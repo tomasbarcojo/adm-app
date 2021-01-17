@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useSelector } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -10,8 +10,8 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Copyright from '../../utils/Copyright'
 import '../../App.css'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -29,6 +29,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
+  const history = useHistory()
+  // const isLogged = useSelector(state => state.userLogged)
+  const [data, setData] = useState({
+    username: '',
+    password: ''
+  })
+  const [KeepLogIn, setKeepLogIn] = useState(false)
+
+  // if (isLogged) {
+  //   history.push('/dashboard')
+  // }
 
   return (
     <div className='LoginPageOuterContainer'>
@@ -90,7 +101,6 @@ export default function SignIn() {
         </form>
       </div>
       <Box mt={8}>
-        <Copyright />
       </Box>
     </div>
   );
