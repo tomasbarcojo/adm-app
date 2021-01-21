@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -41,6 +41,10 @@ export default function SignIn() {
   //   history.push('/dashboard')
   // }
 
+  const handleChange = (event) => {
+    setData({...data, [event.target.name]: event.target.value})
+  }
+
   return (
     <div className='LoginPageOuterContainer'>
       <div className='LoginPageForm'>
@@ -56,11 +60,11 @@ export default function SignIn() {
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email o Usuario"
-            name="email"
-            autoComplete="email"
+            label="Usuario"
+            name="username"
+            autoComplete="username"
             autoFocus
+            onChange={handleChange}
           />
           <TextField
             variant="outlined"
@@ -70,8 +74,8 @@ export default function SignIn() {
             name="password"
             label="Contraseña"
             type="password"
-            id="password"
             autoComplete="current-password"
+            onChange={handleChange}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
