@@ -10,6 +10,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux'
+import { addUser } from '../../actions/users'
+import { useHistory } from 'react-router-dom'
+import SnackBar from '../SnackBar/SnackBar'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
   const classes = useStyles();
   const dispatch = useDispatch()
+  const history = useHistory()
   const [data, setData] = useState({
     firstName: '',
     lastName: '',
@@ -45,8 +49,12 @@ export default function SignUp() {
     setData({...data, [event.target.name]: event.target.value})
   }
 
-  const handleSubmit = () => {
-    dispatch() //add user
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // dispatch(addUser(data, history)) //add user
+    return (
+      <SnackBar />
+    )
   }
 
   return (
@@ -62,12 +70,10 @@ export default function SignUp() {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                autoComplete="fname"
                 name="firstName"
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
                 label="Nombre"
                 autoFocus
                 onChange={handleChange}
@@ -78,10 +84,8 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                id="lastName"
                 label="Apellido"
                 name="lastName"
-                autoComplete="lname"
                 onChange={handleChange}
               />
             </Grid>
@@ -90,10 +94,8 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                id="email"
                 label="Usuario"
-                name="user"
-                autoComplete="email"
+                name="username"
                 onChange={handleChange}
               />
             </Grid>
@@ -105,15 +107,13 @@ export default function SignUp() {
                 name="password"
                 label="Contraseña"
                 type="password"
-                id="password"
-                autoComplete="current-password"
                 onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="Aca se puede agregar una opcion por ej: RECIBIR MAILS CON NOVEDADES"
+                label="Aca puede ir algo como: RECIBIR MAILS CON NOVEDADES"
               />
             </Grid>
           </Grid>

@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2';
+import Snackbar from '../components/SnackBar/SnackBar'
 
 export const userLogin = (data, history) => async dispatch => {
     await fetch(`http://localhost:3001/user/login`, {
@@ -37,33 +38,35 @@ export const userLogin = (data, history) => async dispatch => {
 }
 
 export const addUser = (user, history) => async dispatch => {
-	try {
-		await fetch('http://localhost:3001/user/createuser', {
-			method: 'POST',
-			body: JSON.stringify(user),
-			headers: {
+    try {
+        await fetch('http://localhost:3001/user/createuser', {
+            method: 'POST',
+            body: JSON.stringify(user),
+            headers: {
                 'Content-Type': 'application/json',
-                // "auth-token": token
-			},
-		})
-			.then(data => data.json())
-			.then(res => {
-				if (res.status === 400) {
-					Swal.fire("User already exist", "", "error")
-				} else if (res.status === 201) {
-					localStorage.setItem('userData', JSON.stringify(res.newUser))
-					dispatch({
-						type: 'ADD_USER',
-						payload: res.newUser,
-					})
+            },
+        })
+            .then(data => data.json())
+            .then(res => {
+                if (res.status === 400) {
+                    Swal.fire("User already exist", "", "error")
+                } else if (res.status === 201) {
+                    localStorage.setItem('userData', JSON.stringify(res.newUser))
+                    dispatch({
+                        type: 'ADD_USER',
+                        payload: res.newUser,
+                    })
+                    return (
+                        <Snackbar pressed={true}/>
+                    )
                     Swal.fire("User created", "", "success")
                     history.push('/')
-				}
-			})
-			.catch((error) => { console.log(error) })
-	} catch (err) {
-		console.log(err)
-	}
+                }
+            })
+            .catch((error) => { console.log(error) })
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 export const resetPassword = (userId, token) => async dispatch => {
@@ -88,7 +91,7 @@ export const resetPassword = (userId, token) => async dispatch => {
 export const userLogout = (history) => async dispatch => {
     await fetch('http://localhost:3001/user/logout', {
         credentials: 'include',
-    }).then(() =>{
+    }).then(() => {
         localStorage.clear()
         dispatch({
             type: 'USER_LOGOUT',
@@ -106,12 +109,12 @@ export const getUser = (userId, token) => async dispatch => {
             "auth-token": token
         },
     })
-    .then((res) => res.json())
-    .then((user) =>{
-        dispatch({
-            type: 'SET_USER',
-            payload: user,
-        })
-    }	
-    )
+        .then((res) => res.json())
+        .then((user) => {
+            dispatch({
+                type: 'SET_USER',
+                payload: user,
+            })
+        }
+        )
 }

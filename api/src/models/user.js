@@ -4,25 +4,25 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('user', {
-    name: {
+    firstName: {
       type: DataTypes.TEXT,
       allowNull: false,     
     },
-    lastname: {
+    lastName: {
       type: DataTypes.TEXT,
       allowNull: false,     
     },
-    email: {
+    username: {
       type: DataTypes.TEXT,
       allowNull: false,
       unique: {
         args: true,
-        message: "Email must be unique.",
-      }, 
+        message: "Username must be unique.",
+      },
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-    },    
+    },
   });
 };

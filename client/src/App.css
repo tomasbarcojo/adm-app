@@ -1,3 +1,8 @@
+a {
+  text-decoration: none;
+  color: #12127A;
+}
+
 .LoginPageOuterContainer {
   display: flex;
   flex-direction: column;
