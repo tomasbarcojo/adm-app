@@ -22,19 +22,8 @@ import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Copyright from '../../utils/Copyright'
+import SnackBar from '../SnackBar/SnackBar'
 
 const drawerWidth = 240;
 
@@ -195,6 +184,7 @@ export default function Dashboard() {
           <Box pt={4}>
             <Copyright />
           </Box>
+          <SnackBar />
         </Container>
       </main>
     </div>
