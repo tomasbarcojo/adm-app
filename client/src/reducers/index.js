@@ -1,21 +1,21 @@
 const initialstate = {
 	user: {},
-    classes: [],
+	classes: [],
 	userLogged: false,
-	onClass: false
+	notifications: []
 }
 
 export default function rootReducer(state = initialstate, action) {
 	switch (action.type) {
-			// USER
-			
+		// USER
+
 		case 'LOGIN_USER':
 			return {
 				...state,
 				user: action.payload,
 				userLogged: true,
 			}
-			
+
 		case 'SET_USER':
 			return {
 				...state,
@@ -27,14 +27,14 @@ export default function rootReducer(state = initialstate, action) {
 			return {
 				...state,
 				user: action.payload
-            }
-            
+			}
+
 		case 'RESET_PASSWORD':
 			return {
 				...state,
 				user: action.payload,
-            }
-            
+			}
+
 		case 'USER_LOGOUT':
 			return {
 				...state,
@@ -42,35 +42,39 @@ export default function rootReducer(state = initialstate, action) {
 				classes: [],
 				userLogged: false,
 			}
-			
-			// CLASSES
 
-		case 'GET_CLASSES':
+		// NOTISTACK
+
+		case 'ENQUEUE_SNACKBAR':
 			return {
 				...state,
-				classes: action.payload,
-			}
+				notifications: [
+					...state.notifications,
+					{
+						key: action.key,
+						...action.notification,
+					},
+				],
+			};
 
-		case 'ADD_CLASS':
+		case 'CLOSE_SNACKBAR':
 			return {
 				...state,
-				classes: [...state.classes, action.payload]
-			}
+				notifications: state.notifications.map(notification => (
+					(action.dismissAll || notification.key === action.key)
+						? { ...notification, dismissed: true }
+						: { ...notification }
+				)),
+			};
 
-		case 'START_CLASS':
+		case 'REMOVE_SNACKBAR':
 			return {
 				...state,
-				onClass: true
-			}
-
-		case 'REMOVE_CLASS':
-			return {
-				...state,
-				classes: state.classes.filter(
-					(classFilter) => classFilter.id !== action.payload
+				notifications: state.notifications.filter(
+					notification => notification.key !== action.key,
 				),
-			}
-			
+			};
+
 		default:
 			return state
 	}

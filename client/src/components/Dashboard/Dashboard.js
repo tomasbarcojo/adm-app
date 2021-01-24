@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -23,7 +23,9 @@ import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
 import Copyright from '../../utils/Copyright'
-import SnackBar from '../SnackBar/SnackBar'
+import Button from '@material-ui/core/Button';
+import { enqueueSnackbar, closeSnackbar } from '../../actions/notistack'
+import { useDispatch } from 'react-redux'
 
 const drawerWidth = 240;
 
@@ -108,7 +110,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  const dispatch = useDispatch()
+  const [open, setOpen] = useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -116,6 +119,23 @@ export default function Dashboard() {
     setOpen(false);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+  const handleClick = () => {
+    // NOTE:
+    // if you want to be able to dispatch a `closeSnackbar` action later on,
+    // you SHOULD pass your own `key` in the options. `key` can be any sequence
+    // of number or characters, but it has to be unique for a given snackbar.
+    dispatch(enqueueSnackbar({
+        message: 'Failed fetching data.',
+        options: {
+            key: new Date().getTime() + Math.random(),
+            variant: 'warning',
+            action: key => (
+                <Button onClick={() => closeSnackbar(key)}>dismiss me</Button>
+            ),
+        },
+    }))
+};
 
   return (
     <div className={classes.root}>
@@ -184,7 +204,7 @@ export default function Dashboard() {
           <Box pt={4}>
             <Copyright />
           </Box>
-          <SnackBar />
+          <Button variant="contained" onClick={handleClick}>Display snackbar</Button>
         </Container>
       </main>
     </div>
