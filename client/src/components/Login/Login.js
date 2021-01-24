@@ -10,6 +10,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import '../../App.css'
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -27,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   // const isLogged = useSelector(state => state.userLogged)
   const [data, setData] = useState({
     username: '',
@@ -41,6 +43,13 @@ export default function SignIn() {
   const handleChange = (event) => {
     setData({...data, [event.target.name]: event.target.value})
   }
+
+  const handleClick = () => {
+    enqueueSnackbar('Te logueaste!', { 
+      variant: 'success',
+      preventDuplicate: true,
+  });
+};
 
   return (
     <div className='LoginPageOuterContainer'>

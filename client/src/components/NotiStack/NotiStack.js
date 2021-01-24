@@ -6,7 +6,7 @@ import Notifier from './Notifier';
 import {
     enqueueSnackbar as enqueueSnackbarAction,
     closeSnackbar as closeSnackbarAction,
-} from './redux/actions';
+} from '../../redux/actions';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -37,10 +37,10 @@ const App = () => {
     return (
         <Fragment>
             <Notifier />
-            <Typography variant="h4" gutterBottom>Notistack redux example</Typography>
+            {/* <Typography variant="h4" gutterBottom>Notistack redux example</Typography> */}
 
             <Button variant="contained" onClick={handleClick}>Display snackbar</Button>
-            <Button variant="contained" onClick={handleDimissAll}>Dismiss all snackbars</Button>
+            {/* <Button variant="contained" onClick={handleDimissAll}>Dismiss all snackbars</Button> */}
         </Fragment>
     );
 };

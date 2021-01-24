@@ -56,9 +56,6 @@ export const addUser = (user, history) => async dispatch => {
                         type: 'ADD_USER',
                         payload: res.newUser,
                     })
-                    return (
-                        <Snackbar pressed={true}/>
-                    )
                     Swal.fire("User created", "", "success")
                     history.push('/')
                 }

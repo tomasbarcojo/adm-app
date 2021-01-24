@@ -1,16 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
-import { removeSnackbar } from '../../actions/notistack';
+import { removeSnackbar } from '../../redux/actions';
 
 let displayed = [];
 
 const Notifier = () => {
     const dispatch = useDispatch();
-    const notifications = useSelector(state => state.notifications || []);
+    const notifications = useSelector(store => store.app.notifications || []);
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
-    console.log(notifications)
 
     const storeDisplayed = (id) => {
         displayed = [...displayed, id];
@@ -20,7 +18,7 @@ const Notifier = () => {
         displayed = [...displayed.filter(key => id !== key)];
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         notifications.forEach(({ key, message, options = {}, dismissed = false }) => {
             if (dismissed) {
                 // dismiss snackbar using notistack

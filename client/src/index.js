@@ -3,15 +3,22 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './routes/App';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter as Router} from 'react-router-dom'
-import { Provider} from 'react-redux'
-import store from "./store/index.js"
+import { BrowserRouter as Router } from 'react-router-dom'
+import { Provider } from 'react-redux'
+// import store from "./store/index.js"
+import { createStore, combineReducers } from 'redux';
+import reducers from './redux/reducers';
+import { SnackbarProvider } from 'notistack';
+
+const store = createStore(combineReducers({ app: reducers }));
 
 ReactDOM.render(
   //<React.StrictMode>
-  <Provider store = {store}>
+  <Provider store={store}>
     <Router>
-      <App />
+      <SnackbarProvider>
+        <App />
+      </SnackbarProvider>
     </Router>
   </Provider>,
   //</React.StrictMode>,
