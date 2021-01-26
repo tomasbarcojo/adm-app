@@ -48,3 +48,10 @@ a {
     width: 30%;
   }
 }
+
+/* REGISTER */
+
+.errorMessageRegister {
+  color: red;
+  position: relative;
+}

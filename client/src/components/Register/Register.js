@@ -34,6 +34,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const emailRegex = RegExp(
+  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+);
+
 export default function SignUp() {
   const classes = useStyles();
   const dispatch = useDispatch()
@@ -43,16 +47,73 @@ export default function SignUp() {
     firstName: '',
     lastName: '',
     username: '',
+    email: '',
     password: '',
   })
+  const [errors, setErrors] = useState({})
+
+  const formValid = (data) => {
+    let valid = true;
+
+    // validate form errors being empty
+    Object.values(data).forEach(val => {
+      if (val === '') {
+        valid = false;
+      };
+    });
+  
+    return valid;
+  };
 
   const handleChange = (event) => {
-    setData({...data, [event.target.name]: event.target.value})
+    const { name, value } = event.target
+
+    switch (name) {
+      case "firstName":
+        errors.firstName =
+          value.length < 3 ? "minimum 3 characaters required" : "";
+        break;
+      case "lastName":
+        errors.lastName =
+          value.length < 3 ? "minimum 3 characaters required" : "";
+        break;
+      case "email":
+        errors.email = emailRegex.test(value)
+          ? ""
+          : "invalid email address";
+        break;
+      case "username":
+        errors.username = value.length < 3 ? "minimum 3 characaters required" : "";
+        break;
+      case "password":
+        errors.password =
+          value.length < 6 && (!/(?=.*[0-9])/.test(value)) ? "La contraseña debe tener 6 o mas caracteres o es invalida" : "";
+        break;
+      default:
+        break;
+    }
+    setData({ ...data, [event.target.name]: event.target.value })
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch(addUser(data, history, enqueueSnackbar, closeSnackbar)) //add user
+
+    console.log(formValid(data))
+
+    if (formValid(data)) {
+      console.log(`
+        --SUBMITTING--
+        First Name: ${data.firstName}
+        Last Name: ${data.lastName}
+        Username: ${data.username}
+        Email: ${data.email}
+        Password: ${data.password}
+      `);
+      // dispatch(addUser(data, history, enqueueSnackbar, closeSnackbar)) //add user
+    } else {
+      console.error("FORM INVALID");
+      alert('Faltan campos obligatorios')
+    }
   }
 
   return (
@@ -76,6 +137,9 @@ export default function SignUp() {
                 autoFocus
                 onChange={handleChange}
               />
+              {errors.firstName && errors.firstName.length > 0 && (
+                <span className="errorMessageRegister">{errors.firstName}</span>
+              )}
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -86,6 +150,9 @@ export default function SignUp() {
                 name="lastName"
                 onChange={handleChange}
               />
+              {errors.lastName && errors.lastName.length > 0 && (
+                <span className="errorMessageRegister">{errors.lastName}</span>
+              )}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -96,6 +163,22 @@ export default function SignUp() {
                 name="username"
                 onChange={handleChange}
               />
+              {errors.username && errors.username.length > 0 && (
+                <span className="errorMessageRegister">{errors.username}</span>
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                label="Email"
+                name="email"
+                onChange={handleChange}
+              />
+              {errors.email && errors.email.length > 0 && (
+                <span className="errorMessageRegister">{errors.email}</span>
+              )}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -107,6 +190,9 @@ export default function SignUp() {
                 type="password"
                 onChange={handleChange}
               />
+              {errors.password && errors.password.length > 0 && (
+                <span className="errorMessageRegister">{errors.password}</span>
+              )}
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
