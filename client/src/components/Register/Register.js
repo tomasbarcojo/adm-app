@@ -51,6 +51,7 @@ export default function SignUp() {
     password: '',
   })
   const [errors, setErrors] = useState({})
+  const [confirmPassword, setconfirmPassword] = useState('')
 
   const formValid = (data) => {
     let valid = true;
@@ -71,23 +72,21 @@ export default function SignUp() {
     switch (name) {
       case "firstName":
         errors.firstName =
-          value.length < 3 ? "minimum 3 characaters required" : "";
+          value.length < 3 ? "Mínimo 3 caracteres requeridos" : "";
         break;
       case "lastName":
         errors.lastName =
-          value.length < 3 ? "minimum 3 characaters required" : "";
+          value.length < 3 ? "Mínimo 3 caracteres requeridos" : "";
         break;
       case "email":
-        errors.email = emailRegex.test(value)
-          ? ""
-          : "invalid email address";
+        errors.email = (!/\S+@\S+\.\S+/.test(value)) ? "Email invalido" : "";
         break;
       case "username":
-        errors.username = value.length < 3 ? "minimum 3 characaters required" : "";
+        errors.username = value.length < 3 ? "Mínimo 3 caracteres requeridos" : "";
         break;
       case "password":
         errors.password =
-          value.length < 6 && (!/(?=.*[0-9])/.test(value)) ? "La contraseña debe tener 6 o mas caracteres o es invalida" : "";
+          value.length < 6 && (!/(?=.*[0-9])/.test(value)) ? "La contraseña debe tener 6 o más caracteres o es inválida" : "";
         break;
       default:
         break;
@@ -98,21 +97,15 @@ export default function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    console.log(formValid(data))
-
     if (formValid(data)) {
-      console.log(`
-        --SUBMITTING--
-        First Name: ${data.firstName}
-        Last Name: ${data.lastName}
-        Username: ${data.username}
-        Email: ${data.email}
-        Password: ${data.password}
-      `);
-      // dispatch(addUser(data, history, enqueueSnackbar, closeSnackbar)) //add user
+      dispatch(addUser(data, history, enqueueSnackbar, closeSnackbar)) //add user
     } else {
-      console.error("FORM INVALID");
-      alert('Faltan campos obligatorios')
+      enqueueSnackbar('Todos los campos son obligatorios', {
+        variant: 'warning',
+        action: key => (
+          <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
+        ),
+      })
     }
   }
 
@@ -125,7 +118,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Registro
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+        <form className={classes.form} noValidate autoComplete='off' onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -192,6 +185,20 @@ export default function SignUp() {
               />
               {errors.password && errors.password.length > 0 && (
                 <span className="errorMessageRegister">{errors.password}</span>
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="confirmPassword"
+                label="Confirmar contraseña"
+                type="password"
+                onChange={(e) => setconfirmPassword(e.target.value)}
+              />
+              {confirmPassword !== data.password && (
+                <span className="errorMessageRegister">No coinciden las contraseñas</span>
               )}
             </Grid>
             <Grid item xs={12}>

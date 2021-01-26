@@ -39,16 +39,16 @@ module.exports = {
   },
 
   async createUser(req, res) {
-    const { firstName, lastName, username, password } = req.body
-    if (!firstName || !lastName || !username || !password) {
+    const { firstName, lastName, username, email, password } = req.body
+    if (!firstName || !lastName || !username || !email || !password) {
       res.status(401).send({ message: 'Data required', status: 401 })
     }
     try {
-      const user = await User.findOne({ where: { username: username } })
+      const user = await User.findOne({ where: { email: email } })
       if (user) {
         return res.status(400).send({ message: "User already exists", status: 400 });
       }
-      const userData = { firstName, lastName, username, password };
+      const userData = { firstName, lastName, username, email, password };
       const newUser = await User.create(userData)
       return res.status(201).send({ newUser, status: 201 })
     } catch (err) {

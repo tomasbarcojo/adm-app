@@ -1,5 +1,5 @@
 import Swal from 'sweetalert2';
-import Button from '@material-ui/core/Button';
+import '../App.css'
 
 export const userLogin = (data, history) => async dispatch => {
     await fetch(`http://localhost:3001/user/login`, {
@@ -59,7 +59,7 @@ export const addUser = (user, history, enqueueSnackbar, closeSnackbar) => async 
                     enqueueSnackbar('Te has registrado con exito', {
                         variant: 'success',
                         action: key => (
-                            <Button onClick={() => closeSnackbar(key)}>X</Button>
+                            <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
                         ),
                     });
                     history.push('/')
