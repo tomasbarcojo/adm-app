@@ -12,7 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux'
 import { addUser } from '../../actions/users'
 import { useHistory } from 'react-router-dom'
-import SnackBar from '../SnackBar/SnackBar'
+import { useSnackbar } from 'notistack'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
   const classes = useStyles();
   const dispatch = useDispatch()
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const history = useHistory()
   const [data, setData] = useState({
     firstName: '',
@@ -51,10 +52,7 @@ export default function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // dispatch(addUser(data, history)) //add user
-    return (
-      <SnackBar />
-    )
+    dispatch(addUser(data, history, enqueueSnackbar, closeSnackbar)) //add user
   }
 
   return (

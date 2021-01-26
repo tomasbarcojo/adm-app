@@ -5,12 +5,8 @@ import App from './routes/App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Provider } from 'react-redux'
-// import store from "./store/index.js"
-import { createStore, combineReducers } from 'redux';
-import reducers from './redux/reducers';
+import store from "./store/index.js"
 import { SnackbarProvider } from 'notistack';
-
-const store = createStore(combineReducers({ app: reducers }));
 
 ReactDOM.render(
   //<React.StrictMode>

@@ -1,5 +1,5 @@
 import Swal from 'sweetalert2';
-import Snackbar from '../components/SnackBar/SnackBar'
+import Button from '@material-ui/core/Button';
 
 export const userLogin = (data, history) => async dispatch => {
     await fetch(`http://localhost:3001/user/login`, {
@@ -37,7 +37,7 @@ export const userLogin = (data, history) => async dispatch => {
         })
 }
 
-export const addUser = (user, history) => async dispatch => {
+export const addUser = (user, history, enqueueSnackbar, closeSnackbar) => async dispatch => {
     try {
         await fetch('http://localhost:3001/user/createuser', {
             method: 'POST',
@@ -56,7 +56,12 @@ export const addUser = (user, history) => async dispatch => {
                         type: 'ADD_USER',
                         payload: res.newUser,
                     })
-                    Swal.fire("User created", "", "success")
+                    enqueueSnackbar('Te has registrado con exito', {
+                        variant: 'success',
+                        action: key => (
+                            <Button onClick={() => closeSnackbar(key)}>X</Button>
+                        ),
+                    });
                     history.push('/')
                 }
             })
