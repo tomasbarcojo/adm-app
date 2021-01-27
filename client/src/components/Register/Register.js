@@ -34,10 +34,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const emailRegex = RegExp(
-  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-);
-
 export default function SignUp() {
   const classes = useStyles();
   const dispatch = useDispatch()
@@ -127,7 +123,6 @@ export default function SignUp() {
                 required
                 fullWidth
                 label="Nombre"
-                autoFocus
                 onChange={handleChange}
               />
               {errors.firstName && errors.firstName.length > 0 && (

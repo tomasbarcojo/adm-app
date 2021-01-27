@@ -69,7 +69,6 @@ export default function SignIn() {
             label="Usuario"
             name="username"
             autoComplete="username"
-            autoFocus
             onChange={handleChange}
           />
           <TextField
@@ -87,15 +86,17 @@ export default function SignIn() {
             control={<Checkbox value="remember" color="primary" />}
             label="Mantener iniciada la sesion"
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Loguearse
-          </Button>
+          <Link to='/dashboard'>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Loguearse
+            </Button>
+          </Link>
           <Grid container>
             <Grid item xs>
               <Link to='/'>

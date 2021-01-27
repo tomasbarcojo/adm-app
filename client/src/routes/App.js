@@ -9,7 +9,7 @@ const App = () => {
   return (
     <Router>
         <Switch>
-            <Route exact path="/" component={LogIn} />
+            <Route exact path="/admin" component={LogIn} />
             <Route exact path="/register" component={Register} />
             {/* <PrivateRoutes exact path="/privateroute" component={Register} /> */}
             <Route exact path="/dashboard" component={Dashboard} />
