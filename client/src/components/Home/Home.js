@@ -8,6 +8,9 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Copyright from '../../utils/Copyright'
 import NavBar from './NavBar'
+import ProductCard from '../ProductCard/ProductCard'
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -52,6 +55,11 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: theme.spacing(6),
     },
   },
+  gridList: {
+      display: 'flex',
+      justifyContent: 'center',
+    height: '80%',
+  }
 }));
 
 const footers = [
@@ -81,6 +89,14 @@ export default function UsersManagment() {
       <CssBaseline />
       
       <NavBar />
+
+      {/* <div className='ProductCards'>
+        <ProductCard /><ProductCard /><ProductCard />
+      </div> */}
+
+      <GridList cellHeight={450} className={classes.gridList} cols={4} spacing={0}>
+        <ProductCard /> <ProductCard /> <ProductCard /><ProductCard /><ProductCard /><ProductCard /><ProductCard /> <ProductCard /><ProductCard /><ProductCard /><ProductCard />
+      </GridList>
 
       {/* Hero unit */}
       {/* <Container maxWidth="sm" component="main" className={classes.heroContent}>

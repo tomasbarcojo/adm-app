@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-// import Logo from '../../images/wisprologohoriz.png'
+import Logo from '../../images/Logo/Logo1.jpg'
 // import {Link} from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
@@ -61,9 +61,10 @@ export default function NavBar() {
             <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
           {/* <Link href="/users">
-            <img className='WisproLogoDashboard' src={Logo} alt='Wispro Logo' />
+            <img className='Logo' src={Logo} alt='Wispro Logo' />
           </Link> */}
           <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+            Activa SRL
           </Typography>
           <nav>
             <Link variant="button" color="textPrimary" href="#" className={classes.link}>

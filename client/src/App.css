@@ -72,3 +72,18 @@ a {
 .notistackButton:hover {
   background:  rgb(107, 107, 107, 0.2);
 }
+
+
+/* HOME */
+
+.ProductCards {
+  display: flex;
+  justify-content: space-around;
+}
+
+.Logo {
+  display: flex;
+  flex-direction: row;
+  width: 20%;
+  height: auto;
+}
