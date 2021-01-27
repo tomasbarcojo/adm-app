@@ -99,7 +99,7 @@ export default function SignIn() {
           </Link>
           <Grid container>
             <Grid item xs>
-              <Link to='/'>
+              <Link to='/admin'>
                 ¿Olvidaste la contraseña?
               </Link>
             </Grid>
