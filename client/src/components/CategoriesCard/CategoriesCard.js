@@ -1,23 +1,53 @@
-import React from 'react'
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import Img from '../../images/cigarrillos-1.jpg'
 
-// LEER ACA PARA LAS IMAGENES GUARDADAS EN EL BACK//
+const useStyles = makeStyles({
+  root: {
+    minWidth: 345,
+    margin: '10px'
+  },
+  media: {
+    height: 140,
+  },
+});
 
-// https://www.freecodecamp.org/news/react-background-image-tutorial-how-to-set-backgroundimage-with-inline-css-style/
+export default function MediaCard({ categoryName, categoryImage}) {
+  const classes = useStyles();
 
-// // // // //
-
-
-export default function CategoriesCard({ nameCategory, image }) {
-    return (
-        <div style={{
-            backgroundImage: `url(${Img})`,
-            backgroundSize: 'cover',
-            padding: '20px 100px 20px 100px',
-            borderRadius: '10px'
-        }}>
-            {/* <img src={Img} alt='Imagen de categoria' /> */}
-            <h1>Cigarrillos</h1>
-        </div>
-    )
+  return (
+    <Card className={classes.root}>
+      <CardActionArea>
+        <CardMedia
+          className={classes.media}
+          image={Img} // aca debe ir categoryImage
+          title='Cigarrillos'
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="h2">
+            Cigarrillos
+          </Typography>
+          {/* <Typography variant="body2" color="textSecondary" component="p">
+            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+            across all continents except Antarctica
+          </Typography> */}
+        </CardContent>
+      </CardActionArea>
+      {/* <CardActions>
+        <Button size="small" color="primary">
+          Share
+        </Button>
+        <Button size="small" color="primary">
+          Learn More
+        </Button>
+      </CardActions> */}
+    </Card>
+  );
 }

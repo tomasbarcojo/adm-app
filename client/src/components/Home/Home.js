@@ -8,10 +8,8 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Copyright from '../../utils/Copyright'
 import NavBar from './NavBar'
-import ProductCard from '../ProductCard/ProductCard'
 import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import CategoriesCard2 from '../CategoriesCard/CategoriesCard2';
+import CategoriesCard2 from '../CategoriesCard/CategoriesCard';
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -57,8 +55,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   gridList: {
-    // display: 'flex',
-    // justifyContent: 'center',
+    display: 'flex',
+    justifyContent: 'center',
     height: '80%',
   }
 }));
