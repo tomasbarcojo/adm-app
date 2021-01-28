@@ -23,32 +23,6 @@ a {
   border-radius: 10px;
 }
 
- /* // Small devices (landscape phones, 576px and up) */
-@media (min-width: 280px) {
-  .LoginPageForm {
-    width: 90%;
-  }
-}
-
-/* // Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) {
-  .LoginPageForm {
-    width: 50%;
-  }
-}
-
-/* // Large devices (desktops, 992px and up)
-@media (min-width: 992px) {
-
-} */
-
-/* // Extra large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {
-  .LoginPageForm {
-    width: 30%;
-  }
-}
-
 /* REGISTER */
 
 .errorMessageRegister {
@@ -84,4 +58,35 @@ a {
 .ActivaLogo {
   max-width: 15%;
   height: auto;
+}
+
+/* MEDIA QUERIES */
+
+ /* // Small devices (landscape phones, 576px and up) */
+ @media (max-width: 576px) {
+  .LoginPageForm {
+    width: 90%;
+  }
+  .ActivaLogo {
+    max-width: 35%;
+  }
+}
+
+/* // Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .LoginPageForm {
+    width: 50%;
+  }
+}
+
+/* // Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+
+} */
+
+/* // Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .LoginPageForm {
+    width: 30%;
+  }
 }
