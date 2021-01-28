@@ -60,7 +60,9 @@ a {
   height: auto;
 }
 
-/* MEDIA QUERIES */
+/*    //////////////////////////    */
+/*           MEDIA QUERIES          */
+/*    //////////////////////////    */
 
  /* // Small devices (landscape phones, 576px and up) */
  @media (max-width: 576px) {

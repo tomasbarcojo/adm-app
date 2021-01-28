@@ -18,12 +18,14 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
+import ListTest from './List'
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
 import Copyright from '../../utils/Copyright'
 
 const drawerWidth = 240;
+const sideBarDuration = 500;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+      duration: sideBarDuration,
     }),
   },
   appBarShift: {
@@ -51,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
+      duration: sideBarDuration,
     }),
   },
   menuButton: {
@@ -66,28 +68,29 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     position: 'relative',
     whiteSpace: 'nowrap',
+    paddingBottom: '1px', //this is for make side bar more larger
     width: drawerWidth,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
+      duration: sideBarDuration,
     }),
   },
   drawerPaperClose: {
     overflowX: 'hidden',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+      duration: sideBarDuration,
     }),
     width: theme.spacing(7),
     [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9),
+      width: theme.spacing(8),
     },
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     height: '100vh',
-    overflow: 'auto',
+    overflow: 'visible',
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -130,7 +133,7 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
+            Panel Administrativo
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
@@ -153,8 +156,10 @@ export default function Dashboard() {
         </div>
         <Divider />
         <List>{mainListItems}</List>
+        {/* <Divider />
+        <List>{secondaryListItems}</List> */}
         <Divider />
-        <List>{secondaryListItems}</List>
+        <ListTest />
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
