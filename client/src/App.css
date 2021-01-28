@@ -81,9 +81,7 @@ a {
   justify-content: space-around;
 }
 
-.Logo {
-  display: flex;
-  flex-direction: row;
-  width: 20%;
+.ActivaLogo {
+  max-width: 15%;
   height: auto;
 }

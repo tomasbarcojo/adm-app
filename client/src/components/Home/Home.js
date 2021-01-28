@@ -11,6 +11,7 @@ import NavBar from './NavBar'
 import ProductCard from '../ProductCard/ProductCard'
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
+import CategoriesCard2 from '../CategoriesCard/CategoriesCard2';
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -56,8 +57,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   gridList: {
-      display: 'flex',
-      justifyContent: 'center',
+    // display: 'flex',
+    // justifyContent: 'center',
     height: '80%',
   }
 }));
@@ -87,15 +88,19 @@ export default function UsersManagment() {
   return (
     <React.Fragment>
       <CssBaseline />
-      
+
       <NavBar />
 
       {/* <div className='ProductCards'>
         <ProductCard /><ProductCard /><ProductCard />
       </div> */}
 
-      <GridList cellHeight={450} className={classes.gridList} cols={4} spacing={0}>
+      {/* <GridList cellHeight={450} className={classes.gridList} cols={4} spacing={0}>
         <ProductCard /> <ProductCard /> <ProductCard /><ProductCard /><ProductCard /><ProductCard /><ProductCard /> <ProductCard /><ProductCard /><ProductCard /><ProductCard />
+      </GridList> */}
+
+      <GridList cellHeight={450} className={classes.gridList} cols={4} spacing={0}>
+        <CategoriesCard2 /><CategoriesCard2 /><CategoriesCard2 /><CategoriesCard2 /><CategoriesCard2 /><CategoriesCard2 /><CategoriesCard2 /><CategoriesCard2 />
       </GridList>
 
       {/* Hero unit */}
