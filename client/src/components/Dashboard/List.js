@@ -12,6 +12,7 @@ import SendIcon from '@material-ui/icons/Send';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
+import {Link, useLocation} from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,54 +37,57 @@ export default function NestedList() {
     <List
       component="nav"
       aria-labelledby="nested-list-subheader"
-      //   subheader={
-      //     <ListSubheader component="div" id="nested-list-subheader">
-      //       Nested List Items
-      //     </ListSubheader>
-      //   }
+        // subheader={
+        //   <ListSubheader component="div" id="nested-list-subheader">
+        //     Nested List Items
+        //   </ListSubheader>
+        // }
       className={classes.root}
     >
-      <ListItem button>
-        <ListItemIcon>
-          <SendIcon />
-        </ListItemIcon>
-        <ListItemText primary="Sent mail" />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <DraftsIcon />
-        </ListItemIcon>
-        <ListItemText primary="Drafts" />
-      </ListItem>
       
       <ListItem button onClick={handleClick}>
         <ListItemIcon>
           <InboxIcon />
         </ListItemIcon>
-        <ListItemText primary="Inbox" />
+        <ListItemText primary="Alta/Modificacion" />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
+
+        <Link to='/proveedor'>
           <ListItem button className={classes.nested}>
             <ListItemIcon>
               <StarBorder />
             </ListItemIcon>
-            <ListItemText primary="Starred" />
+            <ListItemText primary="Proveedor" />
           </ListItem>
+        </Link>
+
           <ListItem button className={classes.nested}>
             <ListItemIcon>
               <StarBorder />
             </ListItemIcon>
-            <ListItemText primary="Starred" />
+            <ListItemText primary="Cliente" />
           </ListItem>
+
           <ListItem button className={classes.nested}>
             <ListItemIcon>
               <StarBorder />
             </ListItemIcon>
-            <ListItemText primary="Starred" />
+            <ListItemText primary="Articulo" />
           </ListItem>
+
+          <ListItem button className={classes.nested}>
+            <ListItemIcon>
+              <StarBorder />
+            </ListItemIcon>
+            <ListItemText primary="Listado" />
+          </ListItem>
+
         </List>
+
+        
       </Collapse>
 
       <ListItem button>

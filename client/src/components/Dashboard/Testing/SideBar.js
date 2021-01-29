@@ -14,16 +14,15 @@ import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
-import Chart from './Chart';
-import Deposits from './Deposits';
-import Orders from './Orders';
-import ListTest from './List'
-import Copyright from '../../utils/Copyright'
+import { mainListItems, secondaryListItems } from '../listItems';
+import ListTest from '../List'
+import Chart from '../Chart';
+import Deposits from '../Deposits';
+import Orders from '../Orders';
+import Copyright from '../../../utils/Copyright'
 
 const drawerWidth = 240;
 const sideBarDuration = 500;
@@ -46,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
-      duration: sideBarDuration
+      duration: sideBarDuration,
     }),
   },
   appBarShift: {
@@ -69,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     position: 'relative',
     whiteSpace: 'nowrap',
+    paddingBottom: '1px', //this is for make side bar more larger
     width: drawerWidth,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
     overflowX: 'hidden',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
-      duration: sideBarDuration
+      duration: sideBarDuration,
     }),
     width: theme.spacing(7),
     [theme.breakpoints.up('sm')]: {
@@ -90,7 +90,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     height: '100vh',
-    overflow: 'auto',
+    overflow: 'visible',
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -109,7 +109,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
   const classes = useStyles();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -136,7 +136,7 @@ export default function Dashboard() {
             Panel Administrativo
           </Typography>
           <IconButton color="inherit">
-            <Badge badgeContent={1} color="secondary">
+            <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
@@ -156,34 +156,11 @@ export default function Dashboard() {
         </div>
         <Divider />
         <List>{mainListItems}</List>
+        {/* <Divider />
+        <List>{secondaryListItems}</List> */}
         <Divider />
         <ListTest />
       </Drawer>
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-        <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                <Chart />
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <Deposits />
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Orders />
-              </Paper>
-            </Grid>
-          </Grid>
-        </Container>
-      </main>
     </div>
   );
 }
