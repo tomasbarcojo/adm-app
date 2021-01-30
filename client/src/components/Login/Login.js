@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
   const classes = useStyles();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const history = useHistory()
   // const isLogged = useSelector(state => state.userLogged)
   const [data, setData] = useState({
     username: '',
@@ -44,11 +45,12 @@ export default function SignIn() {
     setData({...data, [event.target.name]: event.target.value})
   }
 
-  const handleClick = () => {
-    enqueueSnackbar('Te logueaste!', { 
+  const handleSubmit = () => {
+    enqueueSnackbar('Bienvenido ${name}', { 
       variant: 'success',
       preventDuplicate: true,
   });
+  history.push('/dashboard/panel')
 };
 
   return (
@@ -60,7 +62,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Iniciar sesion
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -86,7 +88,7 @@ export default function SignIn() {
             control={<Checkbox value="remember" color="primary" />}
             label="Mantener iniciada la sesion"
           />
-          <Link to='/dashboard'>
+          
             <Button
               type="submit"
               fullWidth
@@ -96,7 +98,7 @@ export default function SignIn() {
             >
               Loguearse
             </Button>
-          </Link>
+          
           <Grid container>
             <Grid item xs>
               <Link to='/admin'>
