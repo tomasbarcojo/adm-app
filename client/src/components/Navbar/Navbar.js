@@ -12,100 +12,11 @@ import Menu from "@material-ui/icons/Menu";
 // core components
 import AdminNavbarLinks from "./AdminNavbarLinks.js";
 import RTLNavbarLinks from "./RTLNavbarLinks.js";
-import Button from "components/CustomButtons/Button.js";
+import Button from "../CustomButtons/Button";
 
-import styles from "assets/jss/material-dashboard-react/components/headerStyle.js";
+import styles from "../../styles/components/headerStyle.js";
 
-const container = {
-    paddingRight: "15px",
-    paddingLeft: "15px",
-    marginRight: "auto",
-    marginLeft: "auto"
-  };
-  const defaultFont = {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: "300",
-    lineHeight: "1.5em"
-  };
-  const primaryColor = ["#9c27b0", "#ab47bc", "#8e24aa", "#af2cc5"];
-  const boxShadow = {
-    boxShadow:
-      "0 10px 30px -12px rgba(" +
-      hexToRgb(blackColor) +
-      ", 0.42), 0 4px 25px 0px rgba(" +
-      hexToRgb(blackColor) +
-      ", 0.12), 0 8px 10px -5px rgba(" +
-      hexToRgb(blackColor) +
-      ", 0.2)"
-  };
-
-const useStyles = makeStyles((styles) => ({
-    appBar: {
-        backgroundColor: "transparent",
-        boxShadow: "none",
-        borderBottom: "0",
-        marginBottom: "0",
-        position: "absolute",
-        width: "100%",
-        paddingTop: "10px",
-        zIndex: "1029",
-        color: grayColor[7],
-        border: "0",
-        borderRadius: "3px",
-        padding: "10px 0",
-        transition: "all 150ms ease 0s",
-        minHeight: "50px",
-        display: "block"
-      },
-      container: {
-        ...container,
-        minHeight: "50px"
-      },
-      flex: {
-        flex: 1
-      },
-      title: {
-        ...defaultFont,
-        letterSpacing: "unset",
-        lineHeight: "30px",
-        fontSize: "18px",
-        borderRadius: "3px",
-        textTransform: "none",
-        color: "inherit",
-        margin: "0",
-        "&:hover,&:focus": {
-          background: "transparent"
-        }
-      },
-      appResponsive: {
-        top: "8px"
-      },
-      primary: {
-        backgroundColor: primaryColor[0],
-        color: whiteColor,
-        ...defaultBoxShadow
-      },
-      info: {
-        backgroundColor: infoColor[0],
-        color: whiteColor,
-        ...defaultBoxShadow
-      },
-      success: {
-        backgroundColor: successColor[0],
-        color: whiteColor,
-        ...defaultBoxShadow
-      },
-      warning: {
-        backgroundColor: warningColor[0],
-        color: whiteColor,
-        ...defaultBoxShadow
-      },
-      danger: {
-        backgroundColor: dangerColor[0],
-        color: whiteColor,
-        ...defaultBoxShadow
-      }
-  }));
+const useStyles = makeStyles(styles);
 
 export default function Header(props) {
   const classes = useStyles();

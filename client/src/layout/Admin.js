@@ -7,17 +7,17 @@ import { Switch, Route, Redirect } from "react-router-dom";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // core components
-import Navbar from "components/Navbars/Navbar.js";
-import Footer from "components/Footer/Footer.js";
-import Sidebar from "components/Sidebar/Sidebar.js";
+import Navbar from "../components/Navbar/Navbar.js";
+import Footer from "../components/Footer/Footer.js";
+import Sidebar from "../components/Sidebar/Sidebar";
 // import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
-import routes from "routes.js";
+import routes from "../routes/dashboardRoutes";
 
 // import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
 
-import bgImage from "assets/img/sidebar-4.jpg";
-import logo from "assets/img/reactlogo.png";
+import bgImage from "../images/sidebar-4.jpg";
+import logo from "../images/reactlogo.png";
 
 const drawerWidth = 260;
 
