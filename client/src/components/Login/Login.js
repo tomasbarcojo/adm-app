@@ -50,7 +50,7 @@ export default function SignIn() {
       variant: 'success',
       preventDuplicate: true,
   });
-  history.push('/dashboard/panel')
+  history.push('/admin/dashboard')
 };
 
   return (
