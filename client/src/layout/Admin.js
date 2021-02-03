@@ -1,65 +1,24 @@
-import React, { useState, createRef } from "react";
+import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 // creates a beautiful scrollbar
 // import PerfectScrollbar from "perfect-scrollbar";
 // import "perfect-scrollbar/css/perfect-scrollbar.css";
-
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // core components
 import Navbar from "../components/Navbar/Navbar.js";
 import Footer from "../components/Footer/Footer.js";
-import Sidebar from "../components/Sidebar/Sidebar";
+import Sidebar from "../components/Sidebar/Sidebar.js";
 // import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
 import routes from "../routes/dashboardRoutes";
 
-// import styles from "assets/jss/material-dashboard-react/layouts/adminStyle.js";
+import styles from "../styles/layouts/adminStyle";
 
 import bgImage from "../images/sidebar-4.jpg";
 import logo from "../images/reactlogo.png";
 
-const drawerWidth = 260;
 
-const transition = {
-  transition: "all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)"
-};
-
-const container = {
-  paddingRight: "15px",
-  paddingLeft: "15px",
-  marginRight: "auto",
-  marginLeft: "auto"
-};
-
-const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    position: "relative",
-    top: "0",
-    height: "100vh"
-  },
-  mainPanel: {
-    [theme.breakpoints.up("md")]: {
-      width: `calc(100% - ${drawerWidth}px)`
-    },
-    overflow: "auto",
-    position: "relative",
-    float: "right",
-    ...transition,
-    maxHeight: "100%",
-    width: "100%",
-    overflowScrolling: "touch"
-  },
-  content: {
-    marginTop: "70px",
-    padding: "30px 15px",
-    minHeight: "calc(100vh - 123px)"
-  },
-  container,
-  map: {
-    marginTop: "70px"
-  }
-}));
 
 const switchRoutes = (
   <Switch>
@@ -79,16 +38,18 @@ const switchRoutes = (
   </Switch>
 );
 
+const useStyles = makeStyles(styles);
+
 export default function Admin({ ...rest }) {
   // styles
   const classes = useStyles();
   // ref to help us initialize PerfectScrollbar on windows devices
-  const mainPanel = createRef();
+  const mainPanel = React.createRef();
   // states and functions
   // const [image, setImage] = React.useState(bgImage);
   // const [color, setColor] = React.useState("blue");
   // const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = React.useState(false);
   // const handleImageClick = image => {
   //   setImage(image);
   // };
@@ -155,8 +116,8 @@ export default function Admin({ ...rest }) {
             <div className={classes.container}>{switchRoutes}</div>
           </div>
         ) : (
-            <div className={classes.map}>{switchRoutes}</div>
-          )}
+          <div className={classes.map}>{switchRoutes}</div>
+        )}
         {getRoute() ? <Footer /> : null}
       </div>
     </div>
