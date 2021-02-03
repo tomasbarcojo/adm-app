@@ -113,7 +113,7 @@ export default function Dashboard() {
   return (
     <div className={classes.root}>
       
-      <SideBar />
+      {/* <SideBar /> */}
       
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />

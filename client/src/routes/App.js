@@ -6,6 +6,7 @@ import Dashboard from '../components/Dashboard/Dashboard'
 import Home from '../components/Home/Home'
 import Suppliers from '../components/Reg-Mod/Suppliers/Suppliers'
 import SideBar from '../components/Dashboard/SideBar'
+import Admin from '../layout/Admin'
 
 const App = () => {
 
@@ -16,8 +17,8 @@ const App = () => {
         <Route exact path="/" component={Home} />
         <Route exact path="/admin" component={LogIn} />
         <Route exact path="/register" component={Register} />
-        <Route exact path="/dashboard/panel" component={Dashboard} />
-        <Route exact path="/dashboard/suppliers" component={Suppliers} />
+        <Route exact path="/dashboard" component={Admin} />
+        {/* <Route exact path="/dashboard" component={Suppliers} /> */}
       </Switch>
     </Router>
   );

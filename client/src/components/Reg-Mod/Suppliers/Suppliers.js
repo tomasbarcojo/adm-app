@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import SideBar from '../../Dashboard/SideBar'
+import AddIcon from '@material-ui/icons/Add';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -18,6 +20,11 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: theme.spacing(4),
         paddingBottom: theme.spacing(4),
     },
+    button: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end'
+    }
 }));
 
 export default function Suppliers() {
@@ -25,12 +32,19 @@ export default function Suppliers() {
 
     return (
         <div className={classes.root}>
-            <SideBar />
+            {/* <SideBar /> */}
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>
                     <Grid container spacing={3}>
-                        <h1>TEST</h1>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            className={classes.button}
+                            startIcon={<AddIcon />}
+                        >
+                            Nuevo proveedor
+                        </Button>
                     </Grid>
                 </Container>
             </main>
