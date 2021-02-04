@@ -28,7 +28,7 @@ const dashboardRoutes = [
     },
     {
       path: "/user",
-      name: "User Profile",
+      name: "Alta/Mod",
       icon: Person,
       component: UserProfile,
       layout: "/admin"

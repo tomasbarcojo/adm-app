@@ -39,6 +39,8 @@ import {
 
 import styles from "../../styles/views/dashboardStyle.js";
 
+import '../../styles/css/styles.css'
+
 const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
