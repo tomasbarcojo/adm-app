@@ -156,6 +156,19 @@ const sidebarStyle = theme => ({
     backgroundColor: "transparent",
     ...defaultFont
   },
+  itemLinkNested: {
+    width: "auto",
+    transition: "all 300ms linear",
+    margin: "10px 15px 0",
+    borderRadius: "3px",
+    position: "relative",
+    padding: "10px 15px",
+    backgroundColor: "transparent",
+    ...defaultFont
+  },
+  nested: {
+    paddingLeft: theme.spacing(4)
+  },
   itemIcon: {
     width: "24px",
     height: "30px",
