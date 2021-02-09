@@ -87,7 +87,12 @@ export default function Sidebar(props) {
 								<ListItemIcon>
 									<InboxIcon />
 								</ListItemIcon>
-								<ListItemText primary="Inbox" />
+								<ListItemText primary="Inbox"
+								className={classNames(classes.itemText, whiteFontClasses, {
+									[classes.itemTextRTL]: props.rtlActive
+								})}
+								disableTypography={true}
+								/>
 								{open ? <ExpandLess /> : <ExpandMore />}
 							</ListItem>
 							<Collapse in={open} timeout="auto" unmountOnExit>
