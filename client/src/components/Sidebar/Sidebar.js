@@ -30,11 +30,12 @@ import StarBorder from '@material-ui/icons/StarBorder';
 const NestedLinks = createMuiTheme({
 	overrides: {
 		// Style sheet name ⚛️
-		MuiSvgIcon: {
+		MuiListItemIcon: {
 			// Name of the rule
 			root: {
 				// Some CSS
-				color: 'red'
+				color: 'white',
+				minWidth: '39px'
 			},
 		},
 	},
@@ -81,25 +82,25 @@ export default function Sidebar(props) {
 						key={key}
 					>
 
-						<ListItem button className={classes.itemLinkNested + listItemClasses} onClick={handleClick}>
-							<ListItemIcon>
-								<ThemeProvider theme={NestedLinks}>
+						<ThemeProvider theme={NestedLinks}>
+							<ListItem button className={classes.itemLinkNested + listItemClasses} onClick={handleClick}>
+								<ListItemIcon>
 									<InboxIcon />
-								</ThemeProvider>
-							</ListItemIcon>
-							<ListItemText primary="Inbox" />
-							{open ? <ExpandLess /> : <ExpandMore />}
-						</ListItem>
-						<Collapse in={open} timeout="auto" unmountOnExit>
-							<List component="div" disablePadding>
-								<ListItem button className={classes.nested}>
-									<ListItemIcon>
-										<StarBorder />
-									</ListItemIcon>
-									<ListItemText primary="Starred" />
-								</ListItem>
-							</List>
-						</Collapse>
+								</ListItemIcon>
+								<ListItemText primary="Inbox" />
+								{open ? <ExpandLess /> : <ExpandMore />}
+							</ListItem>
+							<Collapse in={open} timeout="auto" unmountOnExit>
+								<List component="div" disablePadding>
+									<ListItem button className={classes.nested}>
+										<ListItemIcon>
+											<StarBorder />
+										</ListItemIcon>
+										<ListItemText primary="Starred" />
+									</ListItem>
+								</List>
+							</Collapse>
+						</ThemeProvider>
 
 						<ListItem button className={classes.itemLink + listItemClasses}>
 							{typeof prop.icon === "string" ? (
