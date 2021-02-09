@@ -167,7 +167,7 @@ const sidebarStyle = theme => ({
     ...defaultFont
   },
   nested: {
-    paddingLeft: theme.spacing(4)
+    paddingLeft: theme.spacing(5)
   },
   itemIcon: {
     width: "24px",
@@ -180,7 +180,7 @@ const sidebarStyle = theme => ({
     verticalAlign: "middle",
     color: "rgba(" + hexToRgb(whiteColor) + ", 0.8)"
   },
-  itemIconRTL: {
+  itemIconRTL: { //unused
     marginRight: "3px",
     marginLeft: "15px",
     float: "right"
@@ -192,7 +192,7 @@ const sidebarStyle = theme => ({
     fontSize: "14px",
     color: whiteColor
   },
-  itemTextRTL: {
+  itemTextRTL: { //unused
     textAlign: "right"
   },
   whiteFont: {

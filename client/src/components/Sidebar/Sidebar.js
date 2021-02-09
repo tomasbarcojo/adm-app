@@ -55,6 +55,7 @@ export default function Sidebar(props) {
 	const handleClick = () => {
 		setOpen(!open);
 	};
+	
 
 	var links = (
 		<List className={classes.list}>
@@ -88,20 +89,21 @@ export default function Sidebar(props) {
 									<InboxIcon />
 								</ListItemIcon>
 								<ListItemText primary="Inbox"
-								className={classNames(classes.itemText, whiteFontClasses, {
-									[classes.itemTextRTL]: props.rtlActive
-								})}
+								className={classNames(classes.itemText, whiteFontClasses)}
 								disableTypography={true}
 								/>
 								{open ? <ExpandLess /> : <ExpandMore />}
 							</ListItem>
-							<Collapse in={open} timeout="auto" unmountOnExit>
+							<Collapse in={open} timeout="auto">
 								<List component="div" disablePadding>
 									<ListItem button className={classes.nested}>
 										<ListItemIcon>
 											<StarBorder />
 										</ListItemIcon>
-										<ListItemText primary="Starred" />
+										<ListItemText primary="Starred"
+										className={classNames(classes.itemText, whiteFontClasses)}
+										disableTypography={true}
+										/>
 									</ListItem>
 								</List>
 							</Collapse>
@@ -110,24 +112,18 @@ export default function Sidebar(props) {
 						<ListItem button className={classes.itemLink + listItemClasses}>
 							{typeof prop.icon === "string" ? (
 								<Icon
-									className={classNames(classes.itemIcon, whiteFontClasses, { //this is for "Table List" Icon
-										[classes.itemIconRTL]: props.rtlActive
-									})}
+									className={classNames(classes.itemIcon, whiteFontClasses)} //this is for "Table List" Icon
 								>
 									{prop.icon}
 								</Icon>
 							) : (
 									<prop.icon
-										className={classNames(classes.itemIcon, whiteFontClasses, { //this is for the rest of the icons on the side bar list
-											[classes.itemIconRTL]: props.rtlActive
-										})}
+										className={classNames(classes.itemIcon, whiteFontClasses)} //this is for the rest of the icons on the side bar list
 									/>
 								)}
 							<ListItemText
-								primary={props.rtlActive ? prop.rtlName : prop.name}
-								className={classNames(classes.itemText, whiteFontClasses, {
-									[classes.itemTextRTL]: props.rtlActive
-								})}
+								primary={prop.name}
+								className={classNames(classes.itemText, whiteFontClasses)}
 								disableTypography={true}
 							/>
 						</ListItem>
