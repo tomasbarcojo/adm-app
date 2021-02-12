@@ -73,7 +73,7 @@ const dashboardRoutes = [
       name: "RTL Support",
       icon: Language,
       component: RTLPage,
-      layout: "/rtl"
+      layout: "/admin"
     },
     // {
     //   path: "/upgrade-to-pro",

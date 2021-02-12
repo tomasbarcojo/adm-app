@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React from "react";
+import React, { useState } from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
@@ -27,7 +27,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
 
-const NestedLinks = createMuiTheme({
+const NestedLinksTheme = createMuiTheme({
 	overrides: {
 		// Style sheet name ⚛️
 		MuiListItemIcon: {
@@ -41,21 +41,27 @@ const NestedLinks = createMuiTheme({
 	},
 });
 
+const NestedLinks = [ //this could be added in dashboardRoutes for the nested links. To do de same as links variable
+	{layout: '/admin', path: '/test1'},
+	{layout: '/admin', path: '/test2'},
+	{layout: '/admin', path: '/test3'}
+]
+
 const useStyles = makeStyles(styles);
 
 export default function Sidebar(props) {
 	const classes = useStyles();
-	const [open, setOpen] = React.useState(false);
+	const [open, setOpen] = useState(false);
 	// verifies if routeName is the one active (in browser input)
 	function activeRoute(routeName) {
 		return window.location.href.indexOf(routeName) > -1 ? true : false;
 	}
 	const { color, logo, image, logoText, routes } = props;
+	console.log(routes)
 
 	const handleClick = () => {
 		setOpen(!open);
 	};
-	
 
 	var links = (
 		<List className={classes.list}>
@@ -78,37 +84,10 @@ export default function Sidebar(props) {
 				return (
 					<NavLink
 						to={prop.layout + prop.path}
-						className={activePro + classes.item}
+						className={activePro + classes.item} //activePro did not make effect because it's unused
 						activeClassName="active"
 						key={key}
 					>
-
-						<ThemeProvider theme={NestedLinks}>
-							<ListItem button className={classes.itemLinkNested + listItemClasses} onClick={handleClick}>
-								<ListItemIcon>
-									<InboxIcon />
-								</ListItemIcon>
-								<ListItemText primary="Inbox"
-								className={classNames(classes.itemText, whiteFontClasses)}
-								disableTypography={true}
-								/>
-								{open ? <ExpandLess /> : <ExpandMore />}
-							</ListItem>
-							<Collapse in={open} timeout="auto">
-								<List component="div" disablePadding>
-									<ListItem button className={classes.nested}>
-										<ListItemIcon>
-											<StarBorder />
-										</ListItemIcon>
-										<ListItemText primary="Starred"
-										className={classNames(classes.itemText, whiteFontClasses)}
-										disableTypography={true}
-										/>
-									</ListItem>
-								</List>
-							</Collapse>
-						</ThemeProvider>
-
 						<ListItem button className={classes.itemLink + listItemClasses}>
 							{typeof prop.icon === "string" ? (
 								<Icon
@@ -133,6 +112,39 @@ export default function Sidebar(props) {
 		</List>
 	);
 
+	// WORKING ON THIS
+	// var linksNested = (
+	// <>
+	// 	<List className={classes.list}>
+	// 		<ThemeProvider theme={NestedLinksTheme}>
+	// 			<ListItem button className={classes.itemLinkNested + listItemClassesNested} onClick={handleClick}>
+	// 				<ListItemIcon>
+	// 					<InboxIcon />
+	// 				</ListItemIcon>
+	// 				<ListItemText primary="Inbox"
+	// 					className={classNames(classes.itemText, whiteFontClassesNested)}
+	// 					disableTypography={true}
+	// 				/>
+	// 				{open ? <ExpandLess /> : <ExpandMore />}
+	// 			</ListItem>
+	// 			<Collapse in={open} timeout="auto">
+	// 				<List component="div" disablePadding>
+	// 					<ListItem button className={classes.nested}>
+	// 						<ListItemIcon>
+	// 							<StarBorder />
+	// 						</ListItemIcon>
+	// 						<ListItemText primary="Starred"
+	// 							className={classNames(classes.itemText, whiteFontClassesNested)}
+	// 							disableTypography={true}
+	// 						/>
+	// 					</ListItem>
+	// 				</List>
+	// 			</Collapse>
+	// 		</ThemeProvider>
+	// 	</List>
+	// 	</>
+	// );
+
 	var brand = (
 		<div className={classes.logo}>
 			<a
@@ -153,12 +165,10 @@ export default function Sidebar(props) {
 			<Hidden mdUp implementation="css">
 				<Drawer
 					variant="temporary"
-					anchor={props.rtlActive ? "left" : "right"}
+					anchor="right"
 					open={props.open}
 					classes={{
-						paper: classNames(classes.drawerPaper, {
-							[classes.drawerPaperRTL]: props.rtlActive
-						})
+						paper: classNames(classes.drawerPaper)
 					}}
 					onClose={props.handleDrawerToggle}
 					ModalProps={{
@@ -167,7 +177,7 @@ export default function Sidebar(props) {
 				>
 					{brand}
 					<div className={classes.sidebarWrapper}>
-						{props.rtlActive ? <RTLNavbarLinks /> : <AdminNavbarLinks />}
+						{<AdminNavbarLinks />}
 						{links}
 					</div>
 					{image !== undefined ? (
@@ -180,13 +190,11 @@ export default function Sidebar(props) {
 			</Hidden>
 			<Hidden smDown implementation="css">
 				<Drawer
-					anchor={props.rtlActive ? "right" : "left"}
+					anchor="right"
 					variant="permanent"
 					open
 					classes={{
-						paper: classNames(classes.drawerPaper, {
-							[classes.drawerPaperRTL]: props.rtlActive
-						})
+						paper: classNames(classes.drawerPaper)
 					}}
 				>
 					{brand}
