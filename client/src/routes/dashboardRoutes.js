@@ -68,11 +68,19 @@ const dashboardRoutes = [
       component: NotificationsPage,
       layout: "/admin"
     },
+    // {
+    //   path: "/rtl-page",
+    //   name: "RTL Support",
+    //   icon: Language,
+    //   component: RTLPage,
+    //   layout: "/admin"
+    // },
     {
-      path: "/rtl-page",
-      name: "RTL Support",
+      path: "/test",
+      name: "Test 1",
+      nestedList: true,
       icon: Language,
-      component: RTLPage,
+      // component: RTLPage,
       layout: "/admin"
     },
     // {
