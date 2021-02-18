@@ -8,6 +8,8 @@ import Suppliers from '../components/Reg-Mod/Suppliers/Suppliers'
 import SideBar from '../components/Dashboard/SideBar'
 import Admin from '../layout/Admin'
 
+import '../App.css'
+
 const App = () => {
 
   return (

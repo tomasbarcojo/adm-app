@@ -120,63 +120,70 @@ export default function Sidebar(props) {
           });
           return (
             <ThemeProvider theme={NestedLinksTheme}>
-              <ListItem button className={classes.itemLinkNested + listItemClassesNested} onClick={handleClick}>
-                <ListItemIcon>
-                  <Icon
-                    className={classNames(classes.itemIcon, whiteFontClassesNested)} //this is for "Table List" Icon
-                  >
-                    <InboxIcon />
-                  </Icon>
-                </ListItemIcon>
-                <ListItemText primary={prop.name}
-                  className={classNames(classes.itemText, whiteFontClassesNested)}
-                  disableTypography={true}
-                />
-                {open ? <ExpandLess /> : <ExpandMore style={{ fill: "white" }} />}
-              </ListItem>
-              <Collapse in={open} timeout="auto">
-                <List component="div" disablePadding>
-                  <ListItem button className={classes.nested}>
-                    <ListItemIcon>
-                      <StarBorder />
-                    </ListItemIcon>
-                    <ListItemText primary="Proveedores"
-                      className={classNames(classes.itemText, whiteFontClassesNested)}
-                      disableTypography={true}
-                    />
-                  </ListItem>
+              <NavLink
+                to={prop.layout + prop.path}
+                className={classes.item} //activePro did not make effect because it's unused
+                activeClassName="active"
+                key={key}
+              >
+                <ListItem button className={classes.itemLinkNested + listItemClassesNested} onClick={handleClick}>
+                  <ListItemIcon>
+                    <Icon
+                      className={classNames(classes.itemIcon, whiteFontClassesNested)} //this is for "Table List" Icon
+                    >
+                      <InboxIcon />
+                    </Icon>
+                  </ListItemIcon>
+                  <ListItemText primary={prop.name}
+                    className={classNames(classes.itemText, whiteFontClassesNested)}
+                    disableTypography={true}
+                  />
+                  {open ? <ExpandLess style={{ fill: "white" }} /> : <ExpandMore style={{ fill: "white" }} />}
+                </ListItem>
+                <Collapse in={open} timeout="auto">
+                  <List component="div" disablePadding>
+                    <ListItem button className={classes.nested + listItemClassesNested}>
+                      <ListItemIcon>
+                        <StarBorder />
+                      </ListItemIcon>
+                      <ListItemText primary="Proveedores"
+                        className={classNames(classes.itemText, whiteFontClassesNested)}
+                        disableTypography={true}
+                      />
+                    </ListItem>
 
-                  <ListItem button className={classes.nested}>
-                    <ListItemIcon>
-                      <StarBorder />
-                    </ListItemIcon>
-                    <ListItemText primary="Clientes"
-                      className={classNames(classes.itemText, whiteFontClassesNested)}
-                      disableTypography={true}
-                    />
-                  </ListItem>
+                    <ListItem button className={classes.nested}>
+                      <ListItemIcon>
+                        <StarBorder />
+                      </ListItemIcon>
+                      <ListItemText primary="Clientes"
+                        className={classNames(classes.itemText, whiteFontClassesNested)}
+                        disableTypography={true}
+                      />
+                    </ListItem>
 
-                  <ListItem button className={classes.nested}>
-                    <ListItemIcon>
-                      <AddIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Articulos"
-                      className={classNames(classes.itemText, whiteFontClassesNested)}
-                      disableTypography={true}
-                    />
-                  </ListItem>
+                    <ListItem button className={classes.nested}>
+                      <ListItemIcon>
+                        <AddIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Articulos"
+                        className={classNames(classes.itemText, whiteFontClassesNested)}
+                        disableTypography={true}
+                      />
+                    </ListItem>
 
-                  <ListItem button className={classes.nested}>
-                    <ListItemIcon>
-                      <FormatListNumberedIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Listados"
-                      className={classNames(classes.itemText, whiteFontClassesNested)}
-                      disableTypography={true}
-                    />
-                  </ListItem>
-                </List>
-              </Collapse>
+                    <ListItem button className={classes.nested}>
+                      <ListItemIcon>
+                        <FormatListNumberedIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Listados"
+                        className={classNames(classes.itemText, whiteFontClassesNested)}
+                        disableTypography={true}
+                      />
+                    </ListItem>
+                  </List>
+                </Collapse>
+              </NavLink>
             </ThemeProvider>
           )
         }
