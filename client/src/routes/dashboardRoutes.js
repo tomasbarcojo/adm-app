@@ -27,30 +27,30 @@ const dashboardRoutes = [
       layout: "/admin"
     },
     {
-      path: "/user",
-      name: "Alta/Mod",
-      icon: Person,
+      path: "/suppliers",
+      name: "Proveedores",
+      icon: Language,
       component: UserProfile,
       layout: "/admin"
     },
     {
-      path: "/suppliers",
-      name: "Table List",
-      icon: "content_paste",
+      path: "/clients",
+      name: "Clientes",
+      icon: Person,
       component: TableList,
       layout: "/admin"
     },
     {
-      path: "/typography",
-      name: "Typography",
-      icon: LibraryBooks,
+      path: "/articles",
+      name: "Articulos",
+      icon: BubbleChart,
       component: Typography,
       layout: "/admin"
     },
     {
-      path: "/icons",
-      name: "Icons",
-      icon: BubbleChart,
+      path: "/pricelist",
+      name: "Listado de precios",
+      icon: "content_paste",
       component: Icons,
       layout: "/admin"
     },
@@ -79,6 +79,14 @@ const dashboardRoutes = [
       path: "/test",
       name: "Test 1",
       nestedList: true,
+      icon: Language,
+      // component: RTLPage,
+      layout: "/admin"
+    },
+    {
+      path: "/suppliers",
+      name: "Proveedores",
+      nestedList: false,
       icon: Language,
       // component: RTLPage,
       layout: "/admin"

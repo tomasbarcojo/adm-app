@@ -142,7 +142,7 @@ export default function Sidebar(props) {
                 </ListItem>
                 <Collapse in={open} timeout="auto">
                   <List component="div" disablePadding>
-                    <ListItem button className={classes.nested + listItemClassesNested}>
+                    <ListItem button className={classes.nested}>
                       <ListItemIcon>
                         <StarBorder />
                       </ListItemIcon>
@@ -191,6 +191,89 @@ export default function Sidebar(props) {
     </List>
   );
 
+  // var linksNested2 = (
+  //   <List disablePadding>
+  //     {routes.map((prop, key) => {
+  //       if (prop.nestedList) {
+  //         const listItemClassesNested = classNames({
+  //           [" " + classes[color]]: activeRoute(prop.layout + prop.path)
+  //         });
+  //         const whiteFontClassesNested = classNames({
+  //           [" " + classes.whiteFont]: activeRoute(prop.layout + prop.path)
+  //         });
+  //         return (
+  //           <ThemeProvider theme={NestedLinksTheme}>
+  //               <ListItem button className={classes.itemLinkNested} onClick={handleClick}>
+  //                 <ListItemIcon>
+  //                   <Icon
+  //                     className={classNames(classes.itemIcon, whiteFontClassesNested)} //this is for "Table List" Icon
+  //                   >
+  //                     <InboxIcon />
+  //                   </Icon>
+  //                 </ListItemIcon>
+  //                 <ListItemText primary={prop.name}
+  //                   className={classNames(classes.itemText, whiteFontClassesNested)}
+  //                   disableTypography={true}
+  //                 />
+  //                 {open ? <ExpandLess style={{ fill: "white" }} /> : <ExpandMore style={{ fill: "white" }} />}
+  //               </ListItem>
+  //               <Collapse in={open} timeout="auto">
+  //               <NavLink
+  //               to={prop.layout + prop.path}
+  //               className={classes.item} //activePro did not make effect because it's unused
+  //               activeClassName="active"
+  //               key={key}
+  //             >
+  //                 <List component="div" disablePadding>
+  //                   <ListItem button className={classes.nested}>
+  //                     <ListItemIcon>
+  //                       <StarBorder />
+  //                     </ListItemIcon>
+  //                     <ListItemText primary="Proveedores"
+  //                       className={classNames(classes.itemText, whiteFontClassesNested)}
+  //                       disableTypography={true}
+  //                     />
+  //                   </ListItem>
+
+  //                   <ListItem button className={classes.nested}>
+  //                     <ListItemIcon>
+  //                       <StarBorder />
+  //                     </ListItemIcon>
+  //                     <ListItemText primary="Clientes"
+  //                       className={classNames(classes.itemText, whiteFontClassesNested)}
+  //                       disableTypography={true}
+  //                     />
+  //                   </ListItem>
+
+  //                   <ListItem button className={classes.nested}>
+  //                     <ListItemIcon>
+  //                       <AddIcon />
+  //                     </ListItemIcon>
+  //                     <ListItemText primary="Articulos"
+  //                       className={classNames(classes.itemText, whiteFontClassesNested)}
+  //                       disableTypography={true}
+  //                     />
+  //                   </ListItem>
+
+  //                   <ListItem button className={classes.nested}>
+  //                     <ListItemIcon>
+  //                       <FormatListNumberedIcon />
+  //                     </ListItemIcon>
+  //                     <ListItemText primary="Listados"
+  //                       className={classNames(classes.itemText, whiteFontClassesNested)}
+  //                       disableTypography={true}
+  //                     />
+  //                   </ListItem>
+  //                 </List>
+  //             </NavLink>
+  //               </Collapse>
+  //           </ThemeProvider>
+  //         )
+  //       }
+  //     })}
+  //   </List>
+  // );
+
   var brand = (
     <div className={classes.logo}>
       <a
@@ -225,7 +308,7 @@ export default function Sidebar(props) {
           <div className={classes.sidebarWrapper}>
             {<AdminNavbarLinks />}
             {links}
-            {linksNested}
+            {/* {linksNested2} */}
           </div>
           {image !== undefined ? (
             <div
@@ -245,7 +328,10 @@ export default function Sidebar(props) {
           }}
         >
           {brand}
-          <div className={classes.sidebarWrapper}>{links}{linksNested}</div>
+          <div className={classes.sidebarWrapper}>
+            {links}
+            {/* {linksNested2} */}
+            </div>
           {image !== undefined ? (
             <div
               className={classes.background}
