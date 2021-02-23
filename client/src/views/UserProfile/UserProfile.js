@@ -44,11 +44,12 @@ export default function UserProfile() {
         <GridItem xs={12} sm={12} md={8}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Edit Profile</h4>
-              <p className={classes.cardCategoryWhite}>Complete your profile</p>
+              <h4 className={classes.cardTitleWhite}>Nuevo proveedor</h4>
+              {/* <p className={classes.cardCategoryWhite}>Complete your profile</p> */}
             </CardHeader>
             <CardBody>
               <GridContainer>
+
                 <GridItem xs={12} sm={12} md={5}>
                   <CustomInput
                     labelText="Company (disabled)"
