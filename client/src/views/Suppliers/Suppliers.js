@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -38,34 +38,44 @@ const useStyles = makeStyles(styles);
 
 export default function UserProfile() {
   const classes = useStyles();
+  const [showNew, setShowNew] = useState(false);
+
+  const handleNewSupplier = () => {
+    setShowNew(!showNew)
+  }
+
   return (
     <div>
       <GridContainer>
-        <GridItem xs={12} sm={12} md={8}>
+        <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Nuevo proveedor</h4>
-              {/* <p className={classes.cardCategoryWhite}>Complete your profile</p> */}
+              <h4 className={classes.cardTitleWhite}>Nuevo proveedor {showNew ? null : <Button style={{ display: 'flex' }} color="info" onClick={handleNewSupplier}>Añadir</Button>}</h4>
+              {/* <p className={classes.cardCategoryWhite}>
+                {showNew ? null : <button onClick={handleNewSupplier}>Añadir nuevo</button>}
+              </p> */}
             </CardHeader>
+            { showNew ?
+            <>
             <CardBody>
               <GridContainer>
 
                 <GridItem xs={12} sm={12} md={5}>
                   <CustomInput
-                    labelText="Company (disabled)"
-                    id="company-disabled"
+                    labelText="Razon social"
+                    id="razonsocial"
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
-                      disabled: true
+                      disabled: false
                     }}
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={3}>
                   <CustomInput
-                    labelText="Username"
-                    id="username"
+                    labelText="Cuit"
+                    id="cuit"
                     formControlProps={{
                       fullWidth: true
                     }}
@@ -104,7 +114,7 @@ export default function UserProfile() {
               <GridContainer>
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
-                    labelText="City"
+                    labelText="Ciudad"
                     id="city"
                     formControlProps={{
                       fullWidth: true
@@ -113,7 +123,7 @@ export default function UserProfile() {
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
-                    labelText="Country"
+                    labelText="Pais"
                     id="country"
                     formControlProps={{
                       fullWidth: true
@@ -122,7 +132,7 @@ export default function UserProfile() {
                 </GridItem>
                 <GridItem xs={12} sm={12} md={4}>
                   <CustomInput
-                    labelText="Postal Code"
+                    labelText="Codigo postal"
                     id="postal-code"
                     formControlProps={{
                       fullWidth: true
@@ -148,11 +158,15 @@ export default function UserProfile() {
               </GridContainer>
             </CardBody>
             <CardFooter>
-              <Button color="primary">Update Profile</Button>
+              <Button color="primary">Listo</Button>
+              <Button color="danger" onClick={handleNewSupplier}>Cancelar</Button>
             </CardFooter>
+            </>
+            : null
+            }
           </Card>
         </GridItem>
-        <GridItem xs={12} sm={12} md={4}>
+        {/* <GridItem xs={12} sm={12} md={4}>
           <Card profile>
             <CardAvatar profile>
               <a href="#pablo" onClick={e => e.preventDefault()}>
@@ -172,7 +186,7 @@ export default function UserProfile() {
               </Button>
             </CardBody>
           </Card>
-        </GridItem>
+        </GridItem> */}
       </GridContainer>
     </div>
   );
