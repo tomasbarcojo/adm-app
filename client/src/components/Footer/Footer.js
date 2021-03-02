@@ -43,13 +43,13 @@ export default function Footer(props) {
           <span>
             &copy; {1900 + new Date().getYear()}{" "}
             <a
-              href="https://www.creative-tim.com?ref=mdr-footer"
+              href="https://pedixwpp.com/activa"
               target="_blank"
               className={classes.a}
             >
-              Creative Tim
+              Activa SRL
             </a>
-            , made with love for a better web
+            , hecho con ♥ por Tomas Barcojo
           </span>
         </p>
       </div>

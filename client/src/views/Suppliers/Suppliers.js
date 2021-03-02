@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addSupplier } from '../../actions/suppliers'
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -12,6 +14,7 @@ import CardHeader from "../../components/Card/CardHeader.js";
 import CardAvatar from "../../components/Card/CardAvatar.js";
 import CardBody from "../../components/Card/CardBody.js";
 import CardFooter from "../../components/Card/CardFooter.js";
+import TextField from '@material-ui/core/TextField';
 
 import avatar from "../../images/faces/marc.jpg";
 
@@ -37,6 +40,10 @@ const styles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
+  },
+  input: {
+    margin: '27px 0 0 0',
+    paddingBottom: '10px',
   }
 };
 
@@ -44,10 +51,34 @@ const useStyles = makeStyles(styles);
 
 export default function UserProfile() {
   const classes = useStyles();
+  const dispatch = useDispatch()
   const [showNew, setShowNew] = useState(false);
+  const [data, setData] = useState({
+    bussinesName: '',
+    cuit: '',
+    phone: '',
+    altPhone: '',
+    address: '',
+    city: '',
+    CP: '',
+    obs: ''
+  });
 
   const handleNewSupplier = () => {
     setShowNew(!showNew)
+  }
+
+  const handleChange = (event) => {
+    console.log('cambio')
+    setData({ ...data, [event.target.id]: event.target.value })
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log(data)
+    // dispatch(addSupplier(data))
+    // resetForm()
+    // history.push('/user/login')
   }
 
   return (
@@ -61,114 +92,109 @@ export default function UserProfile() {
                 {showNew ? null : <Button className={classes.buttonCard} color="info" onClick={handleNewSupplier}>Añadir</Button>}
               </div>
             </CardHeader>
-            { showNew ?
-            <>
-            <CardBody>
-              <GridContainer>
-
-                <GridItem xs={12} sm={12} md={9}>
-                  <CustomInput
-                    labelText="Razon social"
-                    id="razonsocial"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      disabled: false
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={3}>
-                  <CustomInput
-                    labelText="Cuit"
-                    id="cuit"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-                {/* <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="Email address"
-                    id="email-address"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem> */}
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="Telefono"
-                    id="phone"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="Telefono 2 (opcional)"
-                    id="phone2"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="Direccion"
-                    id="direction"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="Ciudad"
-                    id="city"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="Codigo postal"
-                    id="postal-code"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <InputLabel style={{ color: "#AAAAAA" }}>About me</InputLabel>
-                  <CustomInput
-                    labelText="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
-                    id="about-me"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      multiline: true,
-                      rows: 5
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
-            </CardBody>
-            <CardFooter>
-              <Button color="primary">Listo</Button>
-              <Button color="danger" onClick={handleNewSupplier}>Cancelar</Button>
-            </CardFooter>
-            </>
-            : null
+            {showNew ?
+              <>
+                <form onSubmit={handleSubmit}>
+                  <CardBody>
+                    <GridContainer>
+                      <GridItem xs={12} sm={12} md={9}>
+                        <TextField
+                          className={classes.input}
+                          label="Razon social"
+                          id="bussinesName"
+                          onChange={handleChange}
+                          fullWidth
+                          autoComplete='off'
+                        />
+                      </GridItem>
+                      <GridItem xs={12} sm={12} md={3}>
+                        <TextField
+                          className={classes.input}
+                          label="Cuit"
+                          id="cuit"
+                          onChange={handleChange}
+                          fullWidth
+                          autoComplete='off'
+                        />
+                      </GridItem>
+                    </GridContainer>
+                    <GridContainer>
+                      <GridItem xs={12} sm={12} md={6}>
+                        <TextField
+                          className={classes.input}
+                          label="Telefono"
+                          id="phone"
+                          onChange={handleChange}
+                          fullWidth
+                          autoComplete='off'
+                        />
+                      </GridItem>
+                      <GridItem xs={12} sm={12} md={6}>
+                        <TextField
+                          className={classes.input}
+                          label="Telefono 2 (opcional)"
+                          id="altPhone"
+                          onChange={handleChange}
+                          fullWidth
+                          autoComplete='off'
+                        />
+                      </GridItem>
+                    </GridContainer>
+                    <GridContainer>
+                      <GridItem xs={12} sm={12} md={4}>
+                        <TextField
+                          className={classes.input}
+                          label="Direccion"
+                          id="address"
+                          onChange={handleChange}
+                          fullWidth
+                          autoComplete='off'
+                        />
+                      </GridItem>
+                      <GridItem xs={12} sm={12} md={4}>
+                        <TextField
+                          className={classes.input}
+                          label="Ciudad"
+                          id="city"
+                          onChange={handleChange}
+                          fullWidth
+                          autoComplete='off'
+                        />
+                      </GridItem>
+                      <GridItem xs={12} sm={12} md={4}>
+                        <TextField
+                          className={classes.input}
+                          label="Codigo postal"
+                          id="CP"
+                          onChange={handleChange}
+                          fullWidth
+                          autoComplete='off'
+                        />
+                      </GridItem>
+                    </GridContainer>
+                    <GridContainer>
+                      <GridItem xs={12} sm={12} md={12}>
+                        {/* <InputLabel style={{ color: "#AAAAAA" }}>Observaciones</InputLabel> */}
+                        <TextField
+                          className={classes.input}
+                          label="Observaciones"
+                          id="obs"
+                          onChange={handleChange}
+                          fullWidth
+                          multiline
+                          rows={4}
+                          autoComplete='off'
+                        />
+                      </GridItem>
+                    </GridContainer>
+                  </CardBody>
+                  <CardFooter>
+                    <Button color="primary" type='submit'>Listo</Button>
+                    <Button color="danger" onClick={handleNewSupplier}>Cancelar</Button>
+                  </CardFooter>
+                </form>
+              </>
+              : null
             }
           </Card>
         </GridItem>
