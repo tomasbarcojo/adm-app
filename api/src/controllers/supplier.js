@@ -1,27 +1,27 @@
 require('dotenv').config()
-const { User } = require('../db.js')
+const { Supplier, User } = require('../db.js')
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET
 
-const hashPassword = (password) => new Promise((resolve, reject) => {
-  bcrypt.genSalt(10, (err, salt) => {
-    if (err) return reject(err)
-    bcrypt.hash(password, salt, (err, hash) => {
-      if (err) return reject(err)
-      return resolve(hash)
-    })
-  })
-})
+// const hashPassword = (password) => new Promise((resolve, reject) => {
+//   bcrypt.genSalt(10, (err, salt) => {
+//     if (err) return reject(err)
+//     bcrypt.hash(password, salt, (err, hash) => {
+//       if (err) return reject(err)
+//       return resolve(hash)
+//     })
+//   })
+// })
 
-User.addHook('beforeCreate', (user) => hashPassword(user.password)
-  .then((newPassword) => {
-    user.set('password', newPassword)
-  })
-  .catch((err) => {
-    if (err) console.log(err)
-  }))
+// User.addHook('beforeCreate', (user) => hashPassword(user.password)
+//   .then((newPassword) => {
+//     user.set('password', newPassword)
+//   })
+//   .catch((err) => {
+//     if (err) console.log(err)
+//   }))
 
 module.exports = {
   async getUsers(req, res) {
@@ -38,19 +38,19 @@ module.exports = {
     }
   },
 
-  async createUser(req, res) {
-    const { firstName, lastName, username, email, password } = req.body
-    if (!firstName || !lastName || !username || !email || !password) {
-      res.status(401).send({ message: 'Data required', status: 401 })
+  async createSupplier(req, res) {
+    const { businessName, cuit, phone, altPhone, address, city, CP, obs } = req.body
+    if (!businessName || !cuit || !phone || !address || !city || !CP) {
+      return res.status(400).send({ message: 'Necesary data required', status: 400 })
     }
     try {
-      const user = await User.findOne({ where: { email: email } })
-      if (user) {
-        return res.status(400).send({ message: "User already exists", status: 400 });
+      const supplier = await Supplier.findOne({ where: { cuit: cuit }})
+      if (supplier) {
+        return res.status(400).send({ message: "Supplier already exists", status: 400 });
       }
-      const userData = { firstName, lastName, username, email, password };
-      const newUser = await User.create(userData)
-      return res.status(201).send({ newUser, status: 201 })
+      const supplierData = { businessName, cuit, phone, altPhone, address, city, CP, obs };
+      const newSupplier = await Supplier.create(supplierData)
+      return res.status(201).send({ newSupplier, status: 201 })
     } catch (err) {
       console.log(err)
       return res.status(500).send(err)

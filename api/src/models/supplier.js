@@ -3,8 +3,8 @@ const { DataTypes } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define('user', {
-    bussinesName: {
+  sequelize.define('supplier', {
+    businessName: {
       type: DataTypes.TEXT,
       allowNull: false,     
     },
@@ -22,7 +22,7 @@ module.exports = (sequelize) => {
     },
     altPhone: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     address: {
       type: DataTypes.TEXT,
@@ -38,7 +38,7 @@ module.exports = (sequelize) => {
     },
     obs: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: true,
     }
   });
 };

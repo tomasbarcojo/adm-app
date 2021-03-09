@@ -37,11 +37,11 @@ export const userLogin = (data, history) => async dispatch => {
         })
 }
 
-export const addSupplier = (user, history, enqueueSnackbar, closeSnackbar) => async dispatch => {
+export const addSupplier = (data, enqueueSnackbar, closeSnackbar) => async dispatch => {
     try {
-        await fetch('http://localhost:3001/user/createuser', {
+        await fetch('http://localhost:3001/supplier/createSupplier', {
             method: 'POST',
-            body: JSON.stringify(user),
+            body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -49,23 +49,29 @@ export const addSupplier = (user, history, enqueueSnackbar, closeSnackbar) => as
             .then(data => data.json())
             .then(res => {
                 if (res.status === 400) {
-                    Swal.fire("User already exist", "", "error")
+                    enqueueSnackbar('Ha ocurrido un error, intente nuevamente', { 
+                        variant: 'warning',
+                        action: key => (
+                            <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
+                        ),
+                    });
+                    // Swal.fire("Supplier already exist", "", "error")
                 } else if (res.status === 201) {
-                    localStorage.setItem('userData', JSON.stringify(res.newUser))
-                    dispatch({
-                        type: 'ADD_USER',
-                        payload: res.newUser,
-                    })
-                    enqueueSnackbar('Te has registrado con exito', {
+                    // localStorage.setItem('userData', JSON.stringify(res.newSupplier))
+                    enqueueSnackbar('Proveedor añadido con exito', {
                         variant: 'success',
                         action: key => (
                             <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
                         ),
                     });
-                    history.push('/')
+                    Swal.fire("Supplier already exist", "", "error")
+                    dispatch({
+                        type: 'ADD_SUPPLIER',
+                        payload: res.newSupplier,
+                    })
                 }
             })
-            .catch((error) => { console.log(error) })
+            // .catch((error) => { console.log(error) })
     } catch (err) {
         console.log(err)
     }

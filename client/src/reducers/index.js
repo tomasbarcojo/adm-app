@@ -1,5 +1,6 @@
 const initialstate = {
 	user: {},
+	suppliers: {},
 	classes: [],
 	userLogged: false,
 	notifications: []
@@ -43,6 +44,14 @@ export default function rootReducer(state = initialstate, action) {
 				userLogged: false,
 			}
 
+		// SUPPLIERS
+
+		case 'ADD_SUPPLIER':
+			return {
+				...state,
+				suppliers: action.payload
+			}
+		
 		// NOTISTACK
 
 		case 'ENQUEUE_SNACKBAR':

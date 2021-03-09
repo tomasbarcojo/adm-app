@@ -15,6 +15,7 @@ import CardAvatar from "../../components/Card/CardAvatar.js";
 import CardBody from "../../components/Card/CardBody.js";
 import CardFooter from "../../components/Card/CardFooter.js";
 import TextField from '@material-ui/core/TextField';
+import { useSnackbar } from 'notistack';
 
 import avatar from "../../images/faces/marc.jpg";
 
@@ -52,9 +53,10 @@ const useStyles = makeStyles(styles);
 export default function UserProfile() {
   const classes = useStyles();
   const dispatch = useDispatch()
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [showNew, setShowNew] = useState(false);
   const [data, setData] = useState({
-    bussinesName: '',
+    businessName: '',
     cuit: '',
     phone: '',
     altPhone: '',
@@ -76,7 +78,11 @@ export default function UserProfile() {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log(data)
-    // dispatch(addSupplier(data))
+  //   enqueueSnackbar('Supplier already exist', { 
+  //     variant: 'success',
+  //     preventDuplicate: true,
+  // });
+    dispatch(addSupplier(data, enqueueSnackbar, closeSnackbar))
     // resetForm()
     // history.push('/user/login')
   }
@@ -101,7 +107,7 @@ export default function UserProfile() {
                         <TextField
                           className={classes.input}
                           label="Razon social"
-                          id="bussinesName"
+                          id="businessName"
                           onChange={handleChange}
                           fullWidth
                           autoComplete='off'
@@ -115,6 +121,7 @@ export default function UserProfile() {
                           onChange={handleChange}
                           fullWidth
                           autoComplete='off'
+                          type='number'
                         />
                       </GridItem>
                     </GridContainer>
