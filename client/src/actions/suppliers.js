@@ -48,30 +48,34 @@ export const addSupplier = (data, enqueueSnackbar, closeSnackbar) => async dispa
         })
             .then(data => data.json())
             .then(res => {
-                if (res.status === 400) {
-                    enqueueSnackbar('Ha ocurrido un error, intente nuevamente', { 
+                if (res.status === 400 && res.message === "Supplier already exists") {
+                    enqueueSnackbar('El proveedor ya existe', {
                         variant: 'warning',
                         action: key => (
                             <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
                         ),
                     });
-                    // Swal.fire("Supplier already exist", "", "error")
+                } else if (res.status === 400 && res.message === "Necesary data required") {
+                    enqueueSnackbar('Ha ocurrido un error', {
+                        variant: 'error',
+                        action: key => (
+                            <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
+                        ),
+                    });
                 } else if (res.status === 201) {
-                    // localStorage.setItem('userData', JSON.stringify(res.newSupplier))
+                    dispatch({
+                        type: 'ADD_SUPPLIER',
+                        payload: res.newSupplier,
+                    })
                     enqueueSnackbar('Proveedor añadido con exito', {
                         variant: 'success',
                         action: key => (
                             <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
                         ),
                     });
-                    Swal.fire("Supplier already exist", "", "error")
-                    dispatch({
-                        type: 'ADD_SUPPLIER',
-                        payload: res.newSupplier,
-                    })
                 }
             })
-            // .catch((error) => { console.log(error) })
+        // .catch((error) => { console.log(error) })
     } catch (err) {
         console.log(err)
     }

@@ -66,6 +66,20 @@ export default function UserProfile() {
     obs: ''
   });
 
+  const resetForm = () => {
+    setData({
+      ...data,
+      businessName: '',
+      cuit: '',
+      phone: '',
+      altPhone: '',
+      address: '',
+      city: '',
+      CP: '',
+      obs: ''
+    })
+  }
+
   const handleNewSupplier = () => {
     setShowNew(!showNew)
   }
@@ -77,13 +91,8 @@ export default function UserProfile() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(data)
-  //   enqueueSnackbar('Supplier already exist', { 
-  //     variant: 'success',
-  //     preventDuplicate: true,
-  // });
     dispatch(addSupplier(data, enqueueSnackbar, closeSnackbar))
-    // resetForm()
+    resetForm()
     // history.push('/user/login')
   }
 
@@ -111,6 +120,7 @@ export default function UserProfile() {
                           onChange={handleChange}
                           fullWidth
                           autoComplete='off'
+                          value={data.businessName}
                         />
                       </GridItem>
                       <GridItem xs={12} sm={12} md={3}>
@@ -122,6 +132,7 @@ export default function UserProfile() {
                           fullWidth
                           autoComplete='off'
                           type='number'
+                          value={data.cuit}
                         />
                       </GridItem>
                     </GridContainer>
@@ -134,6 +145,8 @@ export default function UserProfile() {
                           onChange={handleChange}
                           fullWidth
                           autoComplete='off'
+                          type='number'
+                          value={data.phone}
                         />
                       </GridItem>
                       <GridItem xs={12} sm={12} md={6}>
@@ -144,6 +157,8 @@ export default function UserProfile() {
                           onChange={handleChange}
                           fullWidth
                           autoComplete='off'
+                          type='number'
+                          value={data.altPhone}
                         />
                       </GridItem>
                     </GridContainer>
@@ -156,6 +171,7 @@ export default function UserProfile() {
                           onChange={handleChange}
                           fullWidth
                           autoComplete='off'
+                          value={data.address}
                         />
                       </GridItem>
                       <GridItem xs={12} sm={12} md={4}>
@@ -166,6 +182,7 @@ export default function UserProfile() {
                           onChange={handleChange}
                           fullWidth
                           autoComplete='off'
+                          value={data.city}
                         />
                       </GridItem>
                       <GridItem xs={12} sm={12} md={4}>
@@ -176,6 +193,7 @@ export default function UserProfile() {
                           onChange={handleChange}
                           fullWidth
                           autoComplete='off'
+                          value={data.CP}
                         />
                       </GridItem>
                     </GridContainer>
@@ -191,6 +209,7 @@ export default function UserProfile() {
                           multiline
                           rows={4}
                           autoComplete='off'
+                          value={data.obs}
                         />
                       </GridItem>
                     </GridContainer>
