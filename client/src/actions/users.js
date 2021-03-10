@@ -1,7 +1,7 @@
 import Swal from 'sweetalert2';
 import '../App.css'
 
-export const userLogin = (data, history) => async dispatch => {
+export const userLogin = (data, history, enqueueSnackbar, closeSnackbar) => async dispatch => {
     await fetch(`http://localhost:3001/user/login`, {
         method: 'POST',
         // credentials: 'include',
@@ -13,7 +13,13 @@ export const userLogin = (data, history) => async dispatch => {
         .then((res) => res.json())
         .then((response) => {
             if (response.status === 401) {
-                Swal.fire("Email or password are invalid", "", "error")
+                enqueueSnackbar(`El usuario o contraseña son inválidos`, { 
+                    variant: 'success',
+                    preventDuplicate: false,
+                    action: key => (
+                        <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
+                    ),
+                });
             }
             else if (response.status === 400) {
                 Swal.fire("Non-existent account, please sign in", "", "info")
@@ -26,7 +32,14 @@ export const userLogin = (data, history) => async dispatch => {
                     payload: response.user,
                 })
                 // Swal.fire("You are logged in!", "", "success")
-                history.push('/dashboard')
+                enqueueSnackbar(`Bienvenido, ${response.user.firstName}`, { 
+                    variant: 'success',
+                    preventDuplicate: true,
+                    action: key => (
+                        <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
+                    ),
+                });
+                history.push('/admin/dashboard')
             }
             else {
                 Swal.fire("Something went wrong :(", "", "error")
@@ -62,7 +75,7 @@ export const addUser = (user, history, enqueueSnackbar, closeSnackbar) => async 
                             <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
                         ),
                     });
-                    history.push('/')
+                    history.push('/admin/dashboard')
                 }
             })
             .catch((error) => { console.log(error) })

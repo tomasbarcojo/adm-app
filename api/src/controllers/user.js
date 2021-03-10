@@ -13,7 +13,7 @@ const hashPassword = (password) => new Promise((resolve, reject) => {
       return resolve(hash)
     })
   })
-})
+});
 
 User.addHook('beforeCreate', (user) => hashPassword(user.password)
   .then((newPassword) => {
@@ -21,7 +21,7 @@ User.addHook('beforeCreate', (user) => hashPassword(user.password)
   })
   .catch((err) => {
     if (err) console.log(err)
-  }))
+  }));
 
 module.exports = {
   async getUsers(req, res) {
@@ -58,12 +58,12 @@ module.exports = {
   },
 
   async loginUser(req, res) {
-    const { email, password } = req.body;
-    if (!email || !password) {
-      res.status(400).send({ message: 'Data required' })
+    const { username, password } = req.body;
+    if (!username || !password) {
+      return res.status(400).send({ message: 'Data required' })
     }
     try {
-      const user = await User.findOne({ where: { email: email } })
+      const user = await User.findOne({ where: { username: username } })
       if (!user) {
         return res.status(400).send({ message: "Non-existent account, please sign in", status: 400 })
       }

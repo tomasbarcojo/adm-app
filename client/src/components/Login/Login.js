@@ -11,6 +11,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import '../../App.css'
 import { useSnackbar } from 'notistack';
+import { useDispatch } from 'react-redux'
+import { userLogin } from '../../actions/users';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -29,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
   const classes = useStyles();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const history = useHistory()
+  const history = useHistory();
+  const dispatch = useDispatch();
   // const isLogged = useSelector(state => state.userLogged)
   const [data, setData] = useState({
     username: '',
@@ -46,10 +49,11 @@ export default function SignIn() {
   }
 
   const handleSubmit = () => {
-    enqueueSnackbar('Bienvenido ${name}', { 
-      variant: 'success',
-      preventDuplicate: true,
-  });
+    dispatch(userLogin(data, history, enqueueSnackbar, closeSnackbar))
+  //   enqueueSnackbar('Bienvenido ${name}', { 
+  //     variant: 'success',
+  //     preventDuplicate: true,
+  // });
   history.push('/admin/dashboard')
 };
 
@@ -66,7 +70,6 @@ export default function SignIn() {
           <TextField
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             label="Usuario"
             name="username"
@@ -76,7 +79,6 @@ export default function SignIn() {
           <TextField
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             name="password"
             label="Contraseña"
