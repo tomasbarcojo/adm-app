@@ -19,7 +19,7 @@ const App = () => {
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={LogIn} />
         <Route exact path="/register" component={Register} />
-        <Route path="/admin" component={Admin} />
+        <PrivateRoutes path="/admin" component={Admin} />
         {/* <Route path="/dashboard" component={Suppliers} /> */}
       </Switch>
     </Router>

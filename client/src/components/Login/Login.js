@@ -48,14 +48,10 @@ export default function SignIn() {
     setData({...data, [event.target.name]: event.target.value})
   }
 
-  const handleSubmit = () => {
-    dispatch(userLogin(data, history, enqueueSnackbar, closeSnackbar))
-  //   enqueueSnackbar('Bienvenido ${name}', { 
-  //     variant: 'success',
-  //     preventDuplicate: true,
-  // });
-  history.push('/admin/dashboard')
-};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(userLogin(data, history, enqueueSnackbar, closeSnackbar));
+  };
 
   return (
     <div className='LoginPageOuterContainer'>

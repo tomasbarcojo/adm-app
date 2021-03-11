@@ -59,17 +59,17 @@ module.exports = {
 
   async loginUser(req, res) {
     const { username, password } = req.body;
-    if (!username || !password) {
-      return res.status(400).send({ message: 'Data required' })
-    }
     try {
+      if (!username || !password) {
+        return res.status(400).send({ message: 'Data required' })
+      }
       const user = await User.findOne({ where: { username: username } })
       if (!user) {
         return res.status(400).send({ message: "Non-existent account, please sign in", status: 400 })
       }
       const validate = await bcrypt.compare(password, user.password)
       if (!validate) {
-        return res.status(401).json({ message: 'Invalid credentials', status: 401 })
+        return res.status(401).send({ message: 'Invalid credentials', status: 401 })
       }
       const token = jwt.sign({ id: user.id }, ACCESS_TOKEN_SECRET)
       res.header('auth-token', token)

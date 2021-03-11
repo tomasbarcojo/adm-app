@@ -22,7 +22,13 @@ export const userLogin = (data, history, enqueueSnackbar, closeSnackbar) => asyn
                 });
             }
             else if (response.status === 400) {
-                Swal.fire("Non-existent account, please sign in", "", "info")
+                enqueueSnackbar(`El usuario no existe, regístrese`, { 
+                    variant: 'error',
+                    preventDuplicate: false,
+                    action: key => (
+                        <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
+                    ),
+                });
             }
             else if (response.status === 200) {
                 localStorage.setItem('userData', JSON.stringify(response.user))
@@ -31,7 +37,6 @@ export const userLogin = (data, history, enqueueSnackbar, closeSnackbar) => asyn
                     type: 'LOGIN_USER',
                     payload: response.user,
                 })
-                // Swal.fire("You are logged in!", "", "success")
                 enqueueSnackbar(`Bienvenido, ${response.user.firstName}`, { 
                     variant: 'success',
                     preventDuplicate: true,

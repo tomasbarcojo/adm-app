@@ -2,7 +2,7 @@ const server = require('express').Router()
 const authenticate = require('../utils/auth')
 const { getUsers, createUser, modifyUser, deleteUser, loginUser, getOneUser, userLogout } = require('../controllers/user')
 
-server.get('/', authenticate, getUsers)
+server.get('/', /*authenticate,*/ getUsers)
 
 server.post('/createUser', /*authenticate,*/ createUser)
 
