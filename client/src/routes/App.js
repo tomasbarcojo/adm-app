@@ -1,4 +1,4 @@
-import { useLocation, BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { useLocation, BrowserRouter as Router, Route, Switch, useHistory } from 'react-router-dom';
 import PrivateRoutes from '../auth/PrivateRoutes'
 import LogIn from '../components/Login/Login'
 import Register from '../components/Register/Register'
@@ -8,22 +8,31 @@ import Suppliers from '../components/Reg-Mod/Suppliers/Suppliers'
 import SideBar from '../components/Dashboard/SideBar'
 import Admin from '../layout/Admin'
 
+import { useDispatch, useSelector } from 'react-redux'
+import { getUser } from '../actions/users'
+
 import '../App.css'
 
 const App = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const user = JSON.parse(localStorage.getItem('userData'));
+  const token = JSON.parse(localStorage.getItem('token'));
+
+  if (user) {
+    dispatch(getUser(user.id, token))
+  };
 
   return (
     <Router>
       <Switch>
-        {/* <PrivateRoutes exact path="/privateroute" component={Register} /> */}
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={LogIn} />
         <Route exact path="/register" component={Register} />
         <PrivateRoutes path="/admin" component={Admin} />
-        {/* <Route path="/dashboard" component={Suppliers} /> */}
       </Switch>
     </Router>
   );
-}
+};
 
 export default App;

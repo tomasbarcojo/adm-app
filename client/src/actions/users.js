@@ -13,8 +13,8 @@ export const userLogin = (data, history, enqueueSnackbar, closeSnackbar) => asyn
         .then((res) => res.json())
         .then((response) => {
             if (response.status === 401) {
-                enqueueSnackbar(`El usuario o contraseña son inválidos`, { 
-                    variant: 'success',
+                enqueueSnackbar(`El usuario o contraseña son inválidos`, {
+                    variant: 'error',
                     preventDuplicate: false,
                     action: key => (
                         <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
@@ -22,7 +22,7 @@ export const userLogin = (data, history, enqueueSnackbar, closeSnackbar) => asyn
                 });
             }
             else if (response.status === 400) {
-                enqueueSnackbar(`El usuario no existe, regístrese`, { 
+                enqueueSnackbar(`El usuario no existe, regístrese`, {
                     variant: 'error',
                     preventDuplicate: false,
                     action: key => (
@@ -33,11 +33,12 @@ export const userLogin = (data, history, enqueueSnackbar, closeSnackbar) => asyn
             else if (response.status === 200) {
                 localStorage.setItem('userData', JSON.stringify(response.user))
                 localStorage.setItem('token', JSON.stringify(response.token))
+                localStorage.setItem('logged', true)
                 dispatch({
                     type: 'LOGIN_USER',
                     payload: response.user,
                 })
-                enqueueSnackbar(`Bienvenido, ${response.user.firstName}`, { 
+                enqueueSnackbar(`Bienvenido, ${response.user.firstName}`, {
                     variant: 'success',
                     preventDuplicate: true,
                     action: key => (
@@ -109,17 +110,12 @@ export const resetPassword = (userId, token) => async dispatch => {
 }
 
 export const userLogout = (history) => async dispatch => {
-    await fetch('http://localhost:3001/user/logout', {
-        credentials: 'include',
-    }).then(() => {
-        localStorage.clear()
-        dispatch({
-            type: 'USER_LOGOUT',
-        })
-        history.push('/')
-    }
-    )
-}
+    localStorage.clear();
+    dispatch({
+        type: 'USER_LOGOUT',
+    });
+    history.push('/login')
+};
 
 export const getUser = (userId, token) => async dispatch => {
     await fetch(`http://localhost:3001/user/${userId}`, {

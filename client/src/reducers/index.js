@@ -1,7 +1,6 @@
 const initialstate = {
 	user: {},
 	suppliers: {},
-	classes: [],
 	userLogged: false,
 	notifications: []
 }
@@ -40,7 +39,6 @@ export default function rootReducer(state = initialstate, action) {
 			return {
 				...state,
 				user: {},
-				classes: [],
 				userLogged: false,
 			}
 

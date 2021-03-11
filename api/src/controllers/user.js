@@ -127,7 +127,7 @@ module.exports = {
 
   async userLogout(req, res) {
     try {
-      res.send({ message: 'Disconnected' })
+      res.status(200).send({ message: 'Disconnected' })
     } catch (err) {
       console.log(err)
       res.status(500).send(err)

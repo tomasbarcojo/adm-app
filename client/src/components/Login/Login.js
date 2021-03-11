@@ -33,16 +33,11 @@ export default function SignIn() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const history = useHistory();
   const dispatch = useDispatch();
-  // const isLogged = useSelector(state => state.userLogged)
   const [data, setData] = useState({
     username: '',
     password: ''
   })
   // const [KeepLogIn, setKeepLogIn] = useState(false)
-
-  // if (isLogged) {
-  //   history.push('/dashboard')
-  // }
 
   const handleChange = (event) => {
     setData({...data, [event.target.name]: event.target.value})

@@ -59,7 +59,6 @@ export default function Sidebar(props) {
     return window.location.href.indexOf(routeName) > -1 ? true : false;
   }
   const { color, logo, image, logoText, routes } = props;
-  console.log(routes)
 
   const handleClick = () => {
     setOpen(!open);
