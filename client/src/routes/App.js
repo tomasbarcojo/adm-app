@@ -11,8 +11,6 @@ import Admin from '../layout/Admin'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUser } from '../actions/users'
 
-import '../App.css'
-
 const App = () => {
   const dispatch = useDispatch();
   const history = useHistory();

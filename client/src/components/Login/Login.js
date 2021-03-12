@@ -9,7 +9,6 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import '../../App.css'
 import { useSnackbar } from 'notistack';
 import { useDispatch } from 'react-redux'
 import { userLogin } from '../../actions/users';
