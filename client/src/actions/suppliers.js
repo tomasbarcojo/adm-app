@@ -6,7 +6,7 @@ export const userLogin = (data, history) => async dispatch => {
         method: 'POST',
         // credentials: 'include',
         headers: {
-            'Content-Type': 'multipart/form-data',
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
     })
