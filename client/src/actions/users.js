@@ -58,7 +58,7 @@ export const userLogin = (data, history, enqueueSnackbar, closeSnackbar) => asyn
 
 export const addUser = (user, history, enqueueSnackbar, closeSnackbar) => async dispatch => {
     try {
-        await fetch('http://localhost:3001/user/createuser', {
+        await fetch(`http://localhost:3001/user/createuser`, {
             method: 'POST',
             body: JSON.stringify(user),
             headers: {

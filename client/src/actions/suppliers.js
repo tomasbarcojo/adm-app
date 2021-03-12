@@ -6,7 +6,7 @@ export const userLogin = (data, history) => async dispatch => {
         method: 'POST',
         // credentials: 'include',
         headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
         },
         body: JSON.stringify(data),
     })
@@ -39,7 +39,7 @@ export const userLogin = (data, history) => async dispatch => {
 
 export const addSupplier = (data, enqueueSnackbar, closeSnackbar) => async dispatch => {
     try {
-        await fetch('http://localhost:3001/supplier/createSupplier', {
+        await fetch(`http://localhost:3001/supplier/createSupplier`, {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -101,7 +101,7 @@ export const resetPassword = (userId, token) => async dispatch => {
 }
 
 export const userLogout = (history) => async dispatch => {
-    await fetch('http://localhost:3001/user/logout', {
+    await fetch(`http://localhost:3001/user/logout`, {
         credentials: 'include',
     }).then(() => {
         localStorage.clear()
