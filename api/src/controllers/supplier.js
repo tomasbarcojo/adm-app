@@ -24,14 +24,13 @@ const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET
 //   }))
 
 module.exports = {
-  async getUsers(req, res) {
+  async getSuppliers(req, res) {
     try {
-      const users = await User.findAll()
-      if (users && users.length === 0) {
-        return res.status(404).send({ message: 'No users' })
-      } else {
-        return res.status(200).send(users)
+      const suppliers = await Supplier.findAll()
+      if (suppliers && suppliers.length === 0) {
+        return res.status(404).send({ message: 'No suppliers', status: 404 })
       }
+      return res.status(200).send({suppliers, status: 200})
     } catch (err) {
       console.log(err)
       res.status(400).send({ message: 'Failed to get users' })

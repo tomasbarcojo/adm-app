@@ -6,7 +6,8 @@ import {
   infoColor,
   roseColor,
   grayColor,
-  defaultFont
+  defaultFont,
+  tableFont
 } from "../stylesVariables";
 
 const tableStyle = theme => ({
@@ -43,11 +44,11 @@ const tableStyle = theme => ({
     color: "inherit",
     ...defaultFont,
     "&, &$tableCell": {
-      fontSize: "1em"
+      fontSize: "1.1em"
     }
   },
   tableCell: {
-    ...defaultFont,
+    ...tableFont,
     lineHeight: "1.42857143",
     padding: "12px 8px",
     verticalAlign: "middle",

@@ -54,6 +54,11 @@ const defaultFont = {
   lineHeight: "1.5em"
 };
 
+const tableFont = {
+  fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+  lineHeight: "1.5em"
+}
+
 /* #406CC1 <--- brand color*/
 /* ["#9c27b0", "#ab47bc", "#8e24aa", "#af2cc5"]; <--- default */
 const primaryColor = ["#406CC1", "#406CC1", "#406CC1", "#af2cc5"];
@@ -257,6 +262,7 @@ export {
   boxShadow,
   card,
   defaultFont,
+  tableFont,
   primaryColor,
   warningColor,
   dangerColor,

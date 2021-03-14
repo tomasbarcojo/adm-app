@@ -2,58 +2,59 @@ import Swal from 'sweetalert2';
 import '../App.css'
 
 export const userLogin = (data, history, enqueueSnackbar, closeSnackbar) => async dispatch => {
-    await fetch(`http://localhost:3001/user/login`, {
-        method: 'POST',
-        // credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-        .then((res) => res.json())
-        .then((response) => {
-            if (response.status === 401) {
-                enqueueSnackbar(`El usuario o contraseña son inválidos`, {
-                    variant: 'error',
-                    preventDuplicate: false,
-                    action: key => (
-                        <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
-                    ),
-                });
-            }
-            else if (response.status === 400) {
-                enqueueSnackbar(`El usuario no existe, regístrese`, {
-                    variant: 'error',
-                    preventDuplicate: false,
-                    action: key => (
-                        <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
-                    ),
-                });
-            }
-            else if (response.status === 200) {
-                localStorage.setItem('userData', JSON.stringify(response.user))
-                localStorage.setItem('token', JSON.stringify(response.token))
-                localStorage.setItem('logged', true)
-                dispatch({
-                    type: 'LOGIN_USER',
-                    payload: response.user,
-                })
-                enqueueSnackbar(`Bienvenido, ${response.user.firstName}`, {
-                    variant: 'success',
-                    preventDuplicate: true,
-                    action: key => (
-                        <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
-                    ),
-                });
-                history.push('/admin/dashboard')
-            }
-            else {
-                Swal.fire("Something went wrong :(", "", "error")
-            }
+    try {
+        await fetch(`http://localhost:3001/user/login`, {
+            method: 'POST',
+            // credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
         })
-        .catch((error) => {
-            return { error: true, message: 'Error en login, intente otra vez' }
-        })
+            .then((res) => res.json())
+            .then((response) => {
+                if (response.status === 401) {
+                    enqueueSnackbar(`El usuario o contraseña son inválidos`, {
+                        variant: 'error',
+                        preventDuplicate: false,
+                        action: key => (
+                            <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
+                        ),
+                    });
+                }
+                else if (response.status === 400) {
+                    enqueueSnackbar(`El usuario no existe, regístrese`, {
+                        variant: 'error',
+                        preventDuplicate: false,
+                        action: key => (
+                            <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
+                        ),
+                    });
+                }
+                else if (response.status === 200) {
+                    localStorage.setItem('userData', JSON.stringify(response.user))
+                    localStorage.setItem('token', JSON.stringify(response.token))
+                    localStorage.setItem('logged', true)
+                    dispatch({
+                        type: 'LOGIN_USER',
+                        payload: response.user,
+                    })
+                    enqueueSnackbar(`Bienvenido, ${response.user.firstName}`, {
+                        variant: 'success',
+                        preventDuplicate: true,
+                        action: key => (
+                            <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
+                        ),
+                    });
+                    history.push('/admin/dashboard')
+                }
+                else {
+                    Swal.fire("Something went wrong :(", "", "error")
+                }
+            })
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 export const addUser = (user, history, enqueueSnackbar, closeSnackbar) => async dispatch => {
@@ -110,27 +111,34 @@ export const resetPassword = (userId, token) => async dispatch => {
 }
 
 export const userLogout = (history) => async dispatch => {
-    localStorage.clear();
-    dispatch({
-        type: 'USER_LOGOUT',
-    });
-    history.push('/login')
+    try {
+        localStorage.clear();
+        dispatch({
+            type: 'USER_LOGOUT',
+        });
+        history.push('/login')
+    } catch (err) {
+        console.log(err)
+    }
 };
 
 export const getUser = (userId, token) => async dispatch => {
-    await fetch(`http://localhost:3001/user/${userId}`, {
-        // credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json',
-            "auth-token": token
-        },
-    })
-        .then((res) => res.json())
-        .then((user) => {
-            dispatch({
-                type: 'SET_USER',
-                payload: user,
+    try {
+        await fetch(`http://localhost:3001/user/${userId}`, {
+            // credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                "auth-token": token
+            },
+        })
+            .then((res) => res.json())
+            .then((user) => {
+                dispatch({
+                    type: 'SET_USER',
+                    payload: user,
+                })
             })
-        }
-        )
+    } catch (err) {
+        console.log(err)
+    }
 }

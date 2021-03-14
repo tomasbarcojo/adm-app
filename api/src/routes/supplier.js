@@ -1,10 +1,10 @@
 const server = require('express').Router()
 const authenticate = require('../utils/auth')
-const { createSupplier } = require('../controllers/supplier')
+const { createSupplier, getSuppliers } = require('../controllers/supplier')
 
-// server.get('/', authenticate, getUsers)
+server.get('/', authenticate, getSuppliers)
 
-server.post('/createSupplier', /*authenticate,*/ createSupplier)
+server.post('/createSupplier', authenticate, createSupplier)
 
 // server.get('/logout', userLogout)
 

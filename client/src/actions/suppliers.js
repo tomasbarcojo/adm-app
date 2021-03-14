@@ -1,49 +1,38 @@
 import Swal from 'sweetalert2';
 import '../App.css'
 
-export const userLogin = (data, history) => async dispatch => {
-    await fetch(`http://localhost:3001/user/login`, {
-        method: 'POST',
-        // credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-        .then((res) => res.json())
-        .then((response) => {
-            if (response.status === 401) {
-                Swal.fire("Email or password are invalid", "", "error")
-            }
-            else if (response.status === 400) {
-                Swal.fire("Non-existent account, please sign in", "", "info")
-            }
-            else if (response.status === 200) {
-                localStorage.setItem('userData', JSON.stringify(response.user))
-                localStorage.setItem('token', JSON.stringify(response.token))
+export const getSuppliers = (token) => async dispatch => {
+    try {
+        await fetch(`http://localhost:3001/supplier`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': token
+            },
+        })
+        .then(data => data.json())
+        .then(res => {
+            if (res.status === 200) {
                 dispatch({
-                    type: 'LOGIN_USER',
-                    payload: response.user,
+                    type: 'GET_SUPPLIERS',
+                    payload: res.suppliers
                 })
-                // Swal.fire("You are logged in!", "", "success")
-                history.push('/dashboard')
-            }
-            else {
-                Swal.fire("Something went wrong :(", "", "error")
+            } else {
+                alert('server error')
             }
         })
-        .catch((error) => {
-            return { error: true, message: 'Error en login, intente otra vez' }
-        })
+    } catch (err) {
+        console.log(err)
+    }
 }
 
-export const addSupplier = (data, enqueueSnackbar, closeSnackbar) => async dispatch => {
+export const addSupplier = (data, token, enqueueSnackbar, closeSnackbar) => async dispatch => {
     try {
         await fetch(`http://localhost:3001/supplier/createSupplier`, {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json',
+                'auth-token': token
             },
         })
             .then(data => data.json())

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { addSupplier } from '../../actions/suppliers'
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import InputLabel from "@material-ui/core/InputLabel";
+import TextField from '@material-ui/core/TextField';
 // core components
 import GridItem from "../../components/Grid/GridItem.js";
 import GridContainer from "../../components/Grid/GridContainer.js";
@@ -14,8 +14,9 @@ import CardHeader from "../../components/Card/CardHeader.js";
 import CardAvatar from "../../components/Card/CardAvatar.js";
 import CardBody from "../../components/Card/CardBody.js";
 import CardFooter from "../../components/Card/CardFooter.js";
-import TextField from '@material-ui/core/TextField';
 import { useSnackbar } from 'notistack';
+import Table from "../../components/Table/Table.js";
+import { getSuppliers } from '../../actions/suppliers';
 
 import avatar from "../../images/faces/marc.jpg";
 
@@ -54,6 +55,8 @@ export default function UserProfile() {
   const classes = useStyles();
   const dispatch = useDispatch()
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const token = JSON.parse(localStorage.getItem('token'));
+  const suppliers = useSelector(state => state.suppliers);
   const [showNew, setShowNew] = useState(false);
   const [data, setData] = useState({
     businessName: '',
@@ -65,6 +68,12 @@ export default function UserProfile() {
     CP: '',
     obs: ''
   });
+
+  useEffect(() => {
+    dispatch(getSuppliers(token));
+  }, [token])
+
+  console.log(suppliers)
 
   const resetForm = () => {
     setData({
@@ -91,9 +100,8 @@ export default function UserProfile() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch(addSupplier(data, enqueueSnackbar, closeSnackbar))
+    dispatch(addSupplier(data, token, enqueueSnackbar, closeSnackbar))
     resetForm()
-    // history.push('/user/login')
   }
 
   return (
@@ -245,6 +253,30 @@ export default function UserProfile() {
             </CardBody>
           </Card>
         </GridItem> */}
+        <GridItem xs={12} sm={12} md={12}>
+        <Card>
+          <CardHeader color="primary">
+            <h4 className={classes.cardTitleWhite}>Proveedores</h4>
+            <p className={classes.cardCategoryWhite}>
+              Listado de proveedores
+            </p>
+          </CardHeader>
+          <CardBody>
+            {suppliers && suppliers.length > 0 ?
+            <Table
+              tableHeaderColor="primary"
+              tableHead={["Name", "Country", "City", "Salary", "Test2"]}
+              tableData={suppliers && suppliers.length > 0 ? 
+                suppliers.map((supplier, index) => {
+                  return [supplier.businessName, supplier.cuit, supplier.phone, supplier.CP]
+                })
+              : null}
+            />
+            : <h5 style={{ display: "flex", justifyContent: "center"}}>No existen proveedores</h5>
+            }
+          </CardBody>
+        </Card>
+      </GridItem>
       </GridContainer>
     </div>
   );
