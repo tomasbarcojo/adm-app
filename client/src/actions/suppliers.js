@@ -17,7 +17,7 @@ export const getSuppliers = (token) => async dispatch => {
                     payload: res.suppliers
                 })
             } else {
-                alert('server error')
+                console.error('No suppliers')
             }
         })
     } catch (err) {

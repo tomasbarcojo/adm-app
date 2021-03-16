@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import { addSupplier } from '../../actions/suppliers'
+import { getSuppliers } from '../../actions/suppliers';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from '@material-ui/core/TextField';
@@ -14,9 +17,7 @@ import CardHeader from "../../components/Card/CardHeader.js";
 import CardAvatar from "../../components/Card/CardAvatar.js";
 import CardBody from "../../components/Card/CardBody.js";
 import CardFooter from "../../components/Card/CardFooter.js";
-import { useSnackbar } from 'notistack';
 import Table from "../../components/Table/Table.js";
-import { getSuppliers } from '../../actions/suppliers';
 
 import avatar from "../../images/faces/marc.jpg";
 
@@ -54,6 +55,7 @@ const useStyles = makeStyles(styles);
 export default function UserProfile() {
   const classes = useStyles();
   const dispatch = useDispatch()
+  const url = useLocation();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const token = JSON.parse(localStorage.getItem('token'));
   const suppliers = useSelector(state => state.suppliers);
@@ -74,9 +76,7 @@ export default function UserProfile() {
 
   useEffect(() => {
     dispatch(getSuppliers(token));
-  }, [token])
-
-  console.log(suppliers)
+  }, [url.pathname])
 
   const resetForm = () => {
     setData({

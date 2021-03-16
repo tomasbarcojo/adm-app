@@ -18,10 +18,6 @@ const App = () => {
   const user = JSON.parse(localStorage.getItem('userData'));
   const token = JSON.parse(localStorage.getItem('token'));
 
-  // if (user) {
-  //   dispatch(getUser(user.id, token, history))
-  // };
-
   useEffect(() => {
     if (user) {
       dispatch(getUser(user.id, token, history))
