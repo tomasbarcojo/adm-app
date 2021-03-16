@@ -122,7 +122,7 @@ export const userLogout = (history) => async dispatch => {
     }
 };
 
-export const getUser = (userId, token, history) => async dispatch => {
+export const getUser = (userId, token) => async dispatch => {
     try {
         await fetch(`http://localhost:3001/user/${userId}`, {
             // credentials: 'include',
@@ -134,11 +134,10 @@ export const getUser = (userId, token, history) => async dispatch => {
             .then((data) => data.json())
             .then(res => {
                 if (res.status === 404) {
-                    localStorage.clear();
                     dispatch({
                         type: 'USER_LOGOUT'
                     });
-                    history.push('/login')
+                    localStorage.clear();
                 } else if (res.status === 200) {
                     dispatch({
                         type: 'SET_USER',

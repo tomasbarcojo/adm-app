@@ -1,5 +1,8 @@
 import React from "react";
 import classNames from "classnames";
+import { useHistory, Link } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { userLogout } from '../../actions/users';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -18,11 +21,8 @@ import Search from "@material-ui/icons/Search";
 // core components
 import CustomInput from "../CustomInput/CustomInput";
 import Button from "../CustomButtons/Button.js";
-import { useDispatch } from 'react-redux';
-import { userLogout } from '../../actions/users';
 
 import styles from '../../styles/components/headerLinksStyle'
-import { useHistory } from "react-router";
 
 const useStyles = makeStyles(styles);
 
@@ -202,18 +202,22 @@ export default function AdminNavbarLinks() {
               <Paper>
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role="menu">
-                    <MenuItem
-                      onClick={handleCloseProfile}
-                      className={classes.dropdownItem}
-                    >
-                      Profile
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleCloseProfile}
-                      className={classes.dropdownItem}
-                    >
-                      Settings
-                    </MenuItem>
+                    <Link to='/admin/profile'>
+                      <MenuItem
+                        onClick={handleCloseProfile}
+                        className={classes.dropdownItem}
+                      >
+                        Profile
+                      </MenuItem>
+                    </Link>
+                    <Link to='/admin/settings'>
+                      <MenuItem
+                        onClick={handleCloseProfile}
+                        className={classes.dropdownItem}
+                      >
+                        Settings
+                      </MenuItem>
+                    </Link>
                     <Divider light />
                     <MenuItem
                       onClick={handleLogout}

@@ -2,10 +2,7 @@ import { useLocation, BrowserRouter as Router, Route, Switch, useHistory } from 
 import PrivateRoutes from '../auth/PrivateRoutes'
 import LogIn from '../components/Login/Login'
 import Register from '../components/Register/Register'
-import Dashboard from '../components/Dashboard/Dashboard'
 import Home from '../components/Home/Home'
-import Suppliers from '../components/Reg-Mod/Suppliers/Suppliers'
-import SideBar from '../components/Dashboard/SideBar'
 import Admin from '../layout/Admin'
 
 import { useDispatch, useSelector } from 'react-redux'

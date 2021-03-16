@@ -83,9 +83,17 @@ const dashboardRoutes = [
     //   layout: "/admin"
     // },
     {
-      path: "/test",
-      name: "Test 1",
-      nestedList: true,
+      path: "/profile",
+      name: "Perfil",
+      notSideBar: true,
+      icon: Language,
+      component: RTLPage,
+      layout: "/admin"
+    },
+    {
+      path: "/settings",
+      name: "Ajustes",
+      notSideBar: true,
       icon: Language,
       // component: RTLPage,
       layout: "/admin"
