@@ -41,6 +41,13 @@ const dashboardRoutes = [
       layout: "/admin"
     },
     {
+      path: "/clientsbackup",
+      name: "Clientes",
+      icon: Person,
+      component: TableList,
+      layout: "/admin"
+    },
+    {
       path: "/articles",
       name: "Articulos",
       icon: BubbleChart,
@@ -79,14 +86,6 @@ const dashboardRoutes = [
       path: "/test",
       name: "Test 1",
       nestedList: true,
-      icon: Language,
-      // component: RTLPage,
-      layout: "/admin"
-    },
-    {
-      path: "/suppliers",
-      name: "Proveedores",
-      nestedList: false,
       icon: Language,
       // component: RTLPage,
       layout: "/admin"

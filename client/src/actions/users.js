@@ -122,7 +122,7 @@ export const userLogout = (history) => async dispatch => {
     }
 };
 
-export const getUser = (userId, token) => async dispatch => {
+export const getUser = (userId, token, history) => async dispatch => {
     try {
         await fetch(`http://localhost:3001/user/${userId}`, {
             // credentials: 'include',
@@ -131,14 +131,35 @@ export const getUser = (userId, token) => async dispatch => {
                 "auth-token": token
             },
         })
-            .then((res) => res.json())
-            .then((user) => {
-                dispatch({
-                    type: 'SET_USER',
-                    payload: user,
-                })
+            .then((data) => data.json())
+            .then(res => {
+                if (res.status === 404) {
+                    localStorage.clear();
+                    dispatch({
+                        type: 'USER_LOGOUT'
+                    });
+                    history.push('/login')
+                } else if (res.status === 200) {
+                    dispatch({
+                        type: 'SET_USER',
+                        payload: res.user,
+                    })
+                }
             })
     } catch (err) {
         console.log(err)
     }
 }
+
+export const loggedUser = (userId, token) => async dispatch => {
+    try {
+        await fetch(`http://localhost:3001/user/${userId}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                "auth-token": token
+            },
+        })
+    } catch (err) {
+        
+    }
+};

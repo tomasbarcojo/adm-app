@@ -38,7 +38,7 @@ module.exports = {
   },
 
   async createSupplier(req, res) {
-    const { businessName, cuit, phone, altPhone, address, city, CP, obs } = req.body
+    const { businessName, cuit, phone, altPhone, address, city, CP, bankaccount1, bankaccount2, bankaccount3, obs } = req.body
     if (!businessName || !cuit || !phone || !address || !city || !CP) {
       return res.status(400).send({ message: 'Necesary data required', status: 400 })
     }
@@ -47,7 +47,7 @@ module.exports = {
       if (supplier) {
         return res.status(400).send({ message: "Supplier already exists", status: 400 });
       }
-      const supplierData = { businessName, cuit, phone, altPhone, address, city, CP, obs };
+      const supplierData = { businessName, cuit, phone, altPhone, address, city, CP, bankaccount1, bankaccount2, bankaccount3, obs };
       const newSupplier = await Supplier.create(supplierData)
       return res.status(201).send({ newSupplier, status: 201 })
     } catch (err) {

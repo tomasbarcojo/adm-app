@@ -36,6 +36,18 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    bankaccount1: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    bankaccount2: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    bankaccount3: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     obs: {
       type: DataTypes.TEXT,
       allowNull: true,

@@ -66,6 +66,9 @@ export default function UserProfile() {
     address: '',
     city: '',
     CP: '',
+    bankaccount1: '',
+    bankaccount2: '',
+    bankaccount3: '',
     obs: ''
   });
 
@@ -206,6 +209,41 @@ export default function UserProfile() {
                       </GridItem>
                     </GridContainer>
                     <GridContainer>
+                      <GridItem xs={12} sm={12} md={4}>
+                        <TextField
+                          className={classes.input}
+                          label="Cuenta bancaria 1"
+                          id="bankaccount1"
+                          onChange={handleChange}
+                          fullWidth
+                          autoComplete='off'
+                          value={data.bankaccount1}
+                        />
+                      </GridItem>
+                      <GridItem xs={12} sm={12} md={4}>
+                        <TextField
+                          className={classes.input}
+                          label="Cuenta bancaria 2"
+                          id="bankaccount2"
+                          onChange={handleChange}
+                          fullWidth
+                          autoComplete='off'
+                          value={data.bankaccount2}
+                        />
+                      </GridItem>
+                      <GridItem xs={12} sm={12} md={4}>
+                        <TextField
+                          className={classes.input}
+                          label="Cuenta bancaria 3"
+                          id="bankaccount3"
+                          onChange={handleChange}
+                          fullWidth
+                          autoComplete='off'
+                          value={data.bankaccount3}
+                        />
+                      </GridItem>
+                    </GridContainer>
+                    <GridContainer>
                       <GridItem xs={12} sm={12} md={12}>
                         {/* <InputLabel style={{ color: "#AAAAAA" }}>Observaciones</InputLabel> */}
                         <TextField
@@ -265,7 +303,7 @@ export default function UserProfile() {
             {suppliers && suppliers.length > 0 ?
             <Table
               tableHeaderColor="primary"
-              tableHead={["Name", "Country", "City", "Salary", "Test2"]}
+              tableHead={["Razon Social", "CUIT", "Test1", "Test2", "Test3"]}
               tableData={suppliers && suppliers.length > 0 ? 
                 suppliers.map((supplier, index) => {
                   return [supplier.businessName, supplier.cuit, supplier.phone, supplier.CP]

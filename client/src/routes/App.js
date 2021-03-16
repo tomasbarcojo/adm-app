@@ -10,6 +10,7 @@ import Admin from '../layout/Admin'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { getUser } from '../actions/users'
+import { useEffect } from 'react';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -17,9 +18,15 @@ const App = () => {
   const user = JSON.parse(localStorage.getItem('userData'));
   const token = JSON.parse(localStorage.getItem('token'));
 
-  if (user) {
-    dispatch(getUser(user.id, token))
-  };
+  // if (user) {
+  //   dispatch(getUser(user.id, token, history))
+  // };
+
+  useEffect(() => {
+    if (user) {
+      dispatch(getUser(user.id, token, history))
+    };
+  }, [])
 
   return (
     <Router>

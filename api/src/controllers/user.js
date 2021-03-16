@@ -34,7 +34,7 @@ module.exports = {
       }
     } catch (err) {
       console.log(err)
-      res.status(400).send({ message: 'Failed to get users' })
+      return res.status(500).send({ message: 'Failed to get users' })
     }
   },
 
@@ -65,18 +65,21 @@ module.exports = {
       }
       const user = await User.findOne({ where: { username: username } })
       if (!user) {
-        return res.status(400).send({ message: "Non-existent account, please sign in", status: 400 })
+        return res.status(400).send({ message: "Non-existent account", status: 400 })
       }
       const validate = await bcrypt.compare(password, user.password)
       if (!validate) {
         return res.status(401).send({ message: 'Invalid credentials', status: 401 })
       }
-      const token = jwt.sign({ id: user.id }, ACCESS_TOKEN_SECRET)
+      const token = jwt.sign({
+        id: user.id,
+        username: user.username,
+        password: user.password }, ACCESS_TOKEN_SECRET)
       res.header('auth-token', token)
       res.status(200).send({ token: token, user, status: 200 })
     } catch (err) {
       console.log(err)
-      res.status(500).send(err)
+      return res.status(500).send(err)
     }
   },
 
@@ -92,10 +95,10 @@ module.exports = {
       // user.password = changedPassword || user.password;
 
       await user.save()
-      res.status(200).send({ user, status: 200 })
+      return res.status(200).send({ user, status: 200 })
     } catch (err) {
       console.log(err);
-      res.status(500).send({ message: 'Something went wrong' })
+      return res.status(500).send({ message: 'Something went wrong' })
     }
   },
 
@@ -104,11 +107,11 @@ module.exports = {
       User.findByPk(req.params.id)
         .then((user) => {
           user.destroy().then(() => {
-            res.status(200).send({ user, status: 200 })
+            return res.status(200).send({ user, status: 200 })
           })
         })
     } catch (err) {
-      res.status(404).send({ message: 'Invalid ID', status: 404 })
+      return res.status(404).send({ message: 'Invalid ID', status: 404 })
     }
   },
 
@@ -116,21 +119,21 @@ module.exports = {
     try {
       const user = await User.findByPk(req.params.id)
       if (!user) {
-        res.status(404).send({ message: 'User not found' })
+        return res.status(404).send({ message: 'User not found', status: 404 })
       }
-      res.status(200).send(user)
+      return res.status(200).send({user, status: 200})
     } catch (err) {
       console.log(err)
-      res.status(500).send(err)
+      return res.status(500).send(err)
     }
   },
 
-  async userLogout(req, res) {
-    try {
-      res.status(200).send({ message: 'Disconnected' })
-    } catch (err) {
-      console.log(err)
-      res.status(500).send(err)
-    }
-  }
+  // async userLogout(req, res) {
+  //   try {
+  //     res.status(200).send({ message: 'Disconnected' })
+  //   } catch (err) {
+  //     console.log(err)
+  //     res.status(500).send(err)
+  //   }
+  // }
 }
