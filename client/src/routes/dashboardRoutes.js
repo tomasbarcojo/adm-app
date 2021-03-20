@@ -9,7 +9,7 @@ import Language from "@material-ui/icons/Language";
 
 import DashboardPage from "../views/Dashboard/Dashboard";
 import Suppliers from "../views/Suppliers/Suppliers.js";
-import TableList from "../views/TableList/TableList.js";
+import TableList from "../views/Clients/Clients.js";
 import Typography from "../views/Typography/Typography.js";
 import Icons from "../views/Icons/Icons.js";
 import Maps from "../views/Maps/Maps.js";

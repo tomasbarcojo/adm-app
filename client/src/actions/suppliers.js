@@ -1,4 +1,3 @@
-import Swal from 'sweetalert2';
 import '../App.css'
 
 export const getSuppliers = (token) => async dispatch => {

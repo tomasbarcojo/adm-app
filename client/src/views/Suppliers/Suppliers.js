@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import { addSupplier } from '../../actions/suppliers'
-import { getSuppliers } from '../../actions/suppliers';
+import { addSupplier, getSuppliers } from '../../actions/suppliers'
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from '@material-ui/core/TextField';
@@ -52,7 +51,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function UserProfile() {
+export default function Suppliers() {
   const classes = useStyles();
   const dispatch = useDispatch()
   const url = useLocation();
@@ -97,7 +96,6 @@ export default function UserProfile() {
   }
 
   const handleChange = (event) => {
-    console.log('cambio')
     setData({ ...data, [event.target.id]: event.target.value })
   }
 
