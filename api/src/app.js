@@ -28,9 +28,9 @@ server.use((req, res, next) => {
   next();
 });
 
-server.use("/", routes);
-
 server.use(cors())
+
+server.use("/", routes);
 
 // server.use(express.static(path.join(__dirname, '../public')))
 

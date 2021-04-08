@@ -66,7 +66,7 @@ export default function Clients() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const token = JSON.parse(localStorage.getItem('token'));
   const clients = useSelector(state => state.clients);
-  const [showNew, setShowNew] = useState(false);
+  const [showNew, setShowNew] = useState(true);
   const [data, setData] = useState({
     businessName: '',
     cuit: '',

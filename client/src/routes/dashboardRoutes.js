@@ -12,6 +12,7 @@ import Suppliers from "../views/Suppliers/Suppliers.js";
 import TableList from "../views/Clients/Clients.js";
 import Typography from "../views/Typography/Typography.js";
 import Icons from "../views/Icons/Icons.js";
+import PriceLists from "../views/PriceLists/PriceLists.js"
 import Maps from "../views/Maps/Maps.js";
 import NotificationsPage from "../views/Notifications/Notifications.js";
 import UpgradeToPro from "../views/UpgradeToPro/UpgradeToPro.js";
@@ -58,7 +59,7 @@ const dashboardRoutes = [
       path: "/pricelist",
       name: "Listado de precios",
       icon: "content_paste",
-      component: Icons,
+      component: PriceLists,
       layout: "/admin"
     },
     {
