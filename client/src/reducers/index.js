@@ -1,6 +1,7 @@
 const initialstate = {
 	user: {},
 	suppliers: {},
+	clients: {},
 	userLogged: false,
 	notifications: []
 }

@@ -30,10 +30,11 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 
 
-const { User, Supplier } = sequelize.models;
+const { User, Supplier, Clients, PriceLists } = sequelize.models;
 
 // Aca vendrian las relaciones
 // Relaciones:
+
 
 
 

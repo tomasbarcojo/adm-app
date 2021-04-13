@@ -87,7 +87,10 @@ export default function Suppliers() {
       address: '',
       city: '',
       CP: '',
-      obs: ''
+      bankaccount1: '',
+      bankaccount2: '',
+      bankaccount3: '',
+      obs: '',
     })
   }
 
