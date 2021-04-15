@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import { getClients, addClient } from '../../actions/clients'
+import NumberFormat from 'react-number-format';
+import { getPriceList, addPriceList } from '../../actions/pricelists'
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from '@material-ui/core/TextField';
@@ -58,66 +59,54 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Clients() {
-  // const useStyles = makeStyles(styles);
+export default function PriceLists() {
   const classes = useStyles();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const url = useLocation();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const token = JSON.parse(localStorage.getItem('token'));
   const clients = useSelector(state => state.clients);
   const [showNew, setShowNew] = useState(true);
   const [data, setData] = useState({
-    businessName: '',
-    cuit: '',
-    phone: '',
-    altPhone: '',
-    address: '',
-    city: '',
-    CP: '',
-    bankaccount1: '',
-    bankaccount2: '',
-    bankaccount3: '',
-    obs: ''
+    priceListName: '',
+    percentage: '',
   });
 
   useEffect(() => {
-    dispatch(getClients(token));
-  }, [url.pathname])
+    dispatch(getPriceList(token)); //cambiar
+  }, [url.pathname]);
 
   const resetForm = () => {
     setData({
       ...data,
-      businessName: '',
-      cuit: '',
-      phone: '',
-      altPhone: '',
-      address: '',
-      city: '',
-      CP: '',
+      priceListName: '',
+      percentage: '',
     })
-  }
+  };
 
-  const handleNewClient = () => {
+  const handleNewClient = () => { //cambiar
     setShowNew(!showNew)
-  }
+  };
 
   const handleChange = (event) => {
     setData({ ...data, [event.target.id]: event.target.value })
-  }
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    dispatch(addClient(data, token, enqueueSnackbar, closeSnackbar))
-    resetForm()
-  }
+    e.preventDefault();
+    dispatch(addPriceList(data, token, enqueueSnackbar, closeSnackbar)); //cambiar
+    resetForm();
+  };
+
+  console.log(data.percentage)
+
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">
             <div className={classes.card}>
-              <h4 className={classes.cardTitleWhite}>Nuevo cliente</h4>
+              <h4 className={classes.cardTitleWhite}>Nuevo listado</h4>
               {showNew ? null : <Button color="info" onClick={handleNewClient}>Añadir</Button>}
             </div>
           </CardHeader>
@@ -129,122 +118,28 @@ export default function Clients() {
                     <GridItem xs={12} sm={12} md={9}>
                       <TextField
                         className={classes.input}
-                        label="Razon social"
-                        id="businessName"
+                        label="Nombre del listado"
+                        id="priceListName"
                         onChange={handleChange}
                         fullWidth
                         autoComplete='off'
-                        value={data.businessName}
+                        value={data.priceListName}
                       />
+                      {/* <NumberFormat value={2456981} displayType={'text'} thousandSeparator={true} prefix={'$'} /> */}
+                      {/* <NumberFormat thousandSeparator={'.'} decimalSeparator={','} prefix={'%'} /> */}
                     </GridItem>
                     <GridItem xs={12} sm={12} md={3}>
                       <TextField
                         className={classes.input}
-                        label="Cuit"
-                        id="cuit"
+                        label="Porcentaje a aplicar"
+                        id="percentage"
                         onChange={handleChange}
                         fullWidth
                         autoComplete='off'
                         type='number'
-                        value={data.cuit}
+                        value={data.percentage}
                       />
-                    </GridItem>
-                  </GridContainer>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={6}>
-                      <TextField
-                        className={classes.input}
-                        label="Telefono"
-                        id="phone"
-                        onChange={handleChange}
-                        fullWidth
-                        autoComplete='off'
-                        type='number'
-                        value={data.phone}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={6}>
-                      <TextField
-                        className={classes.input}
-                        label="Telefono 2 (opcional)"
-                        id="altPhone"
-                        onChange={handleChange}
-                        fullWidth
-                        autoComplete='off'
-                        type='number'
-                        value={data.altPhone}
-                      />
-                    </GridItem>
-                  </GridContainer>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={4}>
-                      <TextField
-                        className={classes.input}
-                        label="Direccion"
-                        id="address"
-                        onChange={handleChange}
-                        fullWidth
-                        autoComplete='off'
-                        value={data.address}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={4}>
-                      <TextField
-                        className={classes.input}
-                        label="Ciudad"
-                        id="city"
-                        onChange={handleChange}
-                        fullWidth
-                        autoComplete='off'
-                        value={data.city}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={4}>
-                      <TextField
-                        className={classes.input}
-                        label="Codigo postal"
-                        id="CP"
-                        onChange={handleChange}
-                        fullWidth
-                        autoComplete='off'
-                        value={data.CP}
-                      />
-                    </GridItem>
-                  </GridContainer>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={12}>
-                    <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-label">Age</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          // value="hi"
-          onChange={handleChange}
-          // className={classes.input}
-          fullWidth={true}
-        >
-          {/* priceList.map... */}
-          <MenuItem value={0}>Ten</MenuItem>
-          <MenuItem value={1}>Twenty</MenuItem>
-          <MenuItem value={2}>Thirty</MenuItem>
-        </Select>
-      </FormControl>
-                      </GridItem>
-                  </GridContainer>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={12}>
-                      {/* <InputLabel style={{ color: "#AAAAAA" }}>Observaciones</InputLabel> */}
-                      <TextField
-                        className={classes.input}
-                        label="Observaciones"
-                        id="obs"
-                        onChange={handleChange}
-                        fullWidth
-                        multiline
-                        rows={4}
-                        autoComplete='off'
-                        value={data.obs}
-                      />
+                      {/* <NumberFormat inputRef = {(el) => setData() = el} customInput={TextField} format="#### #### #### ####"/> */}
                     </GridItem>
                   </GridContainer>
                 </CardBody>
@@ -261,23 +156,23 @@ export default function Clients() {
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Clientes</h4>
+            <h4 className={classes.cardTitleWhite}>Listados</h4>
             <p className={classes.cardCategoryWhite}>
-              Listado de clientes
+              Listado de precios
             </p>
           </CardHeader>
           <CardBody>
-            {clients && clients.length > 0 ?
+            {clients && clients.length > 0 ? // cambiar
               <Table
                 tableHeaderColor="primary"
-                tableHead={["Razon Social", "CUIT", "Test1", "Test2", "Test3"]}
-                tableData={clients && clients.length > 0 ?
-                  clients.map((client, index) => {
-                    return [client.businessName, client.cuit, client.phone, client.CP]
+                tableHead={["Nombre", "Porcentaje"]}
+                tableData={clients && clients.length > 0 ? // cambiar
+                  clients.map((client, index) => { // cambiar
+                    return [client.businessName, client.cuit, client.phone, client.CP] // cambiar
                   })
                   : null}
               />
-              : <h5 style={{ display: "flex", justifyContent: "center" }}>No existen clientes</h5>
+              : <h5 style={{ display: "flex", justifyContent: "center" }}>No existen listados de precios</h5>
             }
           </CardBody>
         </Card>

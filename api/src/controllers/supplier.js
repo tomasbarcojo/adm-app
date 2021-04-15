@@ -5,24 +5,6 @@ const jwt = require("jsonwebtoken");
 
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET
 
-// const hashPassword = (password) => new Promise((resolve, reject) => {
-//   bcrypt.genSalt(10, (err, salt) => {
-//     if (err) return reject(err)
-//     bcrypt.hash(password, salt, (err, hash) => {
-//       if (err) return reject(err)
-//       return resolve(hash)
-//     })
-//   })
-// })
-
-// User.addHook('beforeCreate', (user) => hashPassword(user.password)
-//   .then((newPassword) => {
-//     user.set('password', newPassword)
-//   })
-//   .catch((err) => {
-//     if (err) console.log(err)
-//   }))
-
 module.exports = {
   async getSuppliers(req, res) {
     try {
