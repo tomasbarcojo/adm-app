@@ -33,7 +33,7 @@ module.exports = {
       return res.status(200).send({suppliers, status: 200})
     } catch (err) {
       console.log(err)
-      res.status(400).send({ message: 'Failed to get users' })
+      return res.status(400).send({ message: 'Failed to get users' })
     }
   },
 
@@ -59,7 +59,7 @@ module.exports = {
   async loginUser(req, res) {
     const { email, password } = req.body;
     if (!email || !password) {
-      res.status(400).send({ message: 'Data required' })
+      return res.status(400).send({ message: 'Data required' })
     }
     try {
       const user = await User.findOne({ where: { email: email } })
@@ -72,10 +72,10 @@ module.exports = {
       }
       const token = jwt.sign({ id: user.id }, ACCESS_TOKEN_SECRET)
       res.header('auth-token', token)
-      res.status(200).send({ token: token, user, status: 200 })
+      return res.status(200).send({ token: token, user, status: 200 })
     } catch (err) {
       console.log(err)
-      res.status(500).send(err)
+      return res.status(500).send(err)
     }
   },
 
@@ -91,10 +91,10 @@ module.exports = {
       // user.password = changedPassword || user.password;
 
       await user.save()
-      res.status(200).send({ user, status: 200 })
+      return res.status(200).send({ user, status: 200 })
     } catch (err) {
       console.log(err);
-      res.status(500).send({ message: 'Something went wrong' })
+      return res.status(500).send({ message: 'Something went wrong' })
     }
   },
 
@@ -103,11 +103,11 @@ module.exports = {
       User.findByPk(req.params.id)
         .then((user) => {
           user.destroy().then(() => {
-            res.status(200).send({ user, status: 200 })
+            return res.status(200).send({ user, status: 200 })
           })
         })
     } catch (err) {
-      res.status(404).send({ message: 'Invalid ID', status: 404 })
+      return res.status(404).send({ message: 'Invalid ID', status: 404 })
     }
   },
 
@@ -115,21 +115,21 @@ module.exports = {
     try {
       const user = await User.findByPk(req.params.id)
       if (!user) {
-        res.status(404).send({ message: 'User not found' })
+        return res.status(404).send({ message: 'User not found' })
       }
       res.status(200).send(user)
     } catch (err) {
       console.log(err)
-      res.status(500).send(err)
+      return res.status(500).send(err)
     }
   },
 
   async userLogout(req, res) {
     try {
-      res.send({ message: 'Disconnected' })
+      return res.send({ message: 'Disconnected' })
     } catch (err) {
       console.log(err)
-      res.status(500).send(err)
+      return res.status(500).send(err)
     }
   }
 }
