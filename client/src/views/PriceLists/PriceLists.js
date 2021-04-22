@@ -65,7 +65,7 @@ export default function PriceLists() {
   const url = useLocation();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const token = JSON.parse(localStorage.getItem('token'));
-  const clients = useSelector(state => state.clients);
+  const pricelists = useSelector(state => state.pricelists);
   const [showNew, setShowNew] = useState(true);
   const [data, setData] = useState({
     priceListName: '',
@@ -115,7 +115,7 @@ export default function PriceLists() {
               <form onSubmit={handleSubmit}>
                 <CardBody>
                   <GridContainer>
-                    <GridItem xs={12} sm={12} md={9}>
+                    <GridItem xs={12} sm={12} md={8}>
                       <TextField
                         className={classes.input}
                         label="Nombre del listado"
@@ -125,10 +125,8 @@ export default function PriceLists() {
                         autoComplete='off'
                         value={data.priceListName}
                       />
-                      {/* <NumberFormat value={2456981} displayType={'text'} thousandSeparator={true} prefix={'$'} /> */}
-                      {/* <NumberFormat thousandSeparator={'.'} decimalSeparator={','} prefix={'%'} /> */}
                     </GridItem>
-                    <GridItem xs={12} sm={12} md={3}>
+                    <GridItem xs={12} sm={12} md={4}>
                       <TextField
                         className={classes.input}
                         label="Porcentaje a aplicar"
@@ -139,7 +137,6 @@ export default function PriceLists() {
                         type='number'
                         value={data.percentage}
                       />
-                      {/* <NumberFormat inputRef = {(el) => setData() = el} customInput={TextField} format="#### #### #### ####"/> */}
                     </GridItem>
                   </GridContainer>
                 </CardBody>
@@ -162,13 +159,13 @@ export default function PriceLists() {
             </p>
           </CardHeader>
           <CardBody>
-            {clients && clients.length > 0 ? // cambiar
+            {pricelists && pricelists.length > 0 ?
               <Table
                 tableHeaderColor="primary"
                 tableHead={["Nombre", "Porcentaje"]}
-                tableData={clients && clients.length > 0 ? // cambiar
-                  clients.map((client, index) => { // cambiar
-                    return [client.businessName, client.cuit, client.phone, client.CP] // cambiar
+                tableData={pricelists && pricelists.length > 0 ?
+                  pricelists.map((pricelist, index) => {
+                    return [pricelist.priceListName, "% " + pricelist.percentage]
                   })
                   : null}
               />

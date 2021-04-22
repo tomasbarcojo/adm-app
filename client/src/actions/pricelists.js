@@ -1,6 +1,6 @@
 export const getPriceList = (token) => async dispatch => {
     try {
-        await fetch(`http://localhost:3001/pricelists`, {
+        await fetch(`http://localhost:3001/pricelist`, {
             headers: {
                 'Content-Type': 'application/json',
                 'auth-token': token
@@ -11,11 +11,12 @@ export const getPriceList = (token) => async dispatch => {
                 if (res.status === 200) {
                     dispatch({
                         type: 'GET_PRICELISTS',
-                        payload: res.clients
+                        payload: res.pricelist
                     })
-                } else {
-                    console.error('No suppliers')
-                }
+                } 
+                // else {
+                //     console.error('No price lists')
+                // }
             })
     } catch (err) {
         console.log(err)
@@ -24,7 +25,7 @@ export const getPriceList = (token) => async dispatch => {
 
 export const addPriceList = (data, token, enqueueSnackbar, closeSnackbar) => async dispatch => {
     try {
-        await fetch(`http://localhost:3001/pricelists/addPriceLists`, {
+        await fetch(`http://localhost:3001/pricelist/createpricelist`, {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -34,9 +35,9 @@ export const addPriceList = (data, token, enqueueSnackbar, closeSnackbar) => asy
         })
             .then(data => data.json())
             .then(res => {
-                if (res.status === 400 && res.message === "Supplier already exists") {
-                    enqueueSnackbar('El proveedor ya existe', {
-                        variant: 'warning',
+                if (res.status === 400 && res.message === "Price list already exists") {
+                    enqueueSnackbar('El listado ya existe', {
+                        variant: 'error',
                         action: key => (
                             <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
                         ),
@@ -50,10 +51,10 @@ export const addPriceList = (data, token, enqueueSnackbar, closeSnackbar) => asy
                     });
                 } else if (res.status === 201) {
                     dispatch({
-                        type: 'ADD_SUPPLIER',
-                        payload: res.newSupplier,
+                        type: 'ADD_PRICELIST',
+                        payload: res.newPriceList,
                     })
-                    enqueueSnackbar('Proveedor añadido con exito', {
+                    enqueueSnackbar('Listado añadido con exito', {
                         variant: 'success',
                         action: key => (
                             <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
@@ -61,7 +62,6 @@ export const addPriceList = (data, token, enqueueSnackbar, closeSnackbar) => asy
                     });
                 }
             })
-        // .catch((error) => { console.log(error) })
     } catch (err) {
         console.log(err)
     }

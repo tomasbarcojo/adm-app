@@ -15,9 +15,10 @@ export const getSuppliers = (token) => async dispatch => {
                     type: 'GET_SUPPLIERS',
                     payload: res.suppliers
                 })
-            } else {
-                console.error('No suppliers')
-            }
+            } 
+            // else {
+            //     console.error('No suppliers')
+            // }
         })
     } catch (err) {
         console.log(err)
@@ -38,7 +39,7 @@ export const addSupplier = (data, token, enqueueSnackbar, closeSnackbar) => asyn
             .then(res => {
                 if (res.status === 400 && res.message === "Supplier already exists") {
                     enqueueSnackbar('El proveedor ya existe', {
-                        variant: 'warning',
+                        variant: 'error',
                         action: key => (
                             <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
                         ),
@@ -63,7 +64,6 @@ export const addSupplier = (data, token, enqueueSnackbar, closeSnackbar) => asyn
                     });
                 }
             })
-        // .catch((error) => { console.log(error) })
     } catch (err) {
         console.log(err)
     }

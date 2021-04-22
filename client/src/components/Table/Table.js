@@ -7,6 +7,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 // core components
 import styles from "../../styles/components/tableStyle.js";
 
@@ -31,21 +33,32 @@ export default function CustomTable(props) {
                   </TableCell>
                 );
               })}
+              <TableCell
+                className={classes.tableCell + " " + classes.tableHeadCell}
+                // key={key}
+              >
+                Opciones
+                  </TableCell>
             </TableRow>
           </TableHead>
         ) : null}
         <TableBody>
           {tableData.map((prop, key) => {
             return (
-              <TableRow key={key} className={classes.tableBodyRow}>
-                {prop.map((prop, key) => {
-                  return (
-                    <TableCell className={classes.tableCell} key={key}>
-                      {prop}
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
+              <>
+                <TableRow key={key} className={classes.tableBodyRow}>
+                  {prop.map((prop, key) => {
+                    return (
+                      <TableCell className={classes.tableCell} key={key}>
+                        {prop}
+                      </TableCell>
+                    );
+                  })}
+                  <TableCell className={classes.tableCell} key={key}>
+                    <EditIcon /> <DeleteIcon />
+                  </TableCell>
+                </TableRow>
+              </>
             );
           })}
         </TableBody>
