@@ -13,9 +13,10 @@ export const getClients = (token) => async dispatch => {
                     type: 'GET_CLIENTS',
                     payload: res.clients
                 })
-            } else {
-                console.error('No suppliers')
-            }
+            } 
+            // else {
+            //     console.error('No clients')
+            // }
         })
     } catch (err) {
         console.log(err)
@@ -34,12 +35,13 @@ export const addClient = (token) => async dispatch => {
         .then(res => {
             if (res.status === 200) {
                 dispatch({
-                    type: 'GET_CLIENTS',
-                    payload: res.clients
+                    type: 'ADD_CLIENT',
+                    payload: res.client
                 })
-            } else {
-                console.error('No suppliers')
-            }
+            } 
+            // else {
+            //     console.error('No suppliers')
+            // }
         })
     } catch (err) {
         console.log(err)

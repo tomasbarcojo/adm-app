@@ -3,6 +3,7 @@ const { Router } = require('express');
 const user = require('./user')
 const supplier = require('./supplier')
 const pricelist = require('./pricelist')
+const client = require('./client')
 
 const router = Router();
 
@@ -12,5 +13,6 @@ const router = Router();
 router.use('/user', user);
 router.use('/supplier', supplier)
 router.use('/pricelist', pricelist)
+router.use('/client', client)
 
 module.exports = router;
