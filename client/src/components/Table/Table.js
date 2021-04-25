@@ -8,7 +8,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteDialog from '../ConfirmationDialog/DeleteDialog';
 // core components
 import styles from "../../styles/components/tableStyle.js";
 
@@ -34,8 +34,8 @@ export default function CustomTable(props) {
                 );
               })}
               <TableCell
+                align="right"
                 className={classes.tableCell + " " + classes.tableHeadCell}
-                // key={key}
               >
                 Opciones
                   </TableCell>
@@ -54,8 +54,8 @@ export default function CustomTable(props) {
                       </TableCell>
                     );
                   })}
-                  <TableCell className={classes.tableCell} key={key}>
-                    <EditIcon /> <DeleteIcon />
+                  <TableCell align="right" className={classes.tableCell} key={key}>
+                    <DeleteDialog />
                   </TableCell>
                 </TableRow>
               </>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -11,14 +11,23 @@ import { Tooltip } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useLocation } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import { removeProduct, removeCategory } from "../../actions";
+import EditIcon from '@material-ui/icons/Edit';
+import { makeStyles } from "@material-ui/core/styles";
+// import { removeProduct, removeCategory } from "../../actions";
+
+const useStyles = makeStyles((theme) => ({
+  IconButton: {
+    padding: '0px 5px 0px 5px'
+  },
+}));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export default function AlertDialogSlide({props, categoria}) {
-  const [open, setOpen] = React.useState(false);
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -33,21 +42,26 @@ export default function AlertDialogSlide({props, categoria}) {
 
   const handleClose = (e) => {
     e.preventDefault()
-    if (url.pathname === '/admin/editCategory') {
-      dispatch(removeCategory(categoria.id))
-      setOpen(false);
-    }
-    else if (url.pathname === '/admin/products/edit') {
-      dispatch(removeProduct(props.productos.id))
-      setOpen(false);
-    }
+    // if (url.pathname === '/admin/editCategory') {
+    //   dispatch(removeCategory(categoria.id))
+    //   setOpen(false);
+    // }
+    // else if (url.pathname === '/admin/products/edit') {
+    //   dispatch(removeProduct(props.productos.id))
+    //   setOpen(false);
+    // }
   };
 
   return (
     <div>
-      <IconButton onClick={handleClickOpen}>
-        <Tooltip title='Eliminar producto'>
-            <DeleteIcon color='secondary' />
+      <IconButton onClick={handleClickOpen} className={classes.IconButton}>
+        <Tooltip title='Editar'>
+            <EditIcon color='primary' />
+        </Tooltip>
+        </IconButton>
+        <IconButton onClick={handleClickOpen} className={classes.IconButton}>
+        <Tooltip title='Eliminar'>
+            <DeleteIcon color='primary' />
         </Tooltip>
         </IconButton>
       <Dialog
