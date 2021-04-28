@@ -3,7 +3,7 @@ import { blackColor, hexToRgb } from "./stylesVariables";
 const tooltipStyle = {
   tooltip: {
     padding: "10px 15px",
-    minWidth: "130px",
+    minWidth: "50px",
     lineHeight: "1.7em",
     border: "none",
     borderRadius: "3px",
@@ -18,7 +18,7 @@ const tooltipStyle = {
     maxWidth: "200px",
     textAlign: "center",
     fontFamily: '"Helvetica Neue",Helvetica,Arial,sans-serif',
-    fontSize: "12px",
+    fontSize: "13px",
     fontStyle: "normal",
     fontWeight: "400",
     textShadow: "none",

@@ -304,10 +304,10 @@ export default function Suppliers() {
             {suppliers && suppliers.length > 0 ?
             <Table
               tableHeaderColor="primary"
-              tableHead={["Razon Social", "CUIT", "Test1", "Test2"]}
+              tableHead={["ID", "Razon Social", "CUIT", "Test1", "Test2"]}
               tableData={suppliers && suppliers.length > 0 ?
                 suppliers.map((supplier, index) => {
-                  return [supplier.businessName, supplier.cuit, supplier.phone, supplier.CP]
+                  return [supplier.id, supplier.businessName, supplier.cuit, supplier.phone, supplier.CP]
                 })
               : null}
             />
