@@ -74,6 +74,7 @@ export default function CustomTable(props) {
                       <IconButton
                         aria-label="Edit"
                         className={classes2.tableActionButton}
+                        onClick={() => console.log(prop[0])}
                       >
                         <Edit
                           className={

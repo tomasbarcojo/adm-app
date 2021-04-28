@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { addSupplier, getSuppliers } from '../../actions/suppliers'
+import MaterialTable from 'material-table'
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from '@material-ui/core/TextField';
@@ -317,6 +318,16 @@ export default function Suppliers() {
         </Card>
       </GridItem>
       </GridContainer>
+      <MaterialTable
+          columns={[
+            { title: 'Adı', field: 'nametest' },
+            { title: 'Soyadı', field: 'surname' },
+            { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
+            { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } }
+          ]}
+          data={[{ nametest: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 }]}
+          title="Demo Title"
+        />
     </div>
   );
 }
