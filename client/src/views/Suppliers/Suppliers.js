@@ -57,7 +57,12 @@ export default function Suppliers() {
   const dispatch = useDispatch()
   const url = useLocation();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const token = JSON.parse(localStorage.getItem('token'));
+  var token = '';
+  if (localStorage.length > 0) {
+    token = JSON.parse(localStorage.getItem('token'));
+  } else {
+    token = JSON.parse(sessionStorage.getItem('token'));
+  }
   const suppliers = useSelector(state => state.suppliers);
   const [showNew, setShowNew] = useState(false);
   const [data, setData] = useState({

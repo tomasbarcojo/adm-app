@@ -12,8 +12,17 @@ import { useEffect } from 'react';
 const App = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const user = JSON.parse(localStorage.getItem('userData'));
-  const token = JSON.parse(localStorage.getItem('token'));
+  var user = '';
+  var token = '';
+  if (localStorage.length > 0) {
+    console.log('LOCAL', localStorage.length)
+    user = JSON.parse(localStorage.getItem('userData'))
+    token = JSON.parse(localStorage.getItem('token'));
+  } else {
+    console.log('SESSION', sessionStorage.length)
+    user = JSON.parse(sessionStorage.getItem('userData'))
+    token = JSON.parse(sessionStorage.getItem('token'));
+  }
 
   useEffect(() => {
     if (user) {

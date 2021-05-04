@@ -36,15 +36,16 @@ export default function SignIn() {
     username: '',
     password: ''
   })
-  // const [KeepLogIn, setKeepLogIn] = useState(false)
+  const [keepLogged, setKeepLogged] = useState(false)
 
   const handleChange = (event) => {
     setData({...data, [event.target.name]: event.target.value})
   }
 
   const handleSubmit = (e) => {
+    console.log(keepLogged)
     e.preventDefault();
-    dispatch(userLogin(data, history, enqueueSnackbar, closeSnackbar));
+    dispatch(userLogin(data, history, keepLogged, enqueueSnackbar, closeSnackbar));
   };
 
   return (
@@ -77,7 +78,7 @@ export default function SignIn() {
             onChange={handleChange}
           />
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            control={<Checkbox value="remember" color="primary" onClick={() => setKeepLogged(true)} />}
             label="Mantener iniciada la sesion"
           />
           

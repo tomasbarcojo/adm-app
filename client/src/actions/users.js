@@ -1,7 +1,7 @@
 import Swal from 'sweetalert2';
 import '../App.css'
 
-export const userLogin = (data, history, enqueueSnackbar, closeSnackbar) => async dispatch => {
+export const userLogin = (data, history, keepLogged, enqueueSnackbar, closeSnackbar) => async dispatch => {
     try {
         await fetch(`http://localhost:3001/user/login`, {
             method: 'POST',
@@ -32,9 +32,15 @@ export const userLogin = (data, history, enqueueSnackbar, closeSnackbar) => asyn
                     });
                 }
                 else if (response.status === 200) {
-                    localStorage.setItem('userData', JSON.stringify(response.user))
-                    localStorage.setItem('token', JSON.stringify(response.token))
-                    localStorage.setItem('logged', true)
+                    if (keepLogged) {
+                        localStorage.setItem('userData', JSON.stringify(response.user))
+                        localStorage.setItem('token', JSON.stringify(response.token))
+                        localStorage.setItem('logged', true)
+                    } else {
+                        sessionStorage.setItem('userData', JSON.stringify(response.user))
+                        sessionStorage.setItem('token', JSON.stringify(response.token))
+                        sessionStorage.setItem('logged', true)
+                    }
                     dispatch({
                         type: 'LOGIN_USER',
                         payload: response.user,
@@ -159,6 +165,6 @@ export const loggedUser = (userId, token) => async dispatch => {
             },
         })
     } catch (err) {
-        
+
     }
 };
