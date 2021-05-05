@@ -71,6 +71,7 @@ export default function Clients() {
     token = JSON.parse(sessionStorage.getItem('token'));
   }
   const clients = useSelector(state => state.clients);
+  const pricelists = useSelector(state => state.pricelists);
   const [showNew, setShowNew] = useState(false);
   const [data, setData] = useState({
     businessName: '',
@@ -218,23 +219,27 @@ export default function Clients() {
                   </GridContainer>
                   <GridContainer>
                     <GridItem xs={12} sm={12} md={12}>
-                    <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-label">Age</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          // value="hi"
-          onChange={handleChange}
-          // className={classes.input}
-          fullWidth={true}
-        >
-          {/* priceList.map... */}
-          <MenuItem value={0}>Ten</MenuItem>
-          <MenuItem value={1}>Twenty</MenuItem>
-          <MenuItem value={2}>Thirty</MenuItem>
-        </Select>
-      </FormControl>
-                      </GridItem>
+                      <FormControl className={classes.formControl}>
+                        <InputLabel>Listado de precio</InputLabel>
+                        <Select
+                          onChange={handleChange}
+                          fullWidth={true}
+                          // className={classes.input}
+                          menu
+                        >
+                          {
+                            pricelists && pricelists.length > 0 ?
+                            pricelists.map(pricelist => {
+                              return (
+                                <MenuItem value={pricelist.id}>{pricelist.priceListName}</MenuItem>
+                              )
+                            })
+                            :
+                              <MenuItem disabled value={0}>No existen listados de precio</MenuItem>
+                          }
+                        </Select>
+                      </FormControl>
+                    </GridItem>
                   </GridContainer>
                   <GridContainer>
                     <GridItem xs={12} sm={12} md={12}>

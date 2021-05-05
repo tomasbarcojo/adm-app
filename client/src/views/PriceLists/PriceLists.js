@@ -170,8 +170,8 @@ export default function PriceLists() {
                 tableHead={["Nombre", "Porcentaje"]}
                 tableData={pricelists && pricelists.length > 0 ?
                   pricelists.map((pricelist, index) => {
-                    return [pricelist.priceListName, "% " + pricelist.percentage]
-                  })
+                    return [pricelist.priceListName, pricelist.percentage + " %"]
+                  }) 
                   : null}
               />
               : <h5 style={{ display: "flex", justifyContent: "center" }}>No existen listados de precios</h5>
