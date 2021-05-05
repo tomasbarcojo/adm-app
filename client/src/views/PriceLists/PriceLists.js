@@ -57,6 +57,21 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
+  articleRow: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  article: {
+    display: 'inline-block',
+    float: 'left',
+    clear: 'left',
+    width: '450px',
+    margin: '10px'
+  },
+  articleInput: {
+    display: 'inline-block',
+    float: 'left'
+  }
 }));
 
 export default function PriceLists() {
@@ -120,7 +135,7 @@ export default function PriceLists() {
               <form onSubmit={handleSubmit}>
                 <CardBody>
                   <GridContainer>
-                    <GridItem xs={12} sm={12} md={8}>
+                    <GridItem xs={12} sm={12} md={3}>
                       <TextField
                         className={classes.input}
                         label="Nombre del listado"
@@ -131,10 +146,10 @@ export default function PriceLists() {
                         value={data.priceListName}
                       />
                     </GridItem>
-                    <GridItem xs={12} sm={12} md={4}>
+                    {/* <GridItem xs={12} sm={12} md={5}>
                       <TextField
                         className={classes.input}
-                        label="Porcentaje a aplicar"
+                        label="Porcentaje a aplicar (general)"
                         id="percentage"
                         onChange={handleChange}
                         fullWidth
@@ -142,8 +157,28 @@ export default function PriceLists() {
                         type='number'
                         value={data.percentage}
                       />
+                    </GridItem> */}
+                  </GridContainer>
+                  <h5>Articulos:</h5>
+
+                  {/* {articles.map...} */}
+
+                  <GridContainer>
+                    <GridItem xs={10} sm={10} md={12}>
+                      <div className={classes.articleRow}>
+                        <label className={classes.article}>NameNameNameName NameNameNameNameNameNameNameNameNameNameNameNameNameNameNameNameNameNameName</label> <input className={classes.articleInput} />
+                      </div>
                     </GridItem>
                   </GridContainer>
+
+                  <GridContainer>
+                    <GridItem xs={10} sm={10} md={12}>
+                      <div className={classes.articleRow}>
+                        <label className={classes.article}>meNameNameNameNameNameNameNeNameNameNameNameNameNameName</label> <input className={classes.articleInput} />
+                      </div>
+                    </GridItem>
+                  </GridContainer>
+
                 </CardBody>
                 <CardFooter>
                   <Button color="primary" type='submit'>Listo</Button>
@@ -171,7 +206,7 @@ export default function PriceLists() {
                 tableData={pricelists && pricelists.length > 0 ?
                   pricelists.map((pricelist, index) => {
                     return [pricelist.priceListName, pricelist.percentage + " %"]
-                  }) 
+                  })
                   : null}
               />
               : <h5 style={{ display: "flex", justifyContent: "center" }}>No existen listados de precios</h5>

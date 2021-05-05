@@ -10,7 +10,7 @@ import Language from "@material-ui/icons/Language";
 import DashboardPage from "../views/Dashboard/Dashboard";
 import Suppliers from "../views/Suppliers/Suppliers.js";
 import TableList from "../views/Clients/Clients.js";
-import Typography from "../views/Typography/Typography.js";
+import Articles from "../views/Articles/Articles.js";
 import Icons from "../views/Icons/Icons.js";
 import PriceLists from "../views/PriceLists/PriceLists.js"
 import Maps from "../views/Maps/Maps.js";
@@ -41,18 +41,18 @@ const dashboardRoutes = [
       component: TableList,
       layout: "/admin"
     },
-    {
-      path: "/clientsbackup",
-      name: "Clientes",
-      icon: Person,
-      component: TableList,
-      layout: "/admin"
-    },
+    // {
+    //   path: "/clientsbackup",
+    //   name: "Clientes",
+    //   icon: Person,
+    //   component: TableList,
+    //   layout: "/admin"
+    // },
     {
       path: "/articles",
       name: "Articulos",
       icon: BubbleChart,
-      component: Typography,
+      component: Articles,
       layout: "/admin"
     },
     {
