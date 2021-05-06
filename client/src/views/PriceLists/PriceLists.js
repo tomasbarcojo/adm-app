@@ -58,20 +58,14 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   articleRow: {
-    display: 'flex',
-    alignItems: 'center'
-  },
-  article: {
-    display: 'inline-block',
-    float: 'left',
-    clear: 'left',
-    width: '550px',
-    margin: '10px'
+    backgroundColor: '#F6F6F6',
+    margin: '10px',
+    padding: '15px',
+    borderRadius: '5px'
   },
   articleInput: {
-    display: 'inline-block',
-    float: 'left'
-  }
+    padding: '5px 0px 5px 0px',
+  },
 }));
 
 export default function PriceLists() {
@@ -118,8 +112,6 @@ export default function PriceLists() {
     resetForm();
   };
 
-  console.log(data.percentage)
-
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
@@ -162,22 +154,41 @@ export default function PriceLists() {
                   <h5>Articulos:</h5>
 
                   {/* {articles.map...} */}
+                  <div className={classes.articleRow}>
+                    <GridContainer>
+                      {/* <div style={{}}> */}
+                      <GridItem xs={12} sm={12} md={9}>
+                        <label>Test</label>
+                      </GridItem>
+                      {/* </div> */}
+                      <GridItem xs={12} sm={12} md={3}>
+                        <input className={classes.articleInput} />
+                      </GridItem>
+                    </GridContainer>
+                  </div>
 
-                  <GridContainer>
-                    <GridItem xs={10} sm={10} md={12}>
-                      <div className={classes.articleRow}>
-                        <label className={classes.article}>NameNameNameName NameNameNameNameNameNameNameNameNameNameNameNameNameNameNameNameNameNameName</label> <input className={classes.articleInput} />
-                      </div>
-                    </GridItem>
-                  </GridContainer>
+                  <div className={classes.articleRow}>
+                    <GridContainer>
+                      <GridItem xs={12} sm={12} md={9}>
+                        <label>eNameNameNameNameNameeNameNameameNameNameNameeNameNameNameNameNameNameNameNameeNameNameNameNameNameNameNameNameeNameNameNameNameNameNameNameNameeNameNameNameNameNameNameNameNameeNameNameNameNameNNameNameNameeNameNameNameNameNameeNameNameNameNameNameeNameNameNameNameName</label>
+                      </GridItem>
+                      <GridItem xs={12} sm={12} md={3}>
+                        <input className={classes.articleInput} />
+                      </GridItem>
+                    </GridContainer>
+                  </div>
 
-                  <GridContainer>
-                    <GridItem xs={10} sm={10} md={12}>
-                      <div className={classes.articleRow}>
-                        <label className={classes.article}>meNameNameNameNameNameNameNeNameNameNameNameNameNameName</label> <input className={classes.articleInput} />
-                      </div>
-                    </GridItem>
-                  </GridContainer>
+                  <div className={classes.articleRow}>
+                    <GridContainer>
+                      <GridItem xs={12} sm={12} md={9}>
+                        <label>eNameNameNameNameNameeNameNameNameNameNameeNameNameNameNameNameeNameNameNameNameNameeNameNameNameNameName</label>
+                      </GridItem>
+                      <GridItem xs={12} sm={12} md={3}>
+                        <input className={classes.articleInput} />
+                      </GridItem>
+                    </GridContainer>
+                  </div>
+
 
                 </CardBody>
                 <CardFooter>
