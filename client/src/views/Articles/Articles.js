@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useSnackbar } from 'notistack';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from '@material-ui/core/TextField';
 import GridItem from "../../components/Grid/GridItem.js";
 import GridContainer from "../../components/Grid/GridContainer.js";
+import Button from "../../components/CustomButtons/Button.js";
+import CardFooter from "../../components/Card/CardFooter.js";
+
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import ButtonBase from '@material-ui/core/ButtonBase';
 // core components
 import Quote from "../../components/Typography/Quote.js";
 import Muted from "../../components/Typography/Muted.js";
@@ -15,8 +24,12 @@ import Danger from "../../components/Typography/Danger.js";
 import Card from "../../components/Card/Card.js";
 import CardHeader from "../../components/Card/CardHeader.js";
 import CardBody from "../../components/Card/CardBody.js";
+import CardAvatar from "../../components/Card/CardAvatar.js";
 
-const styles = {
+import avatar from "../../images/faces/marc.jpg";
+import test from '../../images/citylogin.jpg'
+
+const useStyles = makeStyles((theme) => ({
   typo: {
     paddingLeft: "25%",
     marginBottom: "40px",
@@ -58,48 +71,195 @@ const styles = {
   },
   article: {
     margin: '100px'
-  }
-};
-
-const useStyles = makeStyles(styles);
+  },
+  input: {
+    margin: '27px 0 0 0',
+    paddingBottom: '10px',
+  },
+  paper: {
+    padding: theme.spacing(2),
+    margin: 'auto',
+    maxWidth: 500,
+  },
+  image: {
+    width: 200,
+    height: 200,
+  },
+  img: {
+    margin: 'auto',
+    display: 'block',
+    maxWidth: '100%',
+    maxHeight: '100%',
+  },
+}));
 
 export default function Articles() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const [showNew, setShowNew] = useState(false);
+  var token = '';
+  if (localStorage.length > 0) {
+    token = JSON.parse(localStorage.getItem('token'));
+  } else {
+    token = JSON.parse(sessionStorage.getItem('token'));
+  }
+
+  const [data, setData] = useState({
+    articleName: '',
+    cost: '',
+    category: '',
+    stock: '',
+    obs: '',
+  });
+
+  const handleNewSupplier = () => {
+    setShowNew(!showNew)
+  }
+
+  const handleChange = (event) => {
+    setData({ ...data, [event.target.id]: event.target.value })
+  }
+
+  const resetForm = () => {
+    setData({
+      ...data,
+      articleName: '',
+      cost: '',
+      category: '',
+      stock: '',
+      obs: '',
+    })
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // dispatch(addSupplier(data, token, enqueueSnackbar, closeSnackbar))
+    resetForm()
+  }
   return (
     <Card>
       <CardHeader color="primary">
         <h4 className={classes.cardTitleWhite}>Nuevo articulo</h4>
+        {showNew ? null : <Button className={classes.buttonCard} color="info" onClick={handleNewSupplier}>Añadir</Button>}
       </CardHeader>
-      <form >
-        <CardBody>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={12}>
-              <TextField
-                className={classes.input}
-                label="Razon social"
-                id="businessName"
-                // onChange={handleChange}
-                fullWidth
-                autoComplete='off'
-              // value={data.businessName}
-              />
-            </GridItem>
+      {showNew ?
+        <>
+          <form onSubmit={handleSubmit}>
+            <CardBody>
+              {/* <Grid container spacing={2}>
+                <Grid item xs={1} sm container>
+                  <Grid item xs={12} container direction="column" spacing={2}>
+                    <Grid item xs={12}>
+                      <GridItem xs={12} sm={12} md={8}>
+                        <TextField
+                          className={classes.input}
+                          label="Nombre"
+                          id="articleName"
+                          onChange={handleChange}
+                          fullWidth
+                          autoComplete='off'
+                          value={data.businessName}
+                        />
+                      </GridItem>
+                      <GridItem xs={12} sm={12} md={8}>
+                        <TextField
+                          className={classes.input}
+                          label="Categoria (select)"
+                          id="category"
+                          onChange={handleChange}
+                          fullWidth
+                          autoComplete='off'
+                          type='number'
+                          value={data.cuit}
+                        />
+                      </GridItem>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid item>
+                  <ButtonBase className={classes.image}>
+                    <img className={classes.img} alt="complex" src={test} />
+                  </ButtonBase>
+                </Grid>
+              </Grid> */}
 
-          </GridContainer>
-
-          <h5>Articulos:</h5>
-
-          {/* {articles.map...} */}
-
-          {/* <GridContainer>
-              <GridItem xs={10} sm={10} md={8}> */}
-          <div className={classes.articleRow}>
-            <p className={classes.article}>Name article</p> <input />
-          </div>
-          {/* </GridItem>
-              </GridContainer> */}
-        </CardBody>
-      </form>
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={8} justifyContent='center' alignContent='center' alignItems='center'>
+                  <TextField
+                    className={classes.input}
+                    label="Nombre"
+                    id="articleName"
+                    onChange={handleChange}
+                    fullWidth
+                    autoComplete='off'
+                    value={data.businessName}
+                  />
+                </GridItem>
+                <GridItem xs={12} sm={12} md={12}>
+                  <TextField
+                    className={classes.input}
+                    label="Categoria (select)"
+                    id="category"
+                    onChange={handleChange}
+                    fullWidth
+                    autoComplete='off'
+                    type='number'
+                    value={data.cuit}
+                  />
+                </GridItem>
+              </GridContainer>
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={4}>
+                  <TextField
+                    className={classes.input}
+                    label="Precio"
+                    id="cost"
+                    onChange={handleChange}
+                    fullWidth
+                    autoComplete='off'
+                    type='number'
+                    value={data.phone}
+                  />
+                </GridItem>
+                <GridItem xs={12} sm={12} md={4}>
+                  <TextField
+                    className={classes.input}
+                    label="Stock"
+                    id="stock"
+                    onChange={handleChange}
+                    fullWidth
+                    autoComplete='off'
+                    type='number'
+                    value={data.altPhone}
+                  />
+                </GridItem>
+              </GridContainer>
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={12}>
+                  <TextField
+                    className={classes.input}
+                    label="Descripcion"
+                    id="obs"
+                    onChange={handleChange}
+                    fullWidth
+                    multiline
+                    rows={4}
+                    autoComplete='off'
+                    value={data.obs}
+                  />
+                </GridItem>
+              </GridContainer>
+            </CardBody>
+            <CardFooter>
+              <Button color="primary" type='submit'>Listo</Button>
+              <Button color="danger" onClick={handleNewSupplier}>Cancelar</Button>
+            </CardFooter>
+          </form>
+        </>
+        : null
+      }
     </Card>
+    // </GridItem>
   );
 }

@@ -277,6 +277,8 @@ export default function Suppliers() {
             }
           </Card>
         </GridItem>
+
+        
         {/* <GridItem xs={12} sm={12} md={4}>
           <Card profile>
             <CardAvatar profile>
@@ -298,6 +300,8 @@ export default function Suppliers() {
             </CardBody>
           </Card>
         </GridItem> */}
+
+
         <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">

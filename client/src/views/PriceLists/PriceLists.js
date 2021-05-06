@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'inline-block',
     float: 'left',
     clear: 'left',
-    width: '450px',
+    width: '550px',
     margin: '10px'
   },
   articleInput: {
