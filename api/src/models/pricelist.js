@@ -9,8 +9,8 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     percentage: {
-      type: DataTypes.STRING,
+      type: DataTypes.JSON,
       allowNull: false
-    }
+    },
   });
 };

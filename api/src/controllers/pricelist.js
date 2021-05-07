@@ -21,23 +21,23 @@ module.exports = {
       if (!priceListName || !percentage) {
         return res.status(400).send({ message: 'Necesary data required', status: 400 })
       }
-      const pricelist = await Pricelist.findOne({
-        where: {
-          [Op.or]: [
-            {
-              priceListName: {
-                [Op.iLike]: `%${priceListName}%`,
-              },
-            },
-            {
-              percentage: percentage,
-            },
-          ],
-        },
-      })
-      if (pricelist) {
-        return res.status(400).send({ message: "Price list already exists", status: 400 });
-      }
+      // const pricelist = await Pricelist.findOne({
+      //   where: {
+      //     [Op.or]: [
+      //       {
+      //         priceListName: {
+      //           [Op.iLike]: `%${priceListName}%`,
+      //         },
+      //       },
+      //       {
+      //         percentage: percentage,
+      //       },
+      //     ],
+      //   },
+      // })
+      // if (pricelist) {
+      //   return res.status(400).send({ message: "Price list already exists", status: 400 });
+      // }
       const priceListData = { priceListName, percentage };
       const newPriceList = await Pricelist.create(priceListData)
       return res.status(201).send({ newPriceList, status: 201 })
