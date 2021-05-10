@@ -4,7 +4,7 @@ const { getClients, createClient } = require('../controllers/Client')
 
 server.get('/', authenticate, getClients)
 
-server.post('/createSupplier', authenticate, createClient)
+server.post('/createClient', authenticate, createClient)
 
 // server.get('/logout', userLogout)
 

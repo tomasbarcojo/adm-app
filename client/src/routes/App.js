@@ -5,6 +5,8 @@ import Register from '../components/Register/Register'
 import Home from '../components/Home/Home'
 import Admin from '../layout/Admin'
 
+import ImageUpload from '../components/ImageUpload/ImageUpload.js'
+
 import { useDispatch, useSelector } from 'react-redux'
 import { getUser } from '../actions/users'
 import { useEffect } from 'react';
@@ -37,6 +39,7 @@ const App = () => {
         <Route exact path="/login" component={LogIn} />
         <Route exact path="/register" component={Register} />
         <PrivateRoutes path="/admin" component={Admin} />
+        <Route exact path='/imageupload' component={ImageUpload} />
       </Switch>
     </Router>
   );

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSnackbar } from 'notistack';
+import ImageUploader from 'react-images-upload';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from '@material-ui/core/TextField';
@@ -107,7 +108,7 @@ export default function Articles() {
   } else {
     token = JSON.parse(sessionStorage.getItem('token'));
   }
-
+  const [files, setFiles] = useState(null);
   const [data, setData] = useState({
     articleName: '',
     cost: '',
@@ -123,6 +124,11 @@ export default function Articles() {
   const handleChange = (event) => {
     setData({ ...data, [event.target.id]: event.target.value })
   }
+
+  const filesHandler = function (files) {
+    setFiles(files)
+    console.log(files)
+  };
 
   const resetForm = () => {
     setData({
@@ -187,7 +193,7 @@ export default function Articles() {
                       </FormControl>
                     </GridItem>
                     <GridItem xs={12} sm={12} md={12}>
-                    <FormControl className={classes.formControl}>
+                      <FormControl className={classes.formControl}>
                         <InputLabel>Proveedor</InputLabel>
                         <Select
                           onChange={handleChange}
@@ -254,7 +260,23 @@ export default function Articles() {
 
                 <div id="contentImage">
                   <h5>Imagen</h5>
-                  <img src={avatar} alt='test' style={{ display: 'flex', justifyContent: 'center' }} />
+                  <ImageUploader
+                    withIcon={false}
+                    buttonText='Choose images'
+                    onChange={filesHandler}
+                    imgExtension={['.jpg', '.png', '.jpeg']}
+                    maxFileSize={5242880}
+                    label={'Max file size: 5mb, accepted: jpg | jpeg | png'}
+                    buttonText='Adjuntar imágenes'
+                    withPreview={files ? true : false}
+                  />
+
+                  <input
+                    accept="image/*"
+                    className={classes.input}
+                    multiple
+                    type="file"
+                  />
                 </div>
               </div>
 
