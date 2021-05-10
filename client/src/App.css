@@ -138,3 +138,38 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+/* Article form */
+
+.containerArticleForm {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+#contentForm {
+  width: 60%;
+  margin-right: 15px;
+}
+
+#contentImage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#contentImage img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+}
+
+@media (max-width: 1024px) {
+  .containerArticleForm {
+    flex-direction: column;
+  }
+  #contentForm {
+    width: 100%;
+  }
+}

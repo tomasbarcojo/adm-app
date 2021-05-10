@@ -13,6 +13,10 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
 // core components
 import Quote from "../../components/Typography/Quote.js";
 import Muted from "../../components/Typography/Muted.js";
@@ -28,6 +32,8 @@ import CardAvatar from "../../components/Card/CardAvatar.js";
 
 import avatar from "../../images/faces/marc.jpg";
 import test from '../../images/citylogin.jpg'
+
+import '../../App.css'
 
 const useStyles = makeStyles((theme) => ({
   typo: {
@@ -81,21 +87,18 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     maxWidth: 500,
   },
-  image: {
-    width: 200,
-    height: 200,
-  },
-  img: {
-    margin: 'auto',
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
+  formControl: {
+    display: 'flex',
+    margin: '27px 0 0 0',
+    minWidth: 120,
+    paddingBottom: '10px',
   },
 }));
 
 export default function Articles() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const pricelists = [];
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [showNew, setShowNew] = useState(false);
   var token = '';
@@ -147,109 +150,114 @@ export default function Articles() {
         <>
           <form onSubmit={handleSubmit}>
             <CardBody>
-              {/* <Grid container spacing={2}>
-                <Grid item xs={1} sm container>
-                  <Grid item xs={12} container direction="column" spacing={2}>
-                    <Grid item xs={12}>
-                      <GridItem xs={12} sm={12} md={8}>
-                        <TextField
-                          className={classes.input}
-                          label="Nombre"
-                          id="articleName"
+              <div class="containerArticleForm">
+                <div id="contentForm">
+                  <GridContainer>
+                    <GridItem xs={12} sm={12} md={12} justifyContent='center' alignContent='center' alignItems='center'>
+                      <TextField
+                        className={classes.input}
+                        label="Nombre"
+                        id="articleName"
+                        onChange={handleChange}
+                        fullWidth
+                        autoComplete='off'
+                        value={data.name}
+                      />
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={12}>
+                      <FormControl className={classes.formControl}>
+                        <InputLabel>Categoria</InputLabel>
+                        <Select
                           onChange={handleChange}
-                          fullWidth
-                          autoComplete='off'
-                          value={data.businessName}
-                        />
-                      </GridItem>
-                      <GridItem xs={12} sm={12} md={8}>
-                        <TextField
-                          className={classes.input}
-                          label="Categoria (select)"
-                          id="category"
+                          fullWidth={true}
+                          // className={classes.input}
+                          menu
+                        >
+                          {
+                            pricelists && pricelists.length > 0 ?
+                              pricelists.map(pricelist => {
+                                return (
+                                  <MenuItem value={pricelist.id}>{pricelist.priceListName}</MenuItem>
+                                )
+                              })
+                              :
+                              <MenuItem disabled value={0}>No existen categorias</MenuItem>
+                          }
+                        </Select>
+                      </FormControl>
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={12}>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel>Proveedor</InputLabel>
+                        <Select
                           onChange={handleChange}
-                          fullWidth
-                          autoComplete='off'
-                          type='number'
-                          value={data.cuit}
-                        />
-                      </GridItem>
-                    </Grid>
-                  </Grid>
-                </Grid>
-                <Grid item>
-                  <ButtonBase className={classes.image}>
-                    <img className={classes.img} alt="complex" src={test} />
-                  </ButtonBase>
-                </Grid>
-              </Grid> */}
+                          fullWidth={true}
+                          // className={classes.input}
+                          menu
+                        >
+                          {
+                            pricelists && pricelists.length > 0 ?
+                              pricelists.map(pricelist => {
+                                return (
+                                  <MenuItem value={pricelist.id}>{pricelist.priceListName}</MenuItem>
+                                )
+                              })
+                              :
+                              <MenuItem disabled value={0}>No existen proveedores</MenuItem>
+                          }
+                        </Select>
+                      </FormControl>
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem xs={12} sm={12} md={6}>
+                      <TextField
+                        className={classes.input}
+                        label="Precio"
+                        id="cost"
+                        onChange={handleChange}
+                        fullWidth
+                        autoComplete='off'
+                        type='number'
+                        value={data.phone}
+                      />
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={6}>
+                      <TextField
+                        className={classes.input}
+                        label="Stock"
+                        id="stock"
+                        onChange={handleChange}
+                        fullWidth
+                        autoComplete='off'
+                        type='number'
+                        value={data.altPhone}
+                      />
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer>
+                    <GridItem xs={12} sm={12} md={12}>
+                      <TextField
+                        className={classes.input}
+                        label="Descripcion"
+                        id="obs"
+                        onChange={handleChange}
+                        fullWidth
+                        multiline
+                        rows={4}
+                        autoComplete='off'
+                        value={data.obs}
+                      />
+                    </GridItem>
+                  </GridContainer>
+                </div>
 
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={8} justifyContent='center' alignContent='center' alignItems='center'>
-                  <TextField
-                    className={classes.input}
-                    label="Nombre"
-                    id="articleName"
-                    onChange={handleChange}
-                    fullWidth
-                    autoComplete='off'
-                    value={data.businessName}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={12}>
-                  <TextField
-                    className={classes.input}
-                    label="Categoria (select)"
-                    id="category"
-                    onChange={handleChange}
-                    fullWidth
-                    autoComplete='off'
-                    type='number'
-                    value={data.cuit}
-                  />
-                </GridItem>
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={4}>
-                  <TextField
-                    className={classes.input}
-                    label="Precio"
-                    id="cost"
-                    onChange={handleChange}
-                    fullWidth
-                    autoComplete='off'
-                    type='number'
-                    value={data.phone}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
-                  <TextField
-                    className={classes.input}
-                    label="Stock"
-                    id="stock"
-                    onChange={handleChange}
-                    fullWidth
-                    autoComplete='off'
-                    type='number'
-                    value={data.altPhone}
-                  />
-                </GridItem>
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <TextField
-                    className={classes.input}
-                    label="Descripcion"
-                    id="obs"
-                    onChange={handleChange}
-                    fullWidth
-                    multiline
-                    rows={4}
-                    autoComplete='off'
-                    value={data.obs}
-                  />
-                </GridItem>
-              </GridContainer>
+                <div id="contentImage">
+                  <h5>Imagen</h5>
+                  <img src={avatar} alt='test' style={{ display: 'flex', justifyContent: 'center' }} />
+                </div>
+              </div>
+
             </CardBody>
             <CardFooter>
               <Button color="primary" type='submit'>Listo</Button>
