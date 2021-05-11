@@ -132,7 +132,7 @@ export default function Articles() {
     setData({
       ...data,
       articleName: '',
-      cost: '',
+      price: '',
       category: '',
       stock: '',
       obs: '',
