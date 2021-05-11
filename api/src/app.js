@@ -5,6 +5,9 @@ const morgan = require("morgan");
 const routes = require("./routes/index.js");
 const server = express();
 const cors = require('cors')
+const multer = require('multer')
+const path = require('path')
+const { v4: uuidv4 } = require('uuid')
 
 server.name = "API";
 
@@ -21,9 +24,32 @@ server.use((req, res, next) => {
   next();
 });
 
+const storage = multer.diskStorage({
+	destination: path.join(__dirname, '../public/images'),
+	filename: (req, file, cb) => {
+		cb(null, uuidv4() + path.extname(file.originalname).toLowerCase())
+	},
+})
+const upload = multer({
+	storage,
+	// limits: { fileSize: 2000000 },
+	fileFilter: (req, file, cb) => {
+		const fileTypes = /jpeg|jpg|png|PNG/
+		const mimeType = fileTypes.test(file.mimetype)
+		const extName = fileTypes.test(path.extname(file.originalname))
+		if (mimeType && extName) {
+			return cb(null, true)
+		}
+		cb('Error: debe subir un archivo valido')
+	},
+}).single('images');
+
+server.use(upload);
+
 server.use("/", routes);
 
-// server.use(express.static(path.join(__dirname, '../public')))
+
+server.use(express.static(path.join(__dirname, '../public')))
 
 // Error catching endware.
 server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars

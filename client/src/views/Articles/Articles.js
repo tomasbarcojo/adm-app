@@ -9,7 +9,6 @@ import GridItem from "../../components/Grid/GridItem.js";
 import GridContainer from "../../components/Grid/GridContainer.js";
 import Button from "../../components/CustomButtons/Button.js";
 import CardFooter from "../../components/Card/CardFooter.js";
-
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -31,8 +30,7 @@ import CardHeader from "../../components/Card/CardHeader.js";
 import CardBody from "../../components/Card/CardBody.js";
 import CardAvatar from "../../components/Card/CardAvatar.js";
 
-import avatar from "../../images/faces/marc.jpg";
-import test from '../../images/citylogin.jpg'
+import { uploadProductImage } from '../../actions/uploadProductImage'
 
 import '../../App.css'
 

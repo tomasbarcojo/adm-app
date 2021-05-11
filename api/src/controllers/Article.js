@@ -1,4 +1,4 @@
-const { Client } = require('../db.js')
+const { Article } = require('../db.js')
 
 module.exports = {
   async getArticles(req, res) {
@@ -33,8 +33,15 @@ module.exports = {
     }
   },
 
-  async uploadImage (upload.array('images')), (req, res) {
-    const names = req.files.map((img) => img.filename)
-    res.send(JSON.stringify(names))
+  async uploadImage (req, res) {
+    // upload.array('productImage')
+    // const names = req.files.map((img) => img.filename)
+    // res.send(JSON.stringify(names))
+    const name = req.file
+    // console.log(req.file)
+    // console.log(req.body);
+    // console.log(req.files);
+    // res.json({ message: "Successfully uploaded files" });
+    res.send(JSON.stringify(name.filename))
   }
 }

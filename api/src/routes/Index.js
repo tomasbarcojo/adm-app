@@ -4,6 +4,7 @@ const user = require('./User')
 const supplier = require('./Supplier')
 const pricelist = require('./Pricelist')
 const client = require('./Client')
+const upload = require('./Article')
 
 const router = Router();
 
@@ -14,5 +15,6 @@ router.use('/user', user);
 router.use('/supplier', supplier)
 router.use('/pricelist', pricelist)
 router.use('/client', client)
+router.use('/upload', upload)
 
 module.exports = router;
