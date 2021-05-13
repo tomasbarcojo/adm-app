@@ -34,14 +34,7 @@ module.exports = {
   },
 
   async uploadImage (req, res) {
-    // upload.array('productImage')
-    // const names = req.files.map((img) => img.filename)
-    // res.send(JSON.stringify(names))
-    const name = req.file
-    // console.log(req.file)
-    // console.log(req.body);
-    // console.log(req.files);
-    // res.json({ message: "Successfully uploaded files" });
-    res.send(JSON.stringify(name.filename))
+    const name = req.file.filename
+    res.status(201).send(JSON.stringify(name))
   }
 }

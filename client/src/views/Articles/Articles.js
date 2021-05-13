@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSnackbar } from 'notistack';
 import ImageUploader from 'react-images-upload';
+import axios from 'axios'
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from '@material-ui/core/TextField';
@@ -17,6 +18,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
+import Box from '@material-ui/core/Box';
+import LinearProgress from '@material-ui/core/LinearProgress';
 // core components
 import Quote from "../../components/Typography/Quote.js";
 import Muted from "../../components/Typography/Muted.js";
@@ -30,9 +33,10 @@ import CardHeader from "../../components/Card/CardHeader.js";
 import CardBody from "../../components/Card/CardBody.js";
 import CardAvatar from "../../components/Card/CardAvatar.js";
 
-import { uploadProductImage } from '../../actions/uploadProductImage'
+import alt from '../../images/producto-sin-imagen.png'
 
-import '../../App.css'
+import { uploadProductImage } from '../../actions/uploadProductImage'
+import { createArticle } from '../../actions/article'
 
 const useStyles = makeStyles((theme) => ({
   typo: {
@@ -97,36 +101,26 @@ const useStyles = makeStyles((theme) => ({
 export default function Articles() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const pricelists = [];
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const pricelists = [];
   const [showNew, setShowNew] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [files, setFiles] = useState(null);
+  const [preview, setPreview] = useState(null);
   var token = '';
   if (localStorage.length > 0) {
     token = JSON.parse(localStorage.getItem('token'));
   } else {
     token = JSON.parse(sessionStorage.getItem('token'));
   }
-  const [files, setFiles] = useState(null);
   const [data, setData] = useState({
     articleName: '',
     cost: '',
     category: '',
     stock: '',
+    image: '',
     obs: '',
   });
-
-  const handleNewSupplier = () => {
-    setShowNew(!showNew)
-  }
-
-  const handleChange = (event) => {
-    setData({ ...data, [event.target.id]: event.target.value })
-  }
-
-  const filesHandler = function (files) {
-    setFiles(files)
-    console.log(files)
-  };
 
   const resetForm = () => {
     setData({
@@ -135,15 +129,61 @@ export default function Articles() {
       price: '',
       category: '',
       stock: '',
+      image: '',
       obs: '',
+    })
+  }
+
+  const handleNewSupplier = () => {
+    setShowNew(!showNew)
+  }
+  
+  const handleChange = (event) => {
+    setData({ ...data, [event.target.id]: event.target.value })
+  }
+
+  const fileSelectedHandler = (event) => {
+    setFiles(event.target.files[0])
+    setPreview(URL.createObjectURL(event.target.files[0]))
+  }
+
+  const fileUploadHandler = (e) => {
+    console.log(files)
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("images", files);
+    axios.post('http://localhost:3001/upload/uploadproductimage', formData, {
+      onUploadProgress: ProgressEvent => {
+        setProgress(ProgressEvent.loaded / ProgressEvent.total * 100)
+      }
+    })
+    .then(img => {
+      // console.log('RESPUESTA', img.data) <======= DATO PARA MODELO DE ARTICULO
+      setData({ ...data, ['image']: img.data })
     })
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // dispatch(addSupplier(data, token, enqueueSnackbar, closeSnackbar))
+    dispatch(createArticle(data, token, enqueueSnackbar, closeSnackbar))
     resetForm()
   }
+
+  function LinearProgressWithLabel(props) {
+    return (
+      <Box display="flex" alignItems="center">
+        <Box width="100%" mr={1}>
+          <LinearProgress variant="determinate" {...props} />
+        </Box>
+        <Box minWidth={35}>
+          <Typography variant="body2" color="textSecondary">{`${Math.round(
+            props.value,
+          )}%`}</Typography>
+        </Box>
+      </Box>
+    );
+  }
+
   return (
     <Card>
       <CardHeader color="primary">
@@ -258,23 +298,30 @@ export default function Articles() {
 
                 <div id="contentImage">
                   <h5>Imagen</h5>
-                  <ImageUploader
-                    withIcon={false}
-                    buttonText='Choose images'
-                    onChange={filesHandler}
-                    imgExtension={['.jpg', '.png', '.jpeg']}
-                    maxFileSize={5242880}
-                    label={'Max file size: 5mb, accepted: jpg | jpeg | png'}
-                    buttonText='Adjuntar imágenes'
-                    withPreview={files ? true : false}
-                  />
+
+                  {preview ?
+                    <img style={{ maxWidth: '300px', maxHeight: '300px', objectFit: 'contain' }} src={preview} alt="Imagen del producto" />
+                    :
+                    <img style={{ maxWidth: '300px', maxHeight: '300px', objectFit: 'contain' }} src={alt} alt="Sin imagen" />
+                  }
 
                   <input
-                    accept="image/*"
-                    className={classes.input}
-                    multiple
-                    type="file"
+                    style={{ marginTop: '20px' }}
+                    type='file'
+                    onChange={fileSelectedHandler}
                   />
+                  
+                  <button
+                    onClick={fileUploadHandler}>
+                    Upload
+                  </button>
+
+                  {progress > 0 ?
+                    <>
+                      <LinearProgressWithLabel value={progress} />
+                    </>
+                    : null
+                  }
                 </div>
               </div>
 

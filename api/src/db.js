@@ -37,8 +37,9 @@ const { User, Supplier, Client, Pricelist, Article, Category } = sequelize.model
 Pricelist.hasMany(Client);
 Client.belongsTo(Pricelist);
 
-Article.belongsToMany(Category, { through: 'article_category' })
-Category.belongsToMany(Article, { through: 'article_category' })
+Article.belongsTo(Category)
+// Category.belongsToMany(Article)
+// Category.belongsToMany(Article, { through: 'article_category' })
 
 
 module.exports = {
