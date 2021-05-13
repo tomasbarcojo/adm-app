@@ -1,6 +1,8 @@
+import IP from '../IP.js'
+
 export const getPriceList = (token) => async dispatch => {
     try {
-        await fetch(`http://localhost:3001/pricelist`, {
+        await fetch(`http://${IP}:3001/pricelist`, {
             headers: {
                 'Content-Type': 'application/json',
                 'auth-token': token
@@ -25,7 +27,7 @@ export const getPriceList = (token) => async dispatch => {
 
 export const addPriceList = (data, token, enqueueSnackbar, closeSnackbar) => async dispatch => {
     try {
-        await fetch(`http://localhost:3001/pricelist/createpricelist`, {
+        await fetch(`http://${IP}:3001/pricelist/createpricelist`, {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {

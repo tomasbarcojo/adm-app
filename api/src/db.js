@@ -37,7 +37,8 @@ const { User, Supplier, Client, Pricelist, Article, Category } = sequelize.model
 Pricelist.hasMany(Client);
 Client.belongsTo(Pricelist);
 
-Article.belongsTo(Category)
+Article.belongsTo(Category);
+Article.belongsTo(Supplier);
 // Category.belongsToMany(Article)
 // Category.belongsToMany(Article, { through: 'article_category' })
 

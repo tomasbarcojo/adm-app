@@ -1,9 +1,11 @@
 import Swal from 'sweetalert2';
 import '../App.css'
 
+import IP from '../IP.js'
+
 export const userLogin = (data, history, keepLogged, enqueueSnackbar, closeSnackbar) => async dispatch => {
     try {
-        await fetch(`http://localhost:3001/user/login`, {
+        await fetch(`http://${IP}:3001/user/login`, {
             method: 'POST',
             // credentials: 'include',
             headers: {
@@ -65,7 +67,7 @@ export const userLogin = (data, history, keepLogged, enqueueSnackbar, closeSnack
 
 export const addUser = (user, history, enqueueSnackbar, closeSnackbar) => async dispatch => {
     try {
-        await fetch(`http://localhost:3001/user/createuser`, {
+        await fetch(`http://${IP}:3001/user/createuser`, {
             method: 'POST',
             body: JSON.stringify(user),
             headers: {
@@ -98,7 +100,7 @@ export const addUser = (user, history, enqueueSnackbar, closeSnackbar) => async 
 }
 
 export const resetPassword = (userId, token) => async dispatch => {
-    await fetch(`http://localhost:3001/user/${userId}/passwordReset`, {
+    await fetch(`http://${IP}:3001/user/${userId}/passwordReset`, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -130,7 +132,7 @@ export const userLogout = (history) => async dispatch => {
 
 export const getUser = (userId, token) => async dispatch => {
     try {
-        await fetch(`http://localhost:3001/user/${userId}`, {
+        await fetch(`http://${IP}:3001/user/${userId}`, {
             // credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
@@ -158,7 +160,7 @@ export const getUser = (userId, token) => async dispatch => {
 
 export const loggedUser = (userId, token) => async dispatch => {
     try {
-        await fetch(`http://localhost:3001/user/${userId}`, {
+        await fetch(`http://${IP}:3001/user/${userId}`, {
             headers: {
                 'Content-Type': 'application/json',
                 "auth-token": token

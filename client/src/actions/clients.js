@@ -1,6 +1,8 @@
+import IP from '../IP.js'
+
 export const getClients = (token) => async dispatch => {
     try {
-        await fetch(`http://localhost:3001/clients`, {
+        await fetch(`http://${IP}:3001/clients`, {
             headers: {
                 'Content-Type': 'application/json',
                 'auth-token': token
@@ -25,7 +27,7 @@ export const getClients = (token) => async dispatch => {
 
 export const addClient = (token) => async dispatch => {
     try {
-        await fetch(`http://localhost:3001/clients`, {
+        await fetch(`http://${IP}:3001/clients`, {
             headers: {
                 'Content-Type': 'application/json',
                 'auth-token': token

@@ -173,3 +173,12 @@ input[type=number] {
     width: 100%;
   }
 }
+
+/* Category Form */
+
+.containerCategoryForm {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}

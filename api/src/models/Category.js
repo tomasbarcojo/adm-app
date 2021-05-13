@@ -9,6 +9,10 @@ module.exports = (sequelize) => {
       allowNull: false,
     // unique: true
     },
+    image: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
     description: {
       type: DataTypes.STRING,
       //allowNull: false,

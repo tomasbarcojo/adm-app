@@ -1,8 +1,9 @@
 import '../App.css'
+import IP from '../IP.js'
 
 export const getSuppliers = (token) => async dispatch => {
     try {
-        await fetch(`http://localhost:3001/supplier`, {
+        await fetch(`http://${IP}:3001/supplier`, {
             headers: {
                 'Content-Type': 'application/json',
                 'auth-token': token
@@ -27,7 +28,7 @@ export const getSuppliers = (token) => async dispatch => {
 
 export const addSupplier = (data, token, enqueueSnackbar, closeSnackbar) => async dispatch => {
     try {
-        await fetch(`http://localhost:3001/supplier/createSupplier`, {
+        await fetch(`http://${IP}:3001/supplier/createSupplier`, {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -70,7 +71,7 @@ export const addSupplier = (data, token, enqueueSnackbar, closeSnackbar) => asyn
 }
 
 export const resetPassword = (userId, token) => async dispatch => {
-    await fetch(`http://localhost:3001/user/${userId}/passwordReset`, {
+    await fetch(`http://${IP}:3001/user/${userId}/passwordReset`, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -89,7 +90,7 @@ export const resetPassword = (userId, token) => async dispatch => {
 }
 
 export const userLogout = (history) => async dispatch => {
-    await fetch(`http://localhost:3001/user/logout`, {
+    await fetch(`http://${IP}:3001/user/logout`, {
         credentials: 'include',
     }).then(() => {
         localStorage.clear()
@@ -102,7 +103,7 @@ export const userLogout = (history) => async dispatch => {
 }
 
 export const getUser = (userId, token) => async dispatch => {
-    await fetch(`http://localhost:3001/user/${userId}`, {
+    await fetch(`http://${IP}:3001/user/${userId}`, {
         // credentials: 'include',
         headers: {
             'Content-Type': 'application/json',

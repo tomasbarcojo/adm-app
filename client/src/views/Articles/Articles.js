@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSnackbar } from 'notistack';
-import ImageUploader from 'react-images-upload';
 import axios from 'axios'
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -32,11 +31,13 @@ import Card from "../../components/Card/Card.js";
 import CardHeader from "../../components/Card/CardHeader.js";
 import CardBody from "../../components/Card/CardBody.js";
 import CardAvatar from "../../components/Card/CardAvatar.js";
+import Categories from './Categories.js'
 
 import alt from '../../images/producto-sin-imagen.png'
 
-import { uploadProductImage } from '../../actions/uploadProductImage'
+import { getSuppliers } from '../../actions/suppliers'
 import { createArticle } from '../../actions/article'
+import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
   typo: {
@@ -96,6 +97,12 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 120,
     paddingBottom: '10px',
   },
+  card: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
 }));
 
 export default function Articles() {
@@ -107,6 +114,7 @@ export default function Articles() {
   const [progress, setProgress] = useState(0);
   const [files, setFiles] = useState(null);
   const [preview, setPreview] = useState(null);
+  const suppliers = useSelector(state => state.suppliers)
   var token = '';
   if (localStorage.length > 0) {
     token = JSON.parse(localStorage.getItem('token'));
@@ -115,12 +123,16 @@ export default function Articles() {
   }
   const [data, setData] = useState({
     articleName: '',
-    cost: '',
+    price: '',
     category: '',
     stock: '',
     image: '',
     obs: '',
   });
+
+  useEffect(() => {
+    dispatch(getSuppliers(token))
+  }, [])
 
   const resetForm = () => {
     setData({
@@ -137,7 +149,7 @@ export default function Articles() {
   const handleNewSupplier = () => {
     setShowNew(!showNew)
   }
-  
+
   const handleChange = (event) => {
     setData({ ...data, [event.target.id]: event.target.value })
   }
@@ -157,10 +169,10 @@ export default function Articles() {
         setProgress(ProgressEvent.loaded / ProgressEvent.total * 100)
       }
     })
-    .then(img => {
-      // console.log('RESPUESTA', img.data) <======= DATO PARA MODELO DE ARTICULO
-      setData({ ...data, ['image']: img.data })
-    })
+      .then(img => {
+        // console.log('RESPUESTA', img.data) <======= DATO PARA MODELO DE ARTICULO
+        setData({ ...data, ['image']: img.data })
+      })
   }
 
   const handleSubmit = (e) => {
@@ -185,156 +197,161 @@ export default function Articles() {
   }
 
   return (
-    <Card>
-      <CardHeader color="primary">
-        <h4 className={classes.cardTitleWhite}>Nuevo articulo</h4>
-        {showNew ? null : <Button className={classes.buttonCard} color="info" onClick={handleNewSupplier}>Añadir</Button>}
-      </CardHeader>
-      {showNew ?
-        <>
-          <form onSubmit={handleSubmit}>
-            <CardBody>
-              <div class="containerArticleForm">
-                <div id="contentForm">
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={12} justifyContent='center' alignContent='center' alignItems='center'>
-                      <TextField
-                        className={classes.input}
-                        label="Nombre"
-                        id="articleName"
-                        onChange={handleChange}
-                        fullWidth
-                        autoComplete='off'
-                        value={data.name}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={12}>
-                      <FormControl className={classes.formControl}>
-                        <InputLabel>Categoria</InputLabel>
-                        <Select
+    <>
+      <Card>
+        <CardHeader color="primary">
+          <div className={classes.card}>
+            <h4 className={classes.cardTitleWhite}>Nueva categoria</h4>
+            {showNew ? null : <Button className={classes.buttonCard} color="info" onClick={handleNewSupplier}>Añadir</Button>}
+          </div>
+        </CardHeader>
+        {showNew ?
+          <>
+            <form onSubmit={handleSubmit}>
+              <CardBody>
+                <div class="containerArticleForm">
+                  <div id="contentForm">
+                    <GridContainer>
+                      <GridItem xs={12} sm={12} md={12} justifyContent='center' alignContent='center' alignItems='center'>
+                        <TextField
+                          className={classes.input}
+                          label="Nombre"
+                          id="articleName"
                           onChange={handleChange}
-                          fullWidth={true}
-                          // className={classes.input}
-                          menu
-                        >
-                          {
-                            pricelists && pricelists.length > 0 ?
-                              pricelists.map(pricelist => {
-                                return (
-                                  <MenuItem value={pricelist.id}>{pricelist.priceListName}</MenuItem>
-                                )
-                              })
-                              :
-                              <MenuItem disabled value={0}>No existen categorias</MenuItem>
-                          }
-                        </Select>
-                      </FormControl>
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={12}>
-                      <FormControl className={classes.formControl}>
-                        <InputLabel>Proveedor</InputLabel>
-                        <Select
+                          fullWidth
+                          autoComplete='off'
+                          value={data.name}
+                        />
+                      </GridItem>
+                      <GridItem xs={12} sm={12} md={12}>
+                        <FormControl className={classes.formControl}>
+                          <InputLabel>Categoria</InputLabel>
+                          <Select
+                            onChange={handleChange}
+                            fullWidth={true}
+                            // className={classes.input}
+                            menu
+                          >
+                            {
+                              pricelists && pricelists.length > 0 ?
+                                pricelists.map(pricelist => {
+                                  return (
+                                    <MenuItem value={pricelist.id}>{pricelist.priceListName}</MenuItem>
+                                  )
+                                })
+                                :
+                                <MenuItem disabled value={0}>No existen categorias</MenuItem>
+                            }
+                          </Select>
+                        </FormControl>
+                      </GridItem>
+                      <GridItem xs={12} sm={12} md={12}>
+                        <FormControl className={classes.formControl}>
+                          <InputLabel>Proveedor</InputLabel>
+                          <Select
+                            onChange={handleChange}
+                            fullWidth={true}
+                            // className={classes.input}
+                            menu
+                          >
+                            {
+                              suppliers && suppliers.length > 0 ?
+                                suppliers.map(suppliers => {
+                                  return (
+                                    <MenuItem value={suppliers.id}>{suppliers.businessName}</MenuItem>
+                                  )
+                                })
+                                :
+                                <MenuItem disabled value={0}>No existen proveedores</MenuItem>
+                            }
+                          </Select>
+                        </FormControl>
+                      </GridItem>
+                    </GridContainer>
+                    <GridContainer>
+                      <GridItem xs={12} sm={12} md={6}>
+                        <TextField
+                          className={classes.input}
+                          label="Precio"
+                          id="cost"
                           onChange={handleChange}
-                          fullWidth={true}
-                          // className={classes.input}
-                          menu
-                        >
-                          {
-                            pricelists && pricelists.length > 0 ?
-                              pricelists.map(pricelist => {
-                                return (
-                                  <MenuItem value={pricelist.id}>{pricelist.priceListName}</MenuItem>
-                                )
-                              })
-                              :
-                              <MenuItem disabled value={0}>No existen proveedores</MenuItem>
-                          }
-                        </Select>
-                      </FormControl>
-                    </GridItem>
-                  </GridContainer>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={6}>
-                      <TextField
-                        className={classes.input}
-                        label="Precio"
-                        id="cost"
-                        onChange={handleChange}
-                        fullWidth
-                        autoComplete='off'
-                        type='number'
-                        value={data.phone}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={6}>
-                      <TextField
-                        className={classes.input}
-                        label="Stock"
-                        id="stock"
-                        onChange={handleChange}
-                        fullWidth
-                        autoComplete='off'
-                        type='number'
-                        value={data.altPhone}
-                      />
-                    </GridItem>
-                  </GridContainer>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={12}>
-                      <TextField
-                        className={classes.input}
-                        label="Descripcion"
-                        id="obs"
-                        onChange={handleChange}
-                        fullWidth
-                        multiline
-                        rows={4}
-                        autoComplete='off'
-                        value={data.obs}
-                      />
-                    </GridItem>
-                  </GridContainer>
-                </div>
+                          fullWidth
+                          autoComplete='off'
+                          type='number'
+                          value={data.phone}
+                        />
+                      </GridItem>
+                      <GridItem xs={12} sm={12} md={6}>
+                        <TextField
+                          className={classes.input}
+                          label="Stock"
+                          id="stock"
+                          onChange={handleChange}
+                          fullWidth
+                          autoComplete='off'
+                          type='number'
+                          value={data.altPhone}
+                        />
+                      </GridItem>
+                    </GridContainer>
+                    <GridContainer>
+                      <GridItem xs={12} sm={12} md={12}>
+                        <TextField
+                          className={classes.input}
+                          label="Descripcion"
+                          id="obs"
+                          onChange={handleChange}
+                          fullWidth
+                          multiline
+                          rows={4}
+                          autoComplete='off'
+                          value={data.obs}
+                        />
+                      </GridItem>
+                    </GridContainer>
+                  </div>
 
-                <div id="contentImage">
-                  <h5>Imagen</h5>
+                  <div id="contentImage">
+                    <h5>Imagen</h5>
 
-                  {preview ?
-                    <img style={{ maxWidth: '300px', maxHeight: '300px', objectFit: 'contain' }} src={preview} alt="Imagen del producto" />
-                    :
-                    <img style={{ maxWidth: '300px', maxHeight: '300px', objectFit: 'contain' }} src={alt} alt="Sin imagen" />
-                  }
+                    {preview ?
+                      <img style={{ maxWidth: '300px', maxHeight: '300px', objectFit: 'contain' }} src={preview} alt="Imagen del producto" />
+                      :
+                      <img style={{ maxWidth: '300px', maxHeight: '300px', objectFit: 'contain' }} src={alt} alt="Sin imagen" />
+                    }
 
-                  <input
-                    style={{ marginTop: '20px' }}
-                    type='file'
-                    onChange={fileSelectedHandler}
-                  />
-                  
-                  <button
-                    onClick={fileUploadHandler}>
-                    Upload
+                    <input
+                      style={{ marginTop: '20px' }}
+                      type='file'
+                      onChange={fileSelectedHandler}
+                    />
+
+                    <button
+                      onClick={fileUploadHandler}>
+                      Upload
                   </button>
 
-                  {progress > 0 ?
-                    <>
-                      <LinearProgressWithLabel value={progress} />
-                    </>
-                    : null
-                  }
+                    {progress > 0 ?
+                      <>
+                        <LinearProgressWithLabel value={progress} />
+                      </>
+                      : null
+                    }
+                  </div>
                 </div>
-              </div>
 
-            </CardBody>
-            <CardFooter>
-              <Button color="primary" type='submit'>Listo</Button>
-              <Button color="danger" onClick={handleNewSupplier}>Cancelar</Button>
-            </CardFooter>
-          </form>
-        </>
-        : null
-      }
-    </Card>
-    // </GridItem>
+              </CardBody>
+              <CardFooter>
+                <Button color="primary" type='submit'>Listo</Button>
+                <Button color="danger" onClick={handleNewSupplier}>Cancelar</Button>
+              </CardFooter>
+            </form>
+          </>
+          : null
+        }
+      </Card>
+      {/* // </GridItem> */}
+      <Categories />
+    </>
   );
 }

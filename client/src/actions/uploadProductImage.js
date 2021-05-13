@@ -1,6 +1,8 @@
+import IP from '../IP.js'
+
 export const uploadProductImage = (formData, token) => async dispatch => {
   try {
-    await fetch(`http://localhost:3001/upload/uploadproductimage`, {
+    await fetch(`http://${IP}:3001/upload/uploadproductimage`, {
       method: 'POST',
       body: formData,
       headers: {
