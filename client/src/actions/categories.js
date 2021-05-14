@@ -20,7 +20,7 @@ export const createCategory = (data, token, enqueueSnackbar, closeSnackbar) => a
                     ),
                 });
             } else if (res.status === 400 && res.message === "Necesary data required") {
-                enqueueSnackbar('Ha ocurrido un error', {
+                enqueueSnackbar('Ha ocurrido un error (data required)', {
                     variant: 'error',
                     action: key => (
                         <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>

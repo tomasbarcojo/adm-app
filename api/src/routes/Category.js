@@ -4,6 +4,6 @@ const { getCategories, createCategory } = require('../controllers/Category')
 
 server.get('/', authenticate, getCategories)
 
-server.post('/createCategory', authenticate, createCategory)
+server.post('/createCategory', /*authenticate,*/ createCategory)
 
 module.exports = server

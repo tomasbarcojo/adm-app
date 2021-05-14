@@ -7,7 +7,6 @@ module.exports = (sequelize) => {
     categoryName: {
       type: DataTypes.STRING,
       allowNull: false,
-    // unique: true
     },
     image: {
       type: DataTypes.TEXT,
@@ -15,7 +14,6 @@ module.exports = (sequelize) => {
     },
     obs: {
       type: DataTypes.STRING,
-      //allowNull: false,
     }
   });
 };

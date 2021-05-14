@@ -1,9 +1,9 @@
 const initialstate = {
-	user: {},
-	suppliers: {},
-	clients: {},
-	pricelists: {},
-	categories: {},
+	user: [],
+	suppliers: [],
+	clients: [],
+	pricelists: [],
+	categories: [],
 	userLogged: false,
 	notifications: []
 }

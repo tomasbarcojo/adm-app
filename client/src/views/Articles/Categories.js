@@ -148,12 +148,15 @@ export default function Articles() {
   }
 
   const fileSelectedHandler = (event) => {
-    setFiles(event.target.files[0])
-    setPreview(URL.createObjectURL(event.target.files[0]))
+    if (event.target.files.length !== 0) {
+      setFiles(event.target.files[0])
+      setPreview(URL.createObjectURL(event.target.files[0]))
+    } else {
+      setPreview(null)
+    }
   }
 
   const fileUploadHandler = async (e) => {
-    // console.log(files)
     e.preventDefault();
     const formData = new FormData();
     formData.append("images", files);
@@ -163,21 +166,30 @@ export default function Articles() {
       }
     })
       .then(img => {
-        // console.log('RESPUESTA', img.data) <======= DATO PARA MODELO DE ARTICULO
         setData({ ...data, 'image': img.data })
       })
-      console.log('termino la subida de imagen')
-      console.log(data.image)
   }
 
-   const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    await fileUploadHandler(e);
-    console.log(data)
-    dispatch(createCategory(data, token, enqueueSnackbar, closeSnackbar)) 
-    resetForm()
-    console.log('termino el submit')
-    console.log(data)
+    const formData = new FormData();
+    formData.append("images", files);
+    await axios.post('http://localhost:3001/upload/', formData, {
+      onUploadProgress: ProgressEvent => {
+        setProgress(ProgressEvent.loaded / ProgressEvent.total * 100)
+      }
+    })
+      .then(img => {
+        setData({ ...data, 'image': img.data })
+        const data2 = {
+          categoryName: data.categoryName,
+          image: img.data,
+          obs: data.obs
+        }
+        console.log(data)
+        dispatch(createCategory(data2, token, enqueueSnackbar, closeSnackbar))
+        resetForm()
+      })
   }
 
   function LinearProgressWithLabel(props) {
@@ -198,17 +210,17 @@ export default function Articles() {
   return (
     <Card>
       <CardHeader color="primary">
-      <div className={classes.card}>
-            <h4 className={classes.cardTitleWhite}>Nueva categoria</h4>
-            {showNew ? null : <Button className={classes.buttonCard} color="info" onClick={handleNewSupplier}>Añadir</Button>}
-          </div>
+        <div className={classes.card}>
+          <h4 className={classes.cardTitleWhite}>Nueva categoria</h4>
+          {showNew ? null : <Button className={classes.buttonCard} color="info" onClick={handleNewSupplier}>Añadir</Button>}
+        </div>
       </CardHeader>
       {showNew ?
         <>
           <form onSubmit={handleSubmit}>
             <CardBody>
-              <div class="containerCategoryForm">
-                <div id="contentForm">
+              <div class="containerForm">
+                <div class="contentForm">
                   <GridContainer>
                     <GridItem xs={12} sm={12} md={12} justifyContent='center' alignContent='center' alignItems='center'>
                       <TextField
@@ -238,7 +250,7 @@ export default function Articles() {
                   </GridContainer>
                 </div>
 
-                <div id="contentImage">
+                <div class="contentImage">
                   <h5>Imagen</h5>
 
                   {preview ?
@@ -251,12 +263,13 @@ export default function Articles() {
                     style={{ marginTop: '20px' }}
                     type='file'
                     onChange={fileSelectedHandler}
+                    // accept="image/*"
                   />
 
-                  <button
+                  {/* <button
                     onClick={fileUploadHandler}>
                     Upload
-                  </button>
+                  </button> */}
 
                   {progress > 0 ?
                     <>

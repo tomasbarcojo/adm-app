@@ -209,8 +209,8 @@ export default function Articles() {
           <>
             <form onSubmit={handleSubmit}>
               <CardBody>
-                <div class="containerArticleForm">
-                  <div id="contentForm">
+                <div class="containerForm">
+                  <div class="contentForm">
                     <GridContainer>
                       <GridItem xs={12} sm={12} md={12} justifyContent='center' alignContent='center' alignItems='center'>
                         <TextField
@@ -311,7 +311,7 @@ export default function Articles() {
                     </GridContainer>
                   </div>
 
-                  <div id="contentImage">
+                  <div class="contentImage">
                     <h5>Imagen</h5>
 
                     {preview ?

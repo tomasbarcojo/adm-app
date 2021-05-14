@@ -141,44 +141,43 @@ input[type=number] {
 
 /* Article form */
 
-.containerArticleForm {
+.containerForm {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  align-items: center;
 }
 
-#contentForm {
+.contentForm {
   width: 60%;
   margin-right: 15px;
 }
 
-#contentImage {
+.contentImage {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
+  /* align-content: center; */
 }
 
-#contentImage img {
+.contentImage img {
   width: 100%;
   max-width: 400px;
   height: auto;
 }
 
 @media (max-width: 1024px) {
-  .containerArticleForm {
+  .containerForm {
     flex-direction: column;
   }
-  #contentForm {
+  .contentForm {
     width: 100%;
   }
 }
 
 /* Category Form */
 
-.containerCategoryForm {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
+.contentImage h5 {
+  text-align: center;
 }
