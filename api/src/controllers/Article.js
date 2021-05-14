@@ -20,7 +20,7 @@ module.exports = {
       return res.status(400).send({ message: 'Necesary data required', status: 400 })
     }
     try {
-      const article = await Article.findOne({ where: { cuit: cuit }})
+      const article = await Article.findOne({ where: { articleName: articleName }})
       if (article) {
         return res.status(400).send({ message: "Article already exists", status: 400 });
       }
@@ -31,10 +31,5 @@ module.exports = {
       console.log(err)
       return res.status(500).send(err)
     }
-  },
-
-  async uploadImage (req, res) {
-    const name = req.file.filename
-    res.status(201).send(JSON.stringify(name))
   }
 }

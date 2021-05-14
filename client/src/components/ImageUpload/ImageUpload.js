@@ -43,7 +43,7 @@ export default function ImageUpload() {
         //     .then((res) => console.log(res))
         //     .catch((err) => ("Error occured", err));
 
-        axios.post('http://localhost:3001/upload/uploadproductimage', formData, {
+        axios.post('http://localhost:3001/upload/', formData, {
             onUploadProgress: ProgressEvent => {
                 setProgress(ProgressEvent.loaded / ProgressEvent.total * 100)
             }

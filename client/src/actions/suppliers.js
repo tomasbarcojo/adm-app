@@ -54,7 +54,7 @@ export const addSupplier = (data, token, enqueueSnackbar, closeSnackbar) => asyn
                     });
                 } else if (res.status === 201) {
                     dispatch({
-                        type: 'ADD_SUPPLIER',
+                        type: 'CREATE_SUPPLIER',
                         payload: res.newSupplier,
                     })
                     enqueueSnackbar('Proveedor añadido con exito', {

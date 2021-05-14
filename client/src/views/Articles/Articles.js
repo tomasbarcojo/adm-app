@@ -201,7 +201,7 @@ export default function Articles() {
       <Card>
         <CardHeader color="primary">
           <div className={classes.card}>
-            <h4 className={classes.cardTitleWhite}>Nueva categoria</h4>
+            <h4 className={classes.cardTitleWhite}>Nuevo articulo</h4>
             {showNew ? null : <Button className={classes.buttonCard} color="info" onClick={handleNewSupplier}>Añadir</Button>}
           </div>
         </CardHeader>

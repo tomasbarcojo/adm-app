@@ -81,7 +81,7 @@ export const addUser = (user, history, enqueueSnackbar, closeSnackbar) => async 
                 } else if (res.status === 201) {
                     localStorage.setItem('userData', JSON.stringify(res.newUser))
                     dispatch({
-                        type: 'ADD_USER',
+                        type: 'CREATE_USER',
                         payload: res.newUser,
                     })
                     enqueueSnackbar('Te has registrado con exito', {

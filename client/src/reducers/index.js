@@ -3,6 +3,7 @@ const initialstate = {
 	suppliers: {},
 	clients: {},
 	pricelists: {},
+	categories: {},
 	userLogged: false,
 	notifications: []
 }
@@ -25,7 +26,7 @@ export default function rootReducer(state = initialstate, action) {
 				userLogged: true
 			};
 
-		case 'ADD_USER':
+		case 'CREATE_USER':
 			return {
 				...state,
 				user: action.payload
@@ -46,33 +47,45 @@ export default function rootReducer(state = initialstate, action) {
 
 		// SUPPLIER
 
-		case 'ADD_SUPPLIER':
-			return {
-				...state,
-				suppliers: [...state.suppliers, action.payload]
-			};
-
 		case 'GET_SUPPLIERS':
 			return {
 				...state,
 				suppliers: action.payload
 			};
 
-		// PRICE LIST
-
-		case 'ADD_PRICELIST':
+		case 'CREATE_SUPPLIER':
 			return {
 				...state,
-				pricelists: [...state.pricelists, action.payload]
+				suppliers: [...state.suppliers, action.payload]
 			};
+
+		// PRICE LIST
 
 		case 'GET_PRICELISTS':
 			return {
 				...state,
 				pricelists: action.payload
 			};
+
+		case 'CREATE_PRICELIST':
+			return {
+				...state,
+				pricelists: [...state.pricelists, action.payload]
+			};
 		
-		// NOTISTACK
+		// CATEGORY
+
+		case 'GET_CATEGORIES':
+			return {
+				...state,
+				categories: action.payload
+			};
+
+		case 'CREATE_CATEGORY':
+			return {
+				...state,
+				categories: [...state.categories, action.payload]
+			};
 
 		default:
 			return state

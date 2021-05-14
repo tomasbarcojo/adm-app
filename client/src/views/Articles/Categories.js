@@ -36,7 +36,7 @@ import CardAvatar from "../../components/Card/CardAvatar.js";
 import alt from '../../images/producto-sin-imagen.png'
 
 import { getSuppliers } from '../../actions/suppliers'
-import { createArticle } from '../../actions/article'
+import { createCategory } from '../../actions/categories'
 import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
@@ -136,6 +136,7 @@ export default function Articles() {
       image: '',
       obs: ''
     })
+    setPreview(null);
   }
 
   const handleNewSupplier = () => {
@@ -151,26 +152,32 @@ export default function Articles() {
     setPreview(URL.createObjectURL(event.target.files[0]))
   }
 
-  const fileUploadHandler = (e) => {
-    console.log(files)
+  const fileUploadHandler = async (e) => {
+    // console.log(files)
     e.preventDefault();
     const formData = new FormData();
     formData.append("images", files);
-    axios.post('http://localhost:3001/upload/uploadproductimage', formData, {
+    await axios.post('http://localhost:3001/upload/', formData, {
       onUploadProgress: ProgressEvent => {
         setProgress(ProgressEvent.loaded / ProgressEvent.total * 100)
       }
     })
       .then(img => {
         // console.log('RESPUESTA', img.data) <======= DATO PARA MODELO DE ARTICULO
-        setData({ ...data, ['image']: img.data })
+        setData({ ...data, 'image': img.data })
       })
+      console.log('termino la subida de imagen')
+      console.log(data.image)
   }
 
-  const handleSubmit = (e) => {
+   const handleSubmit = async (e) => {
     e.preventDefault()
-    // dispatch(createCategory(data, token, enqueueSnackbar, closeSnackbar)) 
+    await fileUploadHandler(e);
+    console.log(data)
+    dispatch(createCategory(data, token, enqueueSnackbar, closeSnackbar)) 
     resetForm()
+    console.log('termino el submit')
+    console.log(data)
   }
 
   function LinearProgressWithLabel(props) {
@@ -192,7 +199,7 @@ export default function Articles() {
     <Card>
       <CardHeader color="primary">
       <div className={classes.card}>
-            <h4 className={classes.cardTitleWhite}>Nuevo articulo</h4>
+            <h4 className={classes.cardTitleWhite}>Nueva categoria</h4>
             {showNew ? null : <Button className={classes.buttonCard} color="info" onClick={handleNewSupplier}>Añadir</Button>}
           </div>
       </CardHeader>
@@ -207,11 +214,11 @@ export default function Articles() {
                       <TextField
                         className={classes.input}
                         label="Nombre"
-                        id="articleName"
+                        id="categoryName"
                         onChange={handleChange}
                         fullWidth
                         autoComplete='off'
-                        value={data.name}
+                        value={data.categoryName}
                       />
                     </GridItem>
 

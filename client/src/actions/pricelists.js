@@ -53,7 +53,7 @@ export const addPriceList = (data, token, enqueueSnackbar, closeSnackbar) => asy
                     });
                 } else if (res.status === 201) {
                     dispatch({
-                        type: 'ADD_PRICELIST',
+                        type: 'CREATE_PRICELIST',
                         payload: res.newPriceList,
                     })
                     enqueueSnackbar('Listado añadido con exito', {

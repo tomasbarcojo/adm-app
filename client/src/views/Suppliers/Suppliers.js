@@ -327,7 +327,7 @@ export default function Suppliers() {
         </Card>
       </GridItem>
       </GridContainer>
-      <MaterialTable
+      {/* <MaterialTable
           columns={[
             { title: 'Adı', field: 'nametest' },
             { title: 'Soyadı', field: 'surname' },
@@ -336,7 +336,7 @@ export default function Suppliers() {
           ]}
           data={[{ nametest: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 }]}
           title="Demo Title"
-        />
+        /> */}
     </div>
   );
 }

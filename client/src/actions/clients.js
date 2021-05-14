@@ -37,7 +37,7 @@ export const addClient = (token) => async dispatch => {
         .then(res => {
             if (res.status === 200) {
                 dispatch({
-                    type: 'ADD_CLIENT',
+                    type: 'CREATE_CLIENT',
                     payload: res.client
                 })
             } 

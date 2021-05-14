@@ -16,12 +16,12 @@ module.exports = {
 
   async createCategory(req, res) {
     const { categoryName, image, obs } = req.body
-    if (!categoryName || !image || !obs) {
+    if (!categoryName || !image) {
       return res.status(400).send({ message: 'Necesary data required', status: 400 })
     }
     try {
       const category = await Category.findOne({ where: { categoryName: categoryName }})
-      if (client) {
+      if (category) {
         return res.status(400).send({ message: "Category already exists", status: 400 });
       }
       const categoryData = { categoryName, image, obs };
