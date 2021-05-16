@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useSnackbar } from 'notistack';
 import ImageUploader from 'react-images-upload';
 import axios from 'axios'
+import { useEffect } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from '@material-ui/core/TextField';
@@ -37,7 +38,6 @@ import alt from '../../images/producto-sin-imagen.png'
 
 import { getSuppliers } from '../../actions/suppliers'
 import { createCategory } from '../../actions/categories'
-import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
   typo: {
@@ -121,7 +121,6 @@ export default function Articles() {
   }
   const [data, setData] = useState({
     categoryName: '',
-    image: '',
     obs: ''
   });
 
@@ -133,7 +132,6 @@ export default function Articles() {
     setData({
       ...data,
       categoryName: '',
-      image: '',
       obs: ''
     })
     setPreview(null);
@@ -156,20 +154,6 @@ export default function Articles() {
     }
   }
 
-  const fileUploadHandler = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("images", files);
-    await axios.post('http://localhost:3001/upload/', formData, {
-      onUploadProgress: ProgressEvent => {
-        setProgress(ProgressEvent.loaded / ProgressEvent.total * 100)
-      }
-    })
-      .then(img => {
-        setData({ ...data, 'image': img.data })
-      })
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     const formData = new FormData();
@@ -181,13 +165,12 @@ export default function Articles() {
     })
       .then(img => {
         setData({ ...data, 'image': img.data })
-        const data2 = {
+        const dataImage = {
           categoryName: data.categoryName,
           image: img.data,
           obs: data.obs
         }
-        console.log(data)
-        dispatch(createCategory(data2, token, enqueueSnackbar, closeSnackbar))
+        dispatch(createCategory(dataImage, token, enqueueSnackbar, closeSnackbar))
         resetForm()
       })
   }
@@ -263,7 +246,7 @@ export default function Articles() {
                     style={{ marginTop: '20px' }}
                     type='file'
                     onChange={fileSelectedHandler}
-                    // accept="image/*"
+                    accept="image/*"
                   />
 
                   {/* <button

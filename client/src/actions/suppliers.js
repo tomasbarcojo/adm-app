@@ -9,18 +9,15 @@ export const getSuppliers = (token) => async dispatch => {
                 'auth-token': token
             },
         })
-        .then(data => data.json())
-        .then(res => {
-            if (res.status === 200) {
-                dispatch({
-                    type: 'GET_SUPPLIERS',
-                    payload: res.suppliers
-                })
-            } 
-            // else {
-            //     console.error('No suppliers')
-            // }
-        })
+            .then(data => data.json())
+            .then(res => {
+                if (res.status === 200) {
+                    dispatch({
+                        type: 'GET_SUPPLIERS',
+                        payload: res.suppliers
+                    })
+                }
+            })
     } catch (err) {
         console.log(err)
     }

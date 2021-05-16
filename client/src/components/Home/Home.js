@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -9,7 +9,10 @@ import Box from '@material-ui/core/Box';
 import Copyright from '../../utils/Copyright'
 import NavBar from './NavBar'
 import GridList from '@material-ui/core/GridList';
-import CategoriesCard2 from '../CategoriesCard/CategoriesCard';
+import CategoriesCard from '../CategoriesCard/CategoriesCard';
+
+import { useDispatch, useSelector } from 'react-redux'
+import { getCategories } from '../../actions/categories'
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -82,6 +85,18 @@ const footers = [
 
 export default function UsersManagment() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  var token = '';
+  if (localStorage.length > 0) {
+    token = JSON.parse(localStorage.getItem('token'));
+  } else {
+    token = JSON.parse(sessionStorage.getItem('token'));
+  }
+  const categories = useSelector(state => state.categories)
+
+  useEffect(() => {
+    dispatch(getCategories(token));
+  }, [])
 
   return (
     <React.Fragment>
@@ -98,7 +113,14 @@ export default function UsersManagment() {
       </GridList> */}
 
       <GridList cellHeight={450} className={classes.gridList} cols={4} spacing={0}>
-        <CategoriesCard2 /><CategoriesCard2 /><CategoriesCard2 /><CategoriesCard2 /><CategoriesCard2 /><CategoriesCard2 /><CategoriesCard2 /><CategoriesCard2 />
+        {categories && categories.length > 0 ?
+        categories.map(cat => {
+          return (
+            <CategoriesCard props={cat} />
+          )
+        })
+        : <h5>No existen categorias</h5>
+        }
       </GridList>
 
       {/* Hero unit */}
