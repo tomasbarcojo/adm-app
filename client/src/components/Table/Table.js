@@ -56,13 +56,26 @@ export default function CustomTable(props) {
             return (
               <>
                 <TableRow key={key} className={classes.tableBodyRow}>
-                  {prop.data.map((prop, key) => {
-                    return (
-                      <TableCell className={classes.tableCell} key={key}>
-                        {prop}
-                      </TableCell>
-                    );
-                  })}
+                  {prop.data && prop.data.length > 0 ?
+                    <>
+                      {prop.data.map((prop, key) => {
+                        return (
+                          <TableCell className={classes.tableCell} key={key}>
+                            {prop}
+                          </TableCell>
+                        );
+                      })}
+                    </>
+                    : <>
+                      {prop.map((prop, key) => {
+                        return (
+                          <TableCell className={classes.tableCell} key={key}>
+                            {prop}
+                          </TableCell>
+                        );
+                      })}
+                    </>
+                  }
                   <TableCell align="right" className={classes.tableCell} key={key}>
                     <Tooltip
                       id="tooltip-top"
@@ -71,17 +84,17 @@ export default function CustomTable(props) {
                       classes={{ tooltip: classes2.tooltip }}
                     >
                       <Link to={`${prop.id}`}>
-                      <IconButton
-                        aria-label={`Edit + ${prop.id}`}
-                        className={classes2.tableActionButton}
-                        onClick={() => console.log(prop[0])}
-                      >
-                        <Edit
-                          className={
-                            classes2.tableActionButtonIcon + " " + classes2.edit
-                          }
-                        />
-                      </IconButton>
+                        <IconButton
+                          aria-label={`Edit + ${prop.id}`}
+                          className={classes2.tableActionButton}
+                          onClick={() => console.log(prop[0])}
+                        >
+                          <Edit
+                            className={
+                              classes2.tableActionButtonIcon + " " + classes2.edit
+                            }
+                          />
+                        </IconButton>
                       </Link>
                     </Tooltip>
                     <Tooltip
