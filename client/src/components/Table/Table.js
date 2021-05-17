@@ -56,7 +56,7 @@ export default function CustomTable(props) {
             return (
               <>
                 <TableRow key={key} className={classes.tableBodyRow}>
-                  {prop.map((prop, key) => {
+                  {prop.data.map((prop, key) => {
                     return (
                       <TableCell className={classes.tableCell} key={key}>
                         {prop}
@@ -66,13 +66,13 @@ export default function CustomTable(props) {
                   <TableCell align="right" className={classes.tableCell} key={key}>
                     <Tooltip
                       id="tooltip-top"
-                      title="Editar"
+                      title={`Edit ${prop.id}`}
                       placement="top"
                       classes={{ tooltip: classes2.tooltip }}
                     >
-                      <Link to={`${prop[0]}`}>
+                      <Link to={`${prop.id}`}>
                       <IconButton
-                        aria-label="Edit"
+                        aria-label={`Edit + ${prop.id}`}
                         className={classes2.tableActionButton}
                         onClick={() => console.log(prop[0])}
                       >

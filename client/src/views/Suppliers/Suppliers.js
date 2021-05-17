@@ -317,7 +317,10 @@ export default function Suppliers() {
               tableHead={["ID", "Razon Social", "CUIT", "Test1", "Test2"]}
               tableData={suppliers && suppliers.length > 0 ?
                 suppliers.map((supplier, index) => {
-                  return [supplier.id, supplier.businessName, supplier.cuit, supplier.phone, supplier.CP]
+                  return {
+                    id: supplier.id,
+                    data: [supplier.id, supplier.businessName, supplier.cuit, supplier.phone, supplier.CP]
+                  }
                 })
               : null}
             />
