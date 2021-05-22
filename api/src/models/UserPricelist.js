@@ -3,9 +3,9 @@ const { DataTypes } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define('pricelist', {
-    priceListName: {
-      type: DataTypes.STRING,
+  sequelize.define('userpricelist', {
+    percentage: {
+      type: DataTypes.FLOAT,
       allowNull: false
     },
   });
