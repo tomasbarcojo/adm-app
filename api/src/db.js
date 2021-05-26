@@ -42,6 +42,9 @@ Article.belongsTo(Supplier);
 
 Client.belongsToMany(Pricelist, { through: Userpricelist });
 Pricelist.belongsToMany(Client, { through: Userpricelist });
+
+Userpricelist.belongsTo(Client)
+Userpricelist.belongsTo(Pricelist)
 // Category.belongsToMany(Article)
 // Category.belongsToMany(Article, { through: 'article_category' })
 

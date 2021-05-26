@@ -1,4 +1,4 @@
-const { Pricelist } = require('../db.js')
+const { Pricelist, User, Userpricelist, Client } = require('../db.js')
 const { Op } = require('sequelize')
 
 module.exports = {
@@ -45,5 +45,43 @@ module.exports = {
       console.log(err)
       return res.status(400).send({ message: 'Failed to create price list' })
     }
+  },
+
+  async createPriceList2(req, res) {
+    const testPricelist = await Pricelist.create({ priceListName: 'Pricelist test 1'});
+    const testClient = await Client.create({
+      businessName: 'test',
+      cuit: 'test',
+      address: 'test',
+      city: 'test',
+      CP: 'test',
+      phone: 'test',
+      altPhone: 'test',
+      pricelistId: 1,
+    });
+
+    await testClient.addPricelist(testPricelist, { through: { percentage: 12 }})
+    // const queen = await Userpricelist.create({ percentage: 10 });
+    // await amidala.addProfile(queen, { through: { Userpricelist: false } });
+    // const result = await Client.findOne({
+    //     where: { businessName: 'test222' },
+    //     include: Pricelist
+    // });
+
+    const result = await Client.findAll({
+      include: Pricelist
+    })
+    // console.log(result);
+    return res.status(200).send(result)
+  },
+
+  async test(req, res) {
+
+    // const result = await Userpricelist.findAll({
+    //   include: Pricelist
+    // })
+    const result = await Userpricelist.findAll({ include: [Client, Pricelist] });
+    // console.log(result);
+    return res.status(200).send(result)
   }
 }
