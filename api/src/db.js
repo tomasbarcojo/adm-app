@@ -2,6 +2,8 @@ require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
+const UserPricelist = require('./models/UserPricelist');
+const { ClientRequest } = require('http');
 const {  DB_USER, DB_PASSWORD, DB_HOST,} = process.env;
 
 const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/activa`, {
@@ -34,19 +36,41 @@ const { User, Supplier, Client, Pricelist, Article, Category, Userpricelist } = 
 // Aca vendrian las relaciones
 // Relaciones:
 
-Pricelist.hasMany(Client);
-Client.belongsTo(Pricelist);
 
-Article.belongsTo(Category);
-Article.belongsTo(Supplier);
+/*
+Pricelist guarda nombre 
+Userpricelist porcentaje TABLA INTERMEDIA
 
-Client.belongsToMany(Pricelist, { through: Userpricelist });
-Pricelist.belongsToMany(Client, { through: Userpricelist });
+1 CLIENTE TIENE 1 Pricelist
+N PRICELIST TIENEN M Client
 
-Userpricelist.belongsTo(Client)
-Userpricelist.belongsTo(Pricelist)
-// Category.belongsToMany(Article)
-// Category.belongsToMany(Article, { through: 'article_category' })
+id pricelist
+
+id --> Userpricelist para aplicarle los descuentos
+
+*/
+
+
+Pricelist.belongsToMany(Article, { through: Userpricelist });
+Article.belongsToMany(Pricelist, { through: Userpricelist });
+
+Pricelist.hasMany(Client, {foreignKey: 'pricelistId', sourcekey: 'id'});
+Client.belongsTo(Pricelist, {foreignKey: 'pricelistId', sourcekey: 'id'});
+
+
+
+
+// Pricelist.hasMany(Client);
+// Client.belongsTo(Pricelist);
+
+// Article.belongsTo(Category);
+// Article.belongsTo(Supplier);
+
+// Article.belongsToMany(Pricelist, { through: Userpricelist });
+// Pricelist.belongsToMany(Article, { through: Userpricelist });
+
+// Userpricelist.belongsTo(Article)
+// Userpricelist.belongsTo(Pricelist)
 
 
 module.exports = {

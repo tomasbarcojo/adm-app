@@ -1,4 +1,4 @@
-const { Pricelist, User, Userpricelist, Client } = require('../db.js')
+const { Pricelist, User, Userpricelist, Client, Article } = require('../db.js')
 const { Op } = require('sequelize')
 
 module.exports = {
@@ -49,18 +49,28 @@ module.exports = {
 
   async createPriceList2(req, res) {
     const testPricelist = await Pricelist.create({ priceListName: 'Pricelist test 1'});
-    const testClient = await Client.create({
-      businessName: 'test',
-      cuit: 'test',
-      address: 'test',
-      city: 'test',
-      CP: 'test',
-      phone: 'test',
-      altPhone: 'test',
-      pricelistId: 1,
-    });
+    await Article.create({
+      articleName: 'Articulo prueba1',
+      price: '10',
+      stock: '10',
+      image: 'asd',
+      obs: 'asd'
+    })
+    await Userpricelist.create({percentage: 10, pricelistId: 1, articleId: 1})
+    // await Userpricelist.create({percentage: 15, pricelistId: 1, articleId: 1})
+    // const testClient = await Client.create({
+    //   businessName: 'test',
+    //   cuit: 'test',
+    //   address: 'test',
+    //   city: 'test',
+    //   CP: 'test',
+    //   phone: 'test',
+    //   altPhone: 'test',
+    //   pricelistId: 1,
+    // });
 
-    await testClient.addPricelist(testPricelist, { through: { percentage: 12 }})
+
+    // await testClient.addPricelist(testPricelist, { through: { percentage: 12 }})
     // const queen = await Userpricelist.create({ percentage: 10 });
     // await amidala.addProfile(queen, { through: { Userpricelist: false } });
     // const result = await Client.findOne({
@@ -68,11 +78,11 @@ module.exports = {
     //     include: Pricelist
     // });
 
-    const result = await Client.findAll({
-      include: Pricelist
-    })
+    // const result = await Client.findAll({
+    //   include: Pricelist
+    // })
     // console.log(result);
-    return res.status(200).send(result)
+    return res.status(200).send('Hecho')
   },
 
   async test(req, res) {
@@ -85,3 +95,21 @@ module.exports = {
     return res.status(200).send(result)
   }
 }
+
+
+/* cada vez que el usuario relaliza un cambio en el listado de precio
+
+LOS LISTADOS DE PRECIO SON 1 PARA CADA CLIENTE, SI UN CLIENTE TIENE OTRO TIPO DE LISTADO SE LE CREA UN NUEVO LISTADO A ESE CLIENTE
+POR LO TANTO PUEDO TENER LISTADOS "DEFAULT" Y LISTADOS PERSONALIZADOS
+
+AHORA: DE QUE MANERA GUARDO ESOS LISTADOS?
+
+LOS DEFAULT SE CREAN Y CHAU, LUEGO AL CREAR EL CLIENTE SE DEBERIA PODER ASOCIAR ESE LISTADO DEFAULT
+CON LOS OTROS PERSONALIZADOS LO MISMO.
+
+MANERA DE GUARDAR EN BASE DE DATOS?
+1 LISTADO VA A TENER MUCHOS ARTICULOS
+MUCHOS ARTICULOS VAN A TENER MUCHOS LISTADOS
+
+
+*/
