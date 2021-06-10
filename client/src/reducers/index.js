@@ -4,6 +4,7 @@ const initialstate = {
 	clients: [],
 	pricelists: [],
 	categories: [],
+	articles: [],
 	userLogged: false,
 	notifications: []
 }
@@ -85,6 +86,20 @@ export default function rootReducer(state = initialstate, action) {
 			return {
 				...state,
 				categories: [...state.categories, action.payload]
+			};
+
+		// ARTICLE
+
+		case 'GET_ARTICLES':
+			return {
+				...state,
+				articles: action.payload
+			};
+
+		case 'CREATE_ARTICLE':
+			return {
+				...state,
+				articles: [...state.articles, action.payload]
 			};
 
 		default:

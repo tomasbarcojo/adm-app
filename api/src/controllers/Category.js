@@ -1,4 +1,6 @@
 const { Category } = require('../db.js')
+const fs = require('fs');
+const path = require('path')
 
 module.exports = {
   async getCategories(req, res) {
@@ -23,7 +25,9 @@ module.exports = {
     try {
       const category = await Category.findOne({ where: { categoryName: categoryName }})
       if (category) {
-        console.log('2')
+        fs.unlink(path.join(__dirname, `../../public/images/${image}`), function(err) {
+          if (err) throw err;
+        })
         return res.status(400).send({ message: "Category already exists", status: 400 });
       }
       const categoryData = { categoryName, image, obs };

@@ -36,42 +36,14 @@ const { User, Supplier, Client, Pricelist, Article, Category, Userpricelist } = 
 // Aca vendrian las relaciones
 // Relaciones:
 
-
-/*
-Pricelist guarda nombre 
-Userpricelist porcentaje TABLA INTERMEDIA
-
-1 CLIENTE TIENE 1 Pricelist
-N PRICELIST TIENEN M Client
-
-id pricelist
-
-id --> Userpricelist para aplicarle los descuentos
-
-*/
-
-
 Pricelist.belongsToMany(Article, { through: Userpricelist });
 Article.belongsToMany(Pricelist, { through: Userpricelist });
 
 Pricelist.hasMany(Client, {foreignKey: 'pricelistId', sourcekey: 'id'});
 Client.belongsTo(Pricelist, {foreignKey: 'pricelistId', sourcekey: 'id'});
 
-
-
-
-// Pricelist.hasMany(Client);
-// Client.belongsTo(Pricelist);
-
-// Article.belongsTo(Category);
-// Article.belongsTo(Supplier);
-
-// Article.belongsToMany(Pricelist, { through: Userpricelist });
-// Pricelist.belongsToMany(Article, { through: Userpricelist });
-
-// Userpricelist.belongsTo(Article)
-// Userpricelist.belongsTo(Pricelist)
-
+Supplier.hasMany(Article);
+Article.belongsTo(Supplier);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

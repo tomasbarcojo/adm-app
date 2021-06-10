@@ -32,16 +32,16 @@ const storage = multer.diskStorage({
 })
 const upload = multer({
 	storage,
-	// limits: { fileSize: 21000000 }, //20mb max size
-	// fileFilter: (req, file, cb) => {
-	// 	const fileTypes = /jpeg|jpg|png|PNG||/
-	// 	const mimeType = fileTypes.test(file.mimetype)
-	// 	const extName = fileTypes.test(path.extname(file.originalname))
-	// 	if (mimeType && extName) {
-	// 		return cb(null, true)
-	// 	}
-	// 	cb('Error: debe subir un archivo valido')
-	// },
+	limits: { fileSize: 21000000 }, //20mb max size
+	fileFilter: (req, file, cb) => {
+		const fileTypes = /jpeg|jpg|png|PNG||/
+		const mimeType = fileTypes.test(file.mimetype)
+		const extName = fileTypes.test(path.extname(file.originalname))
+		if (mimeType && extName) {
+			return cb(null, true)
+		}
+		cb('Error: debe subir un archivo valido')
+	},
 }).single('images');
 
 server.use(upload);

@@ -36,6 +36,7 @@ import Categories from './Categories.js'
 import alt from '../../images/producto-sin-imagen.png'
 
 import { getSuppliers } from '../../actions/suppliers'
+import { getCategories } from '../../actions/categories'
 import { createArticle } from '../../actions/article'
 import { useEffect } from "react";
 
@@ -109,12 +110,12 @@ export default function Articles() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const pricelists = [];
   const [showNew, setShowNew] = useState(false);
   const [progress, setProgress] = useState(0);
   const [files, setFiles] = useState(null);
   const [preview, setPreview] = useState(null);
   const suppliers = useSelector(state => state.suppliers)
+  const categories = useSelector(state => state.categories)
   var token = '';
   if (localStorage.length > 0) {
     token = JSON.parse(localStorage.getItem('token'));
@@ -123,25 +124,26 @@ export default function Articles() {
   }
   const [data, setData] = useState({
     articleName: '',
-    price: '',
     category: '',
+    supplier: '',
+    price: '',
     stock: '',
-    image: '',
     obs: '',
   });
 
   useEffect(() => {
     dispatch(getSuppliers(token))
+    dispatch(getCategories(token))
   }, [])
 
   const resetForm = () => {
     setData({
       ...data,
       articleName: '',
-      price: '',
       category: '',
+      supplier: '',
+      price: '',
       stock: '',
-      image: '',
       obs: '',
     })
   }
@@ -151,34 +153,44 @@ export default function Articles() {
   }
 
   const handleChange = (event) => {
-    setData({ ...data, [event.target.id]: event.target.value })
+    if (event.target.name !== "") {
+      setData({ ...data, [event.target.name]: event.target.value })
+    } else {
+      setData({ ...data, [event.target.id]: event.target.value })
+    }
   }
 
   const fileSelectedHandler = (event) => {
-    setFiles(event.target.files[0])
-    setPreview(URL.createObjectURL(event.target.files[0]))
+    if (event.target.files.length !== 0) {
+      setFiles(event.target.files[0])
+      setPreview(URL.createObjectURL(event.target.files[0]))
+    } else {
+      setPreview(null)
+    }
   }
 
-  const fileUploadHandler = (e) => {
-    console.log(files)
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault()
     const formData = new FormData();
     formData.append("images", files);
-    axios.post('http://localhost:3001/upload/uploadproductimage', formData, {
+    await axios.post('http://localhost:3001/upload/', formData, {
       onUploadProgress: ProgressEvent => {
         setProgress(ProgressEvent.loaded / ProgressEvent.total * 100)
       }
     })
       .then(img => {
-        // console.log('RESPUESTA', img.data) <======= DATO PARA MODELO DE ARTICULO
-        setData({ ...data, ['image']: img.data })
+        const dataArticle = {
+          articleName: data.articleName,
+          category: data.category,
+          supplier: data.supplier,
+          price: data.price,
+          stock: data.stock,
+          image: img.data,
+          obs: data.obs,
+        }
+        dispatch(createArticle(dataArticle, token, enqueueSnackbar, closeSnackbar))
+        resetForm()
       })
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    dispatch(createArticle(data, token, enqueueSnackbar, closeSnackbar))
-    resetForm()
   }
 
   function LinearProgressWithLabel(props) {
@@ -198,6 +210,7 @@ export default function Articles() {
 
   return (
     <>
+      <Categories />
       <Card>
         <CardHeader color="primary">
           <div className={classes.card}>
@@ -209,10 +222,10 @@ export default function Articles() {
           <>
             <form onSubmit={handleSubmit}>
               <CardBody>
-                <div class="containerForm">
-                  <div class="contentForm">
+                <div className="containerForm">
+                  <div className="contentForm">
                     <GridContainer>
-                      <GridItem xs={12} sm={12} md={12} justifyContent='center' alignContent='center' alignItems='center'>
+                      <GridItem xs={12} sm={12} md={12}>
                         <TextField
                           className={classes.input}
                           label="Nombre"
@@ -227,20 +240,21 @@ export default function Articles() {
                         <FormControl className={classes.formControl}>
                           <InputLabel>Categoria</InputLabel>
                           <Select
+                            name="category"
                             onChange={handleChange}
                             fullWidth={true}
-                            // className={classes.input}
-                            menu
+                            value={data.category ? data.category : ''}
                           >
                             {
-                              pricelists && pricelists.length > 0 ?
-                                pricelists.map(pricelist => {
+                              categories && categories.length > 0 ?
+                                categories.map(category => {
                                   return (
-                                    <MenuItem value={pricelist.id}>{pricelist.priceListName}</MenuItem>
+                                    <MenuItem key={category.id} value={category.id}>{category.categoryName}</MenuItem>
                                   )
                                 })
-                                :
-                                <MenuItem disabled value={0}>No existen categorias</MenuItem>
+                                : <>
+                                  <MenuItem disabled key={0} value={0}>No existen categorias</MenuItem>
+                                </>
                             }
                           </Select>
                         </FormControl>
@@ -249,20 +263,20 @@ export default function Articles() {
                         <FormControl className={classes.formControl}>
                           <InputLabel>Proveedor</InputLabel>
                           <Select
+                            name="supplier"
                             onChange={handleChange}
                             fullWidth={true}
-                            // className={classes.input}
-                            menu
+                            value={data.supplier ? data.supplier : ''}
                           >
                             {
                               suppliers && suppliers.length > 0 ?
                                 suppliers.map(suppliers => {
                                   return (
-                                    <MenuItem value={suppliers.id}>{suppliers.businessName}</MenuItem>
+                                    <MenuItem key={suppliers.id} value={suppliers.id}>{suppliers.businessName}</MenuItem>
                                   )
                                 })
                                 :
-                                <MenuItem disabled value={0}>No existen proveedores</MenuItem>
+                                <MenuItem disabled key={0} value={0}>No existen proveedores</MenuItem>
                             }
                           </Select>
                         </FormControl>
@@ -273,7 +287,7 @@ export default function Articles() {
                         <TextField
                           className={classes.input}
                           label="Precio"
-                          id="cost"
+                          id="price"
                           onChange={handleChange}
                           fullWidth
                           autoComplete='off'
@@ -311,7 +325,7 @@ export default function Articles() {
                     </GridContainer>
                   </div>
 
-                  <div class="contentImage">
+                  <div className="contentImage">
                     <h5>Imagen</h5>
 
                     {preview ?
@@ -324,12 +338,13 @@ export default function Articles() {
                       style={{ marginTop: '20px' }}
                       type='file'
                       onChange={fileSelectedHandler}
+                      accept="image/*"
                     />
 
-                    <button
+                    {/* <button
                       onClick={fileUploadHandler}>
                       Upload
-                  </button>
+                  </button> */}
 
                     {progress > 0 ?
                       <>
@@ -351,8 +366,7 @@ export default function Articles() {
         }
       </Card>
       {/* // </GridItem> */}
-      <Categories />
-      
+
     </>
   );
 }

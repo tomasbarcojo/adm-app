@@ -165,12 +165,12 @@ export default function Articles() {
     })
       .then(img => {
         setData({ ...data, 'image': img.data })
-        const dataImage = {
+        const dataCategory = {
           categoryName: data.categoryName,
           image: img.data,
           obs: data.obs
         }
-        dispatch(createCategory(dataImage, token, enqueueSnackbar, closeSnackbar))
+        dispatch(createCategory(dataCategory, token, enqueueSnackbar, closeSnackbar))
         resetForm()
       })
   }
@@ -202,10 +202,10 @@ export default function Articles() {
         <>
           <form onSubmit={handleSubmit}>
             <CardBody>
-              <div class="containerForm">
-                <div class="contentForm">
+              <div className="containerForm">
+                <div className="contentForm">
                   <GridContainer>
-                    <GridItem xs={12} sm={12} md={12} justifyContent='center' alignContent='center' alignItems='center'>
+                    <GridItem xs={12} sm={12} md={12}>
                       <TextField
                         className={classes.input}
                         label="Nombre"
@@ -233,7 +233,7 @@ export default function Articles() {
                   </GridContainer>
                 </div>
 
-                <div class="contentImage">
+                <div className="contentImage">
                   <h5>Imagen</h5>
 
                   {preview ?
