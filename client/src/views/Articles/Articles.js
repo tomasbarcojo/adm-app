@@ -181,13 +181,14 @@ export default function Articles() {
       .then(img => {
         const dataArticle = {
           articleName: data.articleName,
-          category: data.category,
-          supplier: data.supplier,
+          categoryId: data.categoryId,
+          supplierId: data.supplierId,
           price: data.price,
           stock: data.stock,
           image: img.data,
           obs: data.obs,
         }
+        console.log(dataArticle)
         dispatch(createArticle(dataArticle, token, enqueueSnackbar, closeSnackbar))
         resetForm()
       })
@@ -233,17 +234,17 @@ export default function Articles() {
                           onChange={handleChange}
                           fullWidth
                           autoComplete='off'
-                          value={data.name}
+                          value={data.articleName}
                         />
                       </GridItem>
                       <GridItem xs={12} sm={12} md={12}>
                         <FormControl className={classes.formControl}>
                           <InputLabel>Categoria</InputLabel>
                           <Select
-                            name="category"
+                            name="categoryId"
                             onChange={handleChange}
                             fullWidth={true}
-                            value={data.category ? data.category : ''}
+                            value={data.categoryId ? data.categoryId : ''}
                           >
                             {
                               categories && categories.length > 0 ?
@@ -263,10 +264,10 @@ export default function Articles() {
                         <FormControl className={classes.formControl}>
                           <InputLabel>Proveedor</InputLabel>
                           <Select
-                            name="supplier"
+                            name="supplierId"
                             onChange={handleChange}
                             fullWidth={true}
-                            value={data.supplier ? data.supplier : ''}
+                            value={data.supplierId ? data.supplierId : ''}
                           >
                             {
                               suppliers && suppliers.length > 0 ?
@@ -292,7 +293,7 @@ export default function Articles() {
                           fullWidth
                           autoComplete='off'
                           type='number'
-                          value={data.phone}
+                          value={data.price}
                         />
                       </GridItem>
                       <GridItem xs={12} sm={12} md={6}>
@@ -304,7 +305,7 @@ export default function Articles() {
                           fullWidth
                           autoComplete='off'
                           type='number'
-                          value={data.altPhone}
+                          value={data.stock}
                         />
                       </GridItem>
                     </GridContainer>
@@ -340,11 +341,6 @@ export default function Articles() {
                       onChange={fileSelectedHandler}
                       accept="image/*"
                     />
-
-                    {/* <button
-                      onClick={fileUploadHandler}>
-                      Upload
-                  </button> */}
 
                     {progress > 0 ?
                       <>

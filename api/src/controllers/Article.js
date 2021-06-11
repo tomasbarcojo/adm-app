@@ -15,8 +15,11 @@ module.exports = {
   },
 
   async createArticle(req, res) {
-    const { articleName, category, supplier, price, stock, image, obs } = req.body
-    if (!articleName || !category || !supplier || !price || !stock || !image || !obs) {
+    const { articleName, categoryId, supplierId, price, stock, image, obs } = req.body
+    if (!articleName || !categoryId || !supplierId || !price || !stock || !image || !obs) {
+      fs.unlink(path.join(__dirname, `../../public/images/${image}`), function(err) {
+        if (err) throw err;
+      })
       return res.status(400).send({ message: 'Necesary data required', status: 400 })
     }
     try {
@@ -27,7 +30,7 @@ module.exports = {
         })
         return res.status(400).send({ message: "Article already exists", status: 400 });
       }
-      const articleData = { articleName, category, supplier, price, stock, image, obs };
+      const articleData = { articleName, categoryId, supplierId, price, stock, image, obs };
       const newArticle = await Article.create(articleData)
       return res.status(201).send({ newArticle, status: 201 })
     } catch (err) {

@@ -21,6 +21,8 @@ import CardBody from "../../components/Card/CardBody.js";
 import Button from "../../components/CustomButtons/Button.js";
 import CardFooter from "../../components/Card/CardFooter.js";
 
+import { getArticles } from '../../actions/article'
+
 const useStyles = makeStyles((theme) => ({
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -80,6 +82,7 @@ export default function PriceLists() {
     token = JSON.parse(sessionStorage.getItem('token'));
   }
   const pricelists = useSelector(state => state.pricelists);
+  const articles = useSelector(state => state.articles)
   const [showNew, setShowNew] = useState(true);
   const [data, setData] = useState({
     priceListName: '',
@@ -88,6 +91,7 @@ export default function PriceLists() {
 
   useEffect(() => {
     dispatch(getPriceList(token)); //cambiar
+    dispatch(getArticles(token));
   }, [url.pathname]);
 
   const resetForm = () => {
@@ -153,42 +157,26 @@ export default function PriceLists() {
                   </GridContainer>
                   <h5>Articulos:</h5>
 
-                  {/* {articles.map...} */}
-                  <div className={classes.articleRow}>
-                    <GridContainer>
-                      {/* <div style={{}}> */}
-                      <GridItem xs={12} sm={12} md={9}>
-                        <label>Test</label>
-                      </GridItem>
-                      {/* </div> */}
-                      <GridItem xs={12} sm={12} md={3}>
-                        <input className={classes.articleInput} />
-                      </GridItem>
-                    </GridContainer>
-                  </div>
-
-                  <div className={classes.articleRow}>
-                    <GridContainer>
-                      <GridItem xs={12} sm={12} md={9}>
-                        <label>eNameNameNameNameNameeNameNameameNameNameNameeNameNameNameNameNameNameNameNameeNameNameNameNameNameNameNameNameeNameNameNameNameNameNameNameNameeNameNameNameNameNameNameNameNameeNameNameNameNameNNameNameNameeNameNameNameNameNameeNameNameNameNameNameeNameNameNameNameName</label>
-                      </GridItem>
-                      <GridItem xs={12} sm={12} md={3}>
-                        <input className={classes.articleInput} />
-                      </GridItem>
-                    </GridContainer>
-                  </div>
-
-                  <div className={classes.articleRow}>
-                    <GridContainer>
-                      <GridItem xs={12} sm={12} md={9}>
-                        <label>eNameNameNameNameNameeNameNameNameNameNameeNameNameNameNameNameeNameNameNameNameNameeNameNameNameNameName</label>
-                      </GridItem>
-                      <GridItem xs={12} sm={12} md={3}>
-                        <input className={classes.articleInput} />
-                      </GridItem>
-                    </GridContainer>
-                  </div>
-
+                  {
+                    articles && articles.length > 0 ?
+                      articles.map((article, index) => {
+                        // console.log(article)
+                        <>
+                        {/* <div className={classes.articleRow}>
+                          <GridContainer>
+                            <GridItem xs={12} sm={12} md={9}>
+                              <label>{article.articleName}</label>
+                            </GridItem>
+                            <GridItem xs={12} sm={12} md={3}>
+                              <input className={classes.articleInput} />
+                            </GridItem>
+                          </GridContainer>
+                        </div> */}
+                        <h1>{article.articleName}</h1>
+                        </>
+                      })
+                      : <h6>No hay</h6>
+                  }
 
                 </CardBody>
                 <CardFooter>

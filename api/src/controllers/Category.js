@@ -19,7 +19,9 @@ module.exports = {
   async createCategory(req, res) {
     const { categoryName, image, obs } = req.body
     if (!categoryName || !image) {
-      console.log('1')
+      fs.unlink(path.join(__dirname, `../../public/images/${image}`), function(err) {
+        if (err) throw err;
+      })
       return res.status(400).send({ message: 'Necesary data required', status: 400 })
     }
     try {

@@ -43,3 +43,25 @@ export const createArticle = (data, token, enqueueSnackbar, closeSnackbar) => as
         console.log(err);
     }
 }
+
+export const getArticles = (token) => async dispatch => {
+    try {
+        await fetch(`http://${IP}:3001/article`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': token
+            },
+        })
+            .then(data => data.json())
+            .then(res => {
+                if (res.status === 200) {
+                    dispatch({
+                        type: 'GET_ARTICLES',
+                        payload: res.articles
+                    })
+                }
+            })
+    } catch (err) {
+        console.log(err)
+    }
+}

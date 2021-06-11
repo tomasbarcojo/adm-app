@@ -45,6 +45,9 @@ Client.belongsTo(Pricelist, {foreignKey: 'pricelistId', sourcekey: 'id'});
 Supplier.hasMany(Article);
 Article.belongsTo(Supplier);
 
+Category.hasMany(Article);
+Article.belongsTo(Category);
+
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize,     // para importart la conexión { conn } = require('./db.js');
