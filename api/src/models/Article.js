@@ -22,7 +22,7 @@ module.exports = (sequelize) => {
     },
     obs: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: true,
     }
   });
 };

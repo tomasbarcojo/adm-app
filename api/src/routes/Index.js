@@ -7,6 +7,7 @@ const client = require('./Client')
 const upload = require('./UploadImage')
 const article = require('./Article')
 const category = require('./Category')
+const seed = require('./Seed')
 
 const router = Router();
 
@@ -20,5 +21,6 @@ router.use('/client', client);
 router.use('/upload', upload);
 router.use('/article', article);
 router.use('/category', category);
+router.use('/seed', seed);
 
 module.exports = router;

@@ -14,6 +14,7 @@ module.exports = (sequelize) => {
     },
     obs: {
       type: DataTypes.STRING,
+      allowNull: true,
     }
   });
 };
