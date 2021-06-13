@@ -159,23 +159,23 @@ export default function PriceLists() {
 
                   {
                     articles && articles.length > 0 ?
-                      articles.map((article, index) => {
-                        // console.log(article)
-                        <>
-                        {/* <div className={classes.articleRow}>
-                          <GridContainer>
-                            <GridItem xs={12} sm={12} md={9}>
-                              <label>{article.articleName}</label>
-                            </GridItem>
-                            <GridItem xs={12} sm={12} md={3}>
-                              <input className={classes.articleInput} />
-                            </GridItem>
-                          </GridContainer>
-                        </div> */}
-                        <h1>{article.articleName}</h1>
-                        </>
+                      articles.map((article) => {
+                        return (
+                          <>
+                            <div key={article.id} className={classes.articleRow}>
+                              <GridContainer>
+                                <GridItem xs={12} sm={12} md={9}>
+                                  <label>{article.articleName}</label>
+                                </GridItem>
+                                <GridItem xs={12} sm={12} md={3}>
+                                  <input type="number" className={classes.articleInput}/>
+                                </GridItem>
+                              </GridContainer>
+                            </div>
+                          </>
+                        )
                       })
-                      : <h6>No hay</h6>
+                      : <h6>No existen articulos</h6>
                   }
 
                 </CardBody>
