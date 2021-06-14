@@ -84,10 +84,9 @@ export default function PriceLists() {
   const pricelists = useSelector(state => state.pricelists);
   const articles = useSelector(state => state.articles)
   const [showNew, setShowNew] = useState(true);
-  const [data, setData] = useState({
-    priceListName: '',
-    percentage: '',
-  });
+  const [priceListName, setpriceListName] = useState('')
+  const [data, setData] = useState([])
+  const [percentage, setPercentage] = useState([])
 
   useEffect(() => {
     dispatch(getPriceList(token)); //cambiar
@@ -95,19 +94,15 @@ export default function PriceLists() {
   }, [url.pathname]);
 
   const resetForm = () => {
-    setData({
-      ...data,
-      priceListName: '',
-      percentage: '',
-    })
+
   };
 
   const handleNewClient = () => { //cambiar
     setShowNew(!showNew)
   };
 
-  const handleChange = (event) => {
-    setData({ ...data, [event.target.id]: event.target.value })
+  const handleChangepriceListName = (event) => {
+    setpriceListName(event.target.value)
   };
 
   const handleSubmit = (e) => {
@@ -115,6 +110,40 @@ export default function PriceLists() {
     dispatch(addPriceList(data, token, enqueueSnackbar, closeSnackbar)); //cambiar
     resetForm();
   };
+
+  const handleChangeInput = (event) => {
+
+    const newData = {
+      articleId: event.target.id,
+      percentage: event.target.value
+    }
+    const newData2 = {
+      articleId: event.target.id,
+      percentage: event.target.value
+    }
+    setData([...data, newData])
+    setData([...data, newData2])
+
+    if (data && data.length > 0) {
+      var arrayData = data
+      console.log(arrayData)
+    }
+
+
+    // if (data && data.length > 0) {
+    //   for (var i = 0; i < data.length; i++) {
+    //     if (data.articleId === event.target.id) {
+    //       data.percentage = event.target.value
+    //     } else {
+    //       const newData = {
+    //         articleId: event.target.id,
+    //         percentage: event.target.value
+    //       }
+    //       setData([...data, newData])
+    //     }
+    //   }
+    // }
+  }
 
   return (
     <GridContainer>
@@ -136,24 +165,12 @@ export default function PriceLists() {
                         className={classes.input}
                         label="Nombre del listado"
                         id="priceListName"
-                        onChange={handleChange}
+                        onChange={handleChangepriceListName}
                         fullWidth
                         autoComplete='off'
-                        value={data.priceListName}
+                        value={priceListName}
                       />
                     </GridItem>
-                    {/* <GridItem xs={12} sm={12} md={5}>
-                      <TextField
-                        className={classes.input}
-                        label="Porcentaje a aplicar (general)"
-                        id="percentage"
-                        onChange={handleChange}
-                        fullWidth
-                        autoComplete='off'
-                        type='number'
-                        value={data.percentage}
-                      />
-                    </GridItem> */}
                   </GridContainer>
                   <h5>Articulos:</h5>
 
@@ -168,7 +185,7 @@ export default function PriceLists() {
                                   <label>{article.articleName}</label>
                                 </GridItem>
                                 <GridItem xs={12} sm={12} md={3}>
-                                  <input type="number" className={classes.articleInput}/>
+                                  <input id={article.id} onChange={handleChangeInput} type="number" className={classes.articleInput}/>
                                 </GridItem>
                               </GridContainer>
                             </div>
