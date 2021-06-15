@@ -17,8 +17,8 @@ module.exports = {
 
   async createPriceList(req, res) {
     try {
-      const { priceListName, percentage } = req.body
-      if (!priceListName || !percentage) {
+      const { priceListName, data } = req.body
+      if (!priceListName || !data) {
         return res.status(400).send({ message: 'Necesary data required', status: 400 })
       }
       // const pricelist = await Pricelist.findOne({
@@ -38,12 +38,17 @@ module.exports = {
       // if (pricelist) {
       //   return res.status(400).send({ message: "Price list already exists", status: 400 });
       // }
-      const priceListData = { priceListName, percentage };
-      const newPriceList = await Pricelist.create(priceListData)
-      return res.status(201).send({ newPriceList, status: 201 })
+      await Pricelist.create({pricelistName: priceListName});
+      const idPricelist = Pricelist.findOne({
+        where: { priceListName: priceListName}
+      })
+      for (var i = 0; i < data.length; i++) {
+        Userpricelist.create({percentage: data.percentage, pricelistId: idPricelist.id, articleId: data.articleId})
+      }
+      return res.status(201).send({ newPriceList, status: 201 });
     } catch (err) {
-      console.log(err)
-      return res.status(400).send({ message: 'Failed to create price list' })
+      console.log(err);
+      return res.status(400).send({ message: 'Failed to create price list' });
     }
   },
 

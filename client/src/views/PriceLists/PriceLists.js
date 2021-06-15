@@ -85,11 +85,10 @@ export default function PriceLists() {
   const articles = useSelector(state => state.articles)
   const [showNew, setShowNew] = useState(true);
   const [priceListName, setpriceListName] = useState('')
-  const [data, setData] = useState([])
-  const [percentage, setPercentage] = useState([])
+  const data = []
 
   useEffect(() => {
-    dispatch(getPriceList(token)); //cambiar
+    dispatch(getPriceList(token));
     dispatch(getArticles(token));
   }, [url.pathname]);
 
@@ -97,7 +96,7 @@ export default function PriceLists() {
 
   };
 
-  const handleNewClient = () => { //cambiar
+  const handleNewClient = () => { 
     setShowNew(!showNew)
   };
 
@@ -107,42 +106,33 @@ export default function PriceLists() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addPriceList(data, token, enqueueSnackbar, closeSnackbar)); //cambiar
+    dispatch(addPriceList(priceListName, data, token, enqueueSnackbar, closeSnackbar));
     resetForm();
   };
 
   const handleChangeInput = (event) => {
-
-    const newData = {
-      articleId: event.target.id,
-      percentage: event.target.value
+    var changeMade = false
+    if (data.length > 0) {
+      data.map(el => {
+        if (el.articleId === event.target.id) {
+          el.percentage = event.target.value;
+          changeMade = true;
+        }
+      })
+      if (!changeMade) {
+        const newData = {
+          articleId: event.target.id,
+          percentage: event.target.value
+        }
+        data.push(newData)
+      }
+    } else {
+      const newData = {
+        articleId: event.target.id,
+        percentage: event.target.value
+      }
+      data.push(newData)
     }
-    const newData2 = {
-      articleId: event.target.id,
-      percentage: event.target.value
-    }
-    setData([...data, newData])
-    setData([...data, newData2])
-
-    if (data && data.length > 0) {
-      var arrayData = data
-      console.log(arrayData)
-    }
-
-
-    // if (data && data.length > 0) {
-    //   for (var i = 0; i < data.length; i++) {
-    //     if (data.articleId === event.target.id) {
-    //       data.percentage = event.target.value
-    //     } else {
-    //       const newData = {
-    //         articleId: event.target.id,
-    //         percentage: event.target.value
-    //       }
-    //       setData([...data, newData])
-    //     }
-    //   }
-    // }
   }
 
   return (
@@ -178,18 +168,16 @@ export default function PriceLists() {
                     articles && articles.length > 0 ?
                       articles.map((article) => {
                         return (
-                          <>
-                            <div key={article.id} className={classes.articleRow}>
-                              <GridContainer>
-                                <GridItem xs={12} sm={12} md={9}>
-                                  <label>{article.articleName}</label>
-                                </GridItem>
-                                <GridItem xs={12} sm={12} md={3}>
-                                  <input id={article.id} onChange={handleChangeInput} type="number" className={classes.articleInput}/>
-                                </GridItem>
-                              </GridContainer>
-                            </div>
-                          </>
+                          <div key={article.id} className={classes.articleRow}>
+                            <GridContainer>
+                              <GridItem xs={12} sm={12} md={9}>
+                                <label>{article.articleName}</label>
+                              </GridItem>
+                              <GridItem xs={12} sm={12} md={3}>
+                                <input id={article.id} onChange={handleChangeInput} type="number" className={classes.articleInput} />
+                              </GridItem>
+                            </GridContainer>
+                          </div>
                         )
                       })
                       : <h6>No existen articulos</h6>

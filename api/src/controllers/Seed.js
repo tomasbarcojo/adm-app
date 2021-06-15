@@ -30,6 +30,14 @@ module.exports = {
             categoryId: 1,
             supplierId: 1
         })
+        Article.create({
+            articleName: 'Prueba articulo 2',
+            price: '1000',
+            stock: '10',
+            image: '8719',
+            categoryId: 1,
+            supplierId: 1
+        })
         res.send('LISTO')
       }
 }
