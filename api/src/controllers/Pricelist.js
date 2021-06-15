@@ -38,7 +38,13 @@ module.exports = {
       // if (pricelist) {
       //   return res.status(400).send({ message: "Price list already exists", status: 400 });
       // }
-      await Pricelist.create({pricelistName: priceListName});
+      await Pricelist.create({pricelistName: priceListName}).complete(function(err, result) {
+        if(err) {
+            callback(0);
+        } else {
+            callback(result.id);    // This is generate primary key.
+        }
+    })
       const idPricelist = Pricelist.findOne({
         where: { priceListName: priceListName}
       })
