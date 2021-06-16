@@ -106,7 +106,11 @@ export default function PriceLists() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addPriceList(priceListName, data, token, enqueueSnackbar, closeSnackbar));
+    const dataObj = {
+      priceListName: priceListName,
+      data: data
+    }
+    dispatch(addPriceList(dataObj, token, enqueueSnackbar, closeSnackbar));
     resetForm();
   };
 

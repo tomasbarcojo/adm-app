@@ -1,14 +1,14 @@
 const server = require('express').Router()
 const authenticate = require('../utils/Auth')
-const { getPriceLists, createPriceList, createPriceList2, test } = require('../controllers/Pricelist')
+const { getPriceLists, createPriceList, createPriceList2, getUserPriceLists } = require('../controllers/Pricelist')
 
 server.get('/', authenticate, getPriceLists)
 
-server.post('/createpricelist', authenticate, createPriceList)
+server.post('/createpricelist', /*authenticate,*/ createPriceList)
 
 server.post('/createpricelist2', /*authenticate,*/ createPriceList2) //test
 
-server.post('/createpricelist3', /*authenticate,*/ test) //test
+server.get('/createpricelist3', /*authenticate,*/ getUserPriceLists) //test
 
 // server.get('/logout', userLogout)
 

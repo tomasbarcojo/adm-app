@@ -38,20 +38,13 @@ module.exports = {
       // if (pricelist) {
       //   return res.status(400).send({ message: "Price list already exists", status: 400 });
       // }
-      await Pricelist.create({pricelistName: priceListName}).complete(function(err, result) {
-        if(err) {
-            callback(0);
-        } else {
-            callback(result.id);    // This is generate primary key.
+      const pepe = await Pricelist.create({priceListName: priceListName}).then(result => {
+        for (var i = 0; i < data.length; i++) {
+          Userpricelist.create({percentage: data[i].percentage, pricelistId: result.id, articleId: data[i].articleId})
         }
-    })
-      const idPricelist = Pricelist.findOne({
-        where: { priceListName: priceListName}
-      })
-      for (var i = 0; i < data.length; i++) {
-        Userpricelist.create({percentage: data.percentage, pricelistId: idPricelist.id, articleId: data.articleId})
-      }
-      return res.status(201).send({ newPriceList, status: 201 });
+      });
+      return res.status(201).send({message: "todo ok", status: 201})
+      // si es necesario puedo crear un array y pushear los elementos userpricelist creados para despues devolverlos
     } catch (err) {
       console.log(err);
       return res.status(400).send({ message: 'Failed to create price list' });
@@ -96,13 +89,9 @@ module.exports = {
     return res.status(200).send('Hecho')
   },
 
-  async test(req, res) {
-
-    // const result = await Userpricelist.findAll({
-    //   include: Pricelist
-    // })
-    const result = await Userpricelist.findAll({ include: [Client, Pricelist] });
-    // console.log(result);
+  async getUserPriceLists(req, res) {
+    const result = await Userpricelist.findAll({ include: [Article, Pricelist] });
+    // const result = await Userpricelist.findAll();
     return res.status(200).send(result)
   }
 }

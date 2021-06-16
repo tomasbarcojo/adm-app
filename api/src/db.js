@@ -48,6 +48,11 @@ Article.belongsTo(Supplier);
 Category.hasMany(Article);
 Article.belongsTo(Category);
 
+// Article.hasMany(Userpricelist); //relacion para usar el include al hacer get en Userpricelist
+Userpricelist.belongsTo(Article); //relacion para usar el include al hacer get en Userpricelist
+// Pricelist.hasMany(Userpricelist); //relacion para usar el include al hacer get en Userpricelist
+Userpricelist.belongsTo(Pricelist); //relacion para usar el include al hacer get en Userpricelist
+
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize,     // para importart la conexión { conn } = require('./db.js');
