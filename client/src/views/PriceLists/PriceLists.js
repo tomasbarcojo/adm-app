@@ -178,7 +178,7 @@ export default function PriceLists() {
                                 <label>{article.articleName}</label>
                               </GridItem>
                               <GridItem xs={12} sm={12} md={3}>
-                                <input id={article.id} onChange={handleChangeInput} type="number" className={classes.articleInput} />
+                                <input id={article.id} onChange={handleChangeInput} type="number" className={classes.articleInput} defaultValue={100}/>
                               </GridItem>
                             </GridContainer>
                           </div>
@@ -206,7 +206,7 @@ export default function PriceLists() {
               Listado de precios
             </p>
           </CardHeader>
-          <CardBody>
+          {/* <CardBody>
             {pricelists && pricelists.length > 0 ?
               <Table
                 tableHeaderColor="primary"
@@ -219,7 +219,7 @@ export default function PriceLists() {
               />
               : <h5 style={{ display: "flex", justifyContent: "center" }}>No existen listados de precios</h5>
             }
-          </CardBody>
+          </CardBody> */}
         </Card>
       </GridItem>
     </GridContainer>
