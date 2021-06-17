@@ -69,20 +69,16 @@ export default function rootReducer(state = initialstate, action) {
 			};
 
 		case 'CREATE_PRICELIST': {
-			var prueba = []
+			var newArr = state.pricelists
 			for (const el of action.payload) {
-				prueba = [...state.pricelists, el]
+				newArr.push(el)
 			}
-			
 			return {
 				...state,
-				pricelists: prueba
+				pricelists: newArr
 			};
 		}
-		// return {
-		// 	...state,
-		// 	pricelists: action.payload.length
-		// }
+
 		// CATEGORY
 
 		case 'GET_CATEGORIES':

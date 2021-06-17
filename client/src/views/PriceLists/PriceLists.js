@@ -11,10 +11,23 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+
 // core components
 import GridItem from "../../components/Grid/GridItem.js";
 import GridContainer from "../../components/Grid/GridContainer.js";
-import Table from "../../components/Table/Table.js";
+// import Table from "../../components/Table/Table.js";
 import Card from "../../components/Card/Card.js";
 import CardHeader from "../../components/Card/CardHeader.js";
 import CardBody from "../../components/Card/CardBody.js";
@@ -86,6 +99,7 @@ export default function PriceLists() {
   const [showNew, setShowNew] = useState(true);
   const [priceListName, setpriceListName] = useState('')
   const data = []
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     dispatch(getPriceList(token));
@@ -96,7 +110,7 @@ export default function PriceLists() {
 
   };
 
-  const handleNewClient = () => { 
+  const handleNewClient = () => {
     setShowNew(!showNew)
   };
 
@@ -178,7 +192,7 @@ export default function PriceLists() {
                                 <label>{article.articleName}</label>
                               </GridItem>
                               <GridItem xs={12} sm={12} md={3}>
-                                <input id={article.id} onChange={handleChangeInput} type="number" className={classes.articleInput} defaultValue={100}/>
+                                <input id={article.id} onChange={handleChangeInput} type="number" className={classes.articleInput} defaultValue={100} />
                               </GridItem>
                             </GridContainer>
                           </div>
@@ -206,20 +220,10 @@ export default function PriceLists() {
               Listado de precios
             </p>
           </CardHeader>
-          {/* <CardBody>
-            {pricelists && pricelists.length > 0 ?
-              <Table
-                tableHeaderColor="primary"
-                tableHead={["Nombre", "Porcentaje"]}
-                tableData={pricelists && pricelists.length > 0 ?
-                  pricelists.map((pricelist, index) => {
-                    return [pricelist.priceListName, pricelist.percentage + " %"]
-                  })
-                  : null}
-              />
-              : <h5 style={{ display: "flex", justifyContent: "center" }}>No existen listados de precios</h5>
-            }
-          </CardBody> */}
+          <CardBody>
+            
+            
+          </CardBody>
         </Card>
       </GridItem>
     </GridContainer>

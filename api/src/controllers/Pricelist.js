@@ -19,17 +19,18 @@ module.exports = {
     try {
       const { priceListName, data } = req.body;
       if (!priceListName || !data) return res.status(400).send({ message: 'Necesary data required', status: 400 });
-      let createdUPL = [];
-      let arrData = [];
+      const ifExistPL = await Pricelist.findOne({ where: { priceListName: priceListName } });
+      if (ifExistPL) {
+        return res.status(400).send({ message: "Price list already exists", status: 400 });
+      }
       const result = await Pricelist.create({ priceListName: priceListName });
+      let createdUPL = [];
       for (const e of data) {
         const item = await Userpricelist.create({ percentage: e.percentage, pricelistId: result.id, articleId: e.articleId });
         createdUPL.push(item);
       }
-      for (const e of createdUPL) {
-        const item = await Userpricelist.findAll({ where: { pricelistId: e.pricelistId }, include: [Article, Pricelist] });
-        arrData.push(item)
-      }
+      const pricelistId = createdUPL[0].pricelistId
+      const arrData = await Userpricelist.findAll({where: {pricelistId: pricelistId}, include: [Article, Pricelist] });
       return res.status(201).send({ arrData, status: 201 })
     } catch (err) {
       console.log(err);
