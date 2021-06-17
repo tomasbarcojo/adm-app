@@ -2,14 +2,14 @@ const { User, Supplier, Category, Article } = require('../db.js')
 
 module.exports = {
     async Seed (req, res) {
-        User.create({
+        await User.create({
             firstName: 'Tomas',
             lastName: 'Barcojo',
             email: 'tomasbarcojo@gmail.com',
             username: 'tomi',
             password: 'tomasito15'
         });
-        Supplier.create({
+        await Supplier.create({
             businessName: 'Activa SRL',
             cuit: '30707651926',
             phone: '3424663535',
@@ -18,11 +18,11 @@ module.exports = {
             CP: '3000',
             bankaccout1: '519925-12'
         });
-        Category.create({
+        await Category.create({
             categoryName: 'Celulares',
             image: '54',
         });
-        Article.create({
+        await Article.create({
             articleName: 'Prueba articulo 1',
             price: '1000',
             stock: '10',
@@ -30,7 +30,7 @@ module.exports = {
             categoryId: 1,
             supplierId: 1
         })
-        Article.create({
+        await Article.create({
             articleName: 'Prueba articulo 2',
             price: '1000',
             stock: '10',
@@ -38,6 +38,6 @@ module.exports = {
             categoryId: 1,
             supplierId: 1
         })
-        res.send('LISTO')
+        return res.send('LISTO')
       }
 }

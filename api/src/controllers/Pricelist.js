@@ -16,38 +16,21 @@ module.exports = {
   },
 
   async createPriceList(req, res) {
-    var sendData = {}
     try {
-      const { priceListName, data } = req.body
-      if (!priceListName || !data) {
-        return res.status(400).send({ message: 'Necesary data required', status: 400 })
+      const { priceListName, data } = req.body;
+      if (!priceListName || !data) return res.status(400).send({ message: 'Necesary data required', status: 400 });
+      let createdUPL = [];
+      let arrData = [];
+      const result = await Pricelist.create({ priceListName: priceListName });
+      for (const e of data) {
+        const item = await Userpricelist.create({ percentage: e.percentage, pricelistId: result.id, articleId: e.articleId });
+        createdUPL.push(item);
       }
-      // const pricelist = await Pricelist.findOne({
-      //   where: {
-      //     [Op.or]: [
-      //       {
-      //         priceListName: {
-      //           [Op.iLike]: `%${priceListName}%`,
-      //         },
-      //       },
-      //       {
-      //         percentage: percentage,
-      //       },
-      //     ],
-      //   },
-      // })
-      // if (pricelist) {
-      //   return res.status(400).send({ message: "Price list already exists", status: 400 });
-      // }
-      await Pricelist.create({ priceListName: priceListName }).then(result => {
-        // for (var i = 0; i < data.length; i++) {
-        //   Userpricelist.create({ percentage: data[i].percentage, pricelistId: result.id, articleId: data[i].articleId })
-        // }
-        const pepe = Userpricelist.bulkCreate(data, {pricelistId: result.id})
-        // sendData = Userpricelist.findAll({where: {pricelistId: result.id}})
-      });
-      return res.status(201).send({ pepe, status: 201 })
-      // si es necesario puedo crear un array y pushear los elementos userpricelist creados para despues devolverlos
+      for (const e of createdUPL) {
+        const item = await Userpricelist.findAll({ where: { pricelistId: e.pricelistId }, include: [Article, Pricelist] });
+        arrData.push(item)
+      }
+      return res.status(201).send({ arrData, status: 201 })
     } catch (err) {
       console.log(err);
       return res.status(400).send({ message: 'Failed to create price list' });
