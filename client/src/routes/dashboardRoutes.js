@@ -87,7 +87,7 @@ const dashboardRoutes = [
       path: "/profile",
       name: "Perfil",
       notSideBar: true,
-      icon: Language,
+      // icon: Language,
       component: RTLPage,
       layout: "/admin"
     },
@@ -95,7 +95,15 @@ const dashboardRoutes = [
       path: "/settings",
       name: "Ajustes",
       notSideBar: true,
-      icon: Language,
+      // icon: Language,
+      // component: RTLPage,
+      layout: "/admin"
+    },
+    {
+      path: '/editpricelist',
+      name: "Editar listado de precio",
+      notSideBar: true,
+      // icon: Language,
       // component: RTLPage,
       layout: "/admin"
     },

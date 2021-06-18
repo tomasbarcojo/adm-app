@@ -13,7 +13,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
-import Table from '@material-ui/core/Table';
+// import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -27,7 +27,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 // core components
 import GridItem from "../../components/Grid/GridItem.js";
 import GridContainer from "../../components/Grid/GridContainer.js";
-// import Table from "../../components/Table/Table.js";
+import Table from "../../components/Table/Table.js";
 import Card from "../../components/Card/Card.js";
 import CardHeader from "../../components/Card/CardHeader.js";
 import CardBody from "../../components/Card/CardBody.js";
@@ -96,10 +96,9 @@ export default function PriceLists() {
   }
   const pricelists = useSelector(state => state.pricelists);
   const articles = useSelector(state => state.articles)
-  const [showNew, setShowNew] = useState(true);
+  const [showNew, setShowNew] = useState(false);
   const [priceListName, setpriceListName] = useState('')
   const data = []
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     dispatch(getPriceList(token));
@@ -107,7 +106,10 @@ export default function PriceLists() {
   }, [url.pathname]);
 
   const resetForm = () => {
-
+    setpriceListName('')
+    for (let i = 1; i < articles.length + 1; i++) {
+      document.getElementById(i).value = '' 
+    }
   };
 
   const handleNewClient = () => {
@@ -192,7 +194,7 @@ export default function PriceLists() {
                                 <label>{article.articleName}</label>
                               </GridItem>
                               <GridItem xs={12} sm={12} md={3}>
-                                <input id={article.id} onChange={handleChangeInput} type="number" className={classes.articleInput} defaultValue={100} />
+                                <input id={article.id} onChange={handleChangeInput} type="number" className={classes.articleInput} />
                               </GridItem>
                             </GridContainer>
                           </div>
@@ -221,7 +223,22 @@ export default function PriceLists() {
             </p>
           </CardHeader>
           <CardBody>
-            
+          {pricelists && pricelists.length > 0 ?
+            <Table
+              tableHeaderColor="primary"
+              tableHead={["ID", "Nombre de listado"]}
+              tableData={
+                pricelists.map((pl, index) => {
+                  console.log(pl)
+                  return {
+                    id: pl.id,
+                    data: [pl.id, pl.priceListName]
+                  }
+                })
+              }
+            />
+          : <h5 style={{ display: "flex", justifyContent: "center"}}>No existen listados de precio</h5>}
+            {/* : <h5 style={{ display: "flex", justifyContent: "center"}}>No existen proveedores</h5> */}
             
           </CardBody>
         </Card>

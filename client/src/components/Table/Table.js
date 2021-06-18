@@ -47,7 +47,7 @@ export default function CustomTable(props) {
                 className={classes.tableCell + " " + classes.tableHeadCell}
               >
                 Opciones
-                  </TableCell>
+              </TableCell>
             </TableRow>
           </TableHead>
         ) : null}
@@ -78,8 +78,8 @@ export default function CustomTable(props) {
                   }
                   <TableCell align="right" className={classes.tableCell} key={key}>
                     <Tooltip
-                      id="tooltip-top"
-                      title={`Edit ${prop.id}`}
+                      id="tooltip-top-start"
+                      title={`Editar ${prop.id}`}
                       placement="top"
                       classes={{ tooltip: classes2.tooltip }}
                     >
@@ -99,20 +99,22 @@ export default function CustomTable(props) {
                     </Tooltip>
                     <Tooltip
                       id="tooltip-top-start"
-                      title="Eliminar"
+                      title={`Eliminar ${prop.id}`}
                       placement="top"
                       classes={{ tooltip: classes2.tooltip }}
                     >
-                      <IconButton
-                        aria-label="Close"
-                        className={classes2.tableActionButton}
-                      >
-                        <Close
-                          className={
-                            classes2.tableActionButtonIcon + " " + classes2.close
-                          }
-                        />
-                      </IconButton>
+                      <Link to={`${prop.id}`}>
+                        <IconButton
+                          aria-label="Close"
+                          className={classes2.tableActionButton}
+                        >
+                          <Close
+                            className={
+                              classes2.tableActionButtonIcon + " " + classes2.close
+                            }
+                          />
+                        </IconButton>
+                      </Link>
                     </Tooltip>
                   </TableCell>
                 </TableRow>

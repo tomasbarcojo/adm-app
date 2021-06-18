@@ -1,8 +1,10 @@
 const server = require('express').Router()
 const authenticate = require('../utils/Auth')
-const { getPriceLists, createPriceList, createPriceList2, getPriceListsById } = require('../controllers/Pricelist')
+const { getPriceLists, createPriceList, getPriceListsWithData, getPriceListsById } = require('../controllers/Pricelist')
 
 server.get('/', /*authenticate,*/ getPriceLists)
+
+server.get('/alldata', /*authenticate,*/ getPriceListsWithData)
 
 server.post('/createpricelist', /*authenticate,*/ createPriceList)
 

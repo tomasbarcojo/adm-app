@@ -54,7 +54,7 @@ export const addPriceList = (data, token, enqueueSnackbar, closeSnackbar) => asy
                 } else if (res.status === 201) {
                     dispatch({
                         type: 'CREATE_PRICELIST',
-                        payload: res.arrData,
+                        payload: res.result,
                     })
                     enqueueSnackbar('Listado añadido con exito', {
                         variant: 'success',
