@@ -83,7 +83,7 @@ export default function CustomTable(props) {
                       placement="top"
                       classes={{ tooltip: classes2.tooltip }}
                     >
-                      <Link to={`${prop.id}`}>
+                      <Link to={ prop.editpathname ? prop.editpathname + `/${prop.id}` : `${prop.id}`}>
                         <IconButton
                           aria-label={`Edit + ${prop.id}`}
                           className={classes2.tableActionButton}
@@ -103,7 +103,7 @@ export default function CustomTable(props) {
                       placement="top"
                       classes={{ tooltip: classes2.tooltip }}
                     >
-                      <Link to={`${prop.id}`}>
+                      <Link to={ prop.editpathname ? prop.editpathname + `/${prop.id}` : `${prop.id}`}>
                         <IconButton
                           aria-label="Close"
                           className={classes2.tableActionButton}

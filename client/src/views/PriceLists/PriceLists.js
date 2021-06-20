@@ -232,6 +232,7 @@ export default function PriceLists() {
                   console.log(pl)
                   return {
                     id: pl.id,
+                    editpathname: 'editpricelist',
                     data: [pl.id, pl.priceListName]
                   }
                 })
