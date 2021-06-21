@@ -20,6 +20,8 @@ import CardBody from "../../components/Card/CardBody.js";
 import Button from "../../components/CustomButtons/Button.js";
 import CardFooter from "../../components/Card/CardFooter.js";
 
+import Token from '../../Token/Token'
+
 const useStyles = makeStyles((theme) => ({
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -64,12 +66,7 @@ export default function Clients() {
   const dispatch = useDispatch()
   const url = useLocation();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  var token = '';
-  if (localStorage.length > 0) {
-    token = JSON.parse(localStorage.getItem('token'));
-  } else {
-    token = JSON.parse(sessionStorage.getItem('token'));
-  }
+  var token = Token();
   const clients = useSelector(state => state.clients);
   const pricelists = useSelector(state => state.pricelists);
   const [showNew, setShowNew] = useState(false);

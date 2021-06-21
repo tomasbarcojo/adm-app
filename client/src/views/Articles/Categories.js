@@ -38,6 +38,7 @@ import alt from '../../images/producto-sin-imagen.png'
 
 import { getSuppliers } from '../../actions/suppliers'
 import { createCategory } from '../../actions/categories'
+import Token from '../../Token/Token'
 
 const useStyles = makeStyles((theme) => ({
   typo: {
@@ -113,12 +114,7 @@ export default function Articles() {
   const [progress, setProgress] = useState(0);
   const [files, setFiles] = useState(null);
   const [preview, setPreview] = useState(null);
-  var token = '';
-  if (localStorage.length > 0) {
-    token = JSON.parse(localStorage.getItem('token'));
-  } else {
-    token = JSON.parse(sessionStorage.getItem('token'));
-  }
+  var token = Token();
   const [data, setData] = useState({
     categoryName: '',
     obs: ''

@@ -55,7 +55,7 @@ export default function CustomTable(props) {
           {tableData.map((prop, key) => {
             return (
               <>
-                <TableRow key={key} className={classes.tableBodyRow}>
+                <TableRow key={key} className={classes.tableBodyRow} hover={true}>
                   {prop.data && prop.data.length > 0 ?
                     <>
                       {prop.data.map((prop, key) => {

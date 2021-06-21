@@ -3,6 +3,7 @@ const initialstate = {
 	suppliers: [],
 	clients: [],
 	pricelists: [],
+	pricelistsbyid: [],
 	categories: [],
 	articles: [],
 	userLogged: false,
@@ -68,6 +69,12 @@ export default function rootReducer(state = initialstate, action) {
 				pricelists: action.payload
 			};
 
+		case 'GET_PRICELISTS_BY_ID':
+			return {
+				...state,
+				pricelistsbyid: action.payload
+			};
+
 		case 'CREATE_PRICELIST': {
 			// var newArr = state.pricelists
 			// for (const el of action.payload) {
@@ -82,7 +89,13 @@ export default function rootReducer(state = initialstate, action) {
 				...state,
 				pricelists: [...state.pricelists, action.payload]
 			};
-		}
+		};
+
+		case 'CLEAR_DATA':
+			return {
+				...state,
+				pricelistsbyid: []
+			}
 
 		// CATEGORY
 

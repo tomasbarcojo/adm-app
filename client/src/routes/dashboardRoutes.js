@@ -19,6 +19,8 @@ import UpgradeToPro from "../views/UpgradeToPro/UpgradeToPro.js";
 // core components/views for RTL layout
 import RTLPage from "../views/RTLPage/RTLPage.js";
 
+import EditPricelist from '../views/PriceLists/EditPricelist'
+
 const dashboardRoutes = [
     {
       path: "/dashboard",
@@ -100,11 +102,11 @@ const dashboardRoutes = [
       layout: "/admin"
     },
     {
-      path: '/editpricelist',
+      path: '/editpricelist/:id',
       name: "Editar listado de precio",
       notSideBar: true,
       // icon: Language,
-      // component: RTLPage,
+      component: EditPricelist,
       layout: "/admin"
     },
     // {

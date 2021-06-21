@@ -20,6 +20,7 @@ import CardFooter from "../../components/Card/CardFooter.js";
 import Table from "../../components/Table/Table.js";
 
 import avatar from "../../images/faces/marc.jpg";
+import Token from '../../Token/Token'
 
 const styles = {
   cardCategoryWhite: {
@@ -57,12 +58,7 @@ export default function Suppliers() {
   const dispatch = useDispatch()
   const url = useLocation();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  var token = '';
-  if (localStorage.length > 0) {
-    token = JSON.parse(localStorage.getItem('token'));
-  } else {
-    token = JSON.parse(sessionStorage.getItem('token'));
-  }
+  var token = Token();
   const suppliers = useSelector(state => state.suppliers);
   const [showNew, setShowNew] = useState(false);
   const [data, setData] = useState({

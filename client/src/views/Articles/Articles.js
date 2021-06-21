@@ -39,6 +39,7 @@ import { getSuppliers } from '../../actions/suppliers'
 import { getCategories } from '../../actions/categories'
 import { createArticle } from '../../actions/article'
 import { useEffect } from "react";
+import Token from '../../Token/Token'
 
 const useStyles = makeStyles((theme) => ({
   typo: {
@@ -116,12 +117,7 @@ export default function Articles() {
   const [preview, setPreview] = useState(null);
   const suppliers = useSelector(state => state.suppliers)
   const categories = useSelector(state => state.categories)
-  var token = '';
-  if (localStorage.length > 0) {
-    token = JSON.parse(localStorage.getItem('token'));
-  } else {
-    token = JSON.parse(sessionStorage.getItem('token'));
-  }
+  var token = Token();
   const [data, setData] = useState({
     articleName: '',
     category: '',
@@ -211,158 +207,164 @@ export default function Articles() {
 
   return (
     <>
-      <Categories />
-      <Card>
-        <CardHeader color="primary">
-          <div className={classes.card}>
-            <h4 className={classes.cardTitleWhite}>Nuevo articulo</h4>
-            {showNew ? null : <Button className={classes.buttonCard} color="info" onClick={handleNewSupplier}>Añadir</Button>}
-          </div>
-        </CardHeader>
-        {showNew ?
-          <>
-            <form onSubmit={handleSubmit}>
-              <CardBody>
-                <div className="containerForm">
-                  <div className="contentForm">
-                    <GridContainer>
-                      <GridItem xs={12} sm={12} md={12}>
-                        <TextField
-                          className={classes.input}
-                          label="Nombre"
-                          id="articleName"
-                          onChange={handleChange}
-                          fullWidth
-                          autoComplete='off'
-                          value={data.articleName}
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={12}>
+          <Categories />
+        </GridItem>
+        <GridItem xs={12} sm={12} md={12}>
+          <Card>
+            <CardHeader color="primary">
+              <div className={classes.card}>
+                <h4 className={classes.cardTitleWhite}>Nuevo articulo</h4>
+                {showNew ? null : <Button className={classes.buttonCard} color="info" onClick={handleNewSupplier}>Añadir</Button>}
+              </div>
+            </CardHeader>
+            {showNew ?
+              <>
+                <form onSubmit={handleSubmit}>
+                  <CardBody>
+                    <div className="containerForm">
+                      <div className="contentForm">
+                        <GridContainer>
+                          <GridItem xs={12} sm={12} md={12}>
+                            <TextField
+                              className={classes.input}
+                              label="Nombre"
+                              id="articleName"
+                              onChange={handleChange}
+                              fullWidth
+                              autoComplete='off'
+                              value={data.articleName}
+                            />
+                          </GridItem>
+                          <GridItem xs={12} sm={12} md={12}>
+                            <FormControl className={classes.formControl}>
+                              <InputLabel>Categoria</InputLabel>
+                              <Select
+                                name="categoryId"
+                                onChange={handleChange}
+                                fullWidth={true}
+                                value={data.categoryId ? data.categoryId : ''}
+                              >
+                                {
+                                  categories && categories.length > 0 ?
+                                    categories.map(category => {
+                                      return (
+                                        <MenuItem key={category.id} value={category.id}>{category.categoryName}</MenuItem>
+                                      )
+                                    })
+                                    : <>
+                                      <MenuItem disabled key={0} value={0}>No existen categorias</MenuItem>
+                                    </>
+                                }
+                              </Select>
+                            </FormControl>
+                          </GridItem>
+                          <GridItem xs={12} sm={12} md={12}>
+                            <FormControl className={classes.formControl}>
+                              <InputLabel>Proveedor</InputLabel>
+                              <Select
+                                name="supplierId"
+                                onChange={handleChange}
+                                fullWidth={true}
+                                value={data.supplierId ? data.supplierId : ''}
+                              >
+                                {
+                                  suppliers && suppliers.length > 0 ?
+                                    suppliers.map(suppliers => {
+                                      return (
+                                        <MenuItem key={suppliers.id} value={suppliers.id}>{suppliers.businessName}</MenuItem>
+                                      )
+                                    })
+                                    :
+                                    <MenuItem disabled key={0} value={0}>No existen proveedores</MenuItem>
+                                }
+                              </Select>
+                            </FormControl>
+                          </GridItem>
+                        </GridContainer>
+                        <GridContainer>
+                          <GridItem xs={12} sm={12} md={6}>
+                            <TextField
+                              className={classes.input}
+                              label="Precio"
+                              id="price"
+                              onChange={handleChange}
+                              fullWidth
+                              autoComplete='off'
+                              type='number'
+                              value={data.price}
+                            />
+                          </GridItem>
+                          <GridItem xs={12} sm={12} md={6}>
+                            <TextField
+                              className={classes.input}
+                              label="Stock"
+                              id="stock"
+                              onChange={handleChange}
+                              fullWidth
+                              autoComplete='off'
+                              type='number'
+                              value={data.stock}
+                            />
+                          </GridItem>
+                        </GridContainer>
+                        <GridContainer>
+                          <GridItem xs={12} sm={12} md={12}>
+                            <TextField
+                              className={classes.input}
+                              label="Descripcion"
+                              id="obs"
+                              onChange={handleChange}
+                              fullWidth
+                              multiline
+                              rows={4}
+                              autoComplete='off'
+                              value={data.obs}
+                            />
+                          </GridItem>
+                        </GridContainer>
+                      </div>
+
+                      <div className="contentImage">
+                        <h5>Imagen</h5>
+
+                        {preview ?
+                          <img style={{ maxWidth: '300px', maxHeight: '300px', objectFit: 'contain' }} src={preview} alt="Imagen del producto" />
+                          :
+                          <img style={{ maxWidth: '300px', maxHeight: '300px', objectFit: 'contain' }} src={alt} alt="Sin imagen" />
+                        }
+
+                        <input
+                          style={{ marginTop: '20px' }}
+                          type='file'
+                          onChange={fileSelectedHandler}
+                          accept="image/*"
                         />
-                      </GridItem>
-                      <GridItem xs={12} sm={12} md={12}>
-                        <FormControl className={classes.formControl}>
-                          <InputLabel>Categoria</InputLabel>
-                          <Select
-                            name="categoryId"
-                            onChange={handleChange}
-                            fullWidth={true}
-                            value={data.categoryId ? data.categoryId : ''}
-                          >
-                            {
-                              categories && categories.length > 0 ?
-                                categories.map(category => {
-                                  return (
-                                    <MenuItem key={category.id} value={category.id}>{category.categoryName}</MenuItem>
-                                  )
-                                })
-                                : <>
-                                  <MenuItem disabled key={0} value={0}>No existen categorias</MenuItem>
-                                </>
-                            }
-                          </Select>
-                        </FormControl>
-                      </GridItem>
-                      <GridItem xs={12} sm={12} md={12}>
-                        <FormControl className={classes.formControl}>
-                          <InputLabel>Proveedor</InputLabel>
-                          <Select
-                            name="supplierId"
-                            onChange={handleChange}
-                            fullWidth={true}
-                            value={data.supplierId ? data.supplierId : ''}
-                          >
-                            {
-                              suppliers && suppliers.length > 0 ?
-                                suppliers.map(suppliers => {
-                                  return (
-                                    <MenuItem key={suppliers.id} value={suppliers.id}>{suppliers.businessName}</MenuItem>
-                                  )
-                                })
-                                :
-                                <MenuItem disabled key={0} value={0}>No existen proveedores</MenuItem>
-                            }
-                          </Select>
-                        </FormControl>
-                      </GridItem>
-                    </GridContainer>
-                    <GridContainer>
-                      <GridItem xs={12} sm={12} md={6}>
-                        <TextField
-                          className={classes.input}
-                          label="Precio"
-                          id="price"
-                          onChange={handleChange}
-                          fullWidth
-                          autoComplete='off'
-                          type='number'
-                          value={data.price}
-                        />
-                      </GridItem>
-                      <GridItem xs={12} sm={12} md={6}>
-                        <TextField
-                          className={classes.input}
-                          label="Stock"
-                          id="stock"
-                          onChange={handleChange}
-                          fullWidth
-                          autoComplete='off'
-                          type='number'
-                          value={data.stock}
-                        />
-                      </GridItem>
-                    </GridContainer>
-                    <GridContainer>
-                      <GridItem xs={12} sm={12} md={12}>
-                        <TextField
-                          className={classes.input}
-                          label="Descripcion"
-                          id="obs"
-                          onChange={handleChange}
-                          fullWidth
-                          multiline
-                          rows={4}
-                          autoComplete='off'
-                          value={data.obs}
-                        />
-                      </GridItem>
-                    </GridContainer>
-                  </div>
 
-                  <div className="contentImage">
-                    <h5>Imagen</h5>
+                        {progress > 0 ?
+                          <>
+                            <LinearProgressWithLabel value={progress} />
+                          </>
+                          : null
+                        }
+                      </div>
+                    </div>
 
-                    {preview ?
-                      <img style={{ maxWidth: '300px', maxHeight: '300px', objectFit: 'contain' }} src={preview} alt="Imagen del producto" />
-                      :
-                      <img style={{ maxWidth: '300px', maxHeight: '300px', objectFit: 'contain' }} src={alt} alt="Sin imagen" />
-                    }
+                  </CardBody>
+                  <CardFooter>
+                    <Button color="primary" type='submit'>Listo</Button>
+                    <Button color="danger" onClick={handleNewSupplier}>Cancelar</Button>
+                  </CardFooter>
+                </form>
+              </>
+              : null
+            }
+          </Card>
+          {/* // </GridItem> */}
 
-                    <input
-                      style={{ marginTop: '20px' }}
-                      type='file'
-                      onChange={fileSelectedHandler}
-                      accept="image/*"
-                    />
-
-                    {progress > 0 ?
-                      <>
-                        <LinearProgressWithLabel value={progress} />
-                      </>
-                      : null
-                    }
-                  </div>
-                </div>
-
-              </CardBody>
-              <CardFooter>
-                <Button color="primary" type='submit'>Listo</Button>
-                <Button color="danger" onClick={handleNewSupplier}>Cancelar</Button>
-              </CardFooter>
-            </form>
-          </>
-          : null
-        }
-      </Card>
-      {/* // </GridItem> */}
-
+        </GridItem>
+      </GridContainer>
     </>
   );
 }

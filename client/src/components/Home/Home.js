@@ -119,7 +119,7 @@ export default function UsersManagment() {
             <CategoriesCard props={cat} />
           )
         })
-        : <h5>No existen categorias</h5>
+        : <h5 style={{ display: "flex", justifyContent: "center" }}>No existen categorias</h5>
         }
       </GridList>
 

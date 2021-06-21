@@ -103,7 +103,7 @@ export default function PriceLists() {
   useEffect(() => {
     dispatch(getPriceList(token));
     dispatch(getArticles(token));
-  }, [url.pathname]);
+  }, []);
 
   const resetForm = () => {
     setpriceListName('')
