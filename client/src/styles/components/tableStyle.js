@@ -92,6 +92,12 @@ const tableStyle = theme => ({
   articleInput: {
     padding: '5px 0px 5px 0px',
   },
+  card: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
 });
 
 export default tableStyle;

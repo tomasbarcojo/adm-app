@@ -16,6 +16,7 @@ import styles from "../../styles/components/tableStyle.js";
 import Card from "../../components/Card/Card.js";
 import CardHeader from "../../components/Card/CardHeader.js";
 import CardBody from "../../components/Card/CardBody.js";
+import Button from "../../components/CustomButtons/Button.js";
 
 import { getPriceListsById, clearData } from "../../actions/pricelists";
 
@@ -29,6 +30,7 @@ export default function CustomTable() {
   var token = Token();
   const { id } = useParams()
   const pricelists = useSelector(state => state.pricelistsbyid)
+  const data = []
 
   useEffect(() => {
     dispatch(getPriceListsById(token, id))
@@ -40,15 +42,45 @@ export default function CustomTable() {
     }
   }, [])
 
+  const handleChangeInput = (event) => {
+    console.log(event)
+    var changeMade = false
+    if (data.length > 0) {
+      data.map(el => {
+        if (el.articleId === event.target.id) {
+          el.percentage = event.target.value;
+          changeMade = true;
+        }
+      })
+      if (!changeMade) {
+        const newData = {
+          articleId: event.target.id,
+          percentage: event.target.value
+        }
+        data.push(newData)
+      }
+    } else {
+      const newData = {
+        articleId: event.target.id,
+        percentage: event.target.value
+      }
+      data.push(newData)
+    }
+    console.log(data)
+  }
+
+  const handleEditPL = () => {
+    
+  }
 
   return (
     <div className={classes.tableResponsive}>
       <Card>
         <CardHeader color="primary">
-          <h4 className={classes.cardTitleWhite}>Listados</h4>
-          <p className={classes.cardCategoryWhite}>
-            Listado de precios
-          </p>
+          <div className={classes.card}>
+            <h4 className={classes.cardTitleWhite}>Editar listado: {pricelists[0] && pricelists[0].pricelist.priceListName}</h4>
+            <Button color="info" onClick={handleEditPL}>Guardar</Button>
+          </div>
         </CardHeader>
         <CardBody>
           <Table className={classes.table}>
@@ -66,19 +98,19 @@ export default function CustomTable() {
                 pricelists.map((pricelist, key) => {
                   return (
                     <TableRow key={key} className={classes.tableBodyRow} hover={true}>
-                      <TableCell className={classes.tableCell} key={key}>
+                      <TableCell className={classes.tableCell}>
                         {pricelist.articleId && pricelist.articleId}
                       </TableCell>
-                      <TableCell className={classes.tableCell} key={key}>
+                      <TableCell className={classes.tableCell}>
                         {pricelist.article.articleName && pricelist.article.articleName}
                       </TableCell>
-                      <TableCell className={classes.tableCell} key={key}>
-                        <input id={pricelist.article.articleId} type="number" className={classes.articleInput} defaultValue={pricelist.percentage} /> %
+                      <TableCell className={classes.tableCell}>
+                        <input id={pricelist.article.id} onChange={handleChangeInput} type="number" className={classes.articleInput} defaultValue={pricelist.percentage} /> %
                       </TableCell>
-                      <TableCell className={classes.tableCell} key={key}>
+                      <TableCell className={classes.tableCell}>
                         {pricelist.createdAt.slice('T', 10)} / {pricelist.createdAt.split('T')[1].slice(0, 5)}
                       </TableCell>
-                      <TableCell className={classes.tableCell} key={key}>
+                      <TableCell className={classes.tableCell}>
                         {pricelist.updatedAt.slice('T', 10)} / {pricelist.updatedAt.split('T')[1].slice(0, 5)}
                       </TableCell>
                     </TableRow>

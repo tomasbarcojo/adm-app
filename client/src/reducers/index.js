@@ -76,15 +76,6 @@ export default function rootReducer(state = initialstate, action) {
 			};
 
 		case 'CREATE_PRICELIST': {
-			// var newArr = state.pricelists
-			// for (const el of action.payload) {
-			// 	newArr.push(el)
-			// }
-			// return {
-			// 	...state,
-			// 	pricelists: newArr
-			// };
-
 			return {
 				...state,
 				pricelists: [...state.pricelists, action.payload]
@@ -95,7 +86,7 @@ export default function rootReducer(state = initialstate, action) {
 			return {
 				...state,
 				pricelistsbyid: []
-			}
+			};
 
 		// CATEGORY
 

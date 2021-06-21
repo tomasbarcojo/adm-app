@@ -7,22 +7,6 @@ import { getPriceList, addPriceList } from '../../actions/pricelists'
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from '@material-ui/core/TextField';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Collapse from '@material-ui/core/Collapse';
-import IconButton from '@material-ui/core/IconButton';
-// import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 // core components
 import GridItem from "../../components/Grid/GridItem.js";
@@ -35,6 +19,7 @@ import Button from "../../components/CustomButtons/Button.js";
 import CardFooter from "../../components/Card/CardFooter.js";
 
 import { getArticles } from '../../actions/article'
+import Token from '../../Token/Token'
 
 const useStyles = makeStyles((theme) => ({
   cardCategoryWhite: {
@@ -88,12 +73,7 @@ export default function PriceLists() {
   const dispatch = useDispatch();
   const url = useLocation();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  var token = '';
-  if (localStorage.length > 0) {
-    token = JSON.parse(localStorage.getItem('token'));
-  } else {
-    token = JSON.parse(sessionStorage.getItem('token'));
-  }
+  var token = Token();
   const pricelists = useSelector(state => state.pricelists);
   const articles = useSelector(state => state.articles)
   const [showNew, setShowNew] = useState(false);
@@ -228,8 +208,7 @@ export default function PriceLists() {
               tableHeaderColor="primary"
               tableHead={["ID", "Nombre de listado"]}
               tableData={
-                pricelists.map((pl, index) => {
-                  console.log(pl)
+                pricelists.map((pl) => {
                   return {
                     id: pl.id,
                     editpathname: 'editpricelist',
@@ -238,9 +217,7 @@ export default function PriceLists() {
                 })
               }
             />
-          : <h5 style={{ display: "flex", justifyContent: "center"}}>No existen listados de precio</h5>}
-            {/* : <h5 style={{ display: "flex", justifyContent: "center"}}>No existen proveedores</h5> */}
-            
+          : <h5 style={{ display: "flex", justifyContent: "center"}}>No existen listados de precio</h5>}            
           </CardBody>
         </Card>
       </GridItem>
