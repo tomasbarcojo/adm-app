@@ -36,7 +36,7 @@ const { User, Supplier, Client, Pricelist, Article, Category, Userpricelist } = 
 // Aca vendrian las relaciones
 // Relaciones:
 
-Pricelist.belongsToMany(Article, { through: Userpricelist });
+Pricelist.belongsToMany(Article, { through: Userpricelist, onDelete: 'CASCADE'});
 Article.belongsToMany(Pricelist, { through: Userpricelist });
 
 Pricelist.hasMany(Client, {foreignKey: 'pricelistId', sourcekey: 'id'});

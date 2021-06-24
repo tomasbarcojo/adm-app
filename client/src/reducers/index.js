@@ -88,6 +88,14 @@ export default function rootReducer(state = initialstate, action) {
 				pricelistsbyid: []
 			};
 
+		case 'DELETE_PRICELIST':
+			return {
+				...state,
+				pricelists: state.pricelists.filter(
+					(pricelist) => pricelist.id !== action.payload.id
+				),
+			}
+
 		// CATEGORY
 
 		case 'GET_CATEGORIES':

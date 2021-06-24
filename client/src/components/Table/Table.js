@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom"
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -8,8 +9,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteDialog from '../ConfirmationDialog/DeleteDialog';
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 // @material-ui/icons
@@ -19,13 +18,25 @@ import Close from "@material-ui/icons/Close";
 import styles from "../../styles/components/tableStyle.js";
 import styles2 from "../../styles/components/tasksStyle.js";
 
+import { useSnackbar } from 'notistack';
+import { universalDelete } from "../../actions/universalDelete.js";
+import Token from '../../Token/Token'
+
 const useStyles = makeStyles(styles);
 const useStyles2 = makeStyles(styles2);
 
 export default function CustomTable(props) {
   const classes = useStyles();
   const classes2 = useStyles2();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const token = Token();
+  const dispatch = useDispatch();
   const { tableHead, tableData, tableHeaderColor } = props;
+
+  const handleDelete = (path, id) => {
+    dispatch(universalDelete(path, id, token, enqueueSnackbar, closeSnackbar))
+  }
+
   return (
     <div className={classes.tableResponsive}>
       <Table className={classes.table}>
@@ -79,15 +90,15 @@ export default function CustomTable(props) {
                   <TableCell align="right" className={classes.tableCell} key={key}>
                     <Tooltip
                       id="tooltip-top-start"
-                      title={`Editar ${prop.id}`}
+                      title={`Editar`}
                       placement="top"
                       classes={{ tooltip: classes2.tooltip }}
                     >
                       <Link to={ prop.editpathname ? prop.editpathname + `/${prop.id}` : `${prop.id}`}>
                         <IconButton
-                          aria-label={`Edit + ${prop.id}`}
+                          aria-label={`Editar + ${prop.id}`}
                           className={classes2.tableActionButton}
-                          onClick={() => console.log(prop[0])}
+                          onClick={() => console.log(prop.editpathname)}
                         >
                           <Edit
                             className={
@@ -103,10 +114,11 @@ export default function CustomTable(props) {
                       placement="top"
                       classes={{ tooltip: classes2.tooltip }}
                     >
-                      <Link to={ prop.editpathname ? prop.editpathname + `/${prop.id}` : `${prop.id}`}>
+                      {/* <Link to={ prop.editpathname ? prop.editpathname + `/${prop.id}` : `${prop.id}`}> */}
                         <IconButton
                           aria-label="Close"
                           className={classes2.tableActionButton}
+                          onClick={() => handleDelete(prop.deletepathname, prop.id)}
                         >
                           <Close
                             className={
@@ -114,7 +126,7 @@ export default function CustomTable(props) {
                             }
                           />
                         </IconButton>
-                      </Link>
+                      {/* </Link> */}
                     </Tooltip>
                   </TableCell>
                 </TableRow>

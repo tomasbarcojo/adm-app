@@ -212,6 +212,7 @@ export default function PriceLists() {
                   return {
                     id: pl.id,
                     editpathname: 'editpricelist',
+                    deletepathname: 'pricelist/deletepricelist',
                     data: [pl.id, pl.priceListName]
                   }
                 })

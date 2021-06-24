@@ -7,7 +7,6 @@ export const userLogin = (data, history, keepLogged, enqueueSnackbar, closeSnack
     try {
         await fetch(`http://${IP}:3001/user/login`, {
             method: 'POST',
-            // credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
             },

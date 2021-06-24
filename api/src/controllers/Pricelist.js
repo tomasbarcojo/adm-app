@@ -53,14 +53,19 @@ module.exports = {
 
   async editPricelist(req, res) {
     try {
-      const { priceListName, data } = req.body
-      if (!priceListName || !data) {
+      const { data } = req.body
+      const { id } = req.params
+      console.log(data.length)
+      if (!data || data.length === 0) {
         return res.status(400).send({ message: 'Necesary data required', status: 400 })
       }
-      const pricelist = await Pricelist.findOne({ where: { priceListName: priceListName } });
-      if (pricelist) {
-        return res.status(400).send({ message: "Price list already exists", status: 400 });
+      for (const e of data) {
+        Userpricelist.findOne({ where: { pricelistId: id, articleId: e.articleId } }).then(userPL => {
+          userPL.percentage = e.percentage;
+          userPL.save()
+        })
       }
+      return res.status(201).send({ message: 'Todo ok', status: 204 })
     } catch (err) {
       console.log(err);
       return res.status(400).send({ message: 'Failed to edit price list' });
@@ -72,12 +77,26 @@ module.exports = {
       const { id } = req.params;
       await Userpricelist.findAll({ where: { pricelistId: id }, include: [Article, Pricelist] })
         .then((pricelist) => {
-          if (!pricelist) return res.status(404).send({ message: 'Invalid id' })
-          return res.status(200).send({pricelist, status: 200})
+          if (!pricelist) return res.status(404).send({ message: 'Invalid id', status: 404 })
+          return res.status(200).send({ pricelist, status: 200 })
         })
     } catch (err) {
       console.log(err);
       return res.status(400).send({ message: 'Failed to get price list by id' });
+    }
+  },
+
+  async deletePriceList(req, res) {
+    try {
+      const pricelist = await Pricelist.findByPk(req.params.id)
+      if (!pricelist) {
+        return res.status(404).send({message: 'Price list not found with provided id', status: 404})
+      }
+      pricelist.destroy() // deleting on cascade (userpricelists)
+      return res.status(200).send({ pricelist, status: 200 })
+    } catch (err) {
+      console.log(err)
+      return res.status(500).send({ message: 'Failed to delete price list by id', status: 500 });
     }
   }
 }

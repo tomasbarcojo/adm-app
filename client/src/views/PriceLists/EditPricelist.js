@@ -3,6 +3,7 @@ import { useParams, useLocation } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import PropTypes from "prop-types";
+import { useSnackbar } from 'notistack';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -18,7 +19,7 @@ import CardHeader from "../../components/Card/CardHeader.js";
 import CardBody from "../../components/Card/CardBody.js";
 import Button from "../../components/CustomButtons/Button.js";
 
-import { getPriceListsById, clearData } from "../../actions/pricelists";
+import { getPriceListsById, clearData, editPriceList } from "../../actions/pricelists";
 
 import Token from '../../Token/Token'
 
@@ -28,6 +29,7 @@ export default function CustomTable() {
   const classes = useStyles();
   const dispatch = useDispatch();
   var token = Token();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const { id } = useParams()
   const pricelists = useSelector(state => state.pricelistsbyid)
   const data = []
@@ -43,7 +45,6 @@ export default function CustomTable() {
   }, [])
 
   const handleChangeInput = (event) => {
-    console.log(event)
     var changeMade = false
     if (data.length > 0) {
       data.map(el => {
@@ -66,11 +67,10 @@ export default function CustomTable() {
       }
       data.push(newData)
     }
-    console.log(data)
   }
 
   const handleEditPL = () => {
-    
+    dispatch(editPriceList(id, data, token, enqueueSnackbar, closeSnackbar))
   }
 
   return (

@@ -68,7 +68,7 @@ export const addPriceList = (data, token, enqueueSnackbar, closeSnackbar) => asy
       .then(res => {
         if (res.status === 400 && res.message === "Price list already exists") {
           enqueueSnackbar('El listado ya existe', {
-            variant: 'error',
+            variant: 'warning',
             action: key => (
               <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
             ),
@@ -93,6 +93,39 @@ export const addPriceList = (data, token, enqueueSnackbar, closeSnackbar) => asy
           });
         }
       })
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const editPriceList = (id, data, token, enqueueSnackbar, closeSnackbar) => async dispatch => {
+  try {
+    await fetch(`http://${IP}:3001/pricelist/editpricelist/${id}`, {
+      method: 'POST',
+      body: JSON.stringify({data: data}),
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': token
+      }
+    })
+    .then(data => data.json())
+    .then(res => {
+      if (res.status === 204) {
+        enqueueSnackbar('Listado editado con exito', {
+          variant: 'success',
+          action: key => (
+            <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
+          ),
+        });
+      } else if (res.status === 400) {
+        enqueueSnackbar('No se ha realizado ningun cambio', {
+          variant: 'warning',
+          action: key => (
+            <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
+          ),
+        });
+      }
+    })
   } catch (err) {
     console.log(err)
   }
