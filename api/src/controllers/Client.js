@@ -15,8 +15,8 @@ module.exports = {
   },
 
   async createClient(req, res) {
-    const { businessName, cuit, phone, altPhone, address, city, CP, bankaccount1, bankaccount2, bankaccount3, obs } = req.body
-    if (!businessName || !cuit || !phone || !address || !city || !CP) {
+    const { businessName, cuit, phone, altphone, address, city, CP, pricelistId, obs } = req.body
+    if (!businessName || !cuit || !phone || !address || !city || !CP || !pricelistId) {
       return res.status(400).send({ message: 'Necesary data required', status: 400 })
     }
     try {
@@ -24,7 +24,7 @@ module.exports = {
       if (client) {
         return res.status(400).send({ message: "Client already exists", status: 400 });
       }
-      const clientData = { businessName, cuit, phone, altPhone, address, city, CP, bankaccount1, bankaccount2, bankaccount3, obs };
+      const clientData = { businessName, cuit, phone, altphone, address, city, CP, pricelistId, obs };
       const newClient = await Client.create(clientData)
       return res.status(201).send({ newClient, status: 201 })
     } catch (err) {

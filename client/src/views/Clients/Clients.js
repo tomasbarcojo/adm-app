@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { getClients, addClient } from '../../actions/clients'
+import { getPriceList } from '../../actions/pricelists'
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from '@material-ui/core/TextField';
@@ -74,30 +75,31 @@ export default function Clients() {
     businessName: '',
     cuit: '',
     phone: '',
-    altPhone: '',
+    altphone: '',
     address: '',
     city: '',
     CP: '',
-    bankaccount1: '',
-    bankaccount2: '',
-    bankaccount3: '',
+    pricelistId: '',
     obs: ''
   });
 
   useEffect(() => {
     dispatch(getClients(token));
+    dispatch(getPriceList(token));
   }, [url.pathname])
 
   const resetForm = () => {
     setData({
       ...data,
       businessName: '',
-      cuit: '',
-      phone: '',
-      altPhone: '',
-      address: '',
-      city: '',
-      CP: '',
+    cuit: '',
+    phone: '',
+    altphone: '',
+    address: '',
+    city: '',
+    CP: '',
+    pricelistId: '',
+    obs: ''
     })
   }
 
@@ -106,7 +108,7 @@ export default function Clients() {
   }
 
   const handleChange = (event) => {
-    setData({ ...data, [event.target.id]: event.target.value })
+    setData({ ...data, [event.target.name]: event.target.value })
   }
 
   const handleSubmit = (e) => {
@@ -133,7 +135,7 @@ export default function Clients() {
                       <TextField
                         className={classes.input}
                         label="Razon social"
-                        id="businessName"
+                        name="businessName"
                         onChange={handleChange}
                         fullWidth
                         autoComplete='off'
@@ -144,7 +146,7 @@ export default function Clients() {
                       <TextField
                         className={classes.input}
                         label="Cuit"
-                        id="cuit"
+                        name="cuit"
                         onChange={handleChange}
                         fullWidth
                         autoComplete='off'
@@ -158,7 +160,7 @@ export default function Clients() {
                       <TextField
                         className={classes.input}
                         label="Telefono"
-                        id="phone"
+                        name="phone"
                         onChange={handleChange}
                         fullWidth
                         autoComplete='off'
@@ -170,12 +172,12 @@ export default function Clients() {
                       <TextField
                         className={classes.input}
                         label="Telefono 2 (opcional)"
-                        id="altPhone"
+                        name="altphone"
                         onChange={handleChange}
                         fullWidth
                         autoComplete='off'
                         type='number'
-                        value={data.altPhone}
+                        value={data.altphone}
                       />
                     </GridItem>
                   </GridContainer>
@@ -184,7 +186,7 @@ export default function Clients() {
                       <TextField
                         className={classes.input}
                         label="Direccion"
-                        id="address"
+                        name="address"
                         onChange={handleChange}
                         fullWidth
                         autoComplete='off'
@@ -195,7 +197,7 @@ export default function Clients() {
                       <TextField
                         className={classes.input}
                         label="Ciudad"
-                        id="city"
+                        name="city"
                         onChange={handleChange}
                         fullWidth
                         autoComplete='off'
@@ -206,7 +208,7 @@ export default function Clients() {
                       <TextField
                         className={classes.input}
                         label="Codigo postal"
-                        id="CP"
+                        name="CP"
                         onChange={handleChange}
                         fullWidth
                         autoComplete='off'
@@ -221,8 +223,8 @@ export default function Clients() {
                         <Select
                           onChange={handleChange}
                           fullWidth={true}
-                          // className={classes.input}
-                          menu
+                          name="pricelistId"
+                          value={data.pricelistId && data.pricelistId}
                         >
                           {
                             pricelists && pricelists.length > 0 ?
@@ -240,11 +242,10 @@ export default function Clients() {
                   </GridContainer>
                   <GridContainer>
                     <GridItem xs={12} sm={12} md={12}>
-                      {/* <InputLabel style={{ color: "#AAAAAA" }}>Observaciones</InputLabel> */}
                       <TextField
                         className={classes.input}
                         label="Observaciones"
-                        id="obs"
+                        name="obs"
                         onChange={handleChange}
                         fullWidth
                         multiline
@@ -268,7 +269,7 @@ export default function Clients() {
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Clientes</h4>
+            <h4 className={classes.cardTitleWhite}>Clientes --EQUIPOS ASOCIADOS?--</h4>
             <p className={classes.cardCategoryWhite}>
               Listado de clientes
             </p>
@@ -277,10 +278,13 @@ export default function Clients() {
             {clients && clients.length > 0 ?
               <Table
                 tableHeaderColor="primary"
-                tableHead={["Razon Social", "CUIT", "Test1", "Test2", "Test3"]}
+                tableHead={["ID", "Razon social", "Cuit", "Telefono", "Direccion", "Equipo asociado"]}
                 tableData={clients && clients.length > 0 ?
                   clients.map((client, index) => {
-                    return [client.businessName, client.cuit, client.phone, client.CP]
+                    return {
+                      id: client.id,
+                      data: [client.id, client.businessName, client.cuit, client.phone, client.address, client.pricelistId ]
+                    }
                   })
                   : null}
               />

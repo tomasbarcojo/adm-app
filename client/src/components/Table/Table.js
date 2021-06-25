@@ -21,6 +21,7 @@ import styles2 from "../../styles/components/tasksStyle.js";
 import { useSnackbar } from 'notistack';
 import { universalDelete } from "../../actions/universalDelete.js";
 import Token from '../../Token/Token'
+import DeleteDialog from './DeleteDialog'
 
 const useStyles = makeStyles(styles);
 const useStyles2 = makeStyles(styles2);
@@ -32,10 +33,6 @@ export default function CustomTable(props) {
   const token = Token();
   const dispatch = useDispatch();
   const { tableHead, tableData, tableHeaderColor } = props;
-
-  const handleDelete = (path, id) => {
-    dispatch(universalDelete(path, id, token, enqueueSnackbar, closeSnackbar))
-  }
 
   return (
     <div className={classes.tableResponsive}>
@@ -108,26 +105,10 @@ export default function CustomTable(props) {
                         </IconButton>
                       </Link>
                     </Tooltip>
-                    <Tooltip
-                      id="tooltip-top-start"
-                      title={`Eliminar ${prop.id}`}
-                      placement="top"
-                      classes={{ tooltip: classes2.tooltip }}
-                    >
-                      {/* <Link to={ prop.editpathname ? prop.editpathname + `/${prop.id}` : `${prop.id}`}> */}
-                        <IconButton
-                          aria-label="Close"
-                          className={classes2.tableActionButton}
-                          onClick={() => handleDelete(prop.deletepathname, prop.id)}
-                        >
-                          <Close
-                            className={
-                              classes2.tableActionButtonIcon + " " + classes2.close
-                            }
-                          />
-                        </IconButton>
-                      {/* </Link> */}
-                    </Tooltip>
+                    <DeleteDialog
+                      path={prop.deletepathname}
+                      id={prop.id}
+                    />
                   </TableCell>
                 </TableRow>
               </>

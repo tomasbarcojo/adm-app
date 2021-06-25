@@ -61,6 +61,20 @@ export default function rootReducer(state = initialstate, action) {
 				suppliers: [...state.suppliers, action.payload]
 			};
 
+		// CLIENTS
+
+		case 'GET_CLIENTS':
+			return {
+				...state,
+				clients: action.payload
+			};
+
+		case 'CREATE_CLIENT':
+			return {
+				...state,
+				clients: [...state.clients, action.payload]
+			};
+
 		// PRICE LIST
 
 		case 'GET_PRICELISTS':
