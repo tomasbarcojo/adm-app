@@ -43,8 +43,15 @@ export default function rootReducer(state = initialstate, action) {
 		case 'USER_LOGOUT':
 			return {
 				...state,
-				user: {},
+				user: [],
+				suppliers: [],
+				clients: [],
+				pricelists: [],
+				pricelistsbyid: [],
+				categories: [],
+				articles: [],
 				userLogged: false,
+				notifications: []
 			};
 
 		// SUPPLIER
