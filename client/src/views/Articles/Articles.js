@@ -123,7 +123,6 @@ export default function Articles() {
     category: '',
     supplier: '',
     price: '',
-    stock: '',
     obs: '',
   });
 
@@ -139,7 +138,6 @@ export default function Articles() {
       category: '',
       supplier: '',
       price: '',
-      stock: '',
       obs: '',
     })
   }
@@ -180,7 +178,6 @@ export default function Articles() {
           categoryId: data.categoryId,
           supplierId: data.supplierId,
           price: data.price,
-          stock: data.stock,
           image: img.data,
           obs: data.obs,
         }
@@ -297,7 +294,7 @@ export default function Articles() {
                             />
                           </GridItem>
                           <GridItem xs={12} sm={12} md={6}>
-                            <TextField
+                            {/* <TextField
                               className={classes.input}
                               label="Stock"
                               id="stock"
@@ -306,7 +303,7 @@ export default function Articles() {
                               autoComplete='off'
                               type='number'
                               value={data.stock}
-                            />
+                            /> */}
                           </GridItem>
                         </GridContainer>
                         <GridContainer>

@@ -1,8 +1,10 @@
 const server = require('express').Router()
 const authenticate = require('../utils/Auth')
-const { getArticles, createArticle } = require('../controllers/Article')
+const { getArticles, getArticlesBySupplierId, createArticle } = require('../controllers/Article')
 
 server.get('/', authenticate, getArticles)
+
+server.get('/:id', /*authenticate,*/ getArticlesBySupplierId)
 
 server.post('/createArticle', authenticate, createArticle)
 

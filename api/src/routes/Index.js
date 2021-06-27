@@ -8,6 +8,7 @@ const upload = require('./UploadImage')
 const article = require('./Article')
 const category = require('./Category')
 const seed = require('./Seed')
+const purchase = require('./Purchase')
 
 const router = Router();
 
@@ -22,5 +23,6 @@ router.use('/upload', upload);
 router.use('/article', article);
 router.use('/category', category);
 router.use('/seed', seed);
+router.use('/purchase', purchase)
 
 module.exports = router;

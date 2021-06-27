@@ -6,6 +6,7 @@ import LocationOn from "@material-ui/icons/LocationOn";
 import Notifications from "@material-ui/icons/Notifications";
 import Unarchive from "@material-ui/icons/Unarchive";
 import Language from "@material-ui/icons/Language";
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 import DashboardPage from "../views/Dashboard/Dashboard";
 import Suppliers from "../views/Suppliers/Suppliers.js";
@@ -18,8 +19,8 @@ import NotificationsPage from "../views/Notifications/Notifications.js";
 import UpgradeToPro from "../views/UpgradeToPro/UpgradeToPro.js";
 // core components/views for RTL layout
 import RTLPage from "../views/RTLPage/RTLPage.js";
-
 import EditPricelist from '../views/PriceLists/EditPricelist'
+import Purchases from '../views/Purchases/Purchases'
 
 const dashboardRoutes = [
     {
@@ -107,6 +108,13 @@ const dashboardRoutes = [
       notSideBar: true,
       // icon: Language,
       component: EditPricelist,
+      layout: "/admin"
+    },
+    {
+      path: "/purchases",
+      name: "Compras",
+      icon: ShoppingCartIcon,
+      component: Purchases,
       layout: "/admin"
     },
     // {
