@@ -22,108 +22,122 @@ import RTLPage from "../views/RTLPage/RTLPage.js";
 import EditPricelist from '../views/PriceLists/EditPricelist'
 import Purchases from '../views/Purchases/Purchases'
 
+const nestedDataTest = [
+  {
+    path: "/pepe",
+    name: "Articulos",
+    icon: Language,
+    component: DashboardPage,
+    layout: "/admin"
+  }
+]
+
+
 const dashboardRoutes = [
-    {
-      path: "/dashboard",
-      name: "Panel",
-      icon: Dashboard,
-      component: DashboardPage,
-      layout: "/admin"
-    },
-    {
-      path: "/suppliers",
-      name: "Proveedores",
-      icon: Language,
-      component: Suppliers,
-      layout: "/admin"
-    },
-    {
-      path: "/clients",
-      name: "Clientes",
-      icon: Person,
-      component: TableList,
-      layout: "/admin"
-    },
-    // {
-    //   path: "/clientsbackup",
-    //   name: "Clientes",
-    //   icon: Person,
-    //   component: TableList,
-    //   layout: "/admin"
-    // },
-    {
-      path: "/articles",
-      name: "Articulos",
-      icon: BubbleChart,
-      component: Articles,
-      layout: "/admin"
-    },
-    {
-      path: "/pricelist",
-      name: "Listado de precios",
-      icon: "content_paste",
-      component: PriceLists,
-      layout: "/admin"
-    },
-    {
-      path: "/maps",
-      name: "Maps",
-      icon: LocationOn,
-      component: Maps,
-      layout: "/admin"
-    },
-    {
-      path: "/notifications",
-      name: "Notifications",
-      icon: Notifications,
-      component: NotificationsPage,
-      layout: "/admin"
-    },
-    // {
-    //   path: "/rtl-page",
-    //   name: "RTL Support",
-    //   icon: Language,
-    //   component: RTLPage,
-    //   layout: "/admin"
-    // },
-    {
-      path: "/profile",
-      name: "Perfil",
-      notSideBar: true,
-      // icon: Language,
-      component: RTLPage,
-      layout: "/admin"
-    },
-    {
-      path: "/settings",
-      name: "Ajustes",
-      notSideBar: true,
-      // icon: Language,
-      // component: RTLPage,
-      layout: "/admin"
-    },
-    {
-      path: '/editpricelist/:id',
-      name: "Editar listado de precio",
-      notSideBar: true,
-      // icon: Language,
-      component: EditPricelist,
-      layout: "/admin"
-    },
-    {
-      path: "/purchases",
-      name: "Compras",
-      icon: ShoppingCartIcon,
-      component: Purchases,
-      layout: "/admin"
-    },
-    // {
-    //   path: "/upgrade-to-pro",
-    //   name: "Upgrade To PRO",
-    //   icon: Unarchive,
-    //   component: UpgradeToPro,
-    //   layout: "/admin"
-    // }
-  ];
-  
-  export default dashboardRoutes;
+  {
+    path: "/dashboard",
+    name: "Panel",
+    icon: Dashboard,
+    component: DashboardPage,
+    layout: "/admin"
+  },
+  {
+    path: "/suppliers",
+    name: "Proveedores",
+    icon: Language,
+    component: Suppliers,
+    layout: "/admin",
+  },
+  {
+    path: "/clients",
+    name: "Clientes",
+    icon: Person,
+    component: TableList,
+    layout: "/admin"
+  },
+  // {
+  //   path: "/clientsbackup",
+  //   name: "Clientes",
+  //   icon: Person,
+  //   component: TableList,
+  //   layout: "/admin"
+  // },
+  {
+    path: "/articles",
+    name: "Articulos",
+    icon: BubbleChart,
+    component: Articles,
+    layout: "/admin"
+  },
+  {
+    path: "/pricelist",
+    name: "Listado de precios",
+    icon: "content_paste",
+    component: PriceLists,
+    layout: "/admin"
+  },
+  {
+    path: "/maps",
+    name: "Maps",
+    icon: LocationOn,
+    component: Maps,
+    layout: "/admin"
+  },
+  {
+    path: "/notifications",
+    name: "Notifications",
+    icon: Notifications,
+    component: NotificationsPage,
+    layout: "/admin"
+  },
+  // {
+  //   path: "/rtl-page",
+  //   name: "RTL Support",
+  //   icon: Language,
+  //   component: RTLPage,
+  //   layout: "/admin"
+  // },
+  {
+    path: "/profile",
+    name: "Perfil",
+    notSideBar: true,
+    // icon: Language,
+    component: RTLPage,
+    layout: "/admin"
+  },
+  {
+    path: "/settings",
+    name: "Ajustes",
+    notSideBar: true,
+    // icon: Language,
+    // component: RTLPage,
+    layout: "/admin"
+  },
+  {
+    path: '/editpricelist/:id',
+    name: "Editar listado de precio",
+    notSideBar: true,
+    // icon: Language,
+    component: EditPricelist,
+    layout: "/admin"
+  },
+  {
+    path: "/purchases",
+    name: "Compras",
+    icon: ShoppingCartIcon,
+    component: Purchases,
+    layout: "/admin"
+  },
+  {
+    path: "/upgrade-to-pro",
+    name: "Nested Link test",
+    icon: Unarchive,
+    component: UpgradeToPro,
+    layout: "/admin",
+    notSideBar: true,
+    nestedList: true,
+    nestedData: nestedDataTest,
+  }
+];
+
+export default dashboardRoutes;
