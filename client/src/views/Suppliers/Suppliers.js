@@ -10,11 +10,9 @@ import TextField from '@material-ui/core/TextField';
 // core components
 import GridItem from "../../components/Grid/GridItem.js";
 import GridContainer from "../../components/Grid/GridContainer.js";
-import CustomInput from "../../components/CustomInput/CustomInput.js";
 import Button from "../../components/CustomButtons/Button.js";
 import Card from "../../components/Card/Card.js";
 import CardHeader from "../../components/Card/CardHeader.js";
-import CardAvatar from "../../components/Card/CardAvatar.js";
 import CardBody from "../../components/Card/CardBody.js";
 import CardFooter from "../../components/Card/CardFooter.js";
 import Table from "../../components/Table/Table.js";
@@ -274,7 +272,6 @@ export default function Suppliers() {
           </Card>
         </GridItem>
 
-        
         {/* <GridItem xs={12} sm={12} md={4}>
           <Card profile>
             <CardAvatar profile>
@@ -296,7 +293,6 @@ export default function Suppliers() {
             </CardBody>
           </Card>
         </GridItem> */}
-
 
         <GridItem xs={12} sm={12} md={12}>
         <Card>
@@ -326,16 +322,6 @@ export default function Suppliers() {
         </Card>
       </GridItem>
       </GridContainer>
-      {/* <MaterialTable
-          columns={[
-            { title: 'Adı', field: 'nametest' },
-            { title: 'Soyadı', field: 'surname' },
-            { title: 'Doğum Yılı', field: 'birthYear', type: 'numeric' },
-            { title: 'Doğum Yeri', field: 'birthCity', lookup: { 34: 'İstanbul', 63: 'Şanlıurfa' } }
-          ]}
-          data={[{ nametest: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 }]}
-          title="Demo Title"
-        /> */}
     </div>
   );
 }

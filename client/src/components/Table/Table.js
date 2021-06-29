@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom"
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -13,14 +12,10 @@ import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 // @material-ui/icons
 import Edit from "@material-ui/icons/Edit";
-import Close from "@material-ui/icons/Close";
 // core components
 import styles from "../../styles/components/tableStyle.js";
 import styles2 from "../../styles/components/tasksStyle.js";
 
-import { useSnackbar } from 'notistack';
-import { universalDelete } from "../../actions/universalDelete.js";
-import Token from '../../Token/Token'
 import DeleteDialog from './DeleteDialog'
 
 const useStyles = makeStyles(styles);
@@ -29,9 +24,6 @@ const useStyles2 = makeStyles(styles2);
 export default function CustomTable(props) {
   const classes = useStyles();
   const classes2 = useStyles2();
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const token = Token();
-  const dispatch = useDispatch();
   const { tableHead, tableData, tableHeaderColor } = props;
 
   return (

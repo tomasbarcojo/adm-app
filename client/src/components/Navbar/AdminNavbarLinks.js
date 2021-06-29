@@ -16,10 +16,7 @@ import Divider from "@material-ui/core/Divider";
 // @material-ui/icons
 import Person from "@material-ui/icons/Person";
 import Notifications from "@material-ui/icons/Notifications";
-import Dashboard from "@material-ui/icons/Dashboard";
-import Search from "@material-ui/icons/Search";
 // core components
-import CustomInput from "../CustomInput/CustomInput";
 import Button from "../CustomButtons/Button.js";
 
 import styles from '../../styles/components/headerLinksStyle'

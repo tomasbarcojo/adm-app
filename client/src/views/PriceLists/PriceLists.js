@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import NumberFormat from 'react-number-format';
 import { getPriceList, addPriceList } from '../../actions/pricelists'
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -71,7 +69,6 @@ const useStyles = makeStyles((theme) => ({
 export default function PriceLists() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const url = useLocation();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   var token = Token();
   const pricelists = useSelector(state => state.pricelists);

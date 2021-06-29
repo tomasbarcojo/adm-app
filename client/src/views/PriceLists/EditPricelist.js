@@ -1,8 +1,7 @@
 import React from "react";
-import { useParams, useLocation } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import PropTypes from "prop-types";
 import { useSnackbar } from 'notistack';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";

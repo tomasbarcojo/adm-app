@@ -9,10 +9,7 @@ import GridItem from "../../components/Grid/GridItem.js";
 import GridContainer from "../../components/Grid/GridContainer.js";
 import Button from "../../components/CustomButtons/Button.js";
 import CardFooter from "../../components/Card/CardFooter.js";
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -20,17 +17,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Box from '@material-ui/core/Box';
 import LinearProgress from '@material-ui/core/LinearProgress';
 // core components
-import Quote from "../../components/Typography/Quote.js";
-import Muted from "../../components/Typography/Muted.js";
-import Primary from "../../components/Typography/Primary.js";
-import Info from "../../components/Typography/Info.js";
-import Success from "../../components/Typography/Success.js";
-import Warning from "../../components/Typography/Warning.js";
-import Danger from "../../components/Typography/Danger.js";
 import Card from "../../components/Card/Card.js";
 import CardHeader from "../../components/Card/CardHeader.js";
 import CardBody from "../../components/Card/CardBody.js";
-import CardAvatar from "../../components/Card/CardAvatar.js";
 import Categories from './Categories.js'
 
 import alt from '../../images/producto-sin-imagen.png'
