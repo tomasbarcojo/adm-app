@@ -139,6 +139,18 @@ export default function rootReducer(state = initialstate, action) {
 				articles: action.payload
 			};
 
+		case 'GET_ARTICLES_BY_SUPPLIER_ID':
+			return {
+				...state,
+				articles: action.payload
+			}
+
+		case 'CLEAR_ARTICLES':
+			return {
+				...state,
+				articles: []
+			}
+
 		case 'CREATE_ARTICLE':
 			return {
 				...state,

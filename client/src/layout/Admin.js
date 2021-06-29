@@ -38,6 +38,8 @@ const switchRoutes = (
   </Switch>
 );
 
+console.log(switchRoutes)
+
 const useStyles = makeStyles(styles);
 
 export default function Admin({ ...rest }) {

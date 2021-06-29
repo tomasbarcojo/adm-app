@@ -4,7 +4,7 @@ const { getArticles, getArticlesBySupplierId, createArticle } = require('../cont
 
 server.get('/', authenticate, getArticles)
 
-server.get('/:id', /*authenticate,*/ getArticlesBySupplierId)
+server.get('/supplier/:id', /*authenticate,*/ getArticlesBySupplierId)
 
 server.post('/createArticle', authenticate, createArticle)
 

@@ -5,7 +5,7 @@ import { getPriceList, addPriceList } from '../../actions/pricelists'
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from '@material-ui/core/TextField';
-
+import Autocomplete from '@material-ui/lab/Autocomplete';
 // core components
 import GridItem from "../../components/Grid/GridItem.js";
 import GridContainer from "../../components/Grid/GridContainer.js";
@@ -16,8 +16,9 @@ import CardBody from "../../components/Card/CardBody.js";
 import Button from "../../components/CustomButtons/Button.js";
 import CardFooter from "../../components/Card/CardFooter.js";
 
-import { getArticles } from '../../actions/article'
+import { clearArticleData, getArticles, getArticlesBySupplierId } from '../../actions/article'
 import Token from '../../Token/Token'
+import { getSuppliers } from "../../actions/suppliers";
 
 const useStyles = makeStyles((theme) => ({
   cardCategoryWhite: {
@@ -63,20 +64,26 @@ export default function PriceLists() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   var token = Token();
   const pricelists = useSelector(state => state.pricelists);
-  const articles = useSelector(state => state.articles)
+  const articles = useSelector(state => state.articles);
+  const suppliers = useSelector(state => state.suppliers);
+  const [supplierId, setSupplierId] = useState()
   const [showNew, setShowNew] = useState(false);
   const [priceListName, setpriceListName] = useState('')
   const data = []
 
   useEffect(() => {
-    dispatch(getPriceList(token));
-    dispatch(getArticles(token));
+    dispatch(clearArticleData())
+    dispatch(getSuppliers(token));
   }, []);
+
+  useEffect(() => {
+    if (supplierId) dispatch(getArticlesBySupplierId(token, supplierId))
+  }, [supplierId])
 
   const resetForm = () => {
     setpriceListName('')
     for (let i = 1; i < articles.length + 1; i++) {
-      document.getElementById(i).value = '' 
+      document.getElementById(i).value = ''
     }
   };
 
@@ -84,8 +91,9 @@ export default function PriceLists() {
     setShowNew(!showNew)
   };
 
-  const handleChangepriceListName = (event) => {
-    setpriceListName(event.target.value)
+  const handleChangePriceListName = (value) => {
+    if (value) setSupplierId(value.id)
+    else dispatch(clearArticleData())
   };
 
   const handleSubmit = (e) => {
@@ -138,8 +146,19 @@ export default function PriceLists() {
               <form onSubmit={handleSubmit}>
                 <CardBody>
                   <GridContainer>
-                    <GridItem xs={12} sm={12} md={3}>
-                      <TextField
+                    <GridItem xs={12} sm={12} md={8}>
+                      <div>
+                        <Autocomplete
+                          id="Supplier"
+                          options={suppliers}
+                          getOptionLabel={(option) => option.businessName}
+                          // style={{ width: '100%' }}
+                          onChange={(event, value) => handleChangePriceListName(value)}
+                          fullWidth={true}
+                          renderInput={(params) => <TextField {...params} label="Proveedor" />}
+                        />
+                      </div>
+                      {/* <TextField
                         className={classes.input}
                         label="Nombre del listado"
                         id="priceListName"
@@ -147,9 +166,10 @@ export default function PriceLists() {
                         fullWidth
                         autoComplete='off'
                         value={priceListName}
-                      />
+                      /> */}
                     </GridItem>
                   </GridContainer>
+                  
                   <h5>Articulos:</h5>
 
                   {
@@ -168,7 +188,7 @@ export default function PriceLists() {
                           </div>
                         )
                       })
-                      : <h6>No existen articulos</h6>
+                      : <h6 style={{ display: "flex", justifyContent: "center" }}>Seleccione un proveedor para desplegar sus productos</h6>
                   }
 
                 </CardBody>
@@ -191,22 +211,22 @@ export default function PriceLists() {
             </p>
           </CardHeader>
           <CardBody>
-          {pricelists && pricelists.length > 0 ?
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["ID", "Nombre de listado"]}
-              tableData={
-                pricelists.map((pl) => {
-                  return {
-                    id: pl.id,
-                    editpathname: 'editpricelist',
-                    deletepathname: 'pricelist/deletepricelist',
-                    data: [pl.id, pl.priceListName]
-                  }
-                })
-              }
-            />
-          : <h5 style={{ display: "flex", justifyContent: "center"}}>No existen listados de precio</h5>}            
+            {pricelists && pricelists.length > 0 ?
+              <Table
+                tableHeaderColor="primary"
+                tableHead={["ID", "Nombre de listado"]}
+                tableData={
+                  pricelists.map((pl) => {
+                    return {
+                      id: pl.id,
+                      editpathname: 'editpricelist',
+                      deletepathname: 'pricelist/deletepricelist',
+                      data: [pl.id, pl.priceListName]
+                    }
+                  })
+                }
+              />
+              : <h5 style={{ display: "flex", justifyContent: "center" }}>No existen listados de precio</h5>}
           </CardBody>
         </Card>
       </GridItem>
