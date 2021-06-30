@@ -95,8 +95,9 @@
 }
 
 /* Tamaño del scroll */
+/* LO DEJO EN 0px MOMENTANEAMENTE YA QUE CON LA APARICION DEL SCROLL SE MUEVEN LOS ITEMS Y QUEDA FEO*/ 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 0px; 
 }
 
  /* Estilos barra (thumb) de scroll */

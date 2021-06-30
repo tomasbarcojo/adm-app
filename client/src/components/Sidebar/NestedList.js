@@ -47,18 +47,22 @@ const NestedLinksTheme = createMuiTheme({
 
 const useStyles = makeStyles(styles);
 
-export default function NestedList({prop}) {
+export default function NestedList({ prop }) {
   const classes = useStyles();
   const [open, setOpen] = useState(true);
-
-  console.log(prop)
 
   const handleClick = () => {
     setOpen(!open);
   };
 
   function activeRoute(routeName) {
-    return window.location.href.indexOf(routeName) > -1 ? true : false;
+    // console.log(routeName)
+    // console.log(window.location.pathname)
+    // console.log(window.location.href.indexOf(routeName))
+    // console.log(routeName)
+    if (window.location.pathname === routeName) return true
+    return false
+    // return window.location.href.indexOf(routeName) > -1 ? true : false;
   }
 
   const listItemClassesNested = classNames({
@@ -69,66 +73,72 @@ export default function NestedList({prop}) {
   });
 
   return (
-    <div styles={{marginTop: '10px'}}>
-    <List disablePadding>
-      <ThemeProvider theme={NestedLinksTheme}>
-        <ListItem button className={classes.itemLinkNested + listItemClassesNested} onClick={handleClick}>
-          {typeof prop.icon === "string" ? (
-            <Icon
-              className={classNames(classes.itemIcon, whiteFontClassesNested)} //this is for "Table List" Icon
-            >
-              {prop.icon}
-            </Icon>
-          ) : (
-            <prop.icon
-              className={classNames(classes.itemIcon, whiteFontClassesNested)} //this is for the rest of the icons on the side bar list
+    <div styles={{ marginTop: '10px' }}>
+      <List disablePadding>
+        <ThemeProvider theme={NestedLinksTheme}>
+          <ListItem button className={classes.itemLinkNested + listItemClassesNested} onClick={handleClick}>
+            {typeof prop.icon === "string" ? (
+              <Icon
+                className={classNames(classes.itemIcon, whiteFontClassesNested)} //this is for "Table List" Icon
+              >
+                {prop.icon}
+              </Icon>
+            ) : (
+              <prop.icon
+                className={classNames(classes.itemIcon, whiteFontClassesNested)} //this is for the rest of the icons on the side bar list
+              />
+            )}
+            <ListItemText primary={prop.name}
+              className={classNames(classes.itemText, whiteFontClassesNested)}
+              disableTypography={true}
             />
-          )}
-          <ListItemText primary={prop.name}
-            className={classNames(classes.itemText, whiteFontClassesNested)}
-            disableTypography={true}
-          />
-          {open ? <ExpandLess style={{ fill: `rgba(${255}, ${255}, ${255}, ${0.8})` }} /> : <ExpandMore style={{ fill:  `rgba(${255}, ${255}, ${255}, ${0.8})` }} />}
-        </ListItem>
-        <Collapse in={open} timeout="auto">
-          <List component="div" disablePadding>
-            {prop.nestedData && prop.nestedData.map(data => {
-              return (
-                <>
-                  <NavLink
-                    to={data.layout + data.path}
-                    className={classes.item} //activePro did not make effect because it's unused
-                    activeClassName="active"
-                    key={prop}
-                  >
-                    <ListItem button className={classes.nested}>
-                      <ListItemIcon>
-                        {typeof prop.icon === "string" ? (
-                          <Icon
-                            className={classNames(classes.itemIcon, whiteFontClassesNested)} //this is for "Table List" Icon
-                          >
-                            {data.icon}
-                          </Icon>
-                        ) : (
-                          <data.icon
-                            className={classNames(classes.itemIcon, whiteFontClassesNested)} //this is for the rest of the icons on the side bar list
-                          />
-                        )}
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={prop.name}
-                        className={classNames(classes.itemText, whiteFontClassesNested)}
-                        disableTypography={true}
-                      />
-                    </ListItem>
-                  </NavLink>
-                </>
-              )
-            })}
-          </List>
-        </Collapse>
-      </ThemeProvider>
-    </List>
+            {open ? <ExpandLess style={{ fill: `rgba(${255}, ${255}, ${255}, ${0.8})` }} /> : <ExpandMore style={{ fill: `rgba(${255}, ${255}, ${255}, ${0.8})` }} />}
+          </ListItem>
+          <Collapse in={open} timeout="auto">
+            <List component="div" disablePadding>
+              {prop.nestedData && prop.nestedData.map(data => {
+                return (
+                  <>
+                    <NavLink
+                      to={data.layout + data.path}
+                      className={classes.item} //activePro did not make effect because it's unused
+                      activeClassName="active"
+                      key={prop}
+                    >
+                      <ListItem button className={classes.nested + classNames({
+                        [" " + classes['blue']]: activeRoute(data.layout + data.path)
+                      })}>
+                        <ListItemIcon>
+                          {typeof prop.icon === "string" ? (
+                            <Icon
+                              className={classNames(classes.itemIcon, classNames({
+                                [" " + classes.whiteFont]: activeRoute(data.layout + data.path)
+                              }))} //this is for "Table List" Icon
+                            >
+                              {data.icon}
+                            </Icon>
+                          ) : (
+                            <data.icon
+                              className={classNames(classes.itemIcon, classNames({
+                                [" " + classes.whiteFont]: activeRoute(data.layout + data.path)
+                              }))} //this is for the rest of the icons on the side bar list
+                            />
+                          )}
+                        </ListItemIcon>
+                        <ListItemText
+                          primary={prop.name}
+                          className={classNames(classes.itemText, whiteFontClassesNested)}
+                          disableTypography={true}
+                        />
+                      </ListItem>
+                    </NavLink>
+                  </>
+                )
+              })}
+            </List>
+          </Collapse>
+        </ThemeProvider>
+      </List>
     </div>
   )
 }

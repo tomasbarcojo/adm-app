@@ -24,33 +24,34 @@ import Dashboard from "../views/Dashboard/Dashboard.js";
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
-        console.log(prop.layout + prop.path)
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-      }
       if (prop.nestedData) {
         return (
           prop.nestedData.map((route, key) => {
             return (
               <Route
-                  path={route.layout + route.path}
-                  component={route.component}
-                  key={key}
-                />
-            ) 
+                exact
+                path={route.layout + route.path}
+                component={route.component}
+                key={key}
+              />
+            )
           })
         )
-      }
+      } else
+        return (
+          <Route
+            exact
+            path={prop.layout + prop.path}
+            component={prop.component}
+            key={key}
+          />
+        );
     })}
     <Redirect from="/admin" to="/admin/dashboard" />
   </Switch>
 );
+
+console.log(switchRoutes)
 
 const useStyles = makeStyles(styles);
 

@@ -29,21 +29,21 @@ const nestedDataTest = [
     layout: "/admin"
   },
   {
-    path: "/pepe2",
+    path: "/pepe/prueba",
     name: "Articulos2",
     icon: Language,
     component: DashboardPage,
     layout: "/admin"
   },
   {
-    path: "/pepe3",
+    path: "/prueba",
     name: "Articulos3",
     icon: Language,
     component: DashboardPage,
     layout: "/admin"
   },
   {
-    path: "/pepe4",
+    path: "/prueba/asd",
     name: "Articulos4",
     icon: Language,
     component: DashboardPage,
@@ -159,16 +159,16 @@ const dashboardRoutes = [
     nestedList: true,
     nestedData: nestedDataTest,
   },
-  {
-    path: "/nestedlinktest",
-    name: "Nested Link test",
-    icon: Unarchive,
-    component: UpgradeToPro,
-    layout: "/asd",
-    notSideBar: true,
-    nestedList: true,
-    nestedData: nestedDataTest,
-  }
+  // {
+  //   path: "/nestedlinktest",
+  //   name: "Nested Link test",
+  //   icon: Unarchive,
+  //   component: UpgradeToPro,
+  //   layout: "/asd",
+  //   notSideBar: true,
+  //   nestedList: true,
+  //   nestedData: nestedDataTest,
+  // }
 ];
 
 export default dashboardRoutes;
