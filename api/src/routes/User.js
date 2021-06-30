@@ -1,6 +1,6 @@
 const server = require('express').Router()
 const authenticate = require('../utils/Auth')
-const { getUsers, createUser, modifyUser, deleteUser, loginUser, getOneUser } = require('../controllers/user')
+const { getUsers, createUser, modifyUser, deleteUser, loginUser, getOneUser } = require('../controllers/User')
 
 server.get('/', /*authenticate,*/ getUsers)
 

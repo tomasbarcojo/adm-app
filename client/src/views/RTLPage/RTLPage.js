@@ -31,7 +31,7 @@ import CardAvatar from "../../components/Card/CardAvatar.js";
 import CardIcon from "../../components/Card/CardIcon.js";
 import CardBody from "../../components/Card/CardBody.js";
 import CardFooter from "../../components/Card/CardFooter.js";
-import SnackbarContent from "../../components/Snackbar/SnackbarContent.js";
+import SnackbarContent from "../../components/SnackBar/SnackbarContent.js";
 
 import {
   dailySalesChart,
