@@ -27,6 +27,27 @@ const nestedDataTest = [
     icon: Language,
     component: DashboardPage,
     layout: "/admin"
+  },
+  {
+    path: "/pepe2",
+    name: "Articulos2",
+    icon: Language,
+    component: DashboardPage,
+    layout: "/admin"
+  },
+  {
+    path: "/pepe3",
+    name: "Articulos3",
+    icon: Language,
+    component: DashboardPage,
+    layout: "/admin"
+  },
+  {
+    path: "/pepe4",
+    name: "Articulos4",
+    icon: Language,
+    component: DashboardPage,
+    layout: "/admin"
   }
 ]
 
@@ -124,14 +145,26 @@ const dashboardRoutes = [
     name: "Compras",
     icon: ShoppingCartIcon,
     component: Purchases,
-    layout: "/admin"
+    layout: "/admin",
+    notSideBar: true,
+    nestedList: true,
   },
   {
-    path: "/upgrade-to-pro",
+    path: "/nestedlinktest",
     name: "Nested Link test",
     icon: Unarchive,
     component: UpgradeToPro,
     layout: "/admin",
+    notSideBar: true,
+    nestedList: true,
+    nestedData: nestedDataTest,
+  },
+  {
+    path: "/nestedlinktest",
+    name: "Nested Link test",
+    icon: Unarchive,
+    component: UpgradeToPro,
+    layout: "/asd",
     notSideBar: true,
     nestedList: true,
     nestedData: nestedDataTest,

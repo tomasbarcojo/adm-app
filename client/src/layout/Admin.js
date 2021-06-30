@@ -17,6 +17,7 @@ import styles from "../styles/layouts/adminStyle";
 
 import bgImage from "../images/sidebar-4.jpg";
 import logo from "../images/reactlogo.png";
+import Dashboard from "../views/Dashboard/Dashboard.js";
 
 
 
@@ -24,6 +25,7 @@ const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
       if (prop.layout === "/admin") {
+        console.log(prop.layout + prop.path)
         return (
           <Route
             path={prop.layout + prop.path}
@@ -32,13 +34,23 @@ const switchRoutes = (
           />
         );
       }
-      return null;
+      if (prop.nestedData) {
+        return (
+          prop.nestedData.map((route, key) => {
+            return (
+              <Route
+                  path={route.layout + route.path}
+                  component={route.component}
+                  key={key}
+                />
+            ) 
+          })
+        )
+      }
     })}
     <Redirect from="/admin" to="/admin/dashboard" />
   </Switch>
 );
-
-console.log(switchRoutes)
 
 const useStyles = makeStyles(styles);
 

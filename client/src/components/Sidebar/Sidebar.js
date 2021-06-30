@@ -17,7 +17,7 @@ import AdminNavbarLinks from "../Navbar/AdminNavbarLinks";
 import RTLNavbarLinks from "../Navbar/RTLNavbarLinks.js";
 
 import styles from "../../styles/components/sidebarStyle.js";
-
+import NestedList from './NestedList'
 
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Collapse from '@material-ui/core/Collapse';
@@ -28,6 +28,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import AddIcon from '@material-ui/icons/Add';
+import ShoppingCart from "@material-ui/icons/ShoppingCart";
 
 const NestedLinksTheme = createMuiTheme({
   overrides: {
@@ -95,6 +96,10 @@ export default function Sidebar(props) {
               </ListItem>
             </NavLink>
           );
+        } else if (prop.nestedList){
+          return (
+            <NestedList prop={prop} />
+          )
         }
       })}
     </List>
@@ -292,7 +297,6 @@ export default function Sidebar(props) {
           <div className={classes.sidebarWrapper}>
             {<AdminNavbarLinks />}
             {links}
-            {linksNested}
           </div>
           {image !== undefined ? (
             <div
@@ -314,7 +318,6 @@ export default function Sidebar(props) {
           {brand}
           <div className={classes.sidebarWrapper}>
             {links}
-            {linksNested}
           </div>
           {image !== undefined ? (
             <div

@@ -308,6 +308,10 @@ const sidebarStyle = theme => ({
       width: "100%",
       bottom: "13px"
     }
+  },
+  nested: {
+    paddingLeft: theme.spacing(4),
+    marginTop: theme.spacing(0)
   }
 });
 
