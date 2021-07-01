@@ -49,7 +49,7 @@ const useStyles = makeStyles(styles);
 
 export default function NestedList({ prop }) {
   const classes = useStyles();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const handleClick = () => {
     setOpen(!open);
@@ -126,7 +126,7 @@ export default function NestedList({ prop }) {
                           )}
                         </ListItemIcon>
                         <ListItemText
-                          primary={prop.name}
+                          primary={data.name}
                           className={classNames(classes.itemText, whiteFontClassesNested)}
                           disableTypography={true}
                         />

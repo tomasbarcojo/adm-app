@@ -1,4 +1,4 @@
-const { User, Supplier, Category, Article } = require('../db.js')
+const { User, Supplier, Category, Article, Client } = require('../db.js')
 var faker = require('faker');
 const { fake, finance } = require('faker');
 
@@ -31,34 +31,49 @@ module.exports = {
                 bankaccount1: faker.finance.account(),
             });
         }
-        await Category.create({
-            categoryName: 'Celulares',
-            image: '54',
-        });
-        await Article.create({
-            articleName: 'Prueba articulo 1',
-            price: '1000',
-            stock: '10',
-            image: '8719',
-            categoryId: 1,
-            supplierId: 1
-        })
-        await Article.create({
-            articleName: 'Prueba articulo 2',
-            price: '1000',
-            stock: '10',
-            image: '8719',
-            categoryId: 1,
-            supplierId: 1
-        })
-        await Article.create({
-            articleName: 'Prueba articulo 3',
-            price: '1000',
-            stock: '10',
-            image: '8719',
-            categoryId: 1,
-            supplierId: 2
-        })
+        for (var i = 0; i < 10; i++) {
+            await Category.create({
+                categoryName: `Categoria ${i}`,
+                image: faker.image.business(),
+            });
+        }
+        for (var i = 0; i < 300; i++) {
+            await Article.create({
+                articleName: faker.commerce.productName(),
+                price: faker.commerce.price(),
+                stock: '10',
+                image: faker.image.business(),
+                categoryId: Math.floor(Math.random() * 10) + 1,
+                supplierId: Math.floor(Math.random() * 100) + 1
+            })
+        }
+        for (var i = 0; i < 600; i++) {
+            await Client.create({
+                businessName: faker.internet.userName(),
+                cuit: i,
+                address: faker.address.streetName(),
+                city: faker.address.cityName(),
+                CP: faker.address.zipCode(),
+                phone: faker.phone.phoneNumber(),
+                altphone: faker.phone.phoneNumber()
+            })
+        }
+        // await Article.create({
+        //     articleName: 'Prueba articulo 2',
+        //     price: '1000',
+        //     stock: '10',
+        //     image: '8719',
+        //     categoryId: 1,
+        //     supplierId: 1
+        // })
+        // await Article.create({
+        //     articleName: 'Prueba articulo 3',
+        //     price: '1000',
+        //     stock: '10',
+        //     image: '8719',
+        //     categoryId: 1,
+        //     supplierId: 2
+        // })
         return res.send('LISTO')
       }
 }

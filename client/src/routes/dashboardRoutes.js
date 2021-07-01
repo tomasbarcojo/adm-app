@@ -19,13 +19,14 @@ import UpgradeToPro from "../views/UpgradeToPro/UpgradeToPro.js";
 import RTLPage from "../views/RTLPage/RTLPage.js";
 import EditPricelist from '../views/PriceLists/EditPricelist'
 import Purchases from '../views/Purchases/Purchases'
+import AddIcon from '@material-ui/icons/Add';
 
 const nestedDataTest = [
   {
-    path: "/pepe",
-    name: "Articulos",
-    icon: Language,
-    component: DashboardPage,
+    path: "/purchases",
+    name: "Nueva compra",
+    icon: AddIcon,
+    component: Purchases,
     layout: "/admin"
   },
   {
@@ -148,6 +149,7 @@ const dashboardRoutes = [
     layout: "/admin",
     notSideBar: true,
     nestedList: true,
+    nestedData: nestedDataTest
   },
   {
     path: "/nestedlinktest",
