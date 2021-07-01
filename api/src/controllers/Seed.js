@@ -1,4 +1,6 @@
 const { User, Supplier, Category, Article } = require('../db.js')
+var faker = require('faker');
+const { fake, finance } = require('faker');
 
 module.exports = {
     async Seed (req, res) {
@@ -18,15 +20,17 @@ module.exports = {
             CP: '3000',
             bankaccout1: '519925-12'
         });
-        await Supplier.create({
-            businessName: 'Activa SRL 2',
-            cuit: '30707651927',
-            phone: '3424663535',
-            address: '25 de Mayo 2387',
-            city: 'Santa Fe',
-            CP: '3000',
-            bankaccout1: '519925-12'
-        });
+        for (var i = 0; i < 100; i++) {
+            await Supplier.create({
+                businessName: faker.company.companyName(),
+                cuit: i,
+                phone: faker.phone.phoneNumber(),
+                address: '25 de Mayo 2387',
+                city: faker.address.streetAddress(),
+                CP: faker.address.zipCode(),
+                bankaccount1: faker.finance.account(),
+            });
+        }
         await Category.create({
             categoryName: 'Celulares',
             image: '54',
