@@ -23,6 +23,30 @@ export const getSuppliers = (token) => async dispatch => {
     }
 }
 
+export const getSuppliersByName = (token, name) => async dispatch => {
+    try {
+        await fetch(`http://${IP}:3001/supplier/byname`, {
+            method: 'POST',
+            body: JSON.stringify(name),
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': token
+            },
+        })
+            .then(data => data.json())
+            .then(res => {
+                if (res.status === 200) {
+                    dispatch({
+                        type: 'GET_SUPPLIERS',
+                        payload: res.suppliers
+                    })
+                }
+            })
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 export const addSupplier = (data, token, enqueueSnackbar, closeSnackbar) => async dispatch => {
     try {
         await fetch(`http://${IP}:3001/supplier/createSupplier`, {

@@ -29,7 +29,6 @@ const NestedLinksTheme = createMuiTheme({
     MuiSvgIcon: {
       root: {
         color: `rgba(${255}, ${255}, ${255}, ${0.8})`,
-        marginRight: '15px'
       },
     },
     MuiListItemText: {

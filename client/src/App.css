@@ -182,3 +182,14 @@ input[type=number] {
 .contentImage h5 {
   text-align: center;
 }
+
+/* Search input for data tables */
+
+.searchInput {
+  border: 0;
+  padding: 6px 0 7px;
+  font: inherit;
+  border-radius: 5px;
+  padding: 5px 7px;
+  height: 40px;
+}

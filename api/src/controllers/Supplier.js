@@ -1,18 +1,39 @@
 require('dotenv').config()
-const { Supplier, User } = require('../db.js')
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-
-const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET
+const { Supplier } = require('../db.js')
+const { Op } = require('sequelize')
+const sequelize = require('sequelize');
 
 module.exports = {
   async getSuppliers(req, res) {
     try {
-      const suppliers = await Supplier.findAll()
+      const suppliers = await Supplier.findAll({ limit: 25 })
       if (suppliers && suppliers.length === 0) {
         return res.status(404).send({ message: 'No suppliers', status: 404 })
       }
-      return res.status(200).send({suppliers, status: 200})
+      return res.status(200).send({ suppliers, status: 200 })
+    } catch (err) {
+      console.log(err)
+      return res.status(400).send({ message: 'Failed to get users' })
+    }
+  },
+
+  async getSuppliersByName(req, res) {
+    try {
+      const { name } = req.body;
+      name.toLowerCase();
+      const suppliers = await Supplier.findAll({
+        where: {
+          // businessName: {
+          //   [Op.startsWith]: name
+          // }
+          businessName: sequelize.where(sequelize.fn('LOWER', sequelize.col('businessName')), 'LIKE', '%' + name + '%')
+        },
+        limit: 15
+      })
+      if (suppliers && suppliers.length === 0) {
+        return res.status(404).send({ message: 'No suppliers', status: 404 })
+      }
+      return res.status(200).send({ suppliers, status: 200 })
     } catch (err) {
       console.log(err)
       return res.status(400).send({ message: 'Failed to get users' })
@@ -25,7 +46,7 @@ module.exports = {
       return res.status(400).send({ message: 'Necesary data required', status: 400 })
     }
     try {
-      const supplier = await Supplier.findOne({ where: { cuit: cuit }})
+      const supplier = await Supplier.findOne({ where: { cuit: cuit } })
       if (supplier) {
         return res.status(400).send({ message: "Supplier already exists", status: 400 });
       }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import { addSupplier, getSuppliers } from '../../actions/suppliers'
+import { addSupplier, getSuppliers, getSuppliersByName } from '../../actions/suppliers'
 import MaterialTable from 'material-table'
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -46,6 +46,10 @@ const styles = {
   input: {
     margin: '27px 0 0 0',
     paddingBottom: '10px',
+  },
+  searchInput: {
+    backgroudColor: 'red',
+    background: 'white'
   }
 };
 
@@ -106,6 +110,16 @@ export default function Suppliers() {
     e.preventDefault()
     dispatch(addSupplier(data, token, enqueueSnackbar, closeSnackbar))
     resetForm()
+  }
+
+  const handleChangeSearchInput = (e) => {
+    // const name = e.target.value;
+    const name = {name: e.target.value}
+    if (name.name.length > 0) {
+      dispatch(getSuppliersByName(token, name))
+    } else {
+      dispatch(getSuppliers(token))
+    }
   }
 
   return (
@@ -295,32 +309,37 @@ export default function Suppliers() {
         </GridItem> */}
 
         <GridItem xs={12} sm={12} md={12}>
-        <Card>
-          <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Proveedores</h4>
-            <p className={classes.cardCategoryWhite}>
-              Listado de proveedores
-            </p>
-          </CardHeader>
-          <CardBody>
-            {suppliers && suppliers.length > 0 ?
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["ID", "Razon Social", "CUIT", "Test1", "Test2"]}
-              tableData={suppliers && suppliers.length > 0 ?
-                suppliers.map((supplier, index) => {
-                  return {
-                    id: supplier.id,
-                    data: [supplier.id, supplier.businessName, supplier.cuit, supplier.phone, supplier.CP]
-                  }
-                })
-              : null}
-            />
-            : <h5 style={{ display: "flex", justifyContent: "center"}}>No existen proveedores</h5>
-            }
-          </CardBody>
-        </Card>
-      </GridItem>
+          <Card>
+            <CardHeader color="primary">
+              <div className={classes.card}>
+                <div>
+                  <h4 className={classes.cardTitleWhite}>Proveedores</h4>
+                  <p className={classes.cardCategoryWhite}>
+                    Listado de proveedores
+                  </p>
+                </div>
+                <input className='searchInput' type="search" placeholder="Buscar..." onChange={handleChangeSearchInput}/>
+              </div>
+            </CardHeader>
+            <CardBody>
+              {suppliers && suppliers.length > 0 ?
+                <Table
+                  tableHeaderColor="primary"
+                  tableHead={["ID", "Razon Social", "CUIT", "Test1", "Test2"]}
+                  tableData={suppliers && suppliers.length > 0 ?
+                    suppliers.map((supplier, index) => {
+                      return {
+                        id: supplier.id,
+                        data: [supplier.id, supplier.businessName, supplier.cuit, supplier.phone, supplier.CP]
+                      }
+                    })
+                    : null}
+                />
+                : <h5 style={{ display: "flex", justifyContent: "center" }}>No existen proveedores</h5>
+              }
+            </CardBody>
+          </Card>
+        </GridItem>
       </GridContainer>
     </div>
   );
