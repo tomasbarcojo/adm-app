@@ -3,7 +3,7 @@ const { Client } = require('../db.js')
 module.exports = {
   async getClients(req, res) {
     try {
-      const clients = await Client.findAll()
+      const clients = await Client.findAll({ limit: 5})
       if (clients && clients.length === 0) {
         return res.status(404).send({ message: 'No clients', status: 404 })
       }
