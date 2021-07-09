@@ -16,6 +16,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import Box from '@material-ui/core/Box';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 // core components
 import Card from "../../components/Card/Card.js";
 import CardHeader from "../../components/Card/CardHeader.js";
@@ -109,6 +110,7 @@ export default function Articles() {
   var token = Token();
   const [data, setData] = useState({
     articleName: '',
+    code: '',
     category: '',
     supplier: '',
     price: '',
@@ -124,6 +126,7 @@ export default function Articles() {
     setData({
       ...data,
       articleName: '',
+      code: '',
       category: '',
       supplier: '',
       price: '',
@@ -223,53 +226,46 @@ export default function Articles() {
                               value={data.articleName}
                             />
                           </GridItem>
-                          <GridItem xs={12} sm={12} md={12}>
-                            <FormControl className={classes.formControl}>
-                              <InputLabel>Categoria</InputLabel>
-                              <Select
-                                name="categoryId"
-                                onChange={handleChange}
-                                fullWidth={true}
-                                value={data.categoryId ? data.categoryId : ''}
-                              >
-                                {
-                                  categories && categories.length > 0 ?
-                                    categories.map(category => {
-                                      return (
-                                        <MenuItem key={category.id} value={category.id}>{category.categoryName}</MenuItem>
-                                      )
-                                    })
-                                    : <>
-                                      <MenuItem disabled key={0} value={0}>No existen categorias</MenuItem>
-                                    </>
-                                }
-                              </Select>
-                            </FormControl>
+                        </GridContainer>
+                        <GridContainer>
+                          <GridItem xs={12} sm={12} md={6}>
+                            <Autocomplete
+                              id="categoryId"
+                              name="categoryId"
+                              className={classes.input}
+                              options={categories}
+                              getOptionLabel={(option) => option.categoryName}
+                              onChange={(event, value) => console.log(event, value)}
+                              fullWidth={true}
+                              renderInput={(params) => <TextField {...params} label="Categoria" />}
+                            />
                           </GridItem>
-                          <GridItem xs={12} sm={12} md={12}>
-                            <FormControl className={classes.formControl}>
-                              <InputLabel>Proveedor</InputLabel>
-                              <Select
-                                name="supplierId"
-                                onChange={handleChange}
-                                fullWidth={true}
-                                value={data.supplierId ? data.supplierId : ''}
-                              >
-                                {
-                                  suppliers && suppliers.length > 0 ?
-                                    suppliers.map(suppliers => {
-                                      return (
-                                        <MenuItem key={suppliers.id} value={suppliers.id}>{suppliers.businessName}</MenuItem>
-                                      )
-                                    })
-                                    :
-                                    <MenuItem disabled key={0} value={0}>No existen proveedores</MenuItem>
-                                }
-                              </Select>
-                            </FormControl>
+                          <GridItem xs={12} sm={12} md={6}>
+                            <Autocomplete
+                              id="supplierId"
+                              name="supplierId"
+                              className={classes.input}
+                              options={suppliers}
+                              getOptionLabel={(option) => option.businessName}
+                              onChange={(event, value) => console.log(event, value)}
+                              fullWidth={true}
+                              renderInput={(params) => <TextField {...params} label="Proveedor" />}
+                            />
                           </GridItem>
                         </GridContainer>
                         <GridContainer>
+                          <GridItem xs={12} sm={12} md={6}>
+                            <TextField
+                              className={classes.input}
+                              label="Codigo"
+                              id="code"
+                              onChange={handleChange}
+                              fullWidth
+                              autoComplete='off'
+                              type='number'
+                              value={data.code}
+                            />
+                          </GridItem>
                           <GridItem xs={12} sm={12} md={6}>
                             <TextField
                               className={classes.input}
@@ -282,17 +278,31 @@ export default function Articles() {
                               value={data.price}
                             />
                           </GridItem>
+                        </GridContainer>
+                        <GridContainer>
                           <GridItem xs={12} sm={12} md={6}>
-                            {/* <TextField
+                            <TextField
                               className={classes.input}
-                              label="Stock"
-                              id="stock"
+                              label="Stock inicial"
+                              id="stockini"
                               onChange={handleChange}
                               fullWidth
                               autoComplete='off'
                               type='number'
-                              value={data.stock}
-                            /> */}
+                              value={data.stockini}
+                            />
+                          </GridItem>
+                          <GridItem xs={12} sm={12} md={6}>
+                            <TextField
+                              className={classes.input}
+                              label="Alerta de stock"
+                              id="stockalert"
+                              onChange={handleChange}
+                              fullWidth
+                              autoComplete='off'
+                              type='number'
+                              value={data.stockalert}
+                            />
                           </GridItem>
                         </GridContainer>
                         <GridContainer>

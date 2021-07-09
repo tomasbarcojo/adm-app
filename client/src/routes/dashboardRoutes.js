@@ -18,40 +18,9 @@ import UpgradeToPro from "../views/UpgradeToPro/UpgradeToPro.js";
 // core components/views for RTL layout
 import RTLPage from "../views/RTLPage/RTLPage.js";
 import EditPricelist from '../views/PriceLists/EditPricelist'
-import Purchases from '../views/Purchases/Purchases'
 import AddIcon from '@material-ui/icons/Add';
 
-const nestedDataTest = [
-  {
-    path: "/purchases",
-    name: "Nueva compra",
-    icon: AddIcon,
-    component: Purchases,
-    layout: "/admin"
-  },
-  {
-    path: "/pepe/prueba",
-    name: "Articulos2",
-    icon: Language,
-    component: DashboardPage,
-    layout: "/admin"
-  },
-  {
-    path: "/prueba",
-    name: "Articulos3",
-    icon: Language,
-    component: DashboardPage,
-    layout: "/admin"
-  },
-  {
-    path: "/prueba/asd",
-    name: "Articulos4",
-    icon: Language,
-    component: DashboardPage,
-    layout: "/admin"
-  }
-]
-
+import purchases from './purchases'
 
 const dashboardRoutes = [
   {
@@ -142,25 +111,25 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path: "/purchases",
+    // path: "/purchases",
     name: "Compras",
     icon: ShoppingCartIcon,
-    component: Purchases,
+    // component: Purchases,
     layout: "/admin",
     notSideBar: true,
     nestedList: true,
-    nestedData: nestedDataTest
+    nestedData: purchases
   },
-  {
-    path: "/nestedlinktest",
-    name: "Nested Link test",
-    icon: Unarchive,
-    component: UpgradeToPro,
-    layout: "/admin",
-    notSideBar: true,
-    nestedList: true,
-    nestedData: nestedDataTest,
-  },
+  // {
+  //   path: "/nestedlinktest",
+  //   name: "Nested Link test",
+  //   icon: Unarchive,
+  //   component: UpgradeToPro,
+  //   layout: "/admin",
+  //   notSideBar: true,
+  //   nestedList: true,
+  //   nestedData: nestedDataTest,
+  // },
   // {
   //   path: "/nestedlinktest",
   //   name: "Nested Link test",

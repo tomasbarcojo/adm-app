@@ -40,11 +40,14 @@ module.exports = {
         for (var i = 0; i < 300; i++) {
             await Article.create({
                 articleName: faker.commerce.productName(),
+                code: faker.datatype.number(),
                 price: faker.commerce.price(),
-                stock: '10',
+                stockini: '100',
+                stockalert: '25',
                 image: faker.image.business(),
                 categoryId: Math.floor(Math.random() * 10) + 1,
-                supplierId: Math.floor(Math.random() * 100) + 1
+                supplierId: Math.floor(Math.random() * 100) + 1,
+                obs: faker.commerce.productDescription()
             })
         }
         for (var i = 0; i < 600; i++) {

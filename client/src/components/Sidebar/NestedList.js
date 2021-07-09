@@ -26,11 +26,11 @@ const NestedLinksTheme = createMuiTheme({
         width: 'auto'
       }
     },
-    MuiSvgIcon: {
-      root: {
-        color: `rgba(${255}, ${255}, ${255}, ${0.8})`,
-      },
-    },
+    // MuiSvgIcon: {
+    //   root: {
+    //     color: `rgba(${255}, ${255}, ${255}, ${0.8})`,
+    //   },
+    // },
     MuiListItemText: {
       root: {
         color: `rgba(${255}, ${255}, ${255}, ${0.8})`
