@@ -6,6 +6,7 @@ const initialstate = {
 	pricelistsbyid: [],
 	categories: [],
 	articles: [],
+	purchase: [],
 	userLogged: false,
 	notifications: []
 }

@@ -167,12 +167,12 @@ export default function PriceLists() {
                     articles && articles.length > 0 ?
                       <TablePurchase
                         tableHeaderColor="primary"
-                        tableHead={["ID", "Articulo", "Precio", "Stock"]}
+                        tableHead={["ID", "Articulo", "Stock Actual"]}
                         tableData={articles && articles.length > 0 ?
                           articles.map((article, index) => {
                             return {
                               id: article.id,
-                              data: [article.id, article.articleName, article.price, article.stock],
+                              data: [article.id, article.articleName, article.stock],
                               stock: article.stock
                             }
                           })

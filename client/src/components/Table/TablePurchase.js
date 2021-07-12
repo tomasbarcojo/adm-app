@@ -48,6 +48,12 @@ export default function CustomTable(props) {
               <TableCell
                 className={classes.tableCell + " " + classes.tableHeadCell}
               >
+                Precio de compra
+              </TableCell>
+
+              <TableCell
+                className={classes.tableCell + " " + classes.tableHeadCell}
+              >
                 Monto
               </TableCell>
 
@@ -90,6 +96,9 @@ export default function CustomTable(props) {
                   }
                   <TableCell className={classes.tableCell}>
                     <Counter stock={prop.stock} />
+                  </TableCell>
+                  <TableCell className={classes.tableCell} key={key}>
+                    <input />
                   </TableCell>
 
                   <TableCell className={classes.tableCell} key={key}>
