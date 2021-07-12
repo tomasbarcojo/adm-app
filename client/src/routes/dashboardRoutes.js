@@ -36,6 +36,10 @@ const dashboardRoutes = [
     icon: Language,
     component: Suppliers,
     layout: "/admin",
+    notSideBar: true,
+    nestedList: true,
+    nestedData: purchases,
+
   },
   {
     path: "/clients",
@@ -110,16 +114,16 @@ const dashboardRoutes = [
     component: EditPricelist,
     layout: "/admin"
   },
-  {
-    // path: "/purchases",
-    name: "Compras",
-    icon: ShoppingCartIcon,
-    // component: Purchases,
-    layout: "/admin",
-    notSideBar: true,
-    nestedList: true,
-    nestedData: purchases
-  },
+  // {
+  //   // path: "/purchases",
+  //   name: "Compras",
+  //   icon: ShoppingCartIcon,
+  //   // component: Purchases,
+  //   layout: "/admin",
+    // notSideBar: true,
+    // nestedList: true,
+  //   nestedData: purchases
+  // },
   // {
   //   path: "/nestedlinktest",
   //   name: "Nested Link test",

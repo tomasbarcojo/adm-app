@@ -10,6 +10,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import GridItem from "../../components/Grid/GridItem.js";
 import GridContainer from "../../components/Grid/GridContainer.js";
 import Table from "../../components/Table/Table.js";
+import TablePurchase from "../../components/Table/TablePurchase";
 import Card from "../../components/Card/Card.js";
 import CardHeader from "../../components/Card/CardHeader.js";
 import CardBody from "../../components/Card/CardBody.js";
@@ -152,43 +153,33 @@ export default function PriceLists() {
                           id="Supplier"
                           options={suppliers}
                           getOptionLabel={(option) => option.businessName}
-                          // style={{ width: '100%' }}
                           onChange={(event, value) => handleChangePriceListName(value)}
                           fullWidth={true}
                           renderInput={(params) => <TextField {...params} label="Proveedor" />}
                         />
                       </div>
-                      {/* <TextField
-                        className={classes.input}
-                        label="Nombre del listado"
-                        id="priceListName"
-                        onChange={handleChangepriceListName}
-                        fullWidth
-                        autoComplete='off'
-                        value={priceListName}
-                      /> */}
                     </GridItem>
                   </GridContainer>
-                  
+
                   <h5>Articulos:</h5>
 
                   {
                     articles && articles.length > 0 ?
-                      articles.map((article) => {
-                        return (
-                          <div key={article.id} className={classes.articleRow}>
-                            <GridContainer>
-                              <GridItem xs={12} sm={12} md={9}>
-                                <label>{article.articleName}</label>
-                              </GridItem>
-                              <GridItem xs={12} sm={12} md={3}>
-                                <input id={article.id} onChange={handleChangeInput} type="number" className={classes.articleInput} />
-                              </GridItem>
-                            </GridContainer>
-                          </div>
-                        )
-                      })
+                      <TablePurchase
+                        tableHeaderColor="primary"
+                        tableHead={["ID", "Articulo", "Precio", "Stock"]}
+                        tableData={articles && articles.length > 0 ?
+                          articles.map((article, index) => {
+                            return {
+                              id: article.id,
+                              data: [article.id, article.articleName, article.price, article.stock],
+                              stock: article.stock
+                            }
+                          })
+                        : null}
+                      />
                       : <h6 style={{ display: "flex", justifyContent: "center" }}>Seleccione un proveedor para desplegar sus productos</h6>
+                        
                   }
 
                 </CardBody>

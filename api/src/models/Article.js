@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    stockini: {
+    stock: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },

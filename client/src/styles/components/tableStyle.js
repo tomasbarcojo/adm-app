@@ -98,6 +98,21 @@ const tableStyle = theme => ({
     justifyContent: 'space-between',
     alignItems: 'center'
   },
+  containerPurchase: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    flexDirection: 'row',
+    // height: '100vh'
+  },
+  totalPurchase: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: 'auto',
+    justifyContent: 'flex-end'
+  }
 });
 
 export default tableStyle;

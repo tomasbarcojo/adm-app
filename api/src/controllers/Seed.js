@@ -42,7 +42,7 @@ module.exports = {
                 articleName: faker.commerce.productName(),
                 code: faker.datatype.number(),
                 price: faker.commerce.price(),
-                stockini: '100',
+                stock: faker.datatype.number(),
                 stockalert: '25',
                 image: faker.image.business(),
                 categoryId: Math.floor(Math.random() * 10) + 1,

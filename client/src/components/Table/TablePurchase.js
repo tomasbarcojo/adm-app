@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom"
 import PropTypes from "prop-types";
+import styles from "../../styles/components/tableStyle.js";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -8,23 +9,18 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import Tooltip from "@material-ui/core/Tooltip";
-import IconButton from "@material-ui/core/IconButton";
-// @material-ui/icons
-import Edit from "@material-ui/icons/Edit";
 // core components
-import styles from "../../styles/components/tableStyle.js";
-import styles2 from "../../styles/components/tasksStyle.js";
+import Counter from './Counter'
 
 import DeleteDialog from './DeleteDialog'
 
 const useStyles = makeStyles(styles);
-const useStyles2 = makeStyles(styles2);
 
 export default function CustomTable(props) {
   const classes = useStyles();
-  const classes2 = useStyles2();
-  const { tableHead, tableData, tableHeaderColor, options } = props;
+  const { tableHead, tableData, tableHeaderColor, options, stock } = props;
+
+
 
   return (
     <div className={classes.tableResponsive}>
@@ -42,19 +38,33 @@ export default function CustomTable(props) {
                   </TableCell>
                 );
               })}
-              {options ?
+
               <TableCell
-                align="right"
                 className={classes.tableCell + " " + classes.tableHeadCell}
               >
-                Opciones
+                Cantidad
               </TableCell>
-              : null}
+
+              <TableCell
+                className={classes.tableCell + " " + classes.tableHeadCell}
+              >
+                Monto
+              </TableCell>
+
             </TableRow>
           </TableHead>
         ) : null}
         <TableBody>
           {tableData.map((prop, key) => {
+            let total = 0;
+            // const [cant, setCant] = useState(0);
+            let cantidad = 0
+
+            const handleChangeCounter = () => {
+              cantidad = cantidad + 1
+              console.log(cantidad)
+            }
+
             return (
               <>
                 <TableRow key={key} className={classes.tableBodyRow} hover={true}>
@@ -78,34 +88,15 @@ export default function CustomTable(props) {
                       })}
                     </>
                   }
-                  {options ?
-                  <TableCell align="right" className={classes.tableCell} key={key}>
-                    <Tooltip
-                      id="tooltip-top-start"
-                      title={`Editar`}
-                      placement="top"
-                      classes={{ tooltip: classes2.tooltip }}
-                    >
-                      <Link to={ prop.editpathname ? prop.editpathname + `/${prop.id}` : `${prop.id}`}>
-                        <IconButton
-                          aria-label={`Editar + ${prop.id}`}
-                          className={classes2.tableActionButton}
-                          onClick={() => console.log(prop.editpathname)}
-                        >
-                          <Edit
-                            className={
-                              classes2.tableActionButtonIcon + " " + classes2.edit
-                            }
-                          />
-                        </IconButton>
-                      </Link>
-                    </Tooltip>
-                    <DeleteDialog
-                      path={prop.deletepathname}
-                      id={prop.id}
-                    />
+                  <TableCell className={classes.tableCell}>
+                    <Counter stock={prop.stock} />
                   </TableCell>
-                  : null}
+
+                  <TableCell className={classes.tableCell} key={key}>
+                    $ {total}
+                  </TableCell>
+
+
                 </TableRow>
               </>
             );
@@ -113,7 +104,7 @@ export default function CustomTable(props) {
         </TableBody>
       </Table>
       <div>
-      <p>hola</p>
+        <p>hola</p>
       </div>
     </div>
   );
