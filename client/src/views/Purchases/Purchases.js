@@ -20,6 +20,7 @@ import CardFooter from "../../components/Card/CardFooter.js";
 import { clearArticleData, getArticles, getArticlesBySupplierId } from '../../actions/article'
 import Token from '../../Token/Token'
 import { getSuppliers } from "../../actions/suppliers";
+import TableHtml from "../../components/Table/TableHtml";
 
 const useStyles = makeStyles((theme) => ({
   cardCategoryWhite: {
@@ -165,9 +166,7 @@ export default function PriceLists() {
 
                   {
                     articles && articles.length > 0 ?
-                      <TablePurchase
-                        tableHeaderColor="primary"
-                        tableHead={["ID", "Articulo", "Stock Actual"]}
+                      <TableHtml
                         tableData={articles && articles.length > 0 ?
                           articles.map((article, index) => {
                             return {

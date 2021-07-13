@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"
 import PropTypes from "prop-types";
 import styles from "../../styles/components/tableStyle.js";
 // @material-ui/core components
@@ -11,16 +10,14 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 // core components
 import Counter from './Counter'
-
-import DeleteDialog from './DeleteDialog'
+import TableHtml from "./TableHtml.js";
 
 const useStyles = makeStyles(styles);
 
 export default function CustomTable(props) {
   const classes = useStyles();
   const { tableHead, tableData, tableHeaderColor, options, stock } = props;
-
-
+  let data = {};
 
   return (
     <div className={classes.tableResponsive}>
@@ -62,15 +59,6 @@ export default function CustomTable(props) {
         ) : null}
         <TableBody>
           {tableData.map((prop, key) => {
-            let total = 0;
-            // const [cant, setCant] = useState(0);
-            let cantidad = 0
-
-            const handleChangeCounter = () => {
-              cantidad = cantidad + 1
-              console.log(cantidad)
-            }
-
             return (
               <>
                 <TableRow key={key} className={classes.tableBodyRow} hover={true}>
@@ -95,14 +83,14 @@ export default function CustomTable(props) {
                     </>
                   }
                   <TableCell className={classes.tableCell}>
-                    <Counter stock={prop.stock} />
+                    <Counter id={prop.id}/>
                   </TableCell>
                   <TableCell className={classes.tableCell} key={key}>
-                    <input />
+                    <input id={prop.id}/>
                   </TableCell>
 
                   <TableCell className={classes.tableCell} key={key}>
-                    $ {total}
+                    $ 10
                   </TableCell>
 
 
@@ -114,6 +102,7 @@ export default function CustomTable(props) {
       </Table>
       <div>
         <p>hola</p>
+        <TableHtml />
       </div>
     </div>
   );

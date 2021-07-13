@@ -158,6 +158,14 @@ export default function rootReducer(state = initialstate, action) {
 				articles: [...state.articles, action.payload]
 			};
 
+		// PURCHASE
+
+		case 'ADD_DATA_PURCHASE':
+			return {
+				...state,
+				purchase: action.payload
+			}
+
 		default:
 			return state
 	}
