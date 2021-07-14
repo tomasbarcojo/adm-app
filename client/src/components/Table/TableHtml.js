@@ -1,28 +1,42 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { addDataPurchase } from '../../actions/purchases'
 import Counter from './Counter';
 
 export default function TableHtml(props) {
   const { tableData } = props;
-  const [quantity, setQuantity] = useState(0)
-
-  const handleAddCounter = () => {
-    setQuantity(quantity + 1)
-  }
-
-  const handleReduceCounter = () => {
-    setQuantity(quantity - 1)
-    if (quantity <= 0) {
-      setQuantity(0)
+  const dispatch = useDispatch();
+  const [purchasePrice, setPurPrice] = useState({})
+  const purchase = useSelector(state => state.purchase)
+  
+  useEffect(() => {
+    if (purchasePrice !== 0 || purchase.length > 0) {
+      let arrPurchase = purchase;
+      var changeMade = false
+      arrPurchase.map(el => {
+        if (el.id === id) {
+          el.purchasePrice = purchasePrice;
+          changeMade = true;
+        }
+      })
+      if (!changeMade) {
+        const newData = {
+          id: id,
+          purchasePrice: purchasePrice,
+        }
+        arrPurchase.push(newData)
+        dispatch(addDataPurchase(arrPurchase))
+      } else {
+        dispatch(addDataPurchase(arrPurchase))
+      }
     }
-  }
+  }, [purchasePrice])
 
-  const handleCounter = (e) => {
-    const value = parseInt(e.target.value);
-    if (value < 1) {
-      setQuantity(0)
-    } else {
-      setQuantity(value)
-    }
+  const handleChangePrice = (event, id) => {
+    setPurPrice({
+      id: id,
+      price: event.target.value
+    })
   }
 
   return (
@@ -49,7 +63,7 @@ export default function TableHtml(props) {
                   <Counter id={prop.id}/>
                 </div>
               </td>
-              <td><input type='number'/></td>
+              <td><input id={prop.id} onChange={handleChangePrice(event, prop.id)} type='number'/></td>
               <td>$ 100</td>
             </tr>
           )

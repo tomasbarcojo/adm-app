@@ -149,7 +149,8 @@ export default function rootReducer(state = initialstate, action) {
 		case 'CLEAR_ARTICLES':
 			return {
 				...state,
-				articles: []
+				articles: [],
+				purchase: []
 			}
 
 		case 'CREATE_ARTICLE':

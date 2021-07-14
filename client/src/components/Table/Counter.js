@@ -6,44 +6,37 @@ export default function Counter({ id }) {
   const [quantity, setQuantity] = useState(0)
   const dispatch = useDispatch()
   const purchase = useSelector(state => state.purchase)
-  let data = []
 
-  const handleChangeInput = (event) => {
-    var changeMade = false
-    if (data.length > 0) {
-      data.map(el => {
-        if (el.articleId === event.target.id) {
-          el.percentage = event.target.value;
+  useEffect(() => {
+    if (quantity !== 0 || purchase.length > 0) {
+      let arrPurchase = purchase;
+      var changeMade = false
+      arrPurchase.map(el => {
+        if (el.id === id) {
+          el.quantity = quantity;
           changeMade = true;
         }
       })
+      console.log(arrPurchase)
       if (!changeMade) {
         const newData = {
-          articleId: event.target.id,
-          percentage: event.target.value
+          id: id,
+          quantity: quantity,
+          asd: 1
         }
-        data.push(newData)
+        arrPurchase.push(newData)
+        dispatch(addDataPurchase(arrPurchase))
+      } else {
+        dispatch(addDataPurchase(arrPurchase))
       }
-    } else {
-      const newData = {
-        articleId: event.target.id,
-        percentage: event.target.value
-      }
-      data.push(newData)
     }
-  }
-
-  useEffect(() => {
-    dispatch(addDataPurchase(data))
   }, [quantity])
 
   const handleAddCounter = () => {
     if (Number.isNaN(quantity)) {
       setQuantity(1)
-      dispatch(addDataPurchase(data))
     } else {
       setQuantity(quantity + 1)
-      dispatch(addDataPurchase(data))
     }
   }
 
@@ -51,7 +44,6 @@ export default function Counter({ id }) {
     setQuantity(quantity - 1)
     if (quantity <= 0) {
       setQuantity(0)
-      dispatch(addDataPurchase(data))
     }
   }
 
@@ -59,10 +51,8 @@ export default function Counter({ id }) {
     const value = parseInt(e.target.value);
     if (value < 1) {
       setQuantity(0)
-      dispatch(addDataPurchase(data))
     } else {
       setQuantity(value)
-      dispatch(addDataPurchase(data))
     }
   }
 
