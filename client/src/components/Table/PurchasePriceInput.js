@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addDataPurchase } from '../../actions/purchases'
 
-export default function Counter({ id }) {
+export default function PurchasePriceInput({ id }) {
   const [price, setPrice] = useState(0)
   const dispatch = useDispatch()
   const purchase = useSelector(state => state.purchase)
