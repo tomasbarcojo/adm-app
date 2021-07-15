@@ -9,36 +9,6 @@ export default function TableHtml(props) {
   const dispatch = useDispatch();
   const [purchasePrice, setPurPrice] = useState({})
   const purchase = useSelector(state => state.purchase)
-  
-  useEffect(() => {
-    // if (purchasePrice !== 0 || purchase.length > 0) {
-    //   let arrPurchase = purchase;
-    //   var changeMade = false
-    //   arrPurchase.map(el => {
-    //     if (el.id === id) {
-    //       el.purchasePrice = purchasePrice;
-    //       changeMade = true;
-    //     }
-    //   })
-    //   if (!changeMade) {
-    //     const newData = {
-    //       id: id,
-    //       purchasePrice: purchasePrice,
-    //     }
-    //     arrPurchase.push(newData)
-    //     dispatch(addDataPurchase(arrPurchase))
-    //   } else {
-    //     dispatch(addDataPurchase(arrPurchase))
-    //   }
-    // }
-  }, [purchasePrice])
-
-  const handleChangePrice = (event, id) => {
-    setPurPrice({
-      id: id,
-      price: event.target.value
-    })
-  }
 
   return (
     <div>
@@ -60,12 +30,10 @@ export default function TableHtml(props) {
                 )
               })}
               <td>
-                <div>
-                  <Counter id={prop.id}/>
-                </div>
+                <Counter id={prop.id} />
               </td>
               <td>
-              <InputPrice />
+                <InputPrice id={prop.id} />
               </td>
               <td>$ 100</td>
             </tr>

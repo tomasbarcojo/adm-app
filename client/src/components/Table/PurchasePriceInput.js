@@ -21,8 +21,7 @@ export default function PurchasePriceInput({ id }) {
       if (!changeMade) {
         const newData = {
           id: id,
-          price: price,
-          asd: 1
+          price: price
         }
         arrPurchase.push(newData)
         dispatch(addDataPurchase(arrPurchase))
@@ -47,19 +46,19 @@ export default function PurchasePriceInput({ id }) {
   //     }
   //   }
 
-  //   const handleCounter = (e) => {
-  //     const value = parseInt(e.target.value);
-  //     if (value < 1) {
-  //       setQuantity(0)
-  //     } else {
-  //       setQuantity(value)
-  //     }
-  //   }
+    const handleChangePrice = (event) => {
+      const value = parseInt(event.target.value);
+      if (value < 1) {
+        setPrice(0)
+      } else {
+        setPrice(value)
+      }
+    }
 
   return (
     <input
-      id={prop.id}
-      onChange={handleChangePrice(event, prop.id)}
+      id={id}
+      onChange={handleChangePrice}
       type='number'
       value={price}
     />

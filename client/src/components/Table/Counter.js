@@ -6,6 +6,7 @@ export default function Counter({ id }) {
   const [quantity, setQuantity] = useState(0)
   const dispatch = useDispatch()
   const purchase = useSelector(state => state.purchase)
+  const [price, setPrice] = useState(0)
 
   useEffect(() => {
     if (quantity !== 0 || purchase.length > 0) {
@@ -21,8 +22,7 @@ export default function Counter({ id }) {
       if (!changeMade) {
         const newData = {
           id: id,
-          quantity: quantity,
-          asd: 1
+          quantity: quantity
         }
         arrPurchase.push(newData)
         dispatch(addDataPurchase(arrPurchase))
@@ -56,7 +56,18 @@ export default function Counter({ id }) {
     }
   }
 
+  const handleChangePrice = (event) => {
+    const value = parseInt(event.target.value);
+    if (value < 1) {
+      setPrice(0)
+    } else {
+      setPrice(value)
+    }
+  }
+
   return (
+    <>
+    <td> 
     <div style={{ display: 'flex', flexDirection: 'row' }}>
       <button type='button' onClick={handleAddCounter}>+</button>
       <input
@@ -68,5 +79,15 @@ export default function Counter({ id }) {
       />
       <button type='button' onClick={handleReduceCounter}>-</button>
     </div>
+    </td>
+    <td>
+    <input
+      id={id}
+      onChange={handleChangePrice}
+      type='number'
+      value={price}
+    />
+    </td>
+    </>
   )
 }
