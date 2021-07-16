@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addDataPurchase } from '../../actions/purchases'
-import Counter from './Counter';
-import InputPrice from './PurchasePriceInput'
+import Row from './Row';
 
 export default function TableHtml(props) {
   const { tableData } = props;
-  const dispatch = useDispatch();
-  const [purchasePrice, setPurPrice] = useState({})
-  const purchase = useSelector(state => state.purchase)
 
   return (
     <div>
@@ -24,23 +20,16 @@ export default function TableHtml(props) {
         {tableData.map((prop, key) => {
           return (
             <tr>
-              {prop.data.map((prop, key) => {
-                return (
-                  <td key={key}>{prop}</td>
-                )
-              })}
-              <td>
-                <Counter id={prop.id} />
-              </td>
-              <td>
-                <InputPrice id={prop.id} />
-              </td>
-              <td>$ 100</td>
+              <Row key={key} props={prop} />
             </tr>
           )
         })}
 
       </table>
+      <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+        <h3>Resumen:
+        Total de la compra: $ 1250</h3>
+      </div>
     </div>
   )
 }

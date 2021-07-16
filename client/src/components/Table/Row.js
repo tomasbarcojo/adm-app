@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addDataPurchase } from '../../actions/purchases'
 
-export default function Counter({ id }) {
+export default function Counter({ props }) {
   const [quantity, setQuantity] = useState(0)
   const dispatch = useDispatch()
   const purchase = useSelector(state => state.purchase)
@@ -13,16 +13,18 @@ export default function Counter({ id }) {
       let arrPurchase = purchase;
       var changeMade = false
       arrPurchase.map(el => {
-        if (el.id === id) {
+        if (el.id === props.id) {
           el.quantity = quantity;
+          el.price = price;
           changeMade = true;
         }
       })
       console.log(arrPurchase)
       if (!changeMade) {
         const newData = {
-          id: id,
-          quantity: quantity
+          id: props.id,
+          quantity: quantity,
+          price: price
         }
         arrPurchase.push(newData)
         dispatch(addDataPurchase(arrPurchase))
@@ -30,7 +32,7 @@ export default function Counter({ id }) {
         dispatch(addDataPurchase(arrPurchase))
       }
     }
-  }, [quantity])
+  }, [quantity, price])
 
   const handleAddCounter = () => {
     if (Number.isNaN(quantity)) {
@@ -67,11 +69,14 @@ export default function Counter({ id }) {
 
   return (
     <>
+    <td>{props.id}</td>
+    <td>{props.articleName}</td>
+    <td>{props.stock}</td>
     <td> 
     <div style={{ display: 'flex', flexDirection: 'row' }}>
       <button type='button' onClick={handleAddCounter}>+</button>
       <input
-        id={id}
+        id={props.id}
         className=''
         type='number'
         onChange={handleCounter}
@@ -82,12 +87,13 @@ export default function Counter({ id }) {
     </td>
     <td>
     <input
-      id={id}
+      id={props.id}
       onChange={handleChangePrice}
       type='number'
       value={price}
     />
     </td>
+    <td>$ {quantity && price ? quantity * price : 0}</td>
     </>
   )
 }
