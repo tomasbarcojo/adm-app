@@ -151,7 +151,8 @@ export default function rootReducer(state = initialstate, action) {
 			return {
 				...state,
 				articles: [],
-				purchase: []
+				purchase: [],
+				purchaseTotal: 0
 			}
 
 		case 'CREATE_ARTICLE':

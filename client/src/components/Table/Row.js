@@ -14,16 +14,18 @@ export default function Counter({ props }) {
       let arrPurchase = purchase;
       var changeMade = false
       arrPurchase.map(el => {
-        if (el.id === props.id) {
+        if (el.articleId === props.id) {
           el.quantity = quantity;
+          el.supplierId = props.supplierId;
           el.price = price;
-          el.total = quantity * price
+          el.total = quantity * price;
           changeMade = true;
         }
       })
       if (!changeMade) {
         const newData = {
-          id: props.id,
+          articleId: props.id,
+          supplierId: props.supplierId,
           quantity: quantity,
           price: price,
           total: quantity * price

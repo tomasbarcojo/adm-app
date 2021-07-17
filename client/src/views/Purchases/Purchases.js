@@ -64,12 +64,12 @@ export default function PriceLists() {
   const dispatch = useDispatch();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   var token = Token();
-  const pricelists = useSelector(state => state.pricelists);
+  const purchaseList = useSelector(state => state.purchase);
   const articles = useSelector(state => state.articles);
   const suppliers = useSelector(state => state.suppliers);
   const [supplierId, setSupplierId] = useState()
   const [showNew, setShowNew] = useState(false);
-  const [priceListName, setpriceListName] = useState('')
+  // const [priceListName, setpriceListName] = useState('')
   const data = []
 
   useEffect(() => {
@@ -81,12 +81,12 @@ export default function PriceLists() {
     if (supplierId) dispatch(getArticlesBySupplierId(token, supplierId))
   }, [supplierId])
 
-  const resetForm = () => {
-    setpriceListName('')
-    for (let i = 1; i < articles.length + 1; i++) {
-      document.getElementById(i).value = ''
-    }
-  };
+  // const resetForm = () => {
+  //   setpriceListName('')
+  //   for (let i = 1; i < articles.length + 1; i++) {
+  //     document.getElementById(i).value = ''
+  //   }
+  // };
 
   const handleNewPurchase = () => {
     setShowNew(!showNew)
@@ -100,37 +100,11 @@ export default function PriceLists() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const dataObj = {
-      priceListName: priceListName,
-      data: data
+      data: purchaseList
     }
-    dispatch(addPriceList(dataObj, token, enqueueSnackbar, closeSnackbar));
-    resetForm();
+    dispatch(addPriceList(purchaseList, token, enqueueSnackbar, closeSnackbar));
+    // resetForm();
   };
-
-  const handleChangeInput = (event) => {
-    var changeMade = false
-    if (data.length > 0) {
-      data.map(el => {
-        if (el.articleId === event.target.id) {
-          el.percentage = event.target.value;
-          changeMade = true;
-        }
-      })
-      if (!changeMade) {
-        const newData = {
-          articleId: event.target.id,
-          percentage: event.target.value
-        }
-        data.push(newData)
-      }
-    } else {
-      const newData = {
-        articleId: event.target.id,
-        percentage: event.target.value
-      }
-      data.push(newData)
-    }
-  }
 
   return (
     <GridContainer>
@@ -170,6 +144,7 @@ export default function PriceLists() {
                             articles.map((article, index) => {
                               return {
                                 id: article.id,
+                                supplierId: supplierId,
                                 articleName: article.articleName,
                                 stock: article.stock
                               }
@@ -200,7 +175,7 @@ export default function PriceLists() {
             </p>
           </CardHeader>
           <CardBody>
-            {pricelists && pricelists.length > 0 ?
+            {/* {pricelists && pricelists.length > 0 ?
               <Table
                 tableHeaderColor="primary"
                 tableHead={["ID", "Nombre de listado"]}
@@ -215,7 +190,7 @@ export default function PriceLists() {
                   })
                 }
               />
-              : <h5 style={{ display: "flex", justifyContent: "center" }}>No existen listados de precio</h5>}
+              : <h5 style={{ display: "flex", justifyContent: "center" }}>No existen listados de precio</h5>} */}
           </CardBody>
         </Card>
       </GridItem>
