@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addDataPurchase } from '../../actions/purchases'
+import { addDataPurchase, updateTotal } from '../../actions/purchases'
 
 export default function Counter({ props }) {
   const [quantity, setQuantity] = useState(0)
   const dispatch = useDispatch()
   const purchase = useSelector(state => state.purchase)
   const [price, setPrice] = useState(0)
+  var total = 0;
 
   useEffect(() => {
     if (quantity !== 0 || purchase.length > 0) {
@@ -16,23 +17,33 @@ export default function Counter({ props }) {
         if (el.id === props.id) {
           el.quantity = quantity;
           el.price = price;
+          el.total = quantity * price
           changeMade = true;
         }
       })
-      console.log(arrPurchase)
       if (!changeMade) {
         const newData = {
           id: props.id,
           quantity: quantity,
-          price: price
+          price: price,
+          total: quantity * price
         }
         arrPurchase.push(newData)
         dispatch(addDataPurchase(arrPurchase))
+        getTotal(arrPurchase)
       } else {
         dispatch(addDataPurchase(arrPurchase))
+        getTotal(arrPurchase)
       }
     }
   }, [quantity, price])
+
+  const getTotal = (arrPurchase) => {
+    arrPurchase.map(el => {
+      total = total + el.total
+    })
+    dispatch(updateTotal(total))
+  }
 
   const handleAddCounter = () => {
     if (Number.isNaN(quantity)) {
@@ -77,7 +88,7 @@ export default function Counter({ props }) {
       <button type='button' onClick={handleAddCounter}>+</button>
       <input
         id={props.id}
-        className=''
+        style={{width: '50px', textAlign: 'center'}}
         type='number'
         onChange={handleCounter}
         value={quantity}
@@ -86,12 +97,15 @@ export default function Counter({ props }) {
     </div>
     </td>
     <td>
-    <input
+      <div style={{display: 'flex', flexDirection: 'row'}}>
+      $ <input  
       id={props.id}
+      style={{width: '70px', marginLeft: '7px'}}
       onChange={handleChangePrice}
       type='number'
       value={price}
     />
+      </div>
     </td>
     <td>$ {quantity && price ? quantity * price : 0}</td>
     </>

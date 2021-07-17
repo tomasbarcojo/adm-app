@@ -9,3 +9,15 @@ export const addDataPurchase = (data) => async dispatch => {
     console.log(err)
   }
 }
+
+export const updateTotal = (total) => async dispatch => {
+  try {
+    dispatch({
+      type: 'UPDATE_TOTAL_PURCHASE',
+      payload: total
+    })
+  }
+  catch (err) {
+    console.log(err)
+  }
+}

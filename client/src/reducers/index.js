@@ -7,6 +7,7 @@ const initialstate = {
 	categories: [],
 	articles: [],
 	purchase: [],
+	purchaseTotal: 0,
 	userLogged: false,
 	notifications: []
 }
@@ -165,6 +166,12 @@ export default function rootReducer(state = initialstate, action) {
 			return {
 				...state,
 				purchase: action.payload
+			}
+
+		case 'UPDATE_TOTAL_PURCHASE':
+			return {
+				...state,
+				purchaseTotal: action.payload
 			}
 
 		default:

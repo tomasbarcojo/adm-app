@@ -5,9 +5,10 @@ import Row from './Row';
 
 export default function TableHtml(props) {
   const { tableData } = props;
+  const total = useSelector(state => state.purchaseTotal)
 
   return (
-    <div>
+    <div style={{overflowX: 'auto'}}>
       <table>
         <tr>
           <th>ID</th>
@@ -27,8 +28,7 @@ export default function TableHtml(props) {
 
       </table>
       <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-        <h3>Resumen:
-        Total de la compra: $ 1250</h3>
+        <h3>Total de la compra: $ {total}</h3>
       </div>
     </div>
   )
