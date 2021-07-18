@@ -26,7 +26,7 @@ export const updateTotal = (total) => async dispatch => {
 
 export const newPurchase = (data, token, enqueueSnackbar, closeSnackbar) => async dispatch => {
   try {
-    await fetch(`http://${IP}:3001/pricelist/createpricelist`, {
+    await fetch(`http://${IP}:3001/purchase/createpurchase`, {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
