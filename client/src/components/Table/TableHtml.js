@@ -10,12 +10,12 @@ export default function TableHtml(props) {
     <div style={{overflowX: 'auto'}}>
       <table>
         <tr>
-          <th>ID</th>
-          <th>Articulo</th>
-          <th>Stock actual</th>
-          <th>Cantidad</th>
-          <th>Precio de compra</th>
-          <th>Monto</th>
+          <th className='htmlTableTH'>ID</th>
+          <th className='htmlTableTH'>Articulo</th>
+          <th className='htmlTableTH'>Stock actual</th>
+          <th className='htmlTableTH'>Cantidad</th>
+          <th className='htmlTableTH'>Precio de compra</th>
+          <th className='htmlTableTH'>Monto</th>
         </tr>
         {tableData.map((prop, key) => {
           return (

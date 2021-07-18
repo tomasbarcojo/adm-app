@@ -80,10 +80,10 @@ export default function Counter({ props }) {
 
   return (
     <>
-    <td>{props.id}</td>
-    <td>{props.articleName}</td>
-    <td>{props.stock}</td>
-    <td> 
+    <td className='htmlTableTD'>{props.id}</td>
+    <td className='htmlTableTD'>{props.articleName}</td>
+    <td className='htmlTableTD'>{props.stock}</td>
+    <td className='htmlTableTD'> 
     <div style={{ display: 'flex', flexDirection: 'row' }}>
       <button type='button' onClick={handleAddCounter}>+</button>
       <input
@@ -96,7 +96,7 @@ export default function Counter({ props }) {
       <button type='button' onClick={handleReduceCounter}>-</button>
     </div>
     </td>
-    <td>
+    <td className='htmlTableTD'>
       <div style={{display: 'flex', flexDirection: 'row'}}>
       $ <input  
       id={props.id}
@@ -107,7 +107,7 @@ export default function Counter({ props }) {
     />
       </div>
     </td>
-    <td>$ {quantity && price ? quantity * price : 0}</td>
+    <td className='htmlTableTD'>$ {quantity && price ? quantity * price : 0}</td>
     </>
   )
 }

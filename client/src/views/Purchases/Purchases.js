@@ -13,14 +13,14 @@ import Select from '@material-ui/core/Select';
 // core components
 import GridItem from "../../components/Grid/GridItem.js";
 import GridContainer from "../../components/Grid/GridContainer.js";
-import Table from "../../components/Table/Table.js";
 import Card from "../../components/Card/Card.js";
 import CardHeader from "../../components/Card/CardHeader.js";
 import CardBody from "../../components/Card/CardBody.js";
 import Button from "../../components/CustomButtons/Button.js";
 import CardFooter from "../../components/Card/CardFooter.js";
 
-import { clearArticleData, getArticles, getArticlesBySupplierId } from '../../actions/article'
+import { clearArticleData, getArticlesBySupplierId } from '../../actions/article'
+import { newPurchase } from '../../actions/purchases'
 import Token from '../../Token/Token'
 import { getSuppliers } from "../../actions/suppliers";
 import TableHtml from "../../components/Table/TableHtml";
@@ -109,7 +109,6 @@ export default function PriceLists() {
   };
 
   const handleChangePurchaseState = (event) => {
-    console.log(event)
     setPurchaseState(event.target.value)
   }
 
@@ -120,7 +119,7 @@ export default function PriceLists() {
       supplierId: supplierId,
       data: purchaseList
     }
-    dispatch(addPriceList(purchaseList, token, enqueueSnackbar, closeSnackbar));
+    dispatch(newPurchase(dataObj, token, enqueueSnackbar, closeSnackbar));
     // resetForm();
   };
 

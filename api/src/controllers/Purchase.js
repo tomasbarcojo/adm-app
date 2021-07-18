@@ -1,4 +1,4 @@
-const { Purchase, Supplier, Article } = require('../db.js')
+const { Purchase, Supplier, Article, Purchaseproduct } = require('../db.js')
 const { Op } = require('sequelize')
 
 module.exports = {
@@ -30,42 +30,19 @@ module.exports = {
 
   async createPurchase(req, res) {
     try {
-      const { data } = req.body;
-      if (!data) return res.status(400).send({ message: 'Necesary data required', status: 400 });
-      const purchaseData = { quantities, supplierId, articleId }
-      const result = await Purchase.create({ priceListName: priceListName });
+      const { state, supplierId, data } = req.body;
+      if (!state || !supplierId || !data) return res.status(400).send({ message: 'Necesary data required', status: 400 });
+      const purchaseData = { state, supplierId }
       const newPurchase = await Purchase.create(purchaseData);
-      // let createdUPL = [];
-      //   for (const e of data) {
-      //     const item = await Userpricelist.create({ percentage: e.percentage, pricelistId: result.id, articleId: e.articleId });
-      //     // createdUPL.push(item);
-      //   }
-      // const pricelistId = createdUPL[0].pricelistId
-      // const arrData = await Userpricelist.findAll({ where: { pricelistId: pricelistId }, include: [Article, Pricelist] });
-      return res.status(201).send({ newPurchase, status: 201 })
-    } catch (err) {
-      console.log(err);
-      return res.status(400).send({ message: 'Failed to create price list' });
-    }
-  },
-
-  async createPurchase(req, res) {
-    try {
-      const { priceListName, data } = req.body;
-      if (!priceListName || !data) return res.status(400).send({ message: 'Necesary data required', status: 400 });
-      const ifExistPL = await Pricelist.findOne({ where: { priceListName: priceListName } });
-      if (ifExistPL) {
-        return res.status(400).send({ message: "Price list already exists", status: 400 });
-      }
-      const result = await Pricelist.create({ priceListName: priceListName });
-      // let createdUPL = [];
       for (const e of data) {
-        const item = await Userpricelist.create({ percentage: e.percentage, pricelistId: result.id, articleId: e.articleId });
-        // createdUPL.push(item);
+        await Purchaseproduct.create({
+          quantity: e.quantity,
+          purchaseId: newPurchase.id,
+          price: e.price,
+          articleId: e.articleId
+        });
       }
-      // const pricelistId = createdUPL[0].pricelistId
-      // const arrData = await Userpricelist.findAll({ where: { pricelistId: pricelistId }, include: [Article, Pricelist] });
-      return res.status(201).send({ result, status: 201 })
+      return res.status(201).send({ newPurchase, status: 201 })
     } catch (err) {
       console.log(err);
       return res.status(400).send({ message: 'Failed to create price list' });
