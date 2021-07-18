@@ -4,14 +4,10 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('purchase', {
-    quantities: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    completed: {
-      type: DataTypes.BOOLEAN,
+    state: {
+      type: DataTypes.ENUM('en transito', 'finalizada', 'cancelada', 'procesando', 'completa', 'despacho'),
       allowNull: false,
-      defaultValue: false
+      defaultValue: 'en transito',
     }
   });
 };

@@ -6,6 +6,10 @@ import { getPriceList, addPriceList } from '../../actions/pricelists'
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 // core components
 import GridItem from "../../components/Grid/GridItem.js";
 import GridContainer from "../../components/Grid/GridContainer.js";
@@ -57,6 +61,13 @@ const useStyles = makeStyles((theme) => ({
   articleInput: {
     padding: '5px 0px 5px 0px',
   },
+  formControl: {
+    margin: theme.spacing(1),
+    width: '100%'
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
 }));
 
 export default function PriceLists() {
@@ -69,7 +80,7 @@ export default function PriceLists() {
   const suppliers = useSelector(state => state.suppliers);
   const [supplierId, setSupplierId] = useState()
   const [showNew, setShowNew] = useState(false);
-  // const [priceListName, setpriceListName] = useState('')
+  const [purchaseState, setPurchaseState] = useState('')
   const data = []
 
   useEffect(() => {
@@ -97,9 +108,16 @@ export default function PriceLists() {
     else dispatch(clearArticleData())
   };
 
+  const handleChangePurchaseState = (event) => {
+    console.log(event)
+    setPurchaseState(event.target.value)
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const dataObj = {
+      state: purchaseState,
+      supplierId: supplierId,
       data: purchaseList
     }
     dispatch(addPriceList(purchaseList, token, enqueueSnackbar, closeSnackbar));
@@ -122,16 +140,14 @@ export default function PriceLists() {
                 <CardBody>
                   <GridContainer>
                     <GridItem xs={12} sm={12} md={8}>
-                      <div>
-                        <Autocomplete
-                          id="Supplier"
-                          options={suppliers}
-                          getOptionLabel={(option) => option.businessName}
-                          onChange={(event, value) => handleChangePriceListName(value)}
-                          fullWidth={true}
-                          renderInput={(params) => <TextField {...params} label="Proveedor" />}
-                        />
-                      </div>
+                      <Autocomplete
+                        id="Supplier"
+                        options={suppliers}
+                        getOptionLabel={(option) => option.businessName}
+                        onChange={(event, value) => handleChangePriceListName(value)}
+                        fullWidth={true}
+                        renderInput={(params) => <TextField {...params} label="Proveedor" />}
+                      />
                     </GridItem>
                   </GridContainer>
 
@@ -141,16 +157,33 @@ export default function PriceLists() {
                         <h5>Articulos:</h5>
                         <TableHtml
                           tableData={articles && articles.length > 0 ?
-                            articles.map((article, index) => {
+                            articles.map((article) => {
                               return {
                                 id: article.id,
-                                supplierId: supplierId,
                                 articleName: article.articleName,
                                 stock: article.stock
                               }
                             })
                             : null}
                         />
+
+                        <GridContainer>
+                          <GridItem xs={12} sm={12} md={8}>
+                            <FormControl className={classes.formControl}>
+                              <InputLabel>Estado de la compra</InputLabel>
+                              <Select
+                                fullWidth
+                                value={purchaseState}
+                                onChange={handleChangePurchaseState}
+                                defaultValue={'en transito'}
+                              >
+                                <MenuItem value={'en transito'}>En transito</MenuItem>
+                                <MenuItem value={'procesando'}>Procesando</MenuItem>
+                                <MenuItem value={'completa'}>Completa</MenuItem>
+                              </Select>
+                            </FormControl>
+                          </GridItem>
+                        </GridContainer>
                       </>
                       : <h6 style={{ display: "flex", justifyContent: "center" }}>Seleccione un proveedor para desplegar sus productos</h6>
                   }

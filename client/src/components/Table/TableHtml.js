@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { addDataPurchase } from '../../actions/purchases'
+import React from 'react'
+import { useSelector } from 'react-redux'
 import Row from './Row';
 
 export default function TableHtml(props) {
-  const { tableData } = props;
+  const { tableData} = props;
   const total = useSelector(state => state.purchaseTotal)
 
   return (
