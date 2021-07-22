@@ -26,9 +26,6 @@ export default function TableHtml(props) {
         })}
 
       </table>
-      <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-        <h3>Total de la compra: $ {total}</h3>
-      </div>
     </div>
   )
 }

@@ -112,9 +112,6 @@ export default function CustomTable(props) {
           })}
         </TableBody>
       </Table>
-      <div>
-      <p>hola</p>
-      </div>
     </div>
   );
 }

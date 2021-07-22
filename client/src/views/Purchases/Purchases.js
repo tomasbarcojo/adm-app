@@ -18,9 +18,10 @@ import CardHeader from "../../components/Card/CardHeader.js";
 import CardBody from "../../components/Card/CardBody.js";
 import Button from "../../components/CustomButtons/Button.js";
 import CardFooter from "../../components/Card/CardFooter.js";
+import Table from "../../components/Table/Table.js";
 
 import { clearArticleData, getArticlesBySupplierId } from '../../actions/article'
-import { newPurchase } from '../../actions/purchases'
+import { getPurchases, newPurchase } from '../../actions/purchases'
 import Token from '../../Token/Token'
 import { getSuppliers } from "../../actions/suppliers";
 import TableHtml from "../../components/Table/TableHtml";
@@ -82,10 +83,13 @@ export default function PriceLists() {
   const [showNew, setShowNew] = useState(false);
   const [purchaseState, setPurchaseState] = useState('')
   const data = []
+  const total = useSelector(state => state.purchaseTotal)
+  const createdPurchases = useSelector(state => state.createdPurchases)
 
   useEffect(() => {
-    dispatch(clearArticleData())
+    dispatch(clearArticleData());
     dispatch(getSuppliers(token));
+    dispatch(getPurchases(token));
   }, []);
 
   useEffect(() => {
@@ -183,6 +187,9 @@ export default function PriceLists() {
                             </FormControl>
                           </GridItem>
                         </GridContainer>
+                        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                          <h3>Total de la compra: $ {total}</h3>
+                        </div>
                       </>
                       : <h6 style={{ display: "flex", justifyContent: "center" }}>Seleccione un proveedor para desplegar sus productos</h6>
                   }
@@ -201,28 +208,33 @@ export default function PriceLists() {
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Listados</h4>
+            <h4 className={classes.cardTitleWhite}>Compras</h4>
             <p className={classes.cardCategoryWhite}>
-              Listado de precios
+              Listado de compras
             </p>
           </CardHeader>
           <CardBody>
-            {/* {pricelists && pricelists.length > 0 ?
+            {createdPurchases && createdPurchases.length > 0 ?
               <Table
                 tableHeaderColor="primary"
-                tableHead={["ID", "Nombre de listado"]}
+                tableHead={["ID", "Proveedor", "Estado", "Fecha", "Hora"]}
                 tableData={
-                  pricelists.map((pl) => {
+                  createdPurchases.map((purchase) => {
                     return {
-                      id: pl.id,
+                      id: purchase.id,
                       editpathname: 'editpricelist',
                       deletepathname: 'pricelist/deletepricelist',
-                      data: [pl.id, pl.priceListName]
+                      data: [purchase.id,
+                        purchase.supplier.businessName,
+                        purchase.state,
+                        purchase.createdAt.slice('T', 10),
+                        purchase.createdAt.split('T')[1].slice(0, 5)
+                      ]
                     }
                   })
                 }
               />
-              : <h5 style={{ display: "flex", justifyContent: "center" }}>No existen listados de precio</h5>} */}
+              : <h5 style={{ display: "flex", justifyContent: "center" }}>No existen listados de precio</h5>}
           </CardBody>
         </Card>
       </GridItem>

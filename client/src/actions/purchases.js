@@ -67,3 +67,25 @@ export const newPurchase = (data, token, enqueueSnackbar, closeSnackbar) => asyn
     console.log(err)
   }
 }
+
+export const getPurchases = (token) => async dispatch => {
+  try {
+    await fetch(`http://${IP}:3001/purchase`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': token
+      },
+    })
+      .then(data => data.json())
+      .then(res => {
+        if (res.status === 200) {
+          dispatch({
+            type: 'GET_PURCHASES',
+            payload: res.purchase
+          })
+        }
+      })
+  } catch (err) {
+    console.log(err)
+  }
+}
