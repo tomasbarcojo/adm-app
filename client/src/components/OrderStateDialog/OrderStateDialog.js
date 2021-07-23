@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -9,48 +9,50 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { cancelMail, dispatchMail } from "../../actions";
+import DialogContentText from '@material-ui/core/DialogContentText';
+// import { cancelMail, dispatchMail } from "../../actions";
 
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
+    minWidth: 250
   },
   formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
+    // margin: theme.spacing(1),
+    // minWidth: 120,
   },
-  stateButton:{
-    color:'black',
-    '&:disabled':{
-      color:'black',
+  stateButton: {
+    color: 'black',
+    '&:disabled': {
+      color: 'black',
     },
   },
 }));
 
 
-export default function DialogSelect({state, orderId, to, name}) {
+export default function DialogSelect({ state, purchaseId, to, name }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [orderState, setOrderState] = useState(state);
+  const [purchaseState, setPurchaseState] = useState(state);
   const [data, setData] = useState(null)
-  
+
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetch(`http://localhost:3001/orders/${orderId}`)
-      const orderX = await data.json()
-      setData(orderX)
+      const data = await fetch(`http://localhost:3001/purchase/${purchaseId}`)
+      const purchaseAux = await data.json()
+      setData(purchaseAux)
     }
     fetchData()
-  }, [orderId])
+  }, [purchaseId])
 
 
-  useEffect(()=>{
-  
-  },[open])
+  useEffect(() => {
+
+  }, [open])
 
   const handleChange = (event) => {
-    setOrderState(event.target.value);
+    setPurchaseState(event.target.value);
   };
 
   // const sendMail = () => {
@@ -75,9 +77,9 @@ export default function DialogSelect({state, orderId, to, name}) {
   //   setOrder(orderX)
   //   // console.log(orderX)
   // }
-  
+
   const handleClose = () => {
-    if (orderState === 'cancelada') {
+    if (purchaseState === 'cancelada') {
       data.products.map(prod => {
         let newStock = prod.stock + prod.order_product.quantity
         const product = {
@@ -91,75 +93,81 @@ export default function DialogSelect({state, orderId, to, name}) {
               'Content-Type': 'application/json'
             }
           })
-        } catch (err) {console.log(err)}
+        } catch (err) { console.log(err) }
       })
-      try{
-        fetch(`http://localhost:3001/orders/detail/${orderId}`,{
-            method:'PUT',
-            body:JSON.stringify({state:orderState}),
-            headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-            credentials:'include',
+      try {
+        fetch(`http://localhost:3001/orders/detail/${purchaseId}`, {
+          method: 'PUT',
+          body: JSON.stringify({ state: purchaseState }),
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
         })
-        .then(res=>res.json())
-        .then(data=>console.log(data))
-        .catch(e =>console.log(e))
+          .then(res => res.json())
+          .then(data => console.log(data))
+          .catch(e => console.log(e))
         setOpen(false);
-    } catch(error){
+      } catch (error) {
         console.log(error)
-    }
+      }
     }
     else {
-      try{
-          fetch(`http://localhost:3001/orders/detail/${orderId}`,{
-              method:'PUT',
-              body:JSON.stringify({state:orderState}),
-              headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-              credentials:'include',
-          })
-          .then(res=>res.json())
-          .then(data=>console.log(data))
-          .catch(e =>console.log(e))
-          setOpen(false);
-      } catch(error){
-          console.log(error)
+      try {
+        fetch(`http://localhost:3001/orders/detail/${purchaseId}`, {
+          method: 'PUT',
+          body: JSON.stringify({ state: purchaseState }),
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+        })
+          .then(res => res.json())
+          .then(data => console.log(data))
+          .catch(e => console.log(e))
+        setOpen(false);
+      } catch (error) {
+        console.log(error)
       }
     };
-    sendMail()
-    }
+    // sendMail()
+  }
 
   return (
     <div>
       <Button onClick={handleClickOpen}
-        disabled={orderState==='procesando' || orderState==='completa' || orderState===''?false:true}
+        size={'small'}
+        disabled={purchaseState === 'en transito' || purchaseState === 'completa' || purchaseState === '' ? false : true}
         classes={{
-          root:classes.stateButton,
-          disabled:classes.disabled,
+          root: classes.stateButton,
+          disabled: classes.disabled,
         }}
-      >{orderState}</Button>
+      >
+        {purchaseState}
+      </Button>
       <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
-        <DialogTitle>Cambiar Estado</DialogTitle>
+        <DialogTitle>Cambiar estado</DialogTitle>
         <DialogContent>
+          <DialogContentText>
+            Compra con nº de ID #{purchaseId}
+          </DialogContentText>
           <form className={classes.container}>
-            <FormControl className={classes.formControl}>
-              <InputLabel htmlFor="demo-dialog-native">Estado</InputLabel>
+            {/* <FormControl className={classes.formControl}> */}
+              <InputLabel>Estado</InputLabel>
               <Select
                 native
-                value={orderState}
+                value={purchaseState}
                 onChange={handleChange}
-                input={<Input id="demo-dialog-native" />}
+                style={{width: '100%'}}
               >
                 <option aria-label="None" value="" />
                 <option value={"completa"}>Completa</option>
                 <option value={"despacho"}>Despacho</option>
                 <option value={"cancelada"}>Cancelada</option>
               </Select>
-            </FormControl>
+            {/* </FormControl> */}
           </form>
         </DialogContent>
         <DialogActions>

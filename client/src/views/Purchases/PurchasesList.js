@@ -60,58 +60,61 @@ export default function CustomTable(props) {
             </div>
           </CardHeader>
           <CardBody>
-            <div className={classes.tableResponsive}>
-              <Table className={classes.table}>
-                <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
-                  <TableRow className={classes.tableHeadRow}>
-                    <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>
-                      ID
-                    </TableCell>
-                    <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>
-                      Proveedor
-                    </TableCell>
-                    <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>
-                      Estado
-                    </TableCell>
-                    <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>
-                      Fecha
-                    </TableCell>
-                    <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>
-                      Hora
-                    </TableCell>
-                    <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>
-                      Detalle
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {createdPurchases.map((prop, key) => {
-                    return (
-                      <TableRow key={key} className={classes.tableBodyRow} hover={true}>
-                        <TableCell className={classes.tableCell} key={key}>
-                          {prop.id}
-                        </TableCell>
-                        <TableCell className={classes.tableCell} key={key}>
-                          {prop.supplier.businessName}
-                        </TableCell>
-                        <TableCell>
-                          <OrderStateDialog state={prop.state} orderId={prop.id} to={row.user.email} name={row.user.firstName} />
-                        </TableCell>
-                        <TableCell className={classes.tableCell} key={key}>
-                          {prop.createdAt.slice('T', 10)}
-                        </TableCell>
-                        <TableCell className={classes.tableCell} key={key}>
-                          {prop.createdAt.split('T')[1].slice(0, 5)}
-                        </TableCell>
-                        <TableCell className={classes.tableCell} key={key}>
-                          Detalle
-                        </TableCell>
-                      </TableRow>
-                    )
-                  })}
-                </TableBody>
-              </Table >
-            </div>
+            {createdPurchases && createdPurchases.length !== 0 ?
+              <div className={classes.tableResponsive}>
+                <Table className={classes.table}>
+                  <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
+                    <TableRow className={classes.tableHeadRow}>
+                      <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>
+                        ID
+                      </TableCell>
+                      <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>
+                        Proveedor
+                      </TableCell>
+                      <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>
+                        Estado
+                      </TableCell>
+                      <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>
+                        Fecha
+                      </TableCell>
+                      <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>
+                        Hora
+                      </TableCell>
+                      <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>
+                        Detalle
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {createdPurchases.map((prop, key) => {
+                      return (
+                        <TableRow key={key} className={classes.tableBodyRow} hover={true}>
+                          <TableCell className={classes.tableCell} key={key}>
+                            {prop.id}
+                          </TableCell>
+                          <TableCell className={classes.tableCell} key={key}>
+                            {prop.supplier.businessName}
+                          </TableCell>
+                          <TableCell>
+                            <OrderStateDialog state={prop.state} purchaseId={prop.id} /*to={row.user.email} name={row.user.firstName}*/ />
+                          </TableCell>
+                          <TableCell className={classes.tableCell} key={key}>
+                            {prop.createdAt.slice('T', 10)}
+                          </TableCell>
+                          <TableCell className={classes.tableCell} key={key}>
+                            {prop.createdAt.split('T')[1].slice(0, 5)}
+                          </TableCell>
+                          <TableCell className={classes.tableCell} key={key}>
+                            Detalle
+                          </TableCell>
+                        </TableRow>
+                      )
+                    })}
+                  </TableBody>
+                </Table >
+              </div>
+              : <h5 className='messageEmptyDataTable'>No existen compras</h5>
+            }
           </CardBody>
         </Card>
       </GridItem>

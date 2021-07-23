@@ -215,7 +215,7 @@ export default function PriceLists() {
                 })
               }
             />
-          : <h5 style={{ display: "flex", justifyContent: "center"}}>No existen listados de precio</h5>}            
+          : <h5 className='messageEmptyDataTable'>No existen listados de precio</h5>}            
           </CardBody>
         </Card>
       </GridItem>

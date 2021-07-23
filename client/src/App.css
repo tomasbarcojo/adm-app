@@ -210,3 +210,8 @@ table {
   text-align: left;
   padding: 8px;
 }
+
+.messageEmptyDataTable {
+  display: flex;
+  justify-content: center;
+}

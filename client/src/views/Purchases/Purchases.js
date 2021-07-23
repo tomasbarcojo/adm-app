@@ -189,7 +189,7 @@ export default function PriceLists() {
                           <h3>Total de la compra: $ {total}</h3>
                         </div>
                       </>
-                      : <h6 style={{ display: "flex", justifyContent: "center" }}>Seleccione un proveedor para desplegar sus productos</h6>
+                      : <h5 className='messageEmptyDataTable'>Seleccione un proveedor para desplegar sus productos</h5>
                   }
 
                 </CardBody>

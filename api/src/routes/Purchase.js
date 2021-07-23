@@ -1,12 +1,12 @@
 const server = require('express').Router()
 const authenticate = require('../utils/Auth')
-const { getPurchases, createPurchase } = require('../controllers/Purchase')
+const { getPurchases, createPurchase, getPurchasesById } = require('../controllers/Purchase')
 
 server.get('/', /*authenticate,*/ getPurchases)
 
 server.post('/createpurchase', /*authenticate,*/ createPurchase)
 
-// server.post('/createpricelist', /*authenticate,*/ createPriceList)
+server.get('/:id', /*authenticate,*/ getPurchasesById)
 
 // server.post('/editpricelist/:id', /*authenticate,*/ editPricelist)
 
