@@ -62,7 +62,7 @@ export default function Suppliers() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   var token = Token();
   const suppliers = useSelector(state => state.suppliers);
-  const [showNew, setShowNew] = useState(false);
+  const [showNew, setShowNew] = useState(true);
   const [data, setData] = useState({
     businessName: '',
     cuit: '',

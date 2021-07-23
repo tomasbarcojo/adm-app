@@ -80,9 +80,8 @@ export default function PriceLists() {
   const articles = useSelector(state => state.articles);
   const suppliers = useSelector(state => state.suppliers);
   const [supplierId, setSupplierId] = useState()
-  const [showNew, setShowNew] = useState(false);
+  const [showNew, setShowNew] = useState(true);
   const [purchaseState, setPurchaseState] = useState('')
-  const data = []
   const total = useSelector(state => state.purchaseTotal)
   const createdPurchases = useSelector(state => state.createdPurchases)
 
@@ -203,39 +202,6 @@ export default function PriceLists() {
             </>
             : null
           }
-        </Card>
-      </GridItem>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card>
-          <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Compras</h4>
-            <p className={classes.cardCategoryWhite}>
-              Listado de compras
-            </p>
-          </CardHeader>
-          <CardBody>
-            {createdPurchases && createdPurchases.length > 0 ?
-              <Table
-                tableHeaderColor="primary"
-                tableHead={["ID", "Proveedor", "Estado", "Fecha", "Hora"]}
-                tableData={
-                  createdPurchases.map((purchase) => {
-                    return {
-                      id: purchase.id,
-                      editpathname: 'editpricelist',
-                      deletepathname: 'pricelist/deletepricelist',
-                      data: [purchase.id,
-                        purchase.supplier.businessName,
-                        purchase.state,
-                        purchase.createdAt.slice('T', 10),
-                        purchase.createdAt.split('T')[1].slice(0, 5)
-                      ]
-                    }
-                  })
-                }
-              />
-              : <h5 style={{ display: "flex", justifyContent: "center" }}>No existen listados de precio</h5>}
-          </CardBody>
         </Card>
       </GridItem>
     </GridContainer>

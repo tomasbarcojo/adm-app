@@ -1,10 +1,13 @@
 import Purchases from '../views/Purchases/Purchases'
 import Suppliers from "../views/Suppliers/Suppliers.js";
 import SupplierList from "../views/Suppliers/SuppliersList"
+import PurchasesList from "../views/Purchases/PurchasesList"
 
 import AddIcon from '@material-ui/icons/Add';
 import Language from "@material-ui/icons/Language";
 import ListIcon from '@material-ui/icons/List';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 
 const nestedDataTest = [
   {
@@ -24,15 +27,15 @@ const nestedDataTest = [
   {
     path: "/purchases",
     name: "Nueva compra",
-    icon: AddIcon,
+    icon: AddShoppingCartIcon,
     component: Purchases,
     layout: "/admin"
   },
   {
     path: "/prueba/asd",
-    name: "Articulos4",
-    icon: Language,
-    component: Suppliers,
+    name: "Compras",
+    icon: ListIcon,
+    component: PurchasesList,
     layout: "/admin"
   }
 ];

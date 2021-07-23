@@ -14,65 +14,69 @@ import Button from "../../components/CustomButtons/Button.js";
 import Card from "../../components/Card/Card.js";
 import CardHeader from "../../components/Card/CardHeader.js";
 import CardBody from "../../components/Card/CardBody.js";
-import CardFooter from "../../components/Card/CardFooter.js";
 import Table from "../../components/Table/Table.js";
 
 import avatar from "../../images/faces/marc.jpg";
 import Token from '../../Token/Token'
 
 const styles = {
-    cardCategoryWhite: {
-      color: "rgba(255,255,255,.62)",
-      margin: "0",
-      fontSize: "14px",
-      marginTop: "0",
-      marginBottom: "0"
-    },
-    cardTitleWhite: {
-      color: "#FFFFFF",
-      marginTop: "0px",
-      minHeight: "auto",
-      fontWeight: "300",
-      fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-      marginBottom: "3px",
-      textDecoration: "none"
-    },
-    card: {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center'
-    },
-    input: {
-      margin: '27px 0 0 0',
-      paddingBottom: '10px',
-    },
-    searchInput: {
-      backgroudColor: 'red',
-      background: 'white'
-    }
-  };
-  
-  const useStyles = makeStyles(styles);
+  cardCategoryWhite: {
+    color: "rgba(255,255,255,.62)",
+    margin: "0",
+    fontSize: "14px",
+    marginTop: "0",
+    marginBottom: "0"
+  },
+  cardTitleWhite: {
+    color: "#FFFFFF",
+    marginTop: "0px",
+    minHeight: "auto",
+    fontWeight: "300",
+    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+    marginBottom: "3px",
+    textDecoration: "none"
+  },
+  card: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  input: {
+    margin: '27px 0 0 0',
+    paddingBottom: '10px',
+  },
+  searchInput: {
+    backgroudColor: 'red',
+    background: 'white'
+  }
+};
+
+const useStyles = makeStyles(styles);
 
 export default function SuppliersList() {
-    const classes = useStyles();
-    const dispatch = useDispatch();
-    const suppliers = useSelector(state => state.suppliers);
-    var token = Token();
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const suppliers = useSelector(state => state.suppliers);
+  var token = Token();
 
-    const handleChangeSearchInput = (e) => {
-        const name = {name: e.target.value}
-        if (name.name.length > 0) {
-          dispatch(getSuppliersByName(token, name))
-        } else {
-          dispatch(getSuppliers(token))
-        }
-      }
+  useEffect(() => {
+    dispatch(getSuppliers(token));
+  }, []);
 
-    return (
-        <div>
-            <GridItem xs={12} sm={12} md={12}>
+  const handleChangeSearchInput = (e) => {
+    const name = { name: e.target.value }
+    if (name.name.length > 0) {
+      dispatch(getSuppliersByName(token, name))
+    } else {
+      dispatch(getSuppliers(token))
+    }
+  }
+
+  return (
+    <div>
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
               <div className={classes.card}>
@@ -82,7 +86,7 @@ export default function SuppliersList() {
                     Listado de proveedores
                   </p>
                 </div>
-                <input className='searchInput' type="search" placeholder="Buscar..." onChange={handleChangeSearchInput}/>
+                <input className='searchInput' type="search" placeholder="Buscar..." onChange={handleChangeSearchInput} />
               </div>
             </CardHeader>
             <CardBody>
@@ -104,6 +108,7 @@ export default function SuppliersList() {
             </CardBody>
           </Card>
         </GridItem>
-        </div>
-    )
+      </GridContainer>
+    </div>
+  )
 }
