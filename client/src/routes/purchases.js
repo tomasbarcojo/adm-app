@@ -4,10 +4,8 @@ import SupplierList from "../views/Suppliers/SuppliersList"
 import PurchasesList from "../views/Purchases/PurchasesList"
 
 import AddIcon from '@material-ui/icons/Add';
-import Language from "@material-ui/icons/Language";
 import ListIcon from '@material-ui/icons/List';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 
 const nestedDataTest = [
   {

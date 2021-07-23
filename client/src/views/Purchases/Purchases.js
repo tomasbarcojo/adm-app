@@ -18,7 +18,6 @@ import CardHeader from "../../components/Card/CardHeader.js";
 import CardBody from "../../components/Card/CardBody.js";
 import Button from "../../components/CustomButtons/Button.js";
 import CardFooter from "../../components/Card/CardFooter.js";
-import Table from "../../components/Table/Table.js";
 
 import { clearArticleData, getArticlesBySupplierId } from '../../actions/article'
 import { getPurchases, newPurchase } from '../../actions/purchases'

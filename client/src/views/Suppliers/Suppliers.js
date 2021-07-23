@@ -77,10 +77,6 @@ export default function Suppliers() {
     obs: ''
   });
 
-  // useEffect(() => {
-  //   dispatch(getSuppliers(token));
-  // }, [url.pathname])
-
   const resetForm = () => {
     setData({
       ...data,
