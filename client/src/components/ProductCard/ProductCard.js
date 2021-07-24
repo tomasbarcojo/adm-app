@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   media: {
     height: 0,
     paddingTop: '100%', // 16:9
-    // objectFit: 'contain',
+    objectFit: 'contain',
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RecipeReviewCard() {
+export default function RecipeReviewCard({ props }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -64,17 +64,17 @@ export default function RecipeReviewCard() {
         //     <MoreVertIcon />
         //   </IconButton>
         // }
-        title="SAYRI CLARO 25 GRS"
-        // subheader="September 14, 2016"
+        title={props.articleName}
+      // subheader="September 14, 2016"
       />
       <CardMedia
         className={classes.media}
         image={Image}
-        title="SAYRI CLARO 25 GRS"
+        title={props.articleName}
       />
       <CardContent>
         <Typography variant="h5" color="textSecondary" component="p">
-          $200,19
+          $ {props.price}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

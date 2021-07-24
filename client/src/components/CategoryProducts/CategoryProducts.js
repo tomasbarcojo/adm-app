@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useParams, useHistory } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -7,12 +8,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Copyright from '../../utils/Copyright'
-import NavBar from './NavBar'
+import NavBar from '../Home/NavBar'
 import GridList from '@material-ui/core/GridList';
-import CategoriesCard from '../CategoriesCard/CategoriesCard';
+import ProductCard from '../ProductCard/ProductCard';
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getCategories } from '../../actions/categories'
+import { getArticlesByCategoryId } from '../../actions/article';
+
+import Token from '../../Token/Token'
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -83,19 +86,16 @@ const footers = [
   },
 ];
 
-export default function UsersManagment() {
+export default function CategoryProducts() {
   const classes = useStyles();
   const dispatch = useDispatch();
   var token = '';
-  if (localStorage.length > 0) {
-    token = JSON.parse(localStorage.getItem('token'));
-  } else {
-    token = JSON.parse(sessionStorage.getItem('token'));
-  }
-  const categories = useSelector(state => state.categories)
+  const { id } = useParams()
+  var token = Token();
+  const articles = useSelector(state => state.articles)
 
   useEffect(() => {
-    dispatch(getCategories(token));
+    dispatch(getArticlesByCategoryId(token, id));
   }, [])
 
   return (
@@ -104,23 +104,15 @@ export default function UsersManagment() {
 
       <NavBar />
 
-      {/* <div className='ProductCards'>
-        <ProductCard /><ProductCard /><ProductCard />
-      </div> */}
-
-      {/* <GridList cellHeight={450} className={classes.gridList} cols={4} spacing={0}>
-        <ProductCard /> <ProductCard /> <ProductCard /><ProductCard /><ProductCard /><ProductCard /><ProductCard /> <ProductCard /><ProductCard /><ProductCard /><ProductCard />
-      </GridList> */}
-
       <GridList cellHeight={450} className={classes.gridList} cols={4} spacing={0}>
-        {categories && categories.length > 0 ?
-        categories.map(cat => {
-          console.log(cat)
+        {articles && articles.length > 0 ?
+        articles.map(article => {
+          console.log(article)
           return (
-            <CategoriesCard props={cat} />
+            <ProductCard props={article} />
           )
         })
-        : <h5 style={{ display: "flex", justifyContent: "center" }}>No existen categorias</h5>
+        : <h5 style={{ display: "flex", justifyContent: "center" }}>No existen productos</h5>
         }
       </GridList>
 

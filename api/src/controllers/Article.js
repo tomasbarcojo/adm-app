@@ -28,6 +28,20 @@ module.exports = {
     }
   },
 
+  async getArticlesByCategoryId(req, res) {
+    try {
+      const { id } = req.params
+      const articles = await Article.findAll({where: {categoryId: id}})
+      if (articles && articles.length === 0) {
+        return res.status(404).send({ message: 'No articles', status: 404 })
+      }
+      return res.status(200).send({articles, status: 200})
+    } catch (err) {
+      console.log(err)
+      return res.status(400).send({ message: 'Failed to get articles' })
+    }
+  },
+
   async createArticle(req, res) {
     const { articleName, categoryId, supplierId, price, stock, image, obs } = req.body
     if (!articleName || !categoryId || !supplierId || !price || !stock || !image || !obs) {

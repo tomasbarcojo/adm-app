@@ -88,6 +88,28 @@ export const getArticlesBySupplierId = (token, id) => async dispatch => {
     }
 }
 
+export const getArticlesByCategoryId = (token, id) => async dispatch => {
+    try {
+        await fetch(`http://${IP}:3001/article/category/${id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': token
+            },
+        })
+            .then(data => data.json())
+            .then(res => {
+                if (res.status === 200) {
+                    dispatch({
+                        type: 'GET_ARTICLES',
+                        payload: res.articles
+                    })
+                }
+            })
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 export const clearArticleData = () => async dispatch => {
     try {
         dispatch({

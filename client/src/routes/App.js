@@ -4,6 +4,7 @@ import LogIn from '../components/Login/Login'
 import Register from '../components/Register/Register'
 import Home from '../components/Home/Home'
 import Admin from '../layout/Admin'
+import CategoryProducts from '../components/CategoryProducts/CategoryProducts'
 
 import { useDispatch } from 'react-redux'
 import { getUser } from '../actions/users'
@@ -35,6 +36,7 @@ const App = () => {
         <Route exact path="/login" component={LogIn} />
         <Route exact path="/register" component={Register} />
         <PrivateRoutes path="/admin" component={Admin} />
+        <Route exact path="/category/:id" component={CategoryProducts} />
       </Switch>
     </Router>
   );

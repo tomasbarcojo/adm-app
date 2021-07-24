@@ -5,7 +5,6 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
@@ -17,29 +16,28 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MediaCard({ props }) {
+export default function MediaCard({props}) {
   const classes = useStyles();
 
   return (
-    <Link to={`category/${props.id}`}>
-      <Card className={classes.root}>
-        <CardActionArea>
-          <CardMedia
-            className={classes.media}
-            image={`http://localhost:3001/images/${props.image}`}
-            title='Product image'
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              {props.categoryName}
-            </Typography>
-            {/* <Typography variant="body2" color="textSecondary" component="p">
+    <Card className={classes.root}>
+      <CardActionArea>
+        <CardMedia
+          className={classes.media}
+          image={`http://localhost:3001/images/${props.image}`}
+          title='Product image'
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="h2">
+            {props.categoryName}
+          </Typography>
+          {/* <Typography variant="body2" color="textSecondary" component="p">
             Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
             across all continents except Antarctica
           </Typography> */}
-          </CardContent>
-        </CardActionArea>
-        {/* <CardActions>
+        </CardContent>
+      </CardActionArea>
+      {/* <CardActions>
         <Button size="small" color="primary">
           Share
         </Button>
@@ -47,7 +45,6 @@ export default function MediaCard({ props }) {
           Learn More
         </Button>
       </CardActions> */}
-      </Card>
-    </Link>
+    </Card>
   );
 }
