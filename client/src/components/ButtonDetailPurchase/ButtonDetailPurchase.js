@@ -91,11 +91,8 @@ export default function OrderDetailPurchase({ purchaseId }) {
       >
         {order &&
           <div className={classes.container}>
-            <DialogTitle id="alert-dialog-title">Orden - {order.state}</DialogTitle>
+            <DialogTitle id="alert-dialog-title">Compra</DialogTitle>
             <DialogContent>
-              <Typography variant="h6" gutterBottom>
-                {/* {order.user.firstName} {order.user.lastName} */}
-              </Typography>
               <div className={classes.resumen} style={{ justifyContent: 'space-between' }}>
                 <Typography variant="body1" gutterBottom>
                   Resumen de compra

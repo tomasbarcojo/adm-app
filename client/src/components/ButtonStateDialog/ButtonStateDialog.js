@@ -61,7 +61,7 @@ export default function DialogSelect({ state, purchaseId, to, name }) {
   };
 
   const handleClose = () => {
-    if (purchaseState === 'completa' && purchaseState !== state) {
+    if (purchaseState === 'recibida' && purchaseState !== state) {
       data.purchase.map(prod => {
         console.log(prod)
         let newStock = prod.article.stock + prod.quantity
@@ -124,8 +124,8 @@ export default function DialogSelect({ state, purchaseId, to, name }) {
     <div>
       <Button onClick={handleClickOpen}
         size={'small'}
-        variant={purchaseState === 'en transito' || purchaseState === 'completa' || purchaseState === 'despacho' ? 'outlined' : 'text'}
-        disabled={purchaseState === 'en transito' || purchaseState === 'completa' || purchaseState === 'despacho' ? false : true}
+        variant={purchaseState === 'en transito' ? 'outlined' : 'text'}
+        disabled={purchaseState === 'en transito' ? false : true}
         classes={{
           root: classes.stateButton,
           disabled: classes.disabled,
@@ -148,9 +148,8 @@ export default function DialogSelect({ state, purchaseId, to, name }) {
               onChange={handleChange}
               style={{ width: '100%' }}
             >
-              <option aria-label="None" value="" />
-              <option value={"completa"}>Completa</option>
-              <option value={"despacho"}>Despacho</option>
+              <option value={"en transito"}>En transito</option>
+              <option value={"recibida"}>Recibida</option>
               <option value={"cancelada"}>Cancelada</option>
             </Select>
             {/* </FormControl> */}

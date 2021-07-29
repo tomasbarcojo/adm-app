@@ -18,10 +18,10 @@ import CardBody from "../../components/Card/CardBody.js";
 import GridItem from "../../components/Grid/GridItem.js";
 import GridContainer from "../../components/Grid/GridContainer.js";
 import styles from "../../styles/components/tableStyle.js";
-import OrderStateDialog from "../../components/OrderStateDialog/OrderStateDialog"
+import ButtonStateDialog from "../../components/ButtonStateDialog/ButtonStateDialog"
 import { getPurchases } from "../../actions/purchases.js";
 import Token from '../../Token/Token'
-import OrderDetailPurchase from '../../components/OrderDetailPurchase/OrderDetailPurchase'
+import ButtonDetailPurchase from '../../components/ButtonDetailPurchase/ButtonDetailPurchase'
 
 const useStyles = makeStyles(styles);
 
@@ -97,7 +97,7 @@ export default function CustomTable(props) {
                             {prop.supplier.businessName}
                           </TableCell>
                           <TableCell>
-                            <OrderStateDialog state={prop.state} purchaseId={prop.id} /*to={row.user.email} name={row.user.firstName}*/ />
+                            <ButtonStateDialog state={prop.state} purchaseId={prop.id} /*to={row.user.email} name={row.user.firstName}*/ />
                           </TableCell>
                           <TableCell className={classes.tableCell} key={key}>
                             {prop.createdAt.slice('T', 10)}
@@ -106,7 +106,7 @@ export default function CustomTable(props) {
                             {prop.createdAt.split('T')[1].slice(0, 5)}
                           </TableCell>
                           <TableCell className={classes.tableCell} key={key}>
-                            <OrderDetailPurchase purchaseId={prop.id} />
+                            <ButtonDetailPurchase purchaseId={prop.id} />
                           </TableCell>
                         </TableRow>
                       )

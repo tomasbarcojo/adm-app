@@ -117,7 +117,7 @@ export default function PriceLists() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const dataObj = {
-      state: purchaseState,
+      // state: 'en transito',
       supplierId: supplierId,
       data: purchaseList
     }
@@ -168,7 +168,7 @@ export default function PriceLists() {
                             : null}
                         />
 
-                        <GridContainer>
+                        {/* <GridContainer>
                           <GridItem xs={12} sm={12} md={8}>
                             <FormControl className={classes.formControl}>
                               <InputLabel>Estado de la compra</InputLabel>
@@ -184,7 +184,7 @@ export default function PriceLists() {
                               </Select>
                             </FormControl>
                           </GridItem>
-                        </GridContainer>
+                        </GridContainer> */}
                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
                           <h3>Total de la compra: $ {total}</h3>
                         </div>

@@ -5,7 +5,7 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('purchase', {
     state: {
-      type: DataTypes.ENUM('en transito', 'finalizada', 'cancelada', 'procesando', 'completa', 'despacho'),
+      type: DataTypes.ENUM('en transito', 'recibida', 'cancelada'),
       allowNull: false,
       defaultValue: 'en transito',
     }

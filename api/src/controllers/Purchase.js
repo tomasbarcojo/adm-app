@@ -43,9 +43,9 @@ module.exports = {
 
   async createPurchase(req, res) {
     try {
-      const { state, supplierId, data } = req.body;
-      if (!state || !supplierId || !data) return res.status(400).send({ message: 'Necesary data required', status: 400 });
-      const purchaseData = { state, supplierId }
+      const { supplierId, data } = req.body;
+      if (!supplierId || !data) return res.status(400).send({ message: 'Necesary data required', status: 400 });
+      const purchaseData = { supplierId }
       const newPurchase = await Purchase.create(purchaseData);
       for (const e of data) {
         await Purchaseproduct.create({
