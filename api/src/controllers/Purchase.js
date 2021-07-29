@@ -61,4 +61,20 @@ module.exports = {
       return res.status(400).send({ message: 'Failed to create price list' });
     }
   },
+
+  async updateState(req, res) {
+    try {
+      const purchase = await Purchase.findByPk(req.params.id);
+      if (purchase.state !== req.body.state) {
+        const updatedPurchase = await purchase.update({
+          state: req.body.state
+        })
+        return res.status(201).send({ updatedPurchase, status: 201 })
+      } else {
+        return res.status(200).send({ msg: 'The state is the same', status: 200 })
+      }
+    } catch (err) {
+      return res.status(400).send({ message: 'Failed to update state' });
+    }
+  },
 }

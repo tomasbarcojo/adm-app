@@ -65,5 +65,20 @@ module.exports = {
       console.log(err)
       return res.status(500).send(err)
     }
+  },
+
+  async updateStock(req, res) {
+    try {
+      Article.findByPk(req.params.id)
+      .then((product) => {
+        product.stock = req.body.stock
+        product.save().then((prod) => {
+          res.status(204).send({msg: 'Stock updated successfully', prod, state: 204})
+        })
+      })
+    } catch (err) {
+      return res.status(500).send(err)
+    }
   }
+
 }
