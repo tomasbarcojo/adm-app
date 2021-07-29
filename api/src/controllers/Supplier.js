@@ -23,9 +23,6 @@ module.exports = {
       name.toLowerCase();
       const suppliers = await Supplier.findAll({
         where: {
-          // businessName: {
-          //   [Op.startsWith]: name
-          // }
           businessName: sequelize.where(sequelize.fn('LOWER', sequelize.col('businessName')), 'LIKE', '%' + name + '%')
         },
         limit: 15

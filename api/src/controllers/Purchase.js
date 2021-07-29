@@ -28,6 +28,19 @@ module.exports = {
     }
   },
 
+  async getPurchaseDetailById(req, res) {
+    try {
+      const purchase = await Purchaseproduct.findAll({ where: { purchaseId: req.params.id }, include: [Article] });
+      if (purchase && purchase.length === 0) {
+        return res.status(404).send({ message: 'No purchases', status: 404 })
+      }
+      return res.status(200).send({ purchase, status: 200 })
+    } catch (err) {
+      console.log(err)
+      return res.status(400).send({ message: 'Failed to get purchases' })
+    }
+  },
+
   async createPurchase(req, res) {
     try {
       const { state, supplierId, data } = req.body;

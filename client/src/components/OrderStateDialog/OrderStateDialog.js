@@ -139,6 +139,7 @@ export default function DialogSelect({ state, purchaseId, to, name }) {
     <div>
       <Button onClick={handleClickOpen}
         size={'small'}
+        variant={purchaseState === 'en transito' || purchaseState === 'completa' || purchaseState === '' ? 'outlined' : 'text'}
         disabled={purchaseState === 'en transito' || purchaseState === 'completa' || purchaseState === '' ? false : true}
         classes={{
           root: classes.stateButton,

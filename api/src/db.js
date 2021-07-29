@@ -60,6 +60,7 @@ Userpricelist.belongsTo(Pricelist); //relacion para usar el include al hacer get
 Purchase.belongsToMany(Article, { through: Purchaseproduct })
 Article.belongsToMany(Purchase, { through: Purchaseproduct })
 Purchase.belongsTo(Supplier)
+Purchaseproduct.belongsTo(Article)
 // Supplier.belongsToMany(Purchase, { through: Purchaseproduct })
 
 module.exports = {

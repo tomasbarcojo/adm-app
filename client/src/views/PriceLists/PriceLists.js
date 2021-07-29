@@ -203,6 +203,7 @@ export default function PriceLists() {
           {pricelists && pricelists.length > 0 ?
             <Table
               tableHeaderColor="primary"
+              options={true}
               tableHead={["ID", "Nombre de listado"]}
               tableData={
                 pricelists.map((pl) => {

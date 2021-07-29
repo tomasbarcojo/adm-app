@@ -21,6 +21,7 @@ import styles from "../../styles/components/tableStyle.js";
 import OrderStateDialog from "../../components/OrderStateDialog/OrderStateDialog"
 import { getPurchases } from "../../actions/purchases.js";
 import Token from '../../Token/Token'
+import OrderDetailPurchase from '../../components/OrderDetailPurchase/OrderDetailPurchase'
 
 const useStyles = makeStyles(styles);
 
@@ -105,7 +106,7 @@ export default function CustomTable(props) {
                             {prop.createdAt.split('T')[1].slice(0, 5)}
                           </TableCell>
                           <TableCell className={classes.tableCell} key={key}>
-                            Detalle
+                            <OrderDetailPurchase purchaseId={prop.id} />
                           </TableCell>
                         </TableRow>
                       )
