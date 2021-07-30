@@ -76,10 +76,10 @@ export default function CustomTable(props) {
                         Estado
                       </TableCell>
                       <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>
-                        Fecha
+                        Creado
                       </TableCell>
                       <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>
-                        Hora
+                        Ultima mod.
                       </TableCell>
                       <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>
                         Detalle
@@ -100,10 +100,10 @@ export default function CustomTable(props) {
                             <ButtonStateDialog state={prop.state} purchaseId={prop.id} /*to={row.user.email} name={row.user.firstName}*/ />
                           </TableCell>
                           <TableCell className={classes.tableCell} key={key}>
-                            {prop.createdAt.slice('T', 10)}
+                            {prop.createdAt.slice('T', 10)} / {prop.createdAt.split('T')[1].slice(0, 5)}
                           </TableCell>
                           <TableCell className={classes.tableCell} key={key}>
-                            {prop.createdAt.split('T')[1].slice(0, 5)}
+                            {prop.updatedAt.slice('T', 10)} / {prop.updatedAt.split('T')[1].slice(0, 5)}
                           </TableCell>
                           <TableCell className={classes.tableCell} key={key}>
                             <ButtonDetailPurchase purchaseId={prop.id} />

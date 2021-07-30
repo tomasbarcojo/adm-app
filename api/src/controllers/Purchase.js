@@ -4,7 +4,7 @@ const { Op } = require('sequelize')
 module.exports = {
   async getPurchases(req, res) {
     try {
-      const purchase = await Purchase.findAll({ include: [Supplier] });
+      const purchase = await Purchase.findAll({ include: [Supplier], order: [['updatedAt', 'ASC']] });
       if (purchase && purchase.length === 0) {
         return res.status(404).send({ message: 'No purchases', status: 404 })
       }
