@@ -64,7 +64,7 @@ export default function CustomTable(props) {
             {createdPurchases && createdPurchases.length !== 0 ?
               <div className={classes.tableResponsive}>
                 <Table className={classes.table}>
-                  <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
+                  <TableHead className={classes['primary' + "TableHeader"]}>
                     <TableRow className={classes.tableHeadRow}>
                       <TableCell className={classes.tableCell + " " + classes.tableHeadCell}>
                         ID
@@ -123,20 +123,20 @@ export default function CustomTable(props) {
   );
 }
 
-CustomTable.defaultProps = {
-  tableHeaderColor: "gray"
-};
+// CustomTable.defaultProps = {
+//   tableHeaderColor: "gray"
+// };
 
-CustomTable.propTypes = {
-  tableHeaderColor: PropTypes.oneOf([
-    "warning",
-    "primary",
-    "danger",
-    "success",
-    "info",
-    "rose",
-    "gray"
-  ]),
-  tableHead: PropTypes.arrayOf(PropTypes.string),
-  tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
-};
+// CustomTable.propTypes = {
+//   tableHeaderColor: PropTypes.oneOf([
+//     "warning",
+//     "primary",
+//     "danger",
+//     "success",
+//     "info",
+//     "rose",
+//     "gray"
+//   ]),
+//   tableHead: PropTypes.arrayOf(PropTypes.string),
+//   tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
+// };

@@ -68,9 +68,8 @@ export default function Clients() {
   const url = useLocation();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   var token = Token();
-  const clients = useSelector(state => state.clients);
   const pricelists = useSelector(state => state.pricelists);
-  const [showNew, setShowNew] = useState(false);
+  const [showNew, setShowNew] = useState(true);
   const [data, setData] = useState({
     businessName: '',
     cuit: '',
@@ -264,33 +263,6 @@ export default function Clients() {
             </>
             : null
           }
-        </Card>
-      </GridItem>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card>
-          <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>Clientes --EQUIPOS ASOCIADOS?--</h4>
-            <p className={classes.cardCategoryWhite}>
-              Listado de clientes
-            </p>
-          </CardHeader>
-          <CardBody>
-            {clients && clients.length > 0 ?
-              <Table
-                tableHeaderColor="primary"
-                tableHead={["ID", "Razon social", "Cuit", "Telefono", "Direccion", "Equipo asociado"]}
-                tableData={clients && clients.length > 0 ?
-                  clients.map((client, index) => {
-                    return {
-                      id: client.id,
-                      data: [client.id, client.businessName, client.cuit, client.phone, client.address, client.pricelistId ]
-                    }
-                  })
-                  : null}
-              />
-              : <h5 style={{ display: "flex", justifyContent: "center" }}>No existen clientes</h5>
-            }
-          </CardBody>
         </Card>
       </GridItem>
     </GridContainer>

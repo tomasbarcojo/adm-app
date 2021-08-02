@@ -20,7 +20,8 @@ import RTLPage from "../views/RTLPage/RTLPage.js";
 import EditPricelist from '../views/PriceLists/EditPricelist'
 import AddIcon from '@material-ui/icons/Add';
 
-import purchases from './purchases'
+// import purchases from './purchases'
+import { clients, purchases } from './purchases'
 
 const dashboardRoutes = [
   {
@@ -46,7 +47,10 @@ const dashboardRoutes = [
     name: "Clientes",
     icon: Person,
     component: TableList,
-    layout: "/admin"
+    layout: "/admin",
+    notSideBar: true,
+    nestedList: true,
+    nestedData: clients,
   },
   // {
   //   path: "/clientsbackup",
