@@ -11,28 +11,28 @@ import ClientList from '../views/Clients/ClientsList';
 
 export const purchases = [
   {
-    path: "/prueba",
+    path: "/newsupplier",
     name: "Añadir proveedor",
     icon: AddIcon,
     component: Suppliers,
     layout: "/admin"
   },
   {
-    path: "/pepe/prueba",
+    path: "/suppliers",
     name: "Proveedores",
     icon: ListIcon,
     component: SupplierList,
     layout: "/admin"
   },
   {
-    path: "/purchases",
+    path: "/newpurchase",
     name: "Nueva compra",
     icon: AddShoppingCartIcon,
     component: Purchases,
     layout: "/admin"
   },
   {
-    path: "/prueba/asd",
+    path: "/purchases",
     name: "Compras",
     icon: ListIcon,
     component: PurchasesList,
@@ -42,31 +42,17 @@ export const purchases = [
 
 export const clients = [
   {
-    path: "/addclient",
+    path: "/newclient",
     name: "Añadir cliente",
     icon: AddIcon,
     component: TableList,
     layout: "/admin"
   },
   {
-    path: "/clientslist",
+    path: "/clients",
     name: "Clientes",
     icon: ListIcon,
     component: ClientList,
     layout: "/admin"
-  },
-//   {
-//     path: "/purchases",
-//     name: "Nueva compra",
-//     icon: AddShoppingCartIcon,
-//     component: Purchases,
-//     layout: "/admin"
-//   },
-//   {
-//     path: "/prueba/asd",
-//     name: "Compras",
-//     icon: ListIcon,
-//     component: PurchasesList,
-//     layout: "/admin"
-//   }
+  }
 ];
