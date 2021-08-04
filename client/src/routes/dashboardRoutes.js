@@ -8,9 +8,6 @@ import Language from "@material-ui/icons/Language";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 import DashboardPage from "../views/Dashboard/Dashboard";
-import Suppliers from "../views/Suppliers/Suppliers.js";
-import TableList from "../views/Clients/Clients.js";
-import Articles from "../views/Articles/Articles.js";
 import PriceLists from "../views/PriceLists/PriceLists.js"
 import Maps from "../views/Maps/Maps.js";
 import NotificationsPage from "../views/Notifications/Notifications.js";
@@ -21,7 +18,7 @@ import EditPricelist from '../views/PriceLists/EditPricelist'
 import AddIcon from '@material-ui/icons/Add';
 
 // import purchases from './purchases'
-import { clients, purchases } from './purchases'
+import { clients, purchases, artAndCat } from './purchases'
 
 const dashboardRoutes = [
   {
@@ -32,22 +29,22 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path: "/suppliers",
+    // path: "/suppliers",
     name: "Proveedores",
     icon: Language,
-    component: Suppliers,
-    layout: "/admin",
+    // component: Suppliers,
+    // layout: "/admin",
     notSideBar: true,
     nestedList: true,
     nestedData: purchases,
 
   },
   {
-    path: "/clients",
+    // path: "/clients",
     name: "Clientes",
     icon: Person,
-    component: TableList,
-    layout: "/admin",
+    // component: TableList,
+    // layout: "/admin",
     notSideBar: true,
     nestedList: true,
     nestedData: clients,
@@ -60,11 +57,13 @@ const dashboardRoutes = [
   //   layout: "/admin"
   // },
   {
-    path: "/articles",
-    name: "Articulos",
+    // path: "/articles",
+    name: "Articulos/Categorias",
     icon: BubbleChart,
-    component: Articles,
-    layout: "/admin"
+    // layout: "/admin",
+    notSideBar: true,
+    nestedList: true,
+    nestedData: artAndCat,
   },
   {
     path: "/pricelist",

@@ -10,6 +10,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 // core components
 import GridItem from "../../components/Grid/GridItem.js";
 import GridContainer from "../../components/Grid/GridContainer.js";
@@ -68,6 +70,9 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
+  test: {
+    color: 'black',
+  }
 }));
 
 export default function PriceLists() {
@@ -168,23 +173,35 @@ export default function PriceLists() {
                             : null}
                         />
 
-                        {/* <GridContainer>
+                        <GridContainer>
                           <GridItem xs={12} sm={12} md={8}>
-                            <FormControl className={classes.formControl}>
-                              <InputLabel>Estado de la compra</InputLabel>
-                              <Select
-                                fullWidth
-                                value={purchaseState}
-                                onChange={handleChangePurchaseState}
-                                defaultValue={'en transito'}
-                              >
-                                <MenuItem value={'en transito'}>En transito</MenuItem>
-                                <MenuItem value={'procesando'}>Procesando</MenuItem>
-                                <MenuItem value={'completa'}>Completa</MenuItem>
-                              </Select>
-                            </FormControl>
+                        <FormControlLabel
+                        className={classes.test}
+                          control={
+                            <Checkbox
+                              // checked={state.checkedB}
+                              // onChange={handleChange}
+                              color="primary"
+                              className={classes.checkbox}
+                            />
+                          }
+                          label="Algo 1"
+                        />
                           </GridItem>
-                        </GridContainer> */}
+                        <FormControlLabel
+                        className={classes.test}
+                          control={
+                            <Checkbox
+                              // checked={state.checkedB}
+                              // onChange={handleChange}
+                              color="primary"
+                              className={classes.checkbox}
+                            />
+                          }
+                          label="Algo 2"
+                        />
+                        </GridContainer>
+
                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
                           <h3>Total de la compra: $ {total}</h3>
                         </div>

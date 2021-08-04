@@ -6,7 +6,7 @@ const sequelize = require('sequelize');
 module.exports = {
   async getSuppliers(req, res) {
     try {
-      const suppliers = await Supplier.findAll({ limit: 25 })
+      const suppliers = await Supplier.findAll(/*{ limit: 25 }*/)
       if (suppliers && suppliers.length === 0) {
         return res.status(404).send({ message: 'No suppliers', status: 404 })
       }
