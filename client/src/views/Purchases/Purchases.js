@@ -50,10 +50,6 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center'
   },
-  input: {
-    margin: '27px 0 0 0',
-    paddingBottom: '10px',
-  },
   articleRow: {
     backgroundColor: '#F6F6F6',
     margin: '10px',
@@ -72,6 +68,8 @@ const useStyles = makeStyles((theme) => ({
   },
   test: {
     color: 'black',
+    margin: '10px 0 0 0',
+    paddingBottom: '10px',
   }
 }));
 
@@ -175,31 +173,27 @@ export default function PriceLists() {
 
                         <GridContainer>
                           <GridItem xs={12} sm={12} md={8}>
-                        <FormControlLabel
-                        className={classes.test}
-                          control={
-                            <Checkbox
-                              // checked={state.checkedB}
-                              // onChange={handleChange}
-                              color="primary"
-                              className={classes.checkbox}
+                            <FormControlLabel
+                              className={classes.test}
+                              control={
+                                <Checkbox
+                                  color="primary"
+                                />
+                              }
+                              label="Algo 1"
                             />
-                          }
-                          label="Algo 1"
-                        />
                           </GridItem>
-                        <FormControlLabel
-                        className={classes.test}
-                          control={
-                            <Checkbox
-                              // checked={state.checkedB}
-                              // onChange={handleChange}
-                              color="primary"
-                              className={classes.checkbox}
+                          <GridItem xs={12} sm={12} md={8}>
+                            <FormControlLabel
+                              className={classes.test}
+                              control={
+                                <Checkbox
+                                  color="primary"
+                                />
+                              }
+                              label="Algo 2"
                             />
-                          }
-                          label="Algo 2"
-                        />
+                          </GridItem>
                         </GridContainer>
 
                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
