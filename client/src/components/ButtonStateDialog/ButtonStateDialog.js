@@ -60,7 +60,7 @@ export default function DialogSelect({ state, purchaseId, to, name }) {
     console.log(purchaseAux)
   };
 
-  const handleClose = () => {
+  const handleOkButton = () => {
     if (purchaseState === 'recibida' && purchaseState !== state) {
       data.purchase.map(prod => {
         console.log(prod)
@@ -97,6 +97,10 @@ export default function DialogSelect({ state, purchaseId, to, name }) {
         console.log(error)
       }
     }
+    setOpen(false);
+  }
+
+  const handleClose = () => {
     setOpen(false);
   }
 
@@ -161,7 +165,7 @@ return (
         <Button onClick={handleClose} color="primary">
           Cancelar
         </Button>
-        <Button onClick={handleClose} color="primary">
+        <Button onClick={handleOkButton} color="primary">
           Ok
         </Button>
       </DialogActions>

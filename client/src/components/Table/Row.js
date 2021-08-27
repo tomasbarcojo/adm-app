@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addDataPurchase, updateTotal } from '../../actions/purchases'
+import NumberFormat from "react-number-format";
 
 export default function Counter({ props }) {
   const [quantity, setQuantity] = useState(0)
   const dispatch = useDispatch()
   const purchase = useSelector(state => state.purchase)
   const [price, setPrice] = useState(0)
+  const [float, setFloat] = useState(0)
   var total = 0;
 
   useEffect(() => {
@@ -70,7 +72,7 @@ export default function Counter({ props }) {
   }
 
   const handleChangePrice = (event) => {
-    const value = parseInt(event.target.value);
+    const value = parseFloat(event.target.value).toFixed(2)
     if (value < 1) {
       setPrice(0)
     } else {
@@ -98,16 +100,38 @@ export default function Counter({ props }) {
     </td>
     <td className='htmlTableTD'>
       <div style={{display: 'flex', flexDirection: 'row'}}>
-      $ <input  
+      {/* $ <input  
       id={props.id}
       style={{width: '70px', marginLeft: '7px'}}
       onChange={handleChangePrice}
-      type='number'
+      // type='number'
       value={price}
-    />
+    /> */}
+    {/* $ <NumberFormat
+        thousandsGroupStyle="thousand"
+        value={price}
+        onChange={handleChangePrice}
+        style={{width: '70px', marginLeft: '7px'}}
+        decimalSeparator=","
+        displayType="input"
+        type="text"
+        // value='number'
+        thousandSeparator={false}
+        allowNegative={true}
+        decimalScale={3} /> */}
+
+      $ <NumberFormat
+        value={price}
+        style={{width: '70px', marginLeft: '7px'}}
+        displayType={'input'}
+        thousandSeparator={false}
+        decimalScale={3}
+        onChange={handleChangePrice}
+        />
+    
       </div>
     </td>
-    <td className='htmlTableTD'>$ {quantity && price ? quantity * price : 0}</td>
+    <td className='htmlTableTD'>$ {quantity && price ? (quantity * price).toFixed(2) : 0}</td>
     </>
   )
 }

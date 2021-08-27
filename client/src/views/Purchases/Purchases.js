@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSnackbar } from 'notistack';
 import { getPriceList, addPriceList } from '../../actions/pricelists'
+import 'date-fns';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from '@material-ui/core/TextField';
@@ -12,6 +13,16 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import DateFnsUtils from '@date-io/date-fns';
+import esLocale from "date-fns/locale/es";
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+  DatePicker,
+  TimePicker,
+  DateTimePicker,
+} from '@material-ui/pickers';
 // core components
 import GridItem from "../../components/Grid/GridItem.js";
 import GridContainer from "../../components/Grid/GridContainer.js";
@@ -86,6 +97,7 @@ export default function PriceLists() {
   const [purchaseState, setPurchaseState] = useState('')
   const total = useSelector(state => state.purchaseTotal)
   const createdPurchases = useSelector(state => state.createdPurchases)
+  const [selectedDate, setSelectedDate] = useState();
 
   useEffect(() => {
     dispatch(clearArticleData());
@@ -126,6 +138,10 @@ export default function PriceLists() {
     }
     dispatch(newPurchase(dataObj, token, enqueueSnackbar, closeSnackbar));
     // resetForm();
+  };
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
   };
 
   return (
@@ -182,8 +198,6 @@ export default function PriceLists() {
                               }
                               label="Algo 1"
                             />
-                          </GridItem>
-                          <GridItem xs={12} sm={12} md={8}>
                             <FormControlLabel
                               className={classes.test}
                               control={
@@ -194,10 +208,35 @@ export default function PriceLists() {
                               label="Algo 2"
                             />
                           </GridItem>
+                          <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
+                            <GridItem xs={12} sm={12} md={8}>
+                              <KeyboardDatePicker
+                                // disableToolbar
+                                // autoOk
+                                orientation="landscape"
+                                variant="static"
+                                openTo="date"
+                                showTodayButton
+                                variant="outlined"
+                                format="dd/MM/yyyy"
+                                margin="normal"
+                                id="date-picker-inline"
+                                label="Vencimiento de pago"
+                                value={selectedDate}
+                                onChange={handleDateChange}
+                                KeyboardButtonProps={{
+                                  'aria-label': 'change date',
+                                }}
+                                cancelLabel='Cancelar'
+                                okLabel='OK'
+                                todayLabel='HOY'
+                              />
+                            </GridItem>
+                          </MuiPickersUtilsProvider>
                         </GridContainer>
 
                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-                          <h3>Total de la compra: $ {total}</h3>
+                          <h3>Total de la compra: $ {total.toFixed(2)}</h3>
                         </div>
                       </>
                       : <h5 className='messageEmptyDataTable'>Seleccione un proveedor para desplegar sus productos</h5>
