@@ -8,6 +8,10 @@ module.exports = (sequelize) => {
       type: DataTypes.ENUM('en transito', 'recibida', 'cancelada'),
       allowNull: false,
       defaultValue: 'en transito',
+    },
+    paymentExpirationDate: {
+      type: DataTypes.DATEONLY,
+      allowNull: true
     }
   });
 };

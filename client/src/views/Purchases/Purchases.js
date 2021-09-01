@@ -97,7 +97,7 @@ export default function PriceLists() {
   const [purchaseState, setPurchaseState] = useState('')
   const total = useSelector(state => state.purchaseTotal)
   const createdPurchases = useSelector(state => state.createdPurchases)
-  const [selectedDate, setSelectedDate] = useState();
+  const [paymentExpDate, setPaymentExpDate] = useState('');
 
   useEffect(() => {
     dispatch(clearArticleData());
@@ -132,16 +132,16 @@ export default function PriceLists() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const dataObj = {
-      // state: 'en transito',
       supplierId: supplierId,
-      data: purchaseList
+      data: purchaseList,
+      paymentExpirationDate: paymentExpDate
     }
     dispatch(newPurchase(dataObj, token, enqueueSnackbar, closeSnackbar));
     // resetForm();
   };
 
   const handleDateChange = (date) => {
-    setSelectedDate(date);
+    setPaymentExpDate(date.toISOString());
   };
 
   return (
@@ -167,6 +167,7 @@ export default function PriceLists() {
                         onChange={(event, value) => handleChangePriceListName(value)}
                         fullWidth={true}
                         renderInput={(params) => <TextField {...params} label="Proveedor" />}
+                        getOptionSelected={(option, value) => option.id === value.id}
                       />
                     </GridItem>
                   </GridContainer>
@@ -188,7 +189,7 @@ export default function PriceLists() {
                         />
 
                         <GridContainer>
-                          <GridItem xs={12} sm={12} md={8}>
+                          {/* <GridItem xs={12} sm={12} md={8}>
                             <FormControlLabel
                               className={classes.test}
                               control={
@@ -207,7 +208,7 @@ export default function PriceLists() {
                               }
                               label="Algo 2"
                             />
-                          </GridItem>
+                          </GridItem> */}
                           <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
                             <GridItem xs={12} sm={12} md={8}>
                               <KeyboardDatePicker
@@ -222,7 +223,7 @@ export default function PriceLists() {
                                 margin="normal"
                                 id="date-picker-inline"
                                 label="Vencimiento de pago"
-                                value={selectedDate}
+                                value={paymentExpDate}
                                 onChange={handleDateChange}
                                 KeyboardButtonProps={{
                                   'aria-label': 'change date',
@@ -230,6 +231,10 @@ export default function PriceLists() {
                                 cancelLabel='Cancelar'
                                 okLabel='OK'
                                 todayLabel='HOY'
+                                disablePast
+                                emptyLabel
+                                leftArrowIcon
+                                loadingIndicator
                               />
                             </GridItem>
                           </MuiPickersUtilsProvider>
