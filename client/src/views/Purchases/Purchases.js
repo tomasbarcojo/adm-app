@@ -77,10 +77,13 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
-  test: {
+  formcontrolabel: {
     color: 'black',
-    margin: '10px 0 0 0',
+    margin: '10px 10px 0 0',
     paddingBottom: '10px',
+  },
+  datepicker: {
+    margin: 0
   }
 }));
 
@@ -97,7 +100,8 @@ export default function PriceLists() {
   const [purchaseState, setPurchaseState] = useState('')
   const total = useSelector(state => state.purchaseTotal)
   const createdPurchases = useSelector(state => state.createdPurchases)
-  const [paymentExpDate, setPaymentExpDate] = useState('');
+  const [paymentExpDate, setPaymentExpDate] = useState();
+  const [haveExpPayment, setAddExpPayment] = useState(false);
 
   useEffect(() => {
     dispatch(clearArticleData());
@@ -144,6 +148,10 @@ export default function PriceLists() {
     setPaymentExpDate(date.toISOString());
   };
 
+  const handleAddExpPayment = () => {
+    setAddExpPayment(!haveExpPayment)
+  }
+
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
@@ -188,57 +196,65 @@ export default function PriceLists() {
                             : null}
                         />
 
-                        <GridContainer>
-                          {/* <GridItem xs={12} sm={12} md={8}>
+                        {/* <GridContainer> */}
+                          {/* <GridItem xs={12} sm={12} md={12}> */}
                             <FormControlLabel
+                              className={classes.formcontrolabel}
+                              control={
+                                <Checkbox
+                                  color="primary"
+                                  onClick={handleAddExpPayment}
+                                />
+                              }
+                              label="Añadir vencimiento de pago"
+                            />
+
+                            {haveExpPayment ?
+                              <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
+                                {/* <GridItem xs={12} sm={12} md={8}> */}
+                                <KeyboardDatePicker
+                                  // disableToolbar
+                                  // autoOk
+                                  className={classes.datepicker}
+                                  orientation="landscape"
+                                  variant="static"
+                                  openTo="date"
+                                  showTodayButton
+                                  variant="outlined"
+                                  format="dd/MM/yyyy"
+                                  margin="normal"
+                                  id="date-picker-inline"
+                                  label="Vencimiento de pago"
+                                  value={paymentExpDate}
+                                  onChange={handleDateChange}
+                                  KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                  }}
+                                  cancelLabel='Cancelar'
+                                  okLabel='OK'
+                                  todayLabel='HOY'
+                                  disablePast
+                                  emptyLabel
+                                  leftArrowIcon
+                                  loadingIndicator
+                                />
+                                {/* </GridItem> */}
+                              </MuiPickersUtilsProvider>
+                              : null}
+                          {/* </GridItem> */}
+
+                          {/* <GridItem xs={12} sm={12} md={8}> */}
+                            {/* <FormControlLabel
                               className={classes.test}
                               control={
                                 <Checkbox
                                   color="primary"
                                 />
                               }
-                              label="Algo 1"
-                            />
-                            <FormControlLabel
-                              className={classes.test}
-                              control={
-                                <Checkbox
-                                  color="primary"
-                                />
-                              }
-                              label="Algo 2"
-                            />
-                          </GridItem> */}
-                          <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
-                            <GridItem xs={12} sm={12} md={8}>
-                              <KeyboardDatePicker
-                                // disableToolbar
-                                // autoOk
-                                orientation="landscape"
-                                variant="static"
-                                openTo="date"
-                                showTodayButton
-                                variant="outlined"
-                                format="dd/MM/yyyy"
-                                margin="normal"
-                                id="date-picker-inline"
-                                label="Vencimiento de pago"
-                                value={paymentExpDate}
-                                onChange={handleDateChange}
-                                KeyboardButtonProps={{
-                                  'aria-label': 'change date',
-                                }}
-                                cancelLabel='Cancelar'
-                                okLabel='OK'
-                                todayLabel='HOY'
-                                disablePast
-                                emptyLabel
-                                leftArrowIcon
-                                loadingIndicator
-                              />
-                            </GridItem>
-                          </MuiPickersUtilsProvider>
-                        </GridContainer>
+                              label="Añadir impuestos"
+                            /> */}
+                          {/* </GridItem> */}
+                        {/* </GridContainer> */}
 
                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
                           <h3>Total de la compra: $ {total.toFixed(2)}</h3>
