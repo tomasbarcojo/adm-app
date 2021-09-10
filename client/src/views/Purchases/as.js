@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
   },
   checkbox: {
     color: 'black',
-    margin: '10px 0 0 0',
+    margin: '10px 10px 0 0',
     paddingBottom: '10px',
   },
   checkboxrow: {
