@@ -77,10 +77,18 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
-  test: {
+  checkbox: {
     color: 'black',
     margin: '10px 0 0 0',
     paddingBottom: '10px',
+  },
+  checkboxrow: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    margin: '10px 0px 10px 0px'
+  },
+  datePicker: {
+    margin: '0'
   }
 }));
 
@@ -97,7 +105,8 @@ export default function PriceLists() {
   const [purchaseState, setPurchaseState] = useState('')
   const total = useSelector(state => state.purchaseTotal)
   const createdPurchases = useSelector(state => state.createdPurchases)
-  const [paymentExpDate, setPaymentExpDate] = useState('');
+  const [paymentExpDate, setPaymentExpDate] = useState();
+  const [haveExpDate, setHaveExpDate] = useState(false)
 
   useEffect(() => {
     dispatch(clearArticleData());
@@ -144,6 +153,11 @@ export default function PriceLists() {
     setPaymentExpDate(date.toISOString());
   };
 
+  const handleHaveExpDate = () => {
+    setHaveExpDate(!haveExpDate)
+    console.log(haveExpDate)
+  }
+
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
@@ -188,32 +202,22 @@ export default function PriceLists() {
                             : null}
                         />
 
-                        <GridContainer>
-                          {/* <GridItem xs={12} sm={12} md={8}>
-                            <FormControlLabel
-                              className={classes.test}
-                              control={
-                                <Checkbox
-                                  color="primary"
-                                />
-                              }
-                              label="Algo 1"
-                            />
-                            <FormControlLabel
-                              className={classes.test}
-                              control={
-                                <Checkbox
-                                  color="primary"
-                                />
-                              }
-                              label="Algo 2"
-                            />
-                          </GridItem> */}
-                          <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
-                            <GridItem xs={12} sm={12} md={8}>
+                        <div className={classes.checkboxrow}>
+                          <FormControlLabel
+                            className={classes.checkbox}
+                            control={
+                              <Checkbox
+                                onClick={handleHaveExpDate}
+                                color="primary"
+                              />
+                            }
+                            label="Añadir fecha de vencimiento de pago"
+                          />
+
+                          {haveExpDate ?
+                            <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
                               <KeyboardDatePicker
-                                // disableToolbar
-                                // autoOk
+                                className={classes.datePicker}
                                 orientation="landscape"
                                 variant="static"
                                 openTo="date"
@@ -236,9 +240,54 @@ export default function PriceLists() {
                                 leftArrowIcon
                                 loadingIndicator
                               />
-                            </GridItem>
-                          </MuiPickersUtilsProvider>
-                        </GridContainer>
+                            </MuiPickersUtilsProvider>
+                            : null
+                          }
+                        </div>
+
+                        {/* <div className={classes.checkboxrow}>
+                          <FormControlLabel
+                            className={classes.checkbox}
+                            control={
+                              <Checkbox
+                                onClick={handleHaveExpDate}
+                                color="primary"
+                              />
+                            }
+                            label="Añadir pago"
+                          />
+
+                          {haveExpDate ?
+                            <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
+                              <KeyboardDatePicker
+                                className={classes.datePicker}
+                                orientation="landscape"
+                                variant="static"
+                                openTo="date"
+                                showTodayButton
+                                variant="outlined"
+                                format="dd/MM/yyyy"
+                                margin="normal"
+                                id="date-picker-inline"
+                                label="Vencimiento de pago"
+                                value={paymentExpDate}
+                                onChange={handleDateChange}
+                                KeyboardButtonProps={{
+                                  'aria-label': 'change date',
+                                }}
+                                cancelLabel='Cancelar'
+                                okLabel='OK'
+                                todayLabel='HOY'
+                                disablePast
+                                emptyLabel
+                                leftArrowIcon
+                                loadingIndicator
+                              />
+                            </MuiPickersUtilsProvider>
+                            : null
+                          }
+                        </div> */}
+
 
                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
                           <h3>Total de la compra: $ {total.toFixed(2)}</h3>

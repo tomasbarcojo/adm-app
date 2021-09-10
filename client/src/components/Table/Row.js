@@ -40,6 +40,10 @@ export default function Counter({ props }) {
     }
   }, [quantity, price])
 
+  useEffect(() => {
+
+  }, [price])
+
   const getTotal = (arrPurchase) => {
     arrPurchase.map(el => {
       total = total + el.total
@@ -72,11 +76,24 @@ export default function Counter({ props }) {
   }
 
   const handleChangePrice = (event) => {
-    const value = parseFloat(event.target.value).toFixed(2)
+    const value = event.target.value
     if (value < 1) {
       setPrice(0)
     } else {
-      setPrice(value)
+      var formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      
+        // These options are needed to round to whole numbers if that's what you want.
+        //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+        //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+      });
+      console.log(formatter.format(value).replace('$', ''));
+      console.log(parseInt(formatter.format(value).replace('$', '')))
+      // console.log(formatter.format(value))
+      // console.log(typeof(formatter.format(value)))
+      const newVal = 
+      setPrice(formatter.format(value))
     }
   }
 
