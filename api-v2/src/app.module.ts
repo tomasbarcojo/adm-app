@@ -14,7 +14,6 @@ import ormConfig from './ormconfig';
 import { CommonModule } from './common/common.module';
 
 import { HealthController } from './health/health.controller';
-import { PubsubPocModule } from './modules/pubsub-poc/pubsub-poc.module';
 import { ProductModule } from './modules/product/product.module';
 
 @Module({
@@ -49,9 +48,6 @@ import { ProductModule } from './modules/product/product.module';
 
     // Task Module (just a refence module)
     ProductModule,
-
-    // PubsubPoc Module (Totallly optional)
-    PubsubPocModule,
   ],
   controllers: [AppController, HealthController],
   providers: [AppService],
