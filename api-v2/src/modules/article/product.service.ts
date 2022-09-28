@@ -10,9 +10,9 @@ import appConfig from '../../config/app.config';
 import { Product } from './product.entity';
 
 import { CreateProductInput } from './dto/create-product-input.dto';
-import { GetOneTaskInput } from './dto/get-one-product-input.dto';
-import { GetAllTasksInput } from './dto/get-all-products-input.dto';
-import { UpdateTaskInput } from './dto/update-product-input.dto';
+import { GetOneProductInput } from './dto/get-one-product-input.dto';
+import { GetAllProductsInput } from './dto/get-all-products-input.dto';
+import { UpdateProductInput } from './dto/update-product-input.dto';
 
 @Injectable()
 export class ProductService extends BaseService<Product> {
@@ -37,18 +37,18 @@ export class ProductService extends BaseService<Product> {
     return saved;
   }
 
-  public async getOne(input: GetOneTaskInput): Promise<Product | undefined> {
-    const { uid } = input;
+  public async getOne(input: GetOneProductInput): Promise<Product | undefined> {
+    const { id } = input;
 
     const existing = await this.getOneByOneFields({
-      fields: { uid },
+      fields: { id },
       checkIfExists: false,
     });
 
     return existing;
   }
 
-  public async getAll(input: GetAllTasksInput): Promise<Product[]> {
+  public async getAll(input: GetAllProductsInput): Promise<Product[]> {
     const { limit, skip, q } = input;
 
     const query = this.productRepository
@@ -68,13 +68,13 @@ export class ProductService extends BaseService<Product> {
   }
 
   public async update(
-    getOneInput: GetOneTaskInput,
-    input: UpdateTaskInput,
+    getOneInput: GetOneProductInput,
+    input: UpdateProductInput,
   ): Promise<Product> {
-    const { uid } = getOneInput;
+    const { id } = getOneInput;
 
     const existing = await this.getOneByOneFields({
-      fields: { uid },
+      fields: { id },
       checkIfExists: true,
     });
 
@@ -92,10 +92,10 @@ export class ProductService extends BaseService<Product> {
   }
 
   public async delete(input: any): Promise<Product> {
-    const { uid } = input;
+    const { id } = input;
 
     const existing = await this.getOneByOneFields({
-      fields: { uid },
+      fields: { id },
       checkIfExists: true,
     });
 
@@ -108,11 +108,11 @@ export class ProductService extends BaseService<Product> {
 
   // CRUD
 
-  public async finish(input: GetOneTaskInput): Promise<Product> {
-    const { uid } = input;
+  public async finish(input: GetOneProductInput): Promise<Product> {
+    const { id } = input;
 
     const existing = await this.getOneByOneFields({
-      fields: { uid },
+      fields: { id },
       checkIfExists: true,
     });
 

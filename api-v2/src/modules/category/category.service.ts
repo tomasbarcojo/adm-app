@@ -10,9 +10,9 @@ import appConfig from '../../config/app.config';
 import { Category } from './category.entity';
 
 import { CreateCategoryInput } from './dto/create-category-input.dto';
-import { GetOneTaskInput } from './dto/get-one-category-input.dto';
-import { GetAllTasksInput } from './dto/get-all-categories-input.dto';
-import { UpdateTaskInput } from './dto/update-category-input.dto';
+import { GetOneCategoryInput } from './dto/get-one-category-input.dto';
+import { GetAllCategoriesInput } from './dto/get-all-categories-input.dto';
+import { UpdateCategoryInput } from './dto/update-category-input.dto';
 
 @Injectable()
 export class CategoryService extends BaseService<Category> {
@@ -37,24 +37,24 @@ export class CategoryService extends BaseService<Category> {
     return saved;
   }
 
-  public async getOne(input: GetOneTaskInput): Promise<Category | undefined> {
-    const { uid } = input;
+  public async getOne(input: GetOneCategoryInput): Promise<Category | undefined> {
+    const { id } = input;
 
     const existing = await this.getOneByOneFields({
-      fields: { uid },
+      fields: { id },
       checkIfExists: false,
     });
 
     return existing;
   }
 
-  public async getAll(input: GetAllTasksInput): Promise<Category[]> {
+  public async getAll(input: GetAllCategoriesInput): Promise<Category[]> {
     const { limit, skip, q } = input;
 
-    const query = this.categoryRepository.createQueryBuilder('task').loadAllRelationIds();
+    const query = this.categoryRepository.createQueryBuilder('category').loadAllRelationIds();
 
     if (q)
-      query.where('task.description like :q', {
+      query.where('category.description like :q', {
         q: `%${q}%`,
       });
 
@@ -65,11 +65,11 @@ export class CategoryService extends BaseService<Category> {
     return items;
   }
 
-  public async update(getOneInput: GetOneTaskInput, input: UpdateTaskInput): Promise<Category> {
-    const { uid } = getOneInput;
+  public async update(getOneInput: GetOneCategoryInput, input: UpdateCategoryInput): Promise<Category> {
+    const { id } = getOneInput;
 
     const existing = await this.getOneByOneFields({
-      fields: { uid },
+      fields: { id },
       checkIfExists: true,
     });
 
@@ -87,10 +87,10 @@ export class CategoryService extends BaseService<Category> {
   }
 
   public async delete(input: any): Promise<Category> {
-    const { uid } = input;
+    const { id } = input;
 
     const existing = await this.getOneByOneFields({
-      fields: { uid },
+      fields: { id },
       checkIfExists: true,
     });
 
@@ -103,11 +103,11 @@ export class CategoryService extends BaseService<Category> {
 
   // CRUD
 
-  public async finish(input: GetOneTaskInput): Promise<Category> {
-    const { uid } = input;
+  public async finish(input: GetOneCategoryInput): Promise<Category> {
+    const { id } = input;
 
     const existing = await this.getOneByOneFields({
-      fields: { uid },
+      fields: { id },
       checkIfExists: true,
     });
 

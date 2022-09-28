@@ -5,7 +5,6 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  Index,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -25,7 +24,6 @@ export class Category extends BaseEntity {
     type: 'string',
     example: 'category name',
   })
-  @Index('idx_task_description')
   @Column({ type: 'varchar', length: 160, nullable: false })
   categoryName: string;
 

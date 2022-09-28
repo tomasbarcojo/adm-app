@@ -18,24 +18,24 @@ import { Category } from './category.entity';
 import { CategoryService } from './category.service';
 
 import { CreateCategoryInput } from './dto/create-category-input.dto';
-import { GetAllTasksInput } from './dto/get-all-categories-input.dto';
-import { GetOneTaskInput } from './dto/get-one-category-input.dto';
-import { UpdateTaskInput } from './dto/update-category-input.dto';
+import { GetAllCategoriesInput } from './dto/get-all-categories-input.dto';
+import { GetOneCategoryInput } from './dto/get-one-category-input.dto';
+import { UpdateCategoryInput } from './dto/update-category-input.dto';
 
-@ApiTags('tasks')
+@ApiTags('categories')
 @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
-@Controller('tasks')
+@Controller('categories')
 export class CategoryController {
   constructor(private readonly service: CategoryService) {}
 
   @ApiResponse({
     status: HttpStatus.CREATED,
-    description: 'successfully created task',
+    description: 'successfully created category',
     type: Category,
   })
   @ApiOperation({
-    summary: 'create a new task',
-    description: 'create a new task',
+    summary: 'create a new category',
+    description: 'create a new category',
   })
   @Post()
   async create(@Body() input: CreateCategoryInput): Promise<Category> {
@@ -44,71 +44,71 @@ export class CategoryController {
 
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'list of tasks',
+    description: 'list of categories',
     type: [Category],
   })
   @ApiOperation({
-    summary: 'get a list of tasks',
-    description: 'get a list of task, based on the conditions',
+    summary: 'get a list of categories',
+    description: 'get a list of category, based on the conditions',
   })
   @Get()
-  async getAll(@Query() input: GetAllTasksInput): Promise<Category[]> {
+  async getAll(@Query() input: GetAllCategoriesInput): Promise<Category[]> {
     return this.service.getAll(input);
   }
 
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'a task',
+    description: 'a category',
     type: Category,
   })
   @ApiOperation({
-    summary: 'get a task',
-    description: 'get a task, based on the uid',
+    summary: 'get a category',
+    description: 'get a category, based on the id',
   })
-  @Get('/:uid')
-  async getOne(@Param() input: GetOneTaskInput): Promise<Category> {
+  @Get('/:id')
+  async getOne(@Param() input: GetOneCategoryInput): Promise<Category> {
     return this.service.getOne(input);
   }
 
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'an updated task',
+    description: 'an updated category',
     type: Category,
   })
   @ApiOperation({
-    summary: 'update a task',
-    description: 'update a task, based on the uid',
+    summary: 'update a category',
+    description: 'update a category, based on the id',
   })
-  @Patch('/:uid')
-  async update(@Param() getOneInput: GetOneTaskInput, @Body() input: UpdateTaskInput): Promise<Category> {
+  @Patch('/:id')
+  async update(@Param() getOneInput: GetOneCategoryInput, @Body() input: UpdateCategoryInput): Promise<Category> {
     return this.service.update(getOneInput, input);
   }
 
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'a deleted task',
+    description: 'a deleted category',
     type: Category,
   })
   @ApiOperation({
-    summary: 'delete a task',
-    description: 'delete a task, based on the uid',
+    summary: 'delete a category',
+    description: 'delete a category, based on the id',
   })
-  @Delete('/:uid')
-  async delete(@Param() getOneInput: GetOneTaskInput): Promise<Category> {
+  @Delete('/:id')
+  async delete(@Param() getOneInput: GetOneCategoryInput): Promise<Category> {
     return this.service.delete(getOneInput);
   }
 
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'a finished task',
+    description: 'a finished category',
     type: Category,
   })
   @ApiOperation({
-    summary: 'finish a task',
-    description: 'finish a task, based on the uid',
+    summary: 'finish a category',
+    description: 'finish a category, based on the id',
   })
-  @Patch('/:uid/finish')
-  async finish(@Param() input: GetOneTaskInput): Promise<Category> {
-    return this.service.finish({ uid: input.uid });
+  @Patch('/:id/finish')
+  async finish(@Param() input: GetOneCategoryInput): Promise<Category> {
+    return this.service.finish({ id: input.id });
   }
 }

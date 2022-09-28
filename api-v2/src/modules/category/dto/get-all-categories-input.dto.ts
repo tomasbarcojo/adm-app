@@ -1,7 +1,7 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsNumberString, IsOptional, IsString } from 'class-validator';
 
-export class GetAllTasksInput {
+export class GetAllCategoriesInput {
   @ApiPropertyOptional({
     description: 'rows limit',
     type: 'number',

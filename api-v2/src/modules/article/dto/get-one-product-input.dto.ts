@@ -1,12 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsUUID } from 'class-validator';
+import { IsNumber } from 'class-validator';
 
-export class GetOneTaskInput {
+export class GetOneProductInput {
   @ApiProperty({
-    description: 'task uid',
-    type: 'string',
-    example: '5e9f8f6c-f8f4-4f0f-b8f8-f8f8f8f8f8f8',
+    description: 'category id',
+    type: 'number',
+    example: '1',
   })
-  @IsUUID()
-  readonly uid: string;
+  @IsNumber()
+  readonly id: number;
 }

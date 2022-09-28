@@ -9,14 +9,14 @@ import { ConfigModule } from '@nestjs/config';
 import appConfig from '../../config/app.config';
 import appConfigSchema from '../../config/app.schema';
 
-import { Task } from './category.entity';
+import { Task } from './task.entity';
 
-import { TaskService } from './category.service';
+import { TaskService } from './task.service';
 
-import { CreateTaskInput } from './dto/create-category-input.dto';
-import { GetOneTaskInput } from './dto/get-one-category-input.dto';
-import { GetAllTasksInput } from './dto/get-all-categories-input.dto';
-import { UpdateTaskInput } from './dto/update-category-input.dto';
+import { CreateTaskInput } from './dto/create-task-input.dto';
+import { GetOneTaskInput } from './dto/get-one-task-input.dto';
+import { GetAllTasksInput } from './dto/get-all-tasks-input.dto';
+import { UpdateTaskInput } from './dto/update-task-input.dto';
 
 const envPath = path.resolve(__dirname, '../../../.env.test');
 

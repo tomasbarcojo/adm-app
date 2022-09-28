@@ -4,10 +4,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import appConfig from '../../config/app.config';
 
-import { Task } from './category.entity';
+import { Task } from './task.entity';
 
-import { TaskService } from './category.service';
-import { TaskController } from './category.controller';
+import { TaskService } from './task.service';
+import { TaskController } from './task.controller';
 
 @Module({
   imports: [

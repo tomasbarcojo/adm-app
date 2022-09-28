@@ -13,105 +13,105 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { Product } from './product.entity';
+import { Task } from './task.entity';
 
-import { ProductService } from './product.service';
+import { TaskService } from './task.service';
 
-import { CreateProductInput } from './dto/create-product-input.dto';
-import { GetAllProductsInput } from './dto/get-all-products-input.dto';
-import { GetOneProductInput } from './dto/get-one-product-input.dto';
-import { UpdateProductInput } from './dto/update-product-input.dto';
+import { CreateTaskInput } from './dto/create-task-input.dto';
+import { GetAllTasksInput } from './dto/get-all-tasks-input.dto';
+import { GetOneTaskInput } from './dto/get-one-task-input.dto';
+import { UpdateTaskInput } from './dto/update-task-input.dto';
 
-@ApiTags('product')
+@ApiTags('tasks')
 @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
-@Controller('product')
-export class ProductController {
-  constructor(private readonly service: ProductService) {}
+@Controller('tasks')
+export class TaskController {
+  constructor(private readonly service: TaskService) {}
 
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'successfully created task',
-    type: Product,
+    type: Task,
   })
   @ApiOperation({
     summary: 'create a new task',
     description: 'create a new task',
   })
   @Post()
-  async create(@Body() input: CreateProductInput): Promise<Product> {
+  async create(@Body() input: CreateTaskInput): Promise<Task> {
     return this.service.create(input);
   }
 
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'list of tasks',
-    type: [Product],
+    type: [Task],
   })
   @ApiOperation({
     summary: 'get a list of tasks',
     description: 'get a list of task, based on the conditions',
   })
   @Get()
-  async getAll(@Query() input: GetAllProductsInput): Promise<Product[]> {
+  async getAll(@Query() input: GetAllTasksInput): Promise<Task[]> {
     return this.service.getAll(input);
   }
 
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'a task',
-    type: Product,
+    type: Task,
   })
   @ApiOperation({
     summary: 'get a task',
-    description: 'get a task, based on the id',
+    description: 'get a task, based on the uid',
   })
-  @Get('/:id')
-  async getOne(@Param() input: GetOneProductInput): Promise<Product> {
+  @Get('/:uid')
+  async getOne(@Param() input: GetOneTaskInput): Promise<Task> {
     return this.service.getOne(input);
   }
 
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'an updated task',
-    type: Product,
+    type: Task,
   })
   @ApiOperation({
     summary: 'update a task',
-    description: 'update a task, based on the id',
+    description: 'update a task, based on the uid',
   })
-  @Patch('/:id')
+  @Patch('/:uid')
   async update(
-    @Param() getOneInput: GetOneProductInput,
-    @Body() input: UpdateProductInput,
-  ): Promise<Product> {
+    @Param() getOneInput: GetOneTaskInput,
+    @Body() input: UpdateTaskInput,
+  ): Promise<Task> {
     return this.service.update(getOneInput, input);
   }
 
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'a deleted task',
-    type: Product,
+    type: Task,
   })
   @ApiOperation({
     summary: 'delete a task',
-    description: 'delete a task, based on the id',
+    description: 'delete a task, based on the uid',
   })
-  @Delete('/:id')
-  async delete(@Param() getOneInput: GetOneProductInput): Promise<Product> {
+  @Delete('/:uid')
+  async delete(@Param() getOneInput: GetOneTaskInput): Promise<Task> {
     return this.service.delete(getOneInput);
   }
 
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'a finished task',
-    type: Product,
+    type: Task,
   })
   @ApiOperation({
     summary: 'finish a task',
-    description: 'finish a task, based on the id',
+    description: 'finish a task, based on the uid',
   })
-  @Patch('/:id/finish')
-  async finish(@Param() input: GetOneProductInput): Promise<Product> {
-    return this.service.finish({ id: input.id });
+  @Patch('/:uid/finish')
+  async finish(@Param() input: GetOneTaskInput): Promise<Task> {
+    return this.service.finish({ uid: input.uid });
   }
 }
