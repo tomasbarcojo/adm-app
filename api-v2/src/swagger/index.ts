@@ -7,7 +7,7 @@ export function createdocument(app: INestApplication): OpenAPIObject {
     .setDescription('nest js API template.')
     .setVersion('1.0')
     .addTag('nestjs-api-template')
-    .addServer(`http://localhost:${process.env.PORT}`, 'Local')
+    .addServer(`http://localhost:${process.env.PORT}`, 'Local') // http://localhost:3003/docs
     .addServer(`https://beta.api.chiper.co/api-name`, 'Beta')
     .addServer(`https://staging.api.chiper.co/api-name`, 'Staging')
     .build();

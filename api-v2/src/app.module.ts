@@ -15,7 +15,7 @@ import { CommonModule } from './common/common.module';
 
 import { HealthController } from './health/health.controller';
 import { PubsubPocModule } from './modules/pubsub-poc/pubsub-poc.module';
-import { ProductModule } from './modules/article/product.module';
+import { ProductModule } from './modules/product/product.module';
 
 @Module({
   imports: [

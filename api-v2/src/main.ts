@@ -2,10 +2,7 @@ import helmet from 'fastify-helmet';
 
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
-import {
-  FastifyAdapter,
-  NestFastifyApplication,
-} from '@nestjs/platform-fastify';
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { SwaggerModule } from '@nestjs/swagger';
 
 import { AppModule } from './app.module';
@@ -14,36 +11,22 @@ import { AppModule } from './app.module';
 
 import { createdocument } from './swagger';
 
-import sdk from './common/traicing/autoTracing';
 import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
   // create nestjs app
-  const app = await NestFactory.create<NestFastifyApplication>(
-    AppModule,
-    new FastifyAdapter(),
-  );
+  const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
 
   // getting the config service
   const configService = app.get(ConfigService);
 
   // initialize the chiper logger
-  const loggingChiperProjectId = configService.get<string>(
-    'config.loggingChiper.projectId',
-  );
+  const loggingChiperProjectId = configService.get<string>('config.loggingChiper.projectId');
 
-  const loggingChiperService = configService.get<string>(
-    'config.loggingChiper.service',
-  );
+  const loggingChiperService = configService.get<string>('config.loggingChiper.service');
 
   // start telemetry
-  const activateTelemetrySDK = configService.get<string>(
-    'config.telemetry.activateSDK',
-  );
-
-  if (activateTelemetrySDK === 'true') {
-    sdk.start();
-  }
+  const activateTelemetrySDK = configService.get<string>('config.telemetry.activateSDK');
 
   // getting the port env var
   const PORT = configService.get<number>('config.app.port');

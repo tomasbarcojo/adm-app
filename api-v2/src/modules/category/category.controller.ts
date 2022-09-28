@@ -22,9 +22,9 @@ import { GetAllCategoriesInput } from './dto/get-all-categories-input.dto';
 import { GetOneCategoryInput } from './dto/get-one-category-input.dto';
 import { UpdateCategoryInput } from './dto/update-category-input.dto';
 
-@ApiTags('categories')
+@ApiTags('category')
 @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
-@Controller('categories')
+@Controller('category')
 export class CategoryController {
   constructor(private readonly service: CategoryService) {}
 

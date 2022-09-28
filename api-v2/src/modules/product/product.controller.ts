@@ -22,34 +22,34 @@ import { GetAllProductsInput } from './dto/get-all-products-input.dto';
 import { GetOneProductInput } from './dto/get-one-product-input.dto';
 import { UpdateProductInput } from './dto/update-product-input.dto';
 
-@ApiTags('product')
+@ApiTags('article')
 @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
-@Controller('product')
+@Controller('article')
 export class ProductController {
   constructor(private readonly service: ProductService) {}
 
   @ApiResponse({
     status: HttpStatus.CREATED,
-    description: 'successfully created task',
+    description: 'successfully created product',
     type: Product,
   })
   @ApiOperation({
-    summary: 'create a new task',
-    description: 'create a new task',
+    summary: 'create a new product',
+    description: 'create a new product',
   })
-  @Post()
+  @Post('/createArticle')
   async create(@Body() input: CreateProductInput): Promise<Product> {
     return this.service.create(input);
   }
 
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'list of tasks',
+    description: 'list of products',
     type: [Product],
   })
   @ApiOperation({
-    summary: 'get a list of tasks',
-    description: 'get a list of task, based on the conditions',
+    summary: 'get a list of products',
+    description: 'get a list of product, based on the conditions',
   })
   @Get()
   async getAll(@Query() input: GetAllProductsInput): Promise<Product[]> {
@@ -58,12 +58,26 @@ export class ProductController {
 
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'a task',
+    description: 'a product',
     type: Product,
   })
   @ApiOperation({
-    summary: 'get a task',
-    description: 'get a task, based on the id',
+    summary: 'get a product',
+    description: 'get a product, based on the id',
+  })
+  @Get('/supplier/:id')
+  async getAllBySupplier(@Param() input: GetOneProductInput): Promise<Product> {
+    return this.service.getOne(input);
+  }
+
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'a product',
+    type: Product,
+  })
+  @ApiOperation({
+    summary: 'get a product',
+    description: 'get a product, based on the id',
   })
   @Get('/:id')
   async getOne(@Param() input: GetOneProductInput): Promise<Product> {
@@ -72,29 +86,26 @@ export class ProductController {
 
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'an updated task',
+    description: 'an updated product',
     type: Product,
   })
   @ApiOperation({
-    summary: 'update a task',
-    description: 'update a task, based on the id',
+    summary: 'update a product',
+    description: 'update a product, based on the id',
   })
   @Patch('/:id')
-  async update(
-    @Param() getOneInput: GetOneProductInput,
-    @Body() input: UpdateProductInput,
-  ): Promise<Product> {
+  async update(@Param() getOneInput: GetOneProductInput, @Body() input: UpdateProductInput): Promise<Product> {
     return this.service.update(getOneInput, input);
   }
 
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'a deleted task',
+    description: 'a deleted product',
     type: Product,
   })
   @ApiOperation({
-    summary: 'delete a task',
-    description: 'delete a task, based on the id',
+    summary: 'delete a product',
+    description: 'delete a product, based on the id',
   })
   @Delete('/:id')
   async delete(@Param() getOneInput: GetOneProductInput): Promise<Product> {
@@ -103,12 +114,12 @@ export class ProductController {
 
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'a finished task',
+    description: 'a finished product',
     type: Product,
   })
   @ApiOperation({
-    summary: 'finish a task',
-    description: 'finish a task, based on the id',
+    summary: 'finish a product',
+    description: 'finish a product, based on the id',
   })
   @Patch('/:id/finish')
   async finish(@Param() input: GetOneProductInput): Promise<Product> {

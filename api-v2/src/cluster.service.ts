@@ -1,8 +1,7 @@
 import cluster from 'cluster';
 import * as os from 'os';
 
-import { Injectable } from '@nestjs/common';
-import { Logger } from 'logging-chiper';
+import { Injectable, Logger } from '@nestjs/common';
 
 const numCPUs = os.cpus().length;
 
@@ -13,7 +12,7 @@ export class ClusterService {
     const isDevEnvironment = process.env.NODE_ENV === 'development';
 
     if (cluster.isPrimary && isDevEnvironment) {
-      Logger.getInstance().log({
+      Logger.log({
         stt: 'undetermined',
         context: ClusterService.name,
         functionName: 'clusterize',
@@ -25,7 +24,7 @@ export class ClusterService {
       }
 
       cluster.on('exit', (worker, code, signal) => {
-        Logger.getInstance().log({
+        Logger.log({
           stt: 'undetermined',
           context: ClusterService.name,
           functionName: 'clusterize',
@@ -36,7 +35,7 @@ export class ClusterService {
       callback();
     }
 
-    Logger.getInstance().log({
+    Logger.log({
       stt: 'undetermined',
       context: ClusterService.name,
       functionName: 'clusterize',

@@ -158,10 +158,7 @@ describe('ProductService', () => {
         taskRepository.findOne.mockReturnValue(expectedTask);
         taskRepository.save.mockReturnValue(expectedTask);
 
-        const task = await service.update(
-          {} as GetOneTaskInput,
-          {} as UpdateTaskInput,
-        );
+        const task = await service.update({} as GetOneTaskInput, {} as UpdateTaskInput);
 
         expect(task).toEqual(expectedTask);
       });

@@ -51,9 +51,7 @@ export class ProductService extends BaseService<Product> {
   public async getAll(input: GetAllProductsInput): Promise<Product[]> {
     const { limit, skip, q } = input;
 
-    const query = this.productRepository
-      .createQueryBuilder('task')
-      .loadAllRelationIds();
+    const query = this.productRepository.createQueryBuilder('task').loadAllRelationIds();
 
     if (q)
       query.where('task.description like :q', {
@@ -67,10 +65,7 @@ export class ProductService extends BaseService<Product> {
     return items;
   }
 
-  public async update(
-    getOneInput: GetOneProductInput,
-    input: UpdateProductInput,
-  ): Promise<Product> {
+  public async update(getOneInput: GetOneProductInput, input: UpdateProductInput): Promise<Product> {
     const { id } = getOneInput;
 
     const existing = await this.getOneByOneFields({

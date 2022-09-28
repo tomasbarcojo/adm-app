@@ -158,10 +158,7 @@ describe('CategoryService', () => {
         categoryRepository.findOne.mockReturnValue(expectedCategory);
         categoryRepository.save.mockReturnValue(expectedCategory);
 
-        const category = await service.update(
-          {} as GetOneCategoryInput,
-          {} as UpdateCategoryInput,
-        );
+        const category = await service.update({} as GetOneCategoryInput, {} as UpdateCategoryInput);
 
         expect(category).toEqual(expectedCategory);
       });

@@ -10,10 +10,7 @@ import { CategoryService } from './category.service';
 import { CategoryController } from './category.controller';
 
 @Module({
-  imports: [
-    ConfigModule.forFeature(appConfig),
-    TypeOrmModule.forFeature([Category]),
-  ],
+  imports: [ConfigModule.forFeature(appConfig), TypeOrmModule.forFeature([Category])],
   providers: [CategoryService],
   exports: [CategoryService],
   controllers: [CategoryController],

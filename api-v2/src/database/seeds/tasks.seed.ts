@@ -24,12 +24,10 @@ export const SeedTasksFactory = {
   seed: async (application: INestApplicationContext) => {
     // Obtengo el servicio con el que voy a operar
     // const service = application.get(TaskService);
-
     // for (const item of items) {
     //   const existing = await service.getOneByOneFields({
     //     fields: { description: item.description, type: item.type },
     //   });
-
     //   if (!existing) {
     //     Logger.log({
     //       stt: 'undetermined',
@@ -37,21 +35,17 @@ export const SeedTasksFactory = {
     //       functionName: 'seed',
     //       message: 'creating...',
     //     });
-
     //     await service.create({
     //       ...item,
     //     });
-
     //     continue;
     //   }
-
     //   Logger.log({
     //     stt: 'undetermined',
     //     context: 'SeedTasksFactory',
     //     functionName: 'seed',
     //     message: 'updating...',
     //   });
-
     //   await service.update(
     //     {
     //       uid: existing.uid,

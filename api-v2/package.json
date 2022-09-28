@@ -10,7 +10,7 @@
     "npm": "8.x"
   },
   "scripts": {
-    "postinstall": "npx husky install",
+    "postinstall": "cd .. && npx husky install",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -18,7 +18,8 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "lint:eslint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "lint:prettier": "prettier --check .",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch --detectOpenHandles",
     "test:cov": "jest --coverage",
@@ -33,10 +34,6 @@
     "seed:run": "npx ts-node ./src/database/seeds"
   },
   "dependencies": {
-    "@google-cloud/logging": "9.8.0",
-    "@google-cloud/logging-winston": "4.1.2",
-    "@google-cloud/opentelemetry-cloud-trace-exporter": "1.1.0",
-    "@google-cloud/pubsub": "^2.18.4",
     "@nestjs/axios": "0.0.4",
     "@nestjs/common": "8.2.5",
     "@nestjs/config": "1.1.6",
@@ -55,7 +52,6 @@
     "i": "0.3.7",
     "joi": "17.5.0",
     "k6": "^0.0.0",
-    "logging-chiper": "2.0.0",
     "mysql2": "2.3.3",
     "nanoid": "3.1.32",
     "npm": "8.3.1",
@@ -93,6 +89,12 @@
     "ts-node": "10.4.0",
     "tsconfig-paths": "3.12.0",
     "typescript": "4.5.4"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "tsc && lint-staged"
+    }
   },
   "jest": {
     "moduleFileExtensions": [

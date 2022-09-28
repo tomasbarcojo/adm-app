@@ -10,10 +10,7 @@ import { ProductService } from './product.service';
 import { ProductController } from './product.controller';
 
 @Module({
-  imports: [
-    ConfigModule.forFeature(appConfig),
-    TypeOrmModule.forFeature([Product]),
-  ],
+  imports: [ConfigModule.forFeature(appConfig), TypeOrmModule.forFeature([Product])],
   providers: [ProductService],
   exports: [ProductService],
   controllers: [ProductController],

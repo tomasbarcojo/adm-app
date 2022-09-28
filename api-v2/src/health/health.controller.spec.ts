@@ -1,11 +1,7 @@
 import * as path from 'path';
 
 import { ConfigModule } from '@nestjs/config';
-import {
-  HealthCheckService,
-  HttpHealthIndicator,
-  TypeOrmHealthIndicator,
-} from '@nestjs/terminus';
+import { HealthCheckService, HttpHealthIndicator, TypeOrmHealthIndicator } from '@nestjs/terminus';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import appConfig from '../config/app.config';

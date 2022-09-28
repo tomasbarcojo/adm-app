@@ -60,7 +60,7 @@ export class Product extends BaseEntity {
   })
   @Column({ type: 'int', nullable: false })
   stockAlert: number;
-  
+
   @ApiProperty({
     description: 'the image of the product',
     type: 'string',

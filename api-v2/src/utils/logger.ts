@@ -59,10 +59,7 @@ export class Logger {
   public static error(input: ErrorInput) {
     const { message, error, ...res } = input;
 
-    const errorObj = Object.getOwnPropertyNames(error).reduce(
-      (acc, key) => ({ ...acc, [key]: error[key] }),
-      {},
-    );
+    const errorObj = Object.getOwnPropertyNames(error).reduce((acc, key) => ({ ...acc, [key]: error[key] }), {});
 
     this.logger.error(message, {
       ...res,
