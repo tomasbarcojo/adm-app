@@ -13,8 +13,8 @@ import { useEffect } from 'react';
 const App = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  var user = '';
-  var token = '';
+  let user = '';
+  let token = '';
   if (localStorage.length > 0) {
     user = JSON.parse(localStorage.getItem('userData'))
     token = JSON.parse(localStorage.getItem('token'));

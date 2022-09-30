@@ -7,8 +7,6 @@ import { SwaggerModule } from '@nestjs/swagger';
 
 import { AppModule } from './app.module';
 
-// import { ClusterService } from './cluster.service';
-
 import { createdocument } from './swagger';
 
 import { Logger } from '@nestjs/common';
@@ -17,16 +15,11 @@ async function bootstrap() {
   // create nestjs app
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
 
+  // enable cors
+  app.enableCors();
+
   // getting the config service
   const configService = app.get(ConfigService);
-
-  // initialize the chiper logger
-  const loggingChiperProjectId = configService.get<string>('config.loggingChiper.projectId');
-
-  const loggingChiperService = configService.get<string>('config.loggingChiper.service');
-
-  // start telemetry
-  const activateTelemetrySDK = configService.get<string>('config.telemetry.activateSDK');
 
   // getting the port env var
   const PORT = configService.get<number>('config.app.port');
@@ -55,10 +48,7 @@ async function bootstrap() {
 
   // starting the server
   await app.listen(PORT, '0.0.0.0', () => {
-    Logger.log({
-      message: `app listening at ${PORT} in ${ENV}`,
-      context: 'main.ts',
-    });
+    Logger.log(`app listening at ${PORT} in ${ENV}`, 'main.ts');
   });
 }
 

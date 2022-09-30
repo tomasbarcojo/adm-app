@@ -11,6 +11,7 @@
     "axios": "^0.21.1",
     "chartist": "0.10.1",
     "date-fns": "^2.0.0-alpha.27",
+    "dotenv": "^16.0.2",
     "infinite-scroll": "^4.0.1",
     "material-table": "^1.69.3",
     "notistack": "^1.0.3",

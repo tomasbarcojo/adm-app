@@ -15,6 +15,7 @@ import { CommonModule } from './common/common.module';
 
 import { HealthController } from './health/health.controller';
 import { ProductModule } from './modules/product/product.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -46,8 +47,9 @@ import { ProductModule } from './modules/product/product.module';
 
     HttpModule,
 
-    // Task Module (just a refence module)
+    // Modules
     ProductModule,
+    UserModule
   ],
   controllers: [AppController, HealthController],
   providers: [AppService],

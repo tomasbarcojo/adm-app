@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -49,20 +49,29 @@ export class ProductService extends BaseService<Product> {
   }
 
   public async getAll(input: GetAllProductsInput): Promise<Product[]> {
-    const { limit, skip, q } = input;
+    try {
+      const { limit, skip, q } = input;
+      const query = this.productRepository.createQueryBuilder().loadAllRelationIds();
 
-    const query = this.productRepository.createQueryBuilder('task').loadAllRelationIds();
+      if (q)
+        query
+          .where('articleName like :q', {
+            q: `%${q}%`,
+          })
+          .andWhere('id = :q', { q: `%${q}%` });
 
-    if (q)
-      query.where('task.description like :q', {
-        q: `%${q}%`,
-      });
+      query.limit(limit || 10).skip(skip);
 
-    query.limit(limit || 10).skip(skip);
+      const products = await query.getMany();
 
-    const items = await query.getMany();
+      if (products.length === 0) {
+        throw new NotFoundException('No products');
+      }
 
-    return items;
+      return products;
+    } catch (error) {
+      return error;
+    }
   }
 
   public async update(getOneInput: GetOneProductInput, input: UpdateProductInput): Promise<Product> {
