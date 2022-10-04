@@ -23,8 +23,6 @@ import { GetOneCategoryInput } from './dto/get-one-user-input.dto';
 import { UpdateCategoryInput } from './dto/update-user-input.dto';
 import { LoginUserInput } from './dto/login-user-input.dto';
 
-import * as bcrypt from 'bcrypt';
-
 @ApiTags('user')
 @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
 @Controller('user')
