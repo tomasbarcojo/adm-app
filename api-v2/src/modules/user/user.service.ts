@@ -1,7 +1,7 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { IsNull, Not, Repository } from 'typeorm';
 
 import { BaseService } from '../../base/base.service';
 
@@ -10,16 +10,14 @@ import appConfig from '../../config/app.config';
 import { User } from './user.entity';
 
 import { CreateUserInput } from './dto/create-user-input.dto';
-import { GetOneCategoryInput } from './dto/get-one-user-input.dto';
+import { GetOneUserInput } from './dto/get-one-user-input.dto';
 import { GetAllCategoriesInput } from './dto/get-all-user-input.dto';
-import { UpdateCategoryInput } from './dto/update-user-input.dto';
+import { UpdateUserInput } from './dto/update-user-input.dto';
 import { LoginUserInput } from './dto/login-user-input.dto';
 
 @Injectable()
 export class UserService extends BaseService<User> {
   constructor(
-    @Inject(appConfig.KEY)
-    private readonly appConfiguration: ConfigType<typeof appConfig>,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
   ) {
@@ -34,9 +32,9 @@ export class UserService extends BaseService<User> {
       email,
     });
     if (existing) {
-      throw new NotFoundException(`User already exists`)
+      throw new NotFoundException(`User already exists`);
     }
-    
+
     const created = this.userRepository.create({
       ...input,
     });
@@ -46,11 +44,9 @@ export class UserService extends BaseService<User> {
     return saved;
   }
 
-  public async getOne(input: GetOneCategoryInput): Promise<User | undefined> {
-    const { id } = input;
-
+  public async getOne(input: GetOneUserInput): Promise<User | undefined> {
     const existing = await this.getOneByOneFields({
-      fields: { id },
+      fields: input,
       checkIfExists: false,
     });
 
@@ -74,7 +70,7 @@ export class UserService extends BaseService<User> {
     return items;
   }
 
-  public async update(getOneInput: GetOneCategoryInput, input: UpdateCategoryInput): Promise<User> {
+  public async update(getOneInput: GetOneUserInput, input: UpdateUserInput): Promise<User> {
     const { id } = getOneInput;
 
     const existing = await this.getOneByOneFields({
@@ -112,7 +108,7 @@ export class UserService extends BaseService<User> {
 
   // CRUD
 
-  public async finish(input: GetOneCategoryInput): Promise<User> {
+  public async finish(input: GetOneUserInput): Promise<User> {
     const { id } = input;
 
     const existing = await this.getOneByOneFields({
@@ -140,11 +136,32 @@ export class UserService extends BaseService<User> {
       username,
     });
     if (!existing) {
-      throw new NotFoundException(`User doesn't exist`)
+      throw new NotFoundException(`User doesn't exist`);
     }
     // const isMatch = await bcrypt.compare(password, existing);
     return {
       ...existing,
+    } as User;
+  }
+
+  public async updateRefreshToken(getOneInput: GetOneUserInput, input: UpdateUserInput): Promise<User> {
+    const { id } = getOneInput;
+
+    const existing = await this.getOneByOneFields({
+      fields: { id, refreshToken: Not(IsNull()) },
+      checkIfExists: true,
+    });
+
+    const preloaded = await this.userRepository.preload({
+      id: existing.id,
+      ...input,
+    });
+
+    const saved = await this.userRepository.save(preloaded);
+
+    return {
+      ...existing,
+      ...saved,
     } as User;
   }
 }

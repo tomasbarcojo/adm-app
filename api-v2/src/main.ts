@@ -9,7 +9,7 @@ import { AppModule } from './app.module';
 
 import { createdocument } from './swagger';
 
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   // create nestjs app
@@ -17,6 +17,9 @@ async function bootstrap() {
 
   // enable cors
   app.enableCors();
+
+  // global endpoint validations with class-validator
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
 
   // getting the config service
   const configService = app.get(ConfigService);

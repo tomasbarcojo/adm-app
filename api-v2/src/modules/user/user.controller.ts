@@ -19,12 +19,11 @@ import { UserService } from './user.service';
 
 import { CreateUserInput } from './dto/create-user-input.dto';
 import { GetAllCategoriesInput } from './dto/get-all-user-input.dto';
-import { GetOneCategoryInput } from './dto/get-one-user-input.dto';
-import { UpdateCategoryInput } from './dto/update-user-input.dto';
+import { GetOneUserInput } from './dto/get-one-user-input.dto';
+import { UpdateUserInput } from './dto/update-user-input.dto';
 import { LoginUserInput } from './dto/login-user-input.dto';
 
 @ApiTags('user')
-@UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
 @Controller('user')
 export class UserController {
   constructor(private readonly service: UserService) {}
@@ -81,7 +80,7 @@ export class UserController {
     description: 'get a user, based on the id',
   })
   @Get('/:id')
-  async getOne(@Param() input: GetOneCategoryInput): Promise<User> {
+  async getOne(@Param() input: GetOneUserInput): Promise<User> {
     return this.service.getOne(input);
   }
 
@@ -95,7 +94,7 @@ export class UserController {
     description: 'update a user, based on the id',
   })
   @Patch('/:id')
-  async update(@Param() getOneInput: GetOneCategoryInput, @Body() input: UpdateCategoryInput): Promise<User> {
+  async update(@Param() getOneInput: GetOneUserInput, @Body() input: UpdateUserInput): Promise<User> {
     return this.service.update(getOneInput, input);
   }
 
@@ -109,7 +108,7 @@ export class UserController {
     description: 'delete a user, based on the id',
   })
   @Delete('/:id')
-  async delete(@Param() getOneInput: GetOneCategoryInput): Promise<User> {
+  async delete(@Param() getOneInput: GetOneUserInput): Promise<User> {
     return this.service.delete(getOneInput);
   }
 
@@ -123,7 +122,7 @@ export class UserController {
     description: 'finish a user, based on the id',
   })
   @Patch('/:id/finish')
-  async finish(@Param() input: GetOneCategoryInput): Promise<User> {
+  async finish(@Param() input: GetOneUserInput): Promise<User> {
     return this.service.finish({ id: input.id });
   }
 }

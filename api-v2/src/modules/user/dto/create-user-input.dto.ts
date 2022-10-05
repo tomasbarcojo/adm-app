@@ -39,11 +39,20 @@ export class CreateUserInput {
   readonly username: string;
 
   @ApiProperty({
-    description: 'the password of the user',
+    description: 'the password of the user (hashed)',
     type: 'string',
     example: '',
   })
   @Length(1, 255)
   @IsString()
   readonly password: string;
+
+  @ApiProperty({
+    description: 'the refresh token of the user (hashed)',
+    type: 'string',
+    example: '',
+  })
+  @Length(1, 255)
+  @IsString()
+  readonly refreshToken: string;
 }

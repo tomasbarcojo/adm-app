@@ -16,6 +16,9 @@ import { CommonModule } from './common/common.module';
 import { HealthController } from './health/health.controller';
 import { ProductModule } from './modules/product/product.module';
 import { UserModule } from './modules/user/user.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { AtGuard } from './common/guards/at.guard';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -48,10 +51,17 @@ import { UserModule } from './modules/user/user.module';
     HttpModule,
 
     // Modules
+    AuthModule,
     ProductModule,
-    UserModule
+    UserModule,
   ],
   controllers: [AppController, HealthController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: AtGuard,
+    },
+  ],
 })
 export class AppModule {}

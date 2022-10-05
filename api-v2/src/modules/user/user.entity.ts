@@ -48,16 +48,24 @@ export class User extends BaseEntity {
     type: 'string',
     example: 'tomasbarcojo',
   })
-  @Column({ type: 'varchar', length: 16, nullable: false })
+  @Column({ type: 'varchar', length: 16, nullable: false, unique: true })
   username: string;
 
   @ApiProperty({
-    description: 'the password of the user',
+    description: 'the password of the user (hashed)',
     type: 'string',
     example: '',
   })
-  @Column({ type: 'varchar', length: 255, nullable: false })
+  @Column({ type: 'text', nullable: false })
   password: string;
+
+  @ApiProperty({
+    description: 'the refresh token of the user (hashed)',
+    type: 'string',
+    example: '',
+  })
+  @Column({ type: 'text', nullable: true })
+  refreshToken: string;
 
   @ApiProperty({
     description: 'the date of creation of the user',

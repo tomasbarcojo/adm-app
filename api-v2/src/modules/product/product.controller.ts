@@ -23,7 +23,6 @@ import { GetOneProductInput } from './dto/get-one-product-input.dto';
 import { UpdateProductInput } from './dto/update-product-input.dto';
 
 @ApiTags('article')
-@UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
 @Controller('article')
 export class ProductController {
   constructor(private readonly service: ProductService) {}

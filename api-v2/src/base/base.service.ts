@@ -14,7 +14,7 @@ export class BaseService<Entity extends BaseEntity> {
       where: { ...fields },
       relations,
     });
-
+    
     if (!existing && checkIfExists) {
       const values = Object.keys(fields)
         .map((key) => `${key} = ${typeof fields[key] === 'object' && fields[key] ? fields[key].id : fields[key]}`)
