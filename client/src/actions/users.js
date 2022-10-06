@@ -6,7 +6,7 @@ export const userLogin =
   (data, history, keepLogged, enqueueSnackbar, closeSnackbar) =>
   async (dispatch) => {
     try {
-      await fetch(`${REACT_APP_URL_API}/user/login`, {
+      await fetch(`${REACT_APP_URL_API}/auth/local/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,11 +44,11 @@ export const userLogin =
           } else if (response.status === 200) {
             if (keepLogged) {
               localStorage.setItem("userData", JSON.stringify(response.user));
-              localStorage.setItem("token", JSON.stringify(response.token));
+              localStorage.setItem("access_token", JSON.stringify(response.access_token));
               localStorage.setItem("logged", true);
             } else {
               sessionStorage.setItem("userData", JSON.stringify(response.user));
-              sessionStorage.setItem("token", JSON.stringify(response.token));
+              sessionStorage.setItem("access_token", JSON.stringify(response.access_token));
               sessionStorage.setItem("logged", true);
             }
             dispatch({
@@ -70,6 +70,18 @@ export const userLogin =
             history.push("/admin/dashboard");
           } else {
             Swal.fire("Something went wrong :(", "", "error");
+            enqueueSnackbar(`Something went wrong :(`, {
+              variant: "error",
+              preventDuplicate: false,
+              action: (key) => (
+                <button
+                  className="notistackButton"
+                  onClick={() => closeSnackbar(key)}
+                >
+                  X
+                </button>
+              ),
+            });
           }
         });
     } catch (err) {
