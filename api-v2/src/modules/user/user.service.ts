@@ -1,11 +1,8 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Not, Repository } from 'typeorm';
 
 import { BaseService } from '../../base/base.service';
-
-import appConfig from '../../config/app.config';
 
 import { User } from './user.entity';
 
@@ -32,7 +29,7 @@ export class UserService extends BaseService<User> {
       email,
     });
     if (existing) {
-      throw new NotFoundException(`User already exists`);
+      throw new BadRequestException(`User already exists`);
     }
 
     const created = this.userRepository.create({

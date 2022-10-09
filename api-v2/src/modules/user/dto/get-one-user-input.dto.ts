@@ -1,14 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsOptional, IsString, ValidateIf } from 'class-validator';
+import { IsOptional, IsString, ValidateIf } from 'class-validator';
 
 export class GetOneUserInput {
   @ApiProperty({
     description: 'user id',
-    type: 'number',
+    type: 'string',
     example: '1',
   })
   @IsOptional()
-  @IsNumber()
+  @IsString()
   readonly id?: number;
 
   @ApiProperty({
@@ -16,17 +16,17 @@ export class GetOneUserInput {
     type: 'string',
     example: '1',
   })
-  @ValidateIf(o => !o.username || o.email)
+  @ValidateIf((o) => !o.username || o.email)
   @IsOptional()
   @IsString()
   readonly email?: string;
-  
+
   @ApiProperty({
     description: 'user username',
     type: 'string',
     example: '1',
   })
-  @ValidateIf(o => !o.email || o.username)
+  @ValidateIf((o) => !o.email || o.username)
   @IsOptional()
   @IsString()
   readonly username?: string;
