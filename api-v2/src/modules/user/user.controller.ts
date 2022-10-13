@@ -58,11 +58,11 @@ export class UserController {
 
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'list of categories',
+    description: 'list of users',
     type: [User],
   })
   @ApiOperation({
-    summary: 'get a list of categories',
+    summary: 'get a list of users',
     description: 'get a list of user, based on the conditions',
   })
   @Get()

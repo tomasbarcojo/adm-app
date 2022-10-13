@@ -13,14 +13,18 @@ export class AuthService {
   constructor(private userService: UserService, private jwtService: JwtService, private config: ConfigService) {}
 
   async signupLocal(dto: CreateUserInput): Promise<Tokens> {
-    const hashedPassword = await argon.hash(dto.password);
+    try {
+      const hashedPassword = await argon.hash(dto.password);
 
-    const user = await this.userService.create({ ...dto, password: hashedPassword });
+      const user = await this.userService.create({ ...dto, password: hashedPassword });
 
-    const tokens = await this.getTokens(user.id, user.email, user.username);
-    await this.updateRtHash(user.id, tokens.refresh_token);
+      const tokens = await this.getTokens(user.id, user.email, user.username);
+      await this.updateRtHash(user.id, tokens.refresh_token);
 
-    return tokens;
+      return { ...user, ...tokens };
+    } catch (error) {
+      return error;
+    }
   }
 
   async signinLocal(dto: AuthDto): Promise<Tokens> {
@@ -64,17 +68,17 @@ export class AuthService {
     const jwtPayload: JwtPayload = {
       id: userId,
       email: email,
-      username: username
+      username: username,
     };
 
     const [at, rt] = await Promise.all([
       this.jwtService.signAsync(jwtPayload, {
         secret: this.config.get<string>('AT_SECRET'),
-        expiresIn: '15m',
+        expiresIn: '1m',
       }),
       this.jwtService.signAsync(jwtPayload, {
         secret: this.config.get<string>('RT_SECRET'),
-        expiresIn: '7d',
+        expiresIn: '1d',
       }),
     ]);
 

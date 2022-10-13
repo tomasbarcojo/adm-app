@@ -92,40 +92,74 @@ export const userLogin =
 export const addUser =
   (user, history, enqueueSnackbar, closeSnackbar) => async (dispatch) => {
     try {
-      await fetch(`${REACT_APP_URL_API}/user/createuser`, {
+      // await fetch(`${REACT_APP_URL_API}/auth/local/signup`, {
+      //   method: "POST",
+      //   body: JSON.stringify(user),
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // })
+      //   .then((data) => {
+      //     data.json();
+      //   })
+      //   .then((res) => {
+      //     console.log(res.status);
+          // if (res.status === 400) {
+          //   Swal.fire("User already exist", "", "error");
+          // } else if (res.status === 201) {
+          //   localStorage.setItem("userData", JSON.stringify(res.newUser));
+          //   dispatch({
+          //     type: "CREATE_USER",
+          //     payload: res.newUser,
+          //   });
+          //   enqueueSnackbar("Te has registrado con exito", {
+          //     variant: "success",
+          //     action: (key) => (
+          //       <button
+          //         className="notistackButton"
+          //         onClick={() => closeSnackbar(key)}
+          //       >
+          //         X
+          //       </button>
+          //     ),
+          //   });
+          //   history.push("/admin/dashboard");
+          // }
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
+      const res = await fetch(`${REACT_APP_URL_API}/auth/local/signup`, {
         method: "POST",
         body: JSON.stringify(user),
         headers: {
           "Content-Type": "application/json",
         },
-      })
-        .then((data) => data.json())
-        .then((res) => {
-          if (res.status === 400) {
-            Swal.fire("User already exist", "", "error");
-          } else if (res.status === 201) {
-            localStorage.setItem("userData", JSON.stringify(res.newUser));
-            dispatch({
-              type: "CREATE_USER",
-              payload: res.newUser,
-            });
-            enqueueSnackbar("Te has registrado con exito", {
-              variant: "success",
-              action: (key) => (
-                <button
-                  className="notistackButton"
-                  onClick={() => closeSnackbar(key)}
-                >
-                  X
-                </button>
-              ),
-            });
-            history.push("/admin/dashboard");
-          }
-        })
-        .catch((error) => {
-          console.log(error);
+      });
+      
+      const result = await res.json();
+
+      if (res.status === 400) {
+        Swal.fire("User already exist", "", "error");
+      } else if (res.status === 201) {
+        localStorage.setItem("userData", JSON.stringify(result));
+        dispatch({
+          type: "CREATE_USER",
+          payload: result,
         });
+        enqueueSnackbar("Te has registrado con exito", {
+          variant: "success",
+          action: (key) => (
+            <button
+              className="notistackButton"
+              onClick={() => closeSnackbar(key)}
+            >
+              X
+            </button>
+          ),
+        });
+        history.push("/admin/dashboard");
+      }
     } catch (err) {
       console.log(err);
     }

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, Length } from 'class-validator';
+import { IsOptional, IsString, Length } from 'class-validator';
 
 export class CreateUserInput {
   @ApiProperty({
@@ -54,5 +54,6 @@ export class CreateUserInput {
   })
   @Length(1, 255)
   @IsString()
-  readonly refreshToken: string;
+  @IsOptional()
+  readonly refreshToken?: string;
 }
