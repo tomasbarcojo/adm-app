@@ -1,46 +1,32 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
-import { GetCurrentUserId } from 'src/common/decorators/get-current-user-id.decorator';
-import { GetCurrentUser } from 'src/common/decorators/get-current-user.decorator';
-import { Public } from 'src/common/decorators/public.decorator';
-import { RtGuard } from 'src/common/guards/rt.guard';
-import { CreateUserInput } from '../user/dto/create-user-input.dto';
-
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from './jwt-auth.guard';
+import { LocalAuthGuard } from './local-auth.guard';
 import { AuthService } from './auth.service';
-import { AuthDto } from './dto/auth.dto';
-import { Tokens } from './types/tokens.type';
+import { Public } from 'src/common/decorators/public.decorator';
+import { CreateUserInput } from '../user/dto/create-user-input.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Public()
-  @Post('local/signup')
   @HttpCode(HttpStatus.CREATED)
-  signupLocal(@Body() dto: CreateUserInput): Promise<Tokens> {
+  @Post('local/signup')
+  signupLocal(@Body() dto: CreateUserInput): Promise<any> {
     return this.authService.signupLocal(dto);
   }
 
   @Public()
+  @UseGuards(LocalAuthGuard)
+  @HttpCode(HttpStatus.OK)
   @Post('local/signin')
-  @HttpCode(HttpStatus.OK)
-  signinLocal(@Body() dto: AuthDto): Promise<Tokens> {
-    return this.authService.signinLocal(dto);
+  login(@Request() req): any {
+    return this.authService.login(req.user);
   }
 
-  @Post('logout')
-  @HttpCode(HttpStatus.OK)
-  logout(@GetCurrentUserId() userId: number): Promise<boolean> {
-    return this.authService.logout(userId);
-  }
-
-  @Public()
-  @UseGuards(RtGuard)
-  @Post('refresh')
-  @HttpCode(HttpStatus.OK)
-  refreshTokens(
-    @GetCurrentUserId() userId: number,
-    @GetCurrentUser('refreshToken') refreshToken: string,
-  ): Promise<Tokens> {
-    return this.authService.refreshTokens(userId, refreshToken);
+  @UseGuards(JwtAuthGuard)
+  @Get('protected')
+  getHello(@Request() req): string {
+    return req.user;
   }
 }

@@ -16,9 +16,9 @@ import { CommonModule } from './common/common.module';
 import { HealthController } from './health/health.controller';
 import { ProductModule } from './modules/product/product.module';
 import { UserModule } from './modules/user/user.module';
-import { AuthModule } from './modules/auth/auth.module';
-import { AtGuard } from './common/guards/at.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { AuthModule } from './modules/auth/auth.module';
+import { JwtAuthGuard } from './modules/auth/jwt-auth.guard';
 
 @Module({
   imports: [
@@ -60,7 +60,7 @@ import { APP_GUARD } from '@nestjs/core';
     AppService,
     {
       provide: APP_GUARD,
-      useClass: AtGuard,
+      useClass: JwtAuthGuard,
     },
   ],
 })

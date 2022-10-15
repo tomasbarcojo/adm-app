@@ -60,14 +60,6 @@ export class User extends BaseEntity {
   password: string;
 
   @ApiProperty({
-    description: 'the refresh token of the user (hashed)',
-    type: 'string',
-    example: '',
-  })
-  @Column({ type: 'text', nullable: true })
-  refreshToken: string;
-
-  @ApiProperty({
     description: 'the date of creation of the user',
     type: 'string',
     example: '2020-01-01T00:00:00.000Z',

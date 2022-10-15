@@ -2,7 +2,7 @@ import Swal from "sweetalert2";
 import "../App.css";
 const { REACT_APP_URL_API } = process.env;
 
-export const userLogin =
+export const userLoginOld =
   (data, history, keepLogged, enqueueSnackbar, closeSnackbar) =>
   async (dispatch) => {
     try {
@@ -44,11 +44,17 @@ export const userLogin =
           } else if (response.status === 200) {
             if (keepLogged) {
               localStorage.setItem("userData", JSON.stringify(response.user));
-              localStorage.setItem("access_token", JSON.stringify(response.access_token));
+              localStorage.setItem(
+                "access_token",
+                JSON.stringify(response.access_token)
+              );
               localStorage.setItem("logged", true);
             } else {
               sessionStorage.setItem("userData", JSON.stringify(response.user));
-              sessionStorage.setItem("access_token", JSON.stringify(response.access_token));
+              sessionStorage.setItem(
+                "access_token",
+                JSON.stringify(response.access_token)
+              );
               sessionStorage.setItem("logged", true);
             }
             dispatch({
@@ -89,46 +95,98 @@ export const userLogin =
     }
   };
 
+export const userLogin =
+  (data, history, keepLogged, enqueueSnackbar, closeSnackbar) =>
+  async (dispatch) => {
+    const response = await fetch(`${REACT_APP_URL_API}/auth/local/signin`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+
+    if (response.status === 401) {
+      enqueueSnackbar(`El usuario o contraseña son inválidos`, {
+        variant: "error",
+        preventDuplicate: false,
+        action: (key) => (
+          <button
+            className="notistackButton"
+            onClick={() => closeSnackbar(key)}
+          >
+            X
+          </button>
+        ),
+      });
+    } else if (response.status === 400) {
+      enqueueSnackbar(`El usuario no existe, regístrese`, {
+        variant: "error",
+        preventDuplicate: false,
+        action: (key) => (
+          <button
+            className="notistackButton"
+            onClick={() => closeSnackbar(key)}
+          >
+            X
+          </button>
+        ),
+      });
+    } else if (response.status === 200) {
+      if (keepLogged) {
+        localStorage.setItem("userData", JSON.stringify(result.user));
+        localStorage.setItem(
+          "access_token",
+          JSON.stringify(result.access_token)
+        );
+        localStorage.setItem("logged", true);
+      } else {
+        sessionStorage.setItem("userData", JSON.stringify(result.user));
+        sessionStorage.setItem(
+          "access_token",
+          JSON.stringify(result.access_token)
+        );
+        sessionStorage.setItem("logged", true);
+      }
+      dispatch({
+        type: "LOGIN_USER",
+        payload: result.user,
+      });
+      enqueueSnackbar(`Bienvenido, ${result.user.firstName}`, {
+        variant: "success",
+        preventDuplicate: true,
+        action: (key) => (
+          <button
+            className="notistackButton"
+            onClick={() => closeSnackbar(key)}
+          >
+            X
+          </button>
+        ),
+      });
+      history.push("/admin/dashboard");
+    } else {
+      Swal.fire("Something went wrong :(", "", "error");
+      enqueueSnackbar(`Something went wrong :(`, {
+        variant: "error",
+        preventDuplicate: false,
+        action: (key) => (
+          <button
+            className="notistackButton"
+            onClick={() => closeSnackbar(key)}
+          >
+            X
+          </button>
+        ),
+      });
+    }
+  };
+
 export const addUser =
   (user, history, enqueueSnackbar, closeSnackbar) => async (dispatch) => {
     try {
-      // await fetch(`${REACT_APP_URL_API}/auth/local/signup`, {
-      //   method: "POST",
-      //   body: JSON.stringify(user),
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // })
-      //   .then((data) => {
-      //     data.json();
-      //   })
-      //   .then((res) => {
-      //     console.log(res.status);
-          // if (res.status === 400) {
-          //   Swal.fire("User already exist", "", "error");
-          // } else if (res.status === 201) {
-          //   localStorage.setItem("userData", JSON.stringify(res.newUser));
-          //   dispatch({
-          //     type: "CREATE_USER",
-          //     payload: res.newUser,
-          //   });
-          //   enqueueSnackbar("Te has registrado con exito", {
-          //     variant: "success",
-          //     action: (key) => (
-          //       <button
-          //         className="notistackButton"
-          //         onClick={() => closeSnackbar(key)}
-          //       >
-          //         X
-          //       </button>
-          //     ),
-          //   });
-          //   history.push("/admin/dashboard");
-          // }
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
       const res = await fetch(`${REACT_APP_URL_API}/auth/local/signup`, {
         method: "POST",
         body: JSON.stringify(user),
@@ -136,7 +194,7 @@ export const addUser =
           "Content-Type": "application/json",
         },
       });
-      
+
       const result = await res.json();
 
       if (res.status === 400) {
@@ -187,6 +245,7 @@ export const resetPassword = (userId, token) => async (dispatch) => {
 export const userLogout = (history) => async (dispatch) => {
   try {
     localStorage.clear();
+    sessionStorage.clear();
     dispatch({
       type: "USER_LOGOUT",
     });

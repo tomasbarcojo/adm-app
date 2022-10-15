@@ -125,40 +125,4 @@ export class UserService extends BaseService<User> {
       ...saved,
     } as User;
   }
-
-  public async login(input: LoginUserInput): Promise<User> {
-    const { username, password } = input;
-
-    const existing = await this.userRepository.findOne({
-      username,
-    });
-    if (!existing) {
-      throw new NotFoundException(`User doesn't exist`);
-    }
-    // const isMatch = await bcrypt.compare(password, existing);
-    return {
-      ...existing,
-    } as User;
-  }
-
-  public async updateRefreshToken(getOneInput: GetOneUserInput, input: UpdateUserInput): Promise<User> {
-    const { id } = getOneInput;
-
-    const existing = await this.getOneByOneFields({
-      fields: { id, refreshToken: Not(IsNull()) },
-      checkIfExists: true,
-    });
-
-    const preloaded = await this.userRepository.preload({
-      id: existing.id,
-      ...input,
-    });
-
-    const saved = await this.userRepository.save(preloaded);
-
-    return {
-      ...existing,
-      ...saved,
-    } as User;
-  }
 }

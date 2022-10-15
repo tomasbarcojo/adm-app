@@ -28,34 +28,6 @@ import { LoginUserInput } from './dto/login-user-input.dto';
 export class UserController {
   constructor(private readonly service: UserService) {}
 
-  // @ApiResponse({
-  //   status: HttpStatus.CREATED,
-  //   description: 'successfully created user',
-  //   type: User,
-  // })
-  // @ApiOperation({
-  //   summary: 'create a new user',
-  //   description: 'create a new user',
-  // })
-  // @Post()
-  // async create(@Body() input: CreateUserInput): Promise<User> {
-  //   return this.service.create(input);
-  // }
-
-  // @ApiResponse({
-  //   status: HttpStatus.CREATED,
-  //   description: 'successfully created user',
-  //   type: User,
-  // })
-  // @ApiOperation({
-  //   summary: 'create a new user',
-  //   description: 'create a new user',
-  // })
-  // @Post('/login')
-  // async login(@Body() input: LoginUserInput): Promise<User> {
-  //   return this.service.login(input);
-  // }
-
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'list of users',

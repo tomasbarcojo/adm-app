@@ -56,5 +56,3 @@ async function bootstrap() {
 }
 
 bootstrap();
-
-// ClusterService.clusterize(bootstrap);
