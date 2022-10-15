@@ -17,10 +17,10 @@ const App = () => {
   let token = '';
   if (localStorage.length > 0) {
     user = JSON.parse(localStorage.getItem('userData'))
-    token = JSON.parse(localStorage.getItem('token'));
+    token = JSON.parse(localStorage.getItem('access_token'));
   } else {
     user = JSON.parse(sessionStorage.getItem('userData'))
-    token = JSON.parse(sessionStorage.getItem('token'));
+    token = JSON.parse(sessionStorage.getItem('access_token'));
   }
 
   useEffect(() => {
