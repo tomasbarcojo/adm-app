@@ -256,30 +256,24 @@ export const userLogout = (history) => async (dispatch) => {
 };
 
 export const getUser = (userId, token) => async (dispatch) => {
-  try {
-    await fetch(`${REACT_APP_URL_API}/user/${userId}`, {
-      // credentials: 'include',
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": token,
-      },
-    })
-      .then((data) => data.json())
-      .then((res) => {
-        if (res.status === 404) {
-          dispatch({
-            type: "USER_LOGOUT",
-          });
-          localStorage.clear();
-        } else if (res.status === 200) {
-          dispatch({
-            type: "SET_USER",
-            payload: res.user,
-          });
-        }
-      });
-  } catch (err) {
-    console.log(err);
+  const res = await fetch(`${REACT_APP_URL_API}/user/${userId}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const result = await res.json();
+
+  if (res.status === 404) {
+    dispatch({
+      type: "USER_LOGOUT",
+    });
+    localStorage.clear();
+  } else if (res.status === 200) {
+    dispatch({
+      type: "SET_USER",
+      payload: result.user,
+    });
   }
 };
 
