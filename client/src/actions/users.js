@@ -259,6 +259,7 @@ export const getUser = (userId, token) => async (dispatch) => {
   const res = await fetch(`${REACT_APP_URL_API}/user/${userId}`, {
     headers: {
       "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
     },
   });
 
