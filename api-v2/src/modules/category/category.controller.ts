@@ -12,6 +12,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Public } from 'src/common/decorators/public.decorator';
 
 import { Category } from './category.entity';
 
@@ -50,6 +51,7 @@ export class CategoryController {
     summary: 'get a list of categories',
     description: 'get a list of category, based on the conditions',
   })
+  @Public()
   @Get()
   async getAll(@Query() input: GetAllCategoriesInput): Promise<Category[]> {
     return this.service.getAll(input);

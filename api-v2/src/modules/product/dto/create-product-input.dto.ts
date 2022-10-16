@@ -12,6 +12,23 @@ export class CreateProductInput {
   readonly articleName: string;
 
   @ApiProperty({
+    description: 'the code of the product',
+    type: 'string',
+    example: '1A2B3C',
+  })
+  @Length(1, 255)
+  @IsString()
+  readonly code: string;
+
+  @ApiProperty({
+    description: 'the price of the product',
+    type: 'number',
+    example: '150.5',
+  })
+  @IsString()
+  readonly price: number;
+
+  @ApiProperty({
     description: 'the category which the product belongs',
     type: 'number',
     example: '1',
@@ -36,6 +53,14 @@ export class CreateProductInput {
   readonly stock: number;
 
   @ApiProperty({
+    description: 'the alert for low stock of the product',
+    type: 'number',
+    example: '50',
+  })
+  @IsNumber()
+  readonly stockAlert: number;
+
+  @ApiProperty({
     description: 'the image of the product',
     type: 'string',
     example: '',
@@ -43,4 +68,12 @@ export class CreateProductInput {
   @Length(1, 255)
   @IsString()
   readonly image: string;
+
+  @ApiProperty({
+    description: 'the description of the product',
+    type: 'string',
+    example: 'this is a description of the product',
+  })
+  @IsString()
+  obs: string;
 }

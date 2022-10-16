@@ -9,7 +9,7 @@ module.exports = {
             lastName: 'Barcojo',
             email: 'tomasbarcojo@gmail.com',
             username: 'tomi',
-            password: 'tomasito15'
+            password: '112233'
         });
         await Supplier.create({
             businessName: 'Activa SRL',

@@ -28,9 +28,7 @@ export class ProductService extends BaseService<Product> {
   // CRUD
 
   public async create(input: CreateProductInput): Promise<Product> {
-    const created = this.productRepository.create({
-      ...input,
-    });
+    const created = this.productRepository.create(input);
 
     const saved = await this.productRepository.save(created);
 

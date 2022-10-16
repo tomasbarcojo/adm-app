@@ -31,7 +31,7 @@
     "migration:revert": "npm run typeorm migration:revert",
     "schema:drop": "npm run typeorm schema:drop",
     "schema:sync": "npm run typeorm schema:sync",
-    "seed:run": "npx ts-node ./src/database/seeds"
+    "seed:dev:run": "nest start --debug --config nest-cli.execute-seed.json"
   },
   "dependencies": {
     "@nestjs/axios": "0.0.4",
@@ -70,6 +70,7 @@
   "devDependencies": {
     "@commitlint/cli": "16.0.2",
     "@commitlint/config-conventional": "16.0.0",
+    "@faker-js/faker": "^7.6.0",
     "@nestjs/cli": "8.2.0",
     "@nestjs/schematics": "8.0.5",
     "@nestjs/testing": "8.2.5",

@@ -64,23 +64,18 @@ export const createCategory =
   };
 
 export const getCategories = (token) => async (dispatch) => {
-  try {
-    await fetch(`${REACT_APP_URL_API}/category`, {
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": token,
-      },
-    })
-      .then((data) => data.json())
-      .then((res) => {
-        if (res.status === 200) {
-          dispatch({
-            type: "GET_CATEGORIES",
-            payload: res.categories,
-          });
-        }
-      });
-  } catch (err) {
-    console.log(err);
+  const res = await fetch(`${REACT_APP_URL_API}/category`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const result = await res.json();
+
+  if (res.status === 200) {
+    dispatch({
+      type: "GET_CATEGORIES",
+      payload: result,
+    });
   }
 };

@@ -115,7 +115,6 @@ export default function UsersManagment() {
       <GridList cellHeight={450} className={classes.gridList} cols={4} spacing={0}>
         {categories && categories.length > 0 ?
         categories.map(cat => {
-          console.log(cat)
           return (
             <CategoriesCard props={cat} />
           )

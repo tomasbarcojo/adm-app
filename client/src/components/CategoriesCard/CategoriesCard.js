@@ -26,7 +26,8 @@ export default function MediaCard({ props }) {
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            image={`http://localhost:3001/images/${props.image}`}
+            // image={`http://localhost:3001/images/${props.image}`} // uncomment if images are from server
+            image={`${props.image}`} // uncomment if images aren't from server
             title='Product image'
           />
           <CardContent>
