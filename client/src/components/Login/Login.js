@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { Link, useHistory } from 'react-router-dom'
+import { Link, Redirect, useHistory } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -12,6 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useSnackbar } from 'notistack';
 import { useDispatch } from 'react-redux'
 import { userLogin } from '../../actions/users';
+import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -37,6 +38,16 @@ export default function SignIn() {
     password: ''
   })
   const [keepLogged, setKeepLogged] = useState(false)
+
+  useEffect(() => {
+    let logged;
+    if (localStorage.length > 0 && localStorage.getItem('logged')) {
+      logged = JSON.parse(localStorage.getItem('logged'));
+    } else {
+      logged = JSON.parse(sessionStorage.getItem('logged'));
+    }
+    if (logged) history.push('/admin')
+  })
 
   const handleChange = (event) => {
     setData({...data, [event.target.name]: event.target.value})
