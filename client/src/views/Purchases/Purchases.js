@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
-import { getPriceList, addPriceList } from '../../actions/pricelists'
+import { getPriceList, addPriceList } from '../../actions/pricelists';
 import 'date-fns';
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -14,7 +14,7 @@ import Select from '@material-ui/core/Select';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import DateFnsUtils from '@date-io/date-fns';
-import esLocale from "date-fns/locale/es";
+import esLocale from 'date-fns/locale/es';
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
@@ -24,55 +24,55 @@ import {
   DateTimePicker,
 } from '@material-ui/pickers';
 // core components
-import GridItem from "../../components/Grid/GridItem.js";
-import GridContainer from "../../components/Grid/GridContainer.js";
-import Card from "../../components/Card/Card.js";
-import CardHeader from "../../components/Card/CardHeader.js";
-import CardBody from "../../components/Card/CardBody.js";
-import Button from "../../components/CustomButtons/Button.js";
-import CardFooter from "../../components/Card/CardFooter.js";
+import GridItem from '../../components/Grid/GridItem.js';
+import GridContainer from '../../components/Grid/GridContainer.js';
+import Card from '../../components/Card/Card.js';
+import CardHeader from '../../components/Card/CardHeader.js';
+import CardBody from '../../components/Card/CardBody.js';
+import Button from '../../components/CustomButtons/Button.js';
+import CardFooter from '../../components/Card/CardFooter.js';
 
-import { clearArticleData, getArticlesBySupplierId } from '../../actions/article'
-import { getPurchases, newPurchase } from '../../actions/purchases'
-import Token from '../../Token/Token'
-import { getSuppliers } from "../../actions/suppliers";
-import TableHtml from "../../components/Table/TableHtml";
+import { clearArticleData, getArticlesBySupplierId } from '../../actions/article';
+import { getPurchases, newPurchase } from '../../actions/purchases';
+import Token from '../../Token/Token';
+import { getSuppliers } from '../../actions/suppliers';
+import TableHtml from '../../components/Table/TableHtml';
 
 const useStyles = makeStyles((theme) => ({
   cardCategoryWhite: {
-    color: "rgba(255,255,255,.62)",
-    margin: "0",
-    fontSize: "14px",
-    marginTop: "0",
-    marginBottom: "0"
+    color: 'rgba(255,255,255,.62)',
+    margin: '0',
+    fontSize: '14px',
+    marginTop: '0',
+    marginBottom: '0',
   },
   cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
+    color: '#FFFFFF',
+    marginTop: '0px',
+    minHeight: 'auto',
+    fontWeight: '300',
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none"
+    marginBottom: '3px',
+    textDecoration: 'none',
   },
   card: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   articleRow: {
     backgroundColor: '#F6F6F6',
     margin: '10px',
     padding: '15px',
-    borderRadius: '5px'
+    borderRadius: '5px',
   },
   articleInput: {
     padding: '5px 0px 5px 0px',
   },
   formControl: {
     margin: theme.spacing(1),
-    width: '100%'
+    width: '100%',
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -85,11 +85,11 @@ const useStyles = makeStyles((theme) => ({
   checkboxrow: {
     display: 'flex',
     justifyContent: 'space-between',
-    margin: '10px 0px 10px 0px'
+    margin: '10px 0px 10px 0px',
   },
   datePicker: {
-    margin: '0'
-  }
+    margin: '0',
+  },
 }));
 
 export default function PriceLists() {
@@ -97,16 +97,16 @@ export default function PriceLists() {
   const dispatch = useDispatch();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   var token = Token();
-  const purchaseList = useSelector(state => state.purchase);
-  const articles = useSelector(state => state.articles);
-  const suppliers = useSelector(state => state.suppliers);
-  const [supplierId, setSupplierId] = useState()
+  const purchaseList = useSelector((state) => state.purchase);
+  const articles = useSelector((state) => state.articles);
+  const suppliers = useSelector((state) => state.suppliers);
+  const [supplierId, setSupplierId] = useState();
   const [showNew, setShowNew] = useState(true);
-  const [purchaseState, setPurchaseState] = useState('')
-  const total = useSelector(state => state.purchaseTotal)
-  const createdPurchases = useSelector(state => state.createdPurchases)
+  const [purchaseState, setPurchaseState] = useState('');
+  const total = useSelector((state) => state.purchaseTotal);
+  const createdPurchases = useSelector((state) => state.createdPurchases);
   const [paymentExpDate, setPaymentExpDate] = useState();
-  const [haveExpDate, setHaveExpDate] = useState(false)
+  const [haveExpDate, setHaveExpDate] = useState(false);
 
   useEffect(() => {
     dispatch(clearArticleData());
@@ -115,8 +115,8 @@ export default function PriceLists() {
   }, []);
 
   useEffect(() => {
-    if (supplierId) dispatch(getArticlesBySupplierId(token, supplierId))
-  }, [supplierId])
+    if (supplierId) dispatch(getArticlesBySupplierId(token, supplierId));
+  }, [supplierId]);
 
   // const resetForm = () => {
   //   setpriceListName('')
@@ -126,25 +126,25 @@ export default function PriceLists() {
   // };
 
   const handleNewPurchase = () => {
-    setShowNew(!showNew)
+    setShowNew(!showNew);
   };
 
   const handleChangePriceListName = (value) => {
-    if (value) setSupplierId(value.id)
-    else dispatch(clearArticleData())
+    if (value) setSupplierId(value.id);
+    else dispatch(clearArticleData());
   };
 
   const handleChangePurchaseState = (event) => {
-    setPurchaseState(event.target.value)
-  }
+    setPurchaseState(event.target.value);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const dataObj = {
       supplierId: supplierId,
       data: purchaseList,
-      paymentExpirationDate: paymentExpDate
-    }
+      paymentExpirationDate: paymentExpDate,
+    };
     dispatch(newPurchase(dataObj, token, enqueueSnackbar, closeSnackbar));
     // resetForm();
   };
@@ -154,9 +154,9 @@ export default function PriceLists() {
   };
 
   const handleHaveExpDate = () => {
-    setHaveExpDate(!haveExpDate)
-    console.log(haveExpDate)
-  }
+    setHaveExpDate(!haveExpDate);
+    console.log(haveExpDate);
+  };
 
   return (
     <GridContainer>
@@ -165,10 +165,14 @@ export default function PriceLists() {
           <CardHeader color="primary">
             <div className={classes.card}>
               <h4 className={classes.cardTitleWhite}>Nueva compra</h4>
-              {showNew ? null : <Button color="info" onClick={handleNewPurchase}>Añadir</Button>}
+              {showNew ? null : (
+                <Button color="info" onClick={handleNewPurchase}>
+                  Añadir
+                </Button>
+              )}
             </div>
           </CardHeader>
-          {showNew ?
+          {showNew ? (
             <>
               <form onSubmit={handleSubmit}>
                 <CardBody>
@@ -186,66 +190,61 @@ export default function PriceLists() {
                     </GridItem>
                   </GridContainer>
 
-                  {
-                    articles && articles.length > 0 ?
-                      <>
-                        <h5>Articulos:</h5>
-                        <TableHtml
-                          tableData={articles && articles.length > 0 ?
-                            articles.map((article) => {
-                              return {
-                                id: article.id,
-                                articleName: article.articleName,
-                                stock: article.stock
-                              }
-                            })
-                            : null}
+                  {articles && articles.length > 0 ? (
+                    <>
+                      <h5>Articulos:</h5>
+                      <TableHtml
+                        tableData={
+                          articles && articles.length > 0
+                            ? articles.map((article) => {
+                                return {
+                                  id: article.id,
+                                  articleName: article.articleName,
+                                  stock: article.stock,
+                                };
+                              })
+                            : null
+                        }
+                      />
+
+                      <div className={classes.checkboxrow}>
+                        <FormControlLabel
+                          className={classes.checkbox}
+                          control={<Checkbox onClick={handleHaveExpDate} color="primary" />}
+                          label="Añadir fecha de vencimiento de pago"
                         />
 
-                        <div className={classes.checkboxrow}>
-                          <FormControlLabel
-                            className={classes.checkbox}
-                            control={
-                              <Checkbox
-                                onClick={handleHaveExpDate}
-                                color="primary"
-                              />
-                            }
-                            label="Añadir fecha de vencimiento de pago"
-                          />
+                        {haveExpDate ? (
+                          <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
+                            <KeyboardDatePicker
+                              className={classes.datePicker}
+                              orientation="landscape"
+                              variant="static"
+                              openTo="date"
+                              showTodayButton
+                              variant="outlined"
+                              format="dd/MM/yyyy"
+                              margin="normal"
+                              id="date-picker-inline"
+                              label="Vencimiento de pago"
+                              value={paymentExpDate}
+                              onChange={handleDateChange}
+                              KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                              }}
+                              cancelLabel="Cancelar"
+                              okLabel="OK"
+                              todayLabel="HOY"
+                              disablePast
+                              emptyLabel
+                              leftArrowIcon
+                              loadingIndicator
+                            />
+                          </MuiPickersUtilsProvider>
+                        ) : null}
+                      </div>
 
-                          {haveExpDate ?
-                            <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
-                              <KeyboardDatePicker
-                                className={classes.datePicker}
-                                orientation="landscape"
-                                variant="static"
-                                openTo="date"
-                                showTodayButton
-                                variant="outlined"
-                                format="dd/MM/yyyy"
-                                margin="normal"
-                                id="date-picker-inline"
-                                label="Vencimiento de pago"
-                                value={paymentExpDate}
-                                onChange={handleDateChange}
-                                KeyboardButtonProps={{
-                                  'aria-label': 'change date',
-                                }}
-                                cancelLabel='Cancelar'
-                                okLabel='OK'
-                                todayLabel='HOY'
-                                disablePast
-                                emptyLabel
-                                leftArrowIcon
-                                loadingIndicator
-                              />
-                            </MuiPickersUtilsProvider>
-                            : null
-                          }
-                        </div>
-
-                        {/* <div className={classes.checkboxrow}>
+                      {/* <div className={classes.checkboxrow}>
                           <FormControlLabel
                             className={classes.checkbox}
                             control={
@@ -288,23 +287,25 @@ export default function PriceLists() {
                           }
                         </div> */}
 
-
-                        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-                          <h3>Total de la compra: $ {total.toFixed(2)}</h3>
-                        </div>
-                      </>
-                      : <h5 className='messageEmptyDataTable'>Seleccione un proveedor para desplegar sus productos</h5>
-                  }
-
+                      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                        <h3>Total de la compra: $ {total.toFixed(2)}</h3>
+                      </div>
+                    </>
+                  ) : (
+                    <h5 className="messageEmptyDataTable">Seleccione un proveedor para desplegar sus productos</h5>
+                  )}
                 </CardBody>
                 <CardFooter>
-                  <Button color="primary" type='submit'>Listo</Button>
-                  <Button color="danger" onClick={handleNewPurchase}>Cancelar</Button>
+                  <Button color="primary" type="submit">
+                    Listo
+                  </Button>
+                  <Button color="danger" onClick={handleNewPurchase}>
+                    Cancelar
+                  </Button>
                 </CardFooter>
               </form>
             </>
-            : null
-          }
+          ) : null}
         </Card>
       </GridItem>
     </GridContainer>

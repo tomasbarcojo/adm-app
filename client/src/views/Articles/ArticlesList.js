@@ -1,11 +1,7 @@
 import React from 'react';
 import { FixedSizeList as List } from 'react-window';
 
-const Row = ({ index, style }) => (
-  <div style={style}>
-    Row {index}
-  </div>
-);
+const Row = ({ index, style }) => <div style={style}>Row {index}</div>;
 
 // const Example = () => (
 //   <List
@@ -21,14 +17,8 @@ const Row = ({ index, style }) => (
 
 export default function ArticlesList() {
   return (
-    <List
-      className="List"
-      height={1500}
-      itemCount={1000}
-      itemSize={35}
-      width={1000}
-    >
+    <List className="List" height={1500} itemCount={1000} itemSize={35} width={1000}>
       {Row}
     </List>
-  )
+  );
 }

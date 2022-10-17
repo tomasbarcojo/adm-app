@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -7,15 +7,15 @@ import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import Copyright from '../../utils/Copyright'
-import NavBar from '../Home/NavBar'
+import Copyright from '../../utils/Copyright';
+import NavBar from '../Home/NavBar';
 import GridList from '@material-ui/core/GridList';
 import ProductCard from '../ProductCard/ProductCard';
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import { getArticlesByCategoryId } from '../../actions/article';
 
-import Token from '../../Token/Token'
+import Token from '../../Token/Token';
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -41,8 +41,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(8, 0, 6),
   },
   cardHeader: {
-    backgroundColor:
-      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[700],
+    backgroundColor: theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[700],
   },
   cardPricing: {
     display: 'flex',
@@ -64,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     height: '80%',
-  }
+  },
 }));
 
 const footers = [
@@ -90,13 +89,13 @@ export default function CategoryProducts() {
   const classes = useStyles();
   const dispatch = useDispatch();
   var token = '';
-  const { id } = useParams()
+  const { id } = useParams();
   var token = Token();
-  const articles = useSelector(state => state.articles)
+  const articles = useSelector((state) => state.articles);
 
   useEffect(() => {
     dispatch(getArticlesByCategoryId(token, id));
-  }, [])
+  }, []);
 
   return (
     <React.Fragment>
@@ -105,15 +104,14 @@ export default function CategoryProducts() {
       <NavBar />
 
       <GridList cellHeight={450} className={classes.gridList} cols={4} spacing={0}>
-        {articles && articles.length > 0 ?
-        articles.map(article => {
-          console.log(article)
-          return (
-            <ProductCard props={article} />
-          )
-        })
-        : <h5 style={{ display: "flex", justifyContent: "center" }}>No existen productos</h5>
-        }
+        {articles && articles.length > 0 ? (
+          articles.map((article) => {
+            console.log(article);
+            return <ProductCard props={article} />;
+          })
+        ) : (
+          <h5 style={{ display: 'flex', justifyContent: 'center' }}>No existen productos</h5>
+        )}
       </GridList>
 
       {/* Hero unit */}
