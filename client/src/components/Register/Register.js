@@ -9,10 +9,10 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch } from 'react-redux'
-import { addUser } from '../../actions/users'
-import { useHistory } from 'react-router-dom'
-import { useSnackbar } from 'notistack'
+import { useDispatch } from 'react-redux';
+import { addUser } from '../../actions/users';
+import { useHistory } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,85 +36,87 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const history = useHistory()
+  const history = useHistory();
   const [data, setData] = useState({
     firstName: '',
     lastName: '',
     username: '',
     email: '',
     password: '',
-  })
-  const [errors, setErrors] = useState({})
-  const [confirmPassword, setconfirmPassword] = useState('')
+  });
+  const [errors, setErrors] = useState({});
+  const [confirmPassword, setconfirmPassword] = useState('');
 
   const formValid = (data) => {
     let valid = true;
 
     // validate form errors being empty
-    Object.values(data).forEach(val => {
+    Object.values(data).forEach((val) => {
       if (val === '') {
         valid = false;
-      };
+      }
     });
-  
+
     return valid;
   };
 
   const handleChange = (event) => {
-    const { name, value } = event.target
+    const { name, value } = event.target;
 
     switch (name) {
-      case "firstName":
-        errors.firstName =
-          value.length < 3 ? "Mínimo 3 caracteres requeridos" : "";
+      case 'firstName':
+        errors.firstName = value.length < 3 ? 'Mínimo 3 caracteres requeridos' : '';
         break;
-      case "lastName":
-        errors.lastName =
-          value.length < 3 ? "Mínimo 3 caracteres requeridos" : "";
+      case 'lastName':
+        errors.lastName = value.length < 3 ? 'Mínimo 3 caracteres requeridos' : '';
         break;
-      case "email":
-        errors.email = (!/\S+@\S+\.\S+/.test(value)) ? "Email invalido" : "";
+      case 'email':
+        errors.email = !/\S+@\S+\.\S+/.test(value) ? 'Email invalido' : '';
         break;
-      case "username":
-        errors.username = value.length < 3 ? "Mínimo 3 caracteres requeridos" : "";
+      case 'username':
+        errors.username = value.length < 3 ? 'Mínimo 3 caracteres requeridos' : '';
         break;
-      case "password":
+      case 'password':
         errors.password =
-          value.length < 6 && (!/(?=.*[0-9])/.test(value)) ? "La contraseña debe tener 6 o más caracteres o es inválida" : "";
+          value.length < 6 && !/(?=.*[0-9])/.test(value)
+            ? 'La contraseña debe tener 6 o más caracteres o es inválida'
+            : '';
         break;
       default:
         break;
     }
-    setData({ ...data, [event.target.name]: event.target.value })
-  }
+    setData({ ...data, [event.target.name]: event.target.value });
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (formValid(data)) {
-      dispatch(addUser(data, history, enqueueSnackbar, closeSnackbar)) //add user
+      dispatch(addUser(data, history, enqueueSnackbar, closeSnackbar)); //add user
     } else {
       enqueueSnackbar('Todos los campos son obligatorios', {
         variant: 'warning',
-        action: key => (
-          <button className='notistackButton' onClick={() => closeSnackbar(key)}>X</button>
+        action: (key) => (
+          <button className="notistackButton" onClick={() => closeSnackbar(key)}>
+            X
+          </button>
         ),
-      })
+      });
     }
-  }
+  };
 
   return (
-    <div className='LoginPageOuterContainer'>
-      <div className='LoginPageForm'>
+    <div className="LoginPageOuterContainer">
+      <div className="LoginPageForm">
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           Registro
         </Typography>
-        <form className={classes.form} noValidate autoComplete='off' onSubmit={handleSubmit}>
+        <form className={classes.form} noValidate autoComplete="off" onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -156,17 +158,8 @@ export default function SignUp() {
               )}
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                label="Email"
-                name="email"
-                onChange={handleChange}
-              />
-              {errors.email && errors.email.length > 0 && (
-                <span className="errorMessageRegister">{errors.email}</span>
-              )}
+              <TextField variant="outlined" required fullWidth label="Email" name="email" onChange={handleChange} />
+              {errors.email && errors.email.length > 0 && <span className="errorMessageRegister">{errors.email}</span>}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -203,20 +196,12 @@ export default function SignUp() {
               />
             </Grid>
           </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
+          <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
             Registrarse
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link to='/login'>
-                ¿Ya tenes una cuenta?
-              </Link>
+              <Link to="/login">¿Ya tenes una cuenta?</Link>
             </Grid>
           </Grid>
         </form>

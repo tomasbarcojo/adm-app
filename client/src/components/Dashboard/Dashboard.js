@@ -22,7 +22,7 @@ import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
-import SideBar from './SideBar'
+import SideBar from './SideBar';
 
 const drawerWidth = 240;
 const sideBarDuration = 500;
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
-      duration: sideBarDuration
+      duration: sideBarDuration,
     }),
   },
   appBarShift: {
@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
     overflowX: 'hidden',
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
-      duration: sideBarDuration
+      duration: sideBarDuration,
     }),
     width: theme.spacing(7),
     [theme.breakpoints.up('sm')]: {
@@ -112,9 +112,8 @@ export default function Dashboard() {
 
   return (
     <div className={classes.root}>
-      
       {/* <SideBar /> */}
-      
+
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>

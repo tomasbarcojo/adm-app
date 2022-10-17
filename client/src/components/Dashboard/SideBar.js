@@ -146,7 +146,6 @@ export default function Dashboard() {
         <Divider />
         <ListItems />
       </Drawer>
-
     </div>
   );
 }

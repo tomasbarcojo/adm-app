@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
+import { useDispatch } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 import { useSnackbar } from 'notistack';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -9,11 +9,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
-import Tooltip from "@material-ui/core/Tooltip";
-import Close from "@material-ui/icons/Close";
-import IconButton from "@material-ui/core/IconButton";
-import styles2 from "../../styles/components/tasksStyle.js";
-import Token from '../../Token/Token'
+import Tooltip from '@material-ui/core/Tooltip';
+import Close from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
+import styles2 from '../../styles/components/tasksStyle.js';
+import Token from '../../Token/Token';
 import { universalDelete } from '../../actions/universalDelete.js';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -39,28 +39,15 @@ export default function AlertDialogSlide(props) {
   };
 
   const handleDelete = (path, id) => {
-    dispatch(universalDelete(path, id, token, enqueueSnackbar, closeSnackbar))
-    setOpen(false)
-  }
+    dispatch(universalDelete(path, id, token, enqueueSnackbar, closeSnackbar));
+    setOpen(false);
+  };
 
   return (
     <>
-      <Tooltip
-        id="tooltip-top-start"
-        title={`Eliminar ${id}`}
-        placement="top"
-        classes={{ tooltip: classes2.tooltip }}
-      >
-        <IconButton
-          aria-label="Close"
-          className={classes2.tableActionButton}
-          onClick={() => handleClickOpen()}
-        >
-          <Close
-            className={
-              classes2.tableActionButtonIcon + " " + classes2.close
-            }
-          />
+      <Tooltip id="tooltip-top-start" title={`Eliminar ${id}`} placement="top" classes={{ tooltip: classes2.tooltip }}>
+        <IconButton aria-label="Close" className={classes2.tableActionButton} onClick={() => handleClickOpen()}>
+          <Close className={classes2.tableActionButtonIcon + ' ' + classes2.close} />
         </IconButton>
       </Tooltip>
       <Dialog
@@ -73,9 +60,7 @@ export default function AlertDialogSlide(props) {
       >
         <DialogTitle id="alert-dialog-slide-title">¿Desea eliminar?</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            Esta accion lo borrará para siempre
-          </DialogContentText>
+          <DialogContentText id="alert-dialog-slide-description">Esta accion lo borrará para siempre</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

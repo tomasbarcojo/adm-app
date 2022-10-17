@@ -9,14 +9,14 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles({
   root: {
     minWidth: 345,
-    margin: '10px'
+    margin: '10px',
   },
   media: {
     height: 140,
   },
 });
 
-export default function MediaCard({props}) {
+export default function MediaCard({ props }) {
   const classes = useStyles();
 
   return (
@@ -25,7 +25,7 @@ export default function MediaCard({props}) {
         <CardMedia
           className={classes.media}
           image={`http://localhost:3001/images/${props.image}`}
-          title='Product image'
+          title="Product image"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
