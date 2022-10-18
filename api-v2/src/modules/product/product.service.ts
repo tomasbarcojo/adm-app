@@ -13,6 +13,9 @@ import { CreateProductInput } from './dto/create-product-input.dto';
 import { GetOneProductInput } from './dto/get-one-product-input.dto';
 import { GetAllProductsInput } from './dto/get-all-products-input.dto';
 import { UpdateProductInput } from './dto/update-product-input.dto';
+import { ProductRepository } from './product.repository';
+import { PaginationDto } from '../dto/pagination.dto';
+import { GetProductByCategoryId } from './dto/get-product-by-categoryid.dto';
 
 @Injectable()
 export class ProductService extends BaseService<Product> {
@@ -21,6 +24,7 @@ export class ProductService extends BaseService<Product> {
     private readonly appConfiguration: ConfigType<typeof appConfig>,
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
+    @Inject('productRepository') private readonly productRepositoryV2: ProductRepository,
   ) {
     super(productRepository);
   }
@@ -35,7 +39,7 @@ export class ProductService extends BaseService<Product> {
     return saved;
   }
 
-  public async getOne(input: GetOneProductInput): Promise<Product | undefined> {
+  public async getOne(input: GetOneProductInput): Promise<Product> {
     const { id } = input;
 
     const existing = await this.getOneByOneFields({
@@ -44,6 +48,12 @@ export class ProductService extends BaseService<Product> {
     });
 
     return existing;
+  }
+
+  public async getProductByCategoryId(categoryId: string, pagination: PaginationDto): Promise<GetProductByCategoryId> {
+    const products = await this.productRepositoryV2.getProductByCategoryId(categoryId, pagination);
+
+    return products;
   }
 
   public async getAll(input: GetAllProductsInput): Promise<Product[]> {
