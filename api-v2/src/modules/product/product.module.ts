@@ -8,10 +8,11 @@ import { Product } from './product.entity';
 
 import { ProductService } from './product.service';
 import { ProductController } from './product.controller';
+import { ProductRepository } from './product.repository';
 
 @Module({
   imports: [ConfigModule.forFeature(appConfig), TypeOrmModule.forFeature([Product])],
-  providers: [ProductService],
+  providers: [ProductService, { provide: 'productRepository', useClass: ProductRepository }],
   exports: [ProductService],
   controllers: [ProductController],
 })

@@ -21,6 +21,8 @@ import { CreateProductInput } from './dto/create-product-input.dto';
 import { GetAllProductsInput } from './dto/get-all-products-input.dto';
 import { GetOneProductInput } from './dto/get-one-product-input.dto';
 import { UpdateProductInput } from './dto/update-product-input.dto';
+import { PaginationDto } from '../dto/pagination.dto';
+import { GetProductByCategoryId } from './dto/get-product-by-categoryid.dto';
 
 @ApiTags('article')
 @Controller('article')
@@ -123,5 +125,22 @@ export class ProductController {
   @Patch('/:id/finish')
   async finish(@Param() input: GetOneProductInput): Promise<Product> {
     return this.service.finish({ id: input.id });
+  }
+
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'a category',
+    type: Product,
+  })
+  @ApiOperation({
+    summary: 'get a category',
+    description: 'get a category, based on the id',
+  })
+  @Get('/category/:categoryId')
+  async getProductByCategoryId(
+    @Param('categoryId') categoryId: string,
+    @Query() { page = 1, limit = 30 }: PaginationDto,
+  ): Promise<GetProductByCategoryId> {
+    return this.service.getProductByCategoryId(categoryId, {page, limit});
   }
 }
