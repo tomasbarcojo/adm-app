@@ -50,6 +50,7 @@
     "argon2": "^0.29.1",
     "class-transformer": "0.5.1",
     "class-validator": "0.13.2",
+    "faker": "^6.6.6",
     "fastify-helmet": "6.0.0",
     "fastify-swagger": "4.13.1",
     "i": "0.3.7",

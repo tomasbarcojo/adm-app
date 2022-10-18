@@ -20,6 +20,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthModule } from './modules/auth/auth.module';
 import { JwtAuthGuard } from './modules/auth/jwt-auth.guard';
 import { CategoryModule } from './modules/category/category.module';
+import { PricelistModule } from './modules/pricelist/pricelist.module';
 
 @Module({
   imports: [
@@ -55,7 +56,8 @@ import { CategoryModule } from './modules/category/category.module';
     AuthModule,
     ProductModule,
     UserModule,
-    CategoryModule
+    CategoryModule,
+    PricelistModule
   ],
   controllers: [AppController, HealthController],
   providers: [
