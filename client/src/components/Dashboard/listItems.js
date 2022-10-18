@@ -10,7 +10,7 @@ import SendIcon from '@material-ui/icons/Send';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import Divider from '@material-ui/core/Divider';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
@@ -48,14 +48,13 @@ export default function NestedList() {
       // }
       className={classes.root}
     >
-
-      <Link to='/dashboard/panel'>
-      <ListItem button>
-        <ListItemIcon>
-          <DashboardIcon />
-        </ListItemIcon>
-        <ListItemText primary="Dashboard" />
-      </ListItem>
+      <Link to="/dashboard/panel">
+        <ListItem button>
+          <ListItemIcon>
+            <DashboardIcon />
+          </ListItemIcon>
+          <ListItemText primary="Dashboard" />
+        </ListItem>
       </Link>
 
       <ListItem button>
@@ -94,8 +93,7 @@ export default function NestedList() {
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-
-          <Link to='/dashboard/suppliers'>
+          <Link to="/dashboard/suppliers">
             <ListItem button className={classes.nested} selected>
               <ListItemIcon>
                 <StarBorder />
@@ -124,10 +122,7 @@ export default function NestedList() {
             </ListItemIcon>
             <ListItemText primary="Listado" />
           </ListItem>
-
         </List>
-
-
       </Collapse>
 
       <ListItem button>

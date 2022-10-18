@@ -1,23 +1,23 @@
 /*eslint-disable*/
-import React, { useState } from "react";
-import classNames from "classnames";
-import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
+import React, { useState } from 'react';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import Hidden from "@material-ui/core/Hidden";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Icon from "@material-ui/core/Icon";
+import { makeStyles } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import Hidden from '@material-ui/core/Hidden';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Icon from '@material-ui/core/Icon';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 // core components
-import AdminNavbarLinks from "../Navbar/AdminNavbarLinks";
-import RTLNavbarLinks from "../Navbar/RTLNavbarLinks.js";
+import AdminNavbarLinks from '../Navbar/AdminNavbarLinks';
+import RTLNavbarLinks from '../Navbar/RTLNavbarLinks.js';
 
-import styles from "../../styles/components/sidebarStyle.js";
-import NestedList from './NestedList'
+import styles from '../../styles/components/sidebarStyle.js';
+import NestedList from './NestedList';
 
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Collapse from '@material-ui/core/Collapse';
@@ -28,7 +28,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import AddIcon from '@material-ui/icons/Add';
-import ShoppingCart from "@material-ui/icons/ShoppingCart";
+import ShoppingCart from '@material-ui/icons/ShoppingCart';
 
 const NestedLinksTheme = createMuiTheme({
   overrides: {
@@ -38,7 +38,7 @@ const NestedLinksTheme = createMuiTheme({
       root: {
         // Some CSS
         color: 'white',
-        minWidth: '39px'
+        minWidth: '39px',
       },
     },
   },
@@ -64,10 +64,10 @@ export default function Sidebar(props) {
       {routes.map((prop, key) => {
         if (!prop.notSideBar) {
           const listItemClasses = classNames({
-            [" " + classes[color]]: activeRoute(prop.layout + prop.path)
+            [' ' + classes[color]]: activeRoute(prop.layout + prop.path),
           });
           const whiteFontClasses = classNames({
-            [" " + classes.whiteFont]: activeRoute(prop.layout + prop.path)
+            [' ' + classes.whiteFont]: activeRoute(prop.layout + prop.path),
           });
           return (
             <NavLink
@@ -77,7 +77,7 @@ export default function Sidebar(props) {
               key={key}
             >
               <ListItem button className={classes.itemLink + listItemClasses}>
-                {typeof prop.icon === "string" ? (
+                {typeof prop.icon === 'string' ? (
                   <Icon
                     className={classNames(classes.itemIcon, whiteFontClasses)} //this is for "Table List" Icon
                   >
@@ -96,10 +96,8 @@ export default function Sidebar(props) {
               </ListItem>
             </NavLink>
           );
-        } else if (prop.nestedList){
-          return (
-            <NestedList prop={prop} />
-          )
+        } else if (prop.nestedList) {
+          return <NestedList prop={prop} />;
         }
       })}
     </List>
@@ -109,7 +107,7 @@ export default function Sidebar(props) {
     <div className={classes.logo}>
       <a
         className={classNames(classes.logoLink, {
-          [classes.logoLinkRTL]: props.rtlActive
+          [classes.logoLinkRTL]: props.rtlActive,
         })}
       >
         <div className={classes.logoImage}>
@@ -128,11 +126,11 @@ export default function Sidebar(props) {
           anchor="right"
           open={props.open}
           classes={{
-            paper: classNames(classes.drawerPaper)
+            paper: classNames(classes.drawerPaper),
           }}
           onClose={props.handleDrawerToggle}
           ModalProps={{
-            keepMounted: true // Better open performance on mobile.
+            keepMounted: true, // Better open performance on mobile.
           }}
         >
           {brand}
@@ -141,10 +139,7 @@ export default function Sidebar(props) {
             {links}
           </div>
           {image !== undefined ? (
-            <div
-              className={classes.background}
-              style={{ backgroundImage: "url(" + image + ")" }}
-            />
+            <div className={classes.background} style={{ backgroundImage: 'url(' + image + ')' }} />
           ) : null}
         </Drawer>
       </Hidden>
@@ -154,18 +149,13 @@ export default function Sidebar(props) {
           variant="permanent"
           open
           classes={{
-            paper: classNames(classes.drawerPaper)
+            paper: classNames(classes.drawerPaper),
           }}
         >
           {brand}
-          <div className={classes.sidebarWrapper}>
-            {links}
-          </div>
+          <div className={classes.sidebarWrapper}>{links}</div>
           {image !== undefined ? (
-            <div
-              className={classes.background}
-              style={{ backgroundImage: "url(" + image + ")" }}
-            />
+            <div className={classes.background} style={{ backgroundImage: 'url(' + image + ')' }} />
           ) : null}
         </Drawer>
       </Hidden>
@@ -176,10 +166,10 @@ export default function Sidebar(props) {
 Sidebar.propTypes = {
   rtlActive: PropTypes.bool,
   handleDrawerToggle: PropTypes.func,
-  bgColor: PropTypes.oneOf(["purple", "blue", "green", "orange", "red"]),
+  bgColor: PropTypes.oneOf(['purple', 'blue', 'green', 'orange', 'red']),
   logo: PropTypes.string,
   image: PropTypes.string,
   logoText: PropTypes.string,
   routes: PropTypes.arrayOf(PropTypes.object),
-  open: PropTypes.bool
+  open: PropTypes.bool,
 };

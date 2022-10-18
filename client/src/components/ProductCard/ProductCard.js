@@ -15,17 +15,17 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import Image from '../../images/sayri.png'
+import Image from '../../images/sayri.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
     width: 250,
-    margin: '10px'
+    margin: '10px',
   },
   title: {
-    height: '60px'
+    height: '60px',
   },
   media: {
     height: 0,
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 export default function RecipeReviewCard({ props }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-  const string = 'SMOKING REGULAR (Diam 8mm / Long 15mm)'
+  const string = 'SMOKING REGULAR (Diam 8mm / Long 15mm)';
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -58,17 +58,13 @@ export default function RecipeReviewCard({ props }) {
 
   return (
     <Card className={classes.root}>
-      <CardMedia
-        className={classes.media}
-        image={props.image}
-        title={props.articleName}
-      />
+      <CardMedia className={classes.media} image={props.image} title={props.articleName} />
       <CardContent>
         <Typography className={classes.title} gutterBottom variant="h6">
           {props.articleName.length > 32 ? props.articleName.substring(0, 32) + '...' : props.articleName}
         </Typography>
         <Typography variant="h5" color="textSecondary" component="p">
-          {props.price.toLocaleString('en-US', {style: 'currency',currency: 'USD'})}
+          {props.price.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
         </Typography>
       </CardContent>
     </Card>

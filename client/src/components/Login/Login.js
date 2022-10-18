@@ -4,13 +4,13 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { Link, Redirect, useHistory } from 'react-router-dom'
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSnackbar } from 'notistack';
-import { useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux';
 import { userLogin } from '../../actions/users';
 import { useEffect } from 'react';
 
@@ -35,9 +35,9 @@ export default function SignIn() {
   const dispatch = useDispatch();
   const [data, setData] = useState({
     username: '',
-    password: ''
-  })
-  const [keepLogged, setKeepLogged] = useState(false)
+    password: '',
+  });
+  const [keepLogged, setKeepLogged] = useState(false);
 
   useEffect(() => {
     let logged;
@@ -46,22 +46,22 @@ export default function SignIn() {
     } else {
       logged = JSON.parse(sessionStorage.getItem('logged'));
     }
-    if (logged) history.push('/admin')
-  })
+    if (logged) history.push('/admin');
+  });
 
   const handleChange = (event) => {
-    setData({...data, [event.target.name]: event.target.value})
-  }
+    setData({ ...data, [event.target.name]: event.target.value });
+  };
 
   const handleSubmit = (e) => {
-    console.log(keepLogged)
+    console.log(keepLogged);
     e.preventDefault();
     dispatch(userLogin(data, history, keepLogged, enqueueSnackbar, closeSnackbar));
   };
 
   return (
-    <div className='LoginPageOuterContainer'>
-      <div className='LoginPageForm'>
+    <div className="LoginPageOuterContainer">
+      <div className="LoginPageForm">
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
@@ -92,27 +92,17 @@ export default function SignIn() {
             control={<Checkbox value="remember" color="primary" onClick={() => setKeepLogged(true)} />}
             label="Mantener iniciada la sesion"
           />
-          
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Loguearse
-            </Button>
-          
+
+          <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
+            Loguearse
+          </Button>
+
           <Grid container>
             <Grid item xs>
-              <Link to='/admin'>
-                ¿Olvidaste la contraseña?
-              </Link>
+              <Link to="/admin">¿Olvidaste la contraseña?</Link>
             </Grid>
             <Grid item>
-              <Link to='/register'>
-                ¿No tenes una cuenta?
-              </Link>
+              <Link to="/register">¿No tenes una cuenta?</Link>
             </Grid>
           </Grid>
         </form>

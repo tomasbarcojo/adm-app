@@ -10,14 +10,14 @@ import IconButton from '@material-ui/core/IconButton';
 import { Tooltip } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useLocation } from 'react-router-dom';
-import { useDispatch } from "react-redux";
+import { useDispatch } from 'react-redux';
 import EditIcon from '@material-ui/icons/Edit';
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
 // import { removeProduct, removeCategory } from "../../actions";
 
 const useStyles = makeStyles((theme) => ({
   IconButton: {
-    padding: '0px 5px 0px 5px'
+    padding: '0px 5px 0px 5px',
   },
 }));
 
@@ -25,7 +25,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function AlertDialogSlide({props, categoria}) {
+export default function AlertDialogSlide({ props, categoria }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
@@ -33,15 +33,15 @@ export default function AlertDialogSlide({props, categoria}) {
     setOpen(true);
   };
 
-  const dispatch = useDispatch()
-  const url = useLocation()
+  const dispatch = useDispatch();
+  const url = useLocation();
 
   const handleCancel = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   const handleClose = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     // if (url.pathname === '/admin/editCategory') {
     //   dispatch(removeCategory(categoria.id))
     //   setOpen(false);
@@ -55,15 +55,15 @@ export default function AlertDialogSlide({props, categoria}) {
   return (
     <div>
       <IconButton onClick={handleClickOpen} className={classes.IconButton}>
-        <Tooltip title='Editar'>
-            <EditIcon color='primary' />
+        <Tooltip title="Editar">
+          <EditIcon color="primary" />
         </Tooltip>
-        </IconButton>
-        <IconButton onClick={handleClickOpen} className={classes.IconButton}>
-        <Tooltip title='Eliminar'>
-            <DeleteIcon color='primary' />
+      </IconButton>
+      <IconButton onClick={handleClickOpen} className={classes.IconButton}>
+        <Tooltip title="Eliminar">
+          <DeleteIcon color="primary" />
         </Tooltip>
-        </IconButton>
+      </IconButton>
       <Dialog
         open={open}
         TransitionComponent={Transition}
@@ -72,11 +72,9 @@ export default function AlertDialogSlide({props, categoria}) {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">{"¿Desea eliminar?"}</DialogTitle>
+        <DialogTitle id="alert-dialog-slide-title">{'¿Desea eliminar?'}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            Esta accion borra para siempre
-          </DialogContentText>
+          <DialogContentText id="alert-dialog-slide-description">Esta accion borra para siempre</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancel} color="primary">

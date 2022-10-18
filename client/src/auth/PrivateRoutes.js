@@ -11,17 +11,7 @@ const PrivateRoutes = ({ component: Component, ...rest }) => {
     logged = JSON.parse(sessionStorage.getItem('logged'));
   }
 
-  return (
-    <Route {...rest} render={props => (
-     logged ? (
-      < Component  {...props} />
-      ) : (
-        <Redirect to='/login'/>
-          )
-      )} 
-    />
-  )
+  return <Route {...rest} render={(props) => (logged ? <Component {...props} /> : <Redirect to="/login" />)} />;
 };
-
 
 export default PrivateRoutes;

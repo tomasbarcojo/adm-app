@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
-import axios from 'axios'
+import axios from 'axios';
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import GridItem from "../../components/Grid/GridItem.js";
-import GridContainer from "../../components/Grid/GridContainer.js";
-import Button from "../../components/CustomButtons/Button.js";
-import CardFooter from "../../components/Card/CardFooter.js";
+import GridItem from '../../components/Grid/GridItem.js';
+import GridContainer from '../../components/Grid/GridContainer.js';
+import Button from '../../components/CustomButtons/Button.js';
+import CardFooter from '../../components/Card/CardFooter.js';
 import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
@@ -18,61 +18,61 @@ import Box from '@material-ui/core/Box';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 // core components
-import Card from "../../components/Card/Card.js";
-import CardHeader from "../../components/Card/CardHeader.js";
-import CardBody from "../../components/Card/CardBody.js";
-import Categories from './Categories.js'
+import Card from '../../components/Card/Card.js';
+import CardHeader from '../../components/Card/CardHeader.js';
+import CardBody from '../../components/Card/CardBody.js';
+import Categories from './Categories.js';
 
-import alt from '../../images/producto-sin-imagen.png'
+import alt from '../../images/producto-sin-imagen.png';
 
-import { getSuppliers } from '../../actions/suppliers'
-import { getCategories } from '../../actions/categories'
-import { createArticle } from '../../actions/article'
-import { useEffect } from "react";
-import Token from '../../Token/Token'
+import { getSuppliers } from '../../actions/suppliers';
+import { getCategories } from '../../actions/categories';
+import { createArticle } from '../../actions/article';
+import { useEffect } from 'react';
+import Token from '../../Token/Token';
 
 const useStyles = makeStyles((theme) => ({
   typo: {
-    paddingLeft: "25%",
-    marginBottom: "40px",
-    position: "relative"
+    paddingLeft: '25%',
+    marginBottom: '40px',
+    position: 'relative',
   },
   note: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-    bottom: "10px",
-    color: "#c0c1c2",
-    display: "block",
-    fontWeight: "400",
-    fontSize: "13px",
-    lineHeight: "13px",
-    left: "0",
-    marginLeft: "20px",
-    position: "absolute",
-    width: "260px"
+    bottom: '10px',
+    color: '#c0c1c2',
+    display: 'block',
+    fontWeight: '400',
+    fontSize: '13px',
+    lineHeight: '13px',
+    left: '0',
+    marginLeft: '20px',
+    position: 'absolute',
+    width: '260px',
   },
   cardCategoryWhite: {
-    color: "rgba(255,255,255,.62)",
-    margin: "0",
-    fontSize: "14px",
-    marginTop: "0",
-    marginBottom: "0"
+    color: 'rgba(255,255,255,.62)',
+    margin: '0',
+    fontSize: '14px',
+    marginTop: '0',
+    marginBottom: '0',
   },
   cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
+    color: '#FFFFFF',
+    marginTop: '0px',
+    minHeight: 'auto',
+    fontWeight: '300',
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none"
+    marginBottom: '3px',
+    textDecoration: 'none',
   },
   articleRow: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   article: {
-    margin: '100px'
+    margin: '100px',
   },
   input: {
     margin: '27px 0 0 0',
@@ -93,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 }));
 
@@ -105,8 +105,8 @@ export default function Articles() {
   const [progress, setProgress] = useState(0);
   const [files, setFiles] = useState(null);
   const [preview, setPreview] = useState(null);
-  const suppliers = useSelector(state => state.suppliers)
-  const categories = useSelector(state => state.categories)
+  const suppliers = useSelector((state) => state.suppliers);
+  const categories = useSelector((state) => state.categories);
   var token = Token();
   const [data, setData] = useState({
     articleName: '',
@@ -118,9 +118,9 @@ export default function Articles() {
   });
 
   useEffect(() => {
-    dispatch(getSuppliers(token))
-    dispatch(getCategories(token))
-  }, [])
+    dispatch(getSuppliers(token));
+    dispatch(getCategories(token));
+  }, []);
 
   const resetForm = () => {
     setData({
@@ -131,40 +131,41 @@ export default function Articles() {
       supplier: '',
       price: '',
       obs: '',
-    })
-  }
+    });
+  };
 
   const handleNewSupplier = () => {
-    setShowNew(!showNew)
-  }
+    setShowNew(!showNew);
+  };
 
   const handleChange = (event) => {
-    if (event.target.name !== "") {
-      setData({ ...data, [event.target.name]: event.target.value })
+    if (event.target.name !== '') {
+      setData({ ...data, [event.target.name]: event.target.value });
     } else {
-      setData({ ...data, [event.target.id]: event.target.value })
+      setData({ ...data, [event.target.id]: event.target.value });
     }
-  }
+  };
 
   const fileSelectedHandler = (event) => {
     if (event.target.files.length !== 0) {
-      setFiles(event.target.files[0])
-      setPreview(URL.createObjectURL(event.target.files[0]))
+      setFiles(event.target.files[0]);
+      setPreview(URL.createObjectURL(event.target.files[0]));
     } else {
-      setPreview(null)
+      setPreview(null);
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const formData = new FormData();
-    formData.append("images", files);
-    await axios.post('http://localhost:3001/upload/', formData, {
-      onUploadProgress: ProgressEvent => {
-        setProgress(ProgressEvent.loaded / ProgressEvent.total * 100)
-      }
-    })
-      .then(img => {
+    formData.append('images', files);
+    await axios
+      .post('http://localhost:3001/upload/', formData, {
+        onUploadProgress: (ProgressEvent) => {
+          setProgress((ProgressEvent.loaded / ProgressEvent.total) * 100);
+        },
+      })
+      .then((img) => {
         const dataArticle = {
           articleName: data.articleName,
           categoryId: data.categoryId,
@@ -172,12 +173,12 @@ export default function Articles() {
           price: data.price,
           image: img.data,
           obs: data.obs,
-        }
-        console.log(dataArticle)
-        dispatch(createArticle(dataArticle, token, enqueueSnackbar, closeSnackbar))
-        resetForm()
-      })
-  }
+        };
+        console.log(dataArticle);
+        dispatch(createArticle(dataArticle, token, enqueueSnackbar, closeSnackbar));
+        resetForm();
+      });
+  };
 
   function LinearProgressWithLabel(props) {
     return (
@@ -186,9 +187,7 @@ export default function Articles() {
           <LinearProgress variant="determinate" {...props} />
         </Box>
         <Box minWidth={35}>
-          <Typography variant="body2" color="textSecondary">{`${Math.round(
-            props.value,
-          )}%`}</Typography>
+          <Typography variant="body2" color="textSecondary">{`${Math.round(props.value)}%`}</Typography>
         </Box>
       </Box>
     );
@@ -205,10 +204,14 @@ export default function Articles() {
             <CardHeader color="primary">
               <div className={classes.card}>
                 <h4 className={classes.cardTitleWhite}>Nuevo articulo</h4>
-                {showNew ? null : <Button className={classes.buttonCard} color="info" onClick={handleNewSupplier}>Añadir</Button>}
+                {showNew ? null : (
+                  <Button className={classes.buttonCard} color="info" onClick={handleNewSupplier}>
+                    Añadir
+                  </Button>
+                )}
               </div>
             </CardHeader>
-            {showNew ?
+            {showNew ? (
               <>
                 <form onSubmit={handleSubmit}>
                   <CardBody>
@@ -222,7 +225,7 @@ export default function Articles() {
                               id="articleName"
                               onChange={handleChange}
                               fullWidth
-                              autoComplete='off'
+                              autoComplete="off"
                               value={data.articleName}
                             />
                           </GridItem>
@@ -261,8 +264,8 @@ export default function Articles() {
                               id="code"
                               onChange={handleChange}
                               fullWidth
-                              autoComplete='off'
-                              type='number'
+                              autoComplete="off"
+                              type="number"
                               value={data.code}
                             />
                           </GridItem>
@@ -273,8 +276,8 @@ export default function Articles() {
                               id="price"
                               onChange={handleChange}
                               fullWidth
-                              autoComplete='off'
-                              type='number'
+                              autoComplete="off"
+                              type="number"
                               value={data.price}
                             />
                           </GridItem>
@@ -287,8 +290,8 @@ export default function Articles() {
                               id="stockini"
                               onChange={handleChange}
                               fullWidth
-                              autoComplete='off'
-                              type='number'
+                              autoComplete="off"
+                              type="number"
                               value={data.stockini}
                             />
                           </GridItem>
@@ -299,8 +302,8 @@ export default function Articles() {
                               id="stockalert"
                               onChange={handleChange}
                               fullWidth
-                              autoComplete='off'
-                              type='number'
+                              autoComplete="off"
+                              type="number"
                               value={data.stockalert}
                             />
                           </GridItem>
@@ -315,7 +318,7 @@ export default function Articles() {
                               fullWidth
                               multiline
                               rows={4}
-                              autoComplete='off'
+                              autoComplete="off"
                               value={data.obs}
                             />
                           </GridItem>
@@ -325,40 +328,48 @@ export default function Articles() {
                       <div className="contentImage">
                         <h5>Imagen</h5>
 
-                        {preview ?
-                          <img style={{ maxWidth: '300px', maxHeight: '300px', objectFit: 'contain' }} src={preview} alt="Imagen del producto" />
-                          :
-                          <img style={{ maxWidth: '300px', maxHeight: '300px', objectFit: 'contain' }} src={alt} alt="Sin imagen" />
-                        }
+                        {preview ? (
+                          <img
+                            style={{ maxWidth: '300px', maxHeight: '300px', objectFit: 'contain' }}
+                            src={preview}
+                            alt="Imagen del producto"
+                          />
+                        ) : (
+                          <img
+                            style={{ maxWidth: '300px', maxHeight: '300px', objectFit: 'contain' }}
+                            src={alt}
+                            alt="Sin imagen"
+                          />
+                        )}
 
                         <input
                           style={{ marginTop: '20px' }}
-                          type='file'
+                          type="file"
                           onChange={fileSelectedHandler}
                           accept="image/*"
                         />
 
-                        {progress > 0 ?
+                        {progress > 0 ? (
                           <>
                             <LinearProgressWithLabel value={progress} />
                           </>
-                          : null
-                        }
+                        ) : null}
                       </div>
                     </div>
-
                   </CardBody>
                   <CardFooter>
-                    <Button color="primary" type='submit'>Listo</Button>
-                    <Button color="danger" onClick={handleNewSupplier}>Cancelar</Button>
+                    <Button color="primary" type="submit">
+                      Listo
+                    </Button>
+                    <Button color="danger" onClick={handleNewSupplier}>
+                      Cancelar
+                    </Button>
                   </CardFooter>
                 </form>
               </>
-              : null
-            }
+            ) : null}
           </Card>
           {/* // </GridItem> */}
-
         </GridItem>
       </GridContainer>
     </>
