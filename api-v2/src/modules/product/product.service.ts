@@ -17,7 +17,7 @@ import { UpdateProductInput } from './dto/update-product-input.dto';
 @Injectable()
 export class ProductService extends BaseService<Product> {
   constructor(
-    @Inject(appConfig.KEY)
+    @Inject(appConfig.KEY) 
     private readonly appConfiguration: ConfigType<typeof appConfig>,
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,

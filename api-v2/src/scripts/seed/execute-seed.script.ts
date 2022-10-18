@@ -7,20 +7,23 @@ import { CategoryModule } from '../../modules/category/category.module';
 import { CategoryService } from '../../modules/category/category.service';
 import { ProductModule } from '../../modules/product/product.module';
 import { ProductService } from '../../modules/product/product.service';
+import { PricelistModule } from '../../modules/pricelist/pricelist.module'
+import { PricelistService } from '../../modules/pricelist/pricelist.service';
 
 const boostrap = async () => {
   const app = await NestFactory.createApplicationContext(AppModule);
   const userService = app.select(UserModule).get(UserService, { strict: true });
   const productService = app.select(ProductModule).get(ProductService, { strict: true });
   const categoryService = app.select(CategoryModule).get(CategoryService, { strict: true });
+  const pricelistService = app.select(PricelistModule).get(PricelistService, { strict: true });
 
-  // await userService.create({
-  //   firstName: 'Tomas',
-  //   lastName: 'Barcojo',
-  //   email: faker.internet.email(),
-  //   username: 'tomi',
-  //   password: '112233',
-  // });
+  await userService.create({
+    firstName: 'Admin',
+    lastName: 'Admin',
+    email: faker.internet.email(),
+    username: 'admin',
+    password: '12345',
+  });
   // await Supplier.create({
   //   businessName: 'Activa SRL',
   //   cuit: '30707651926',
