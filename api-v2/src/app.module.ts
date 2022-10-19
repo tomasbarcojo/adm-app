@@ -21,6 +21,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { JwtAuthGuard } from './modules/auth/jwt-auth.guard';
 import { CategoryModule } from './modules/category/category.module';
 import { PricelistModule } from './modules/pricelist/pricelist.module';
+import { PurchaseModule } from './modules/purchase/purcharse.module';
 
 @Module({
   imports: [
@@ -57,15 +58,16 @@ import { PricelistModule } from './modules/pricelist/pricelist.module';
     ProductModule,
     UserModule,
     CategoryModule,
-    PricelistModule
+    PricelistModule,
+    PurchaseModule,
   ],
   controllers: [AppController, HealthController],
   providers: [
     AppService,
-    {
-      provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: JwtAuthGuard,
+    // },
   ],
 })
 export class AppModule {}
