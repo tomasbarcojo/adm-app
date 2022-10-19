@@ -39,7 +39,7 @@ module.exports = {
         }
         for (var i = 0; i < 300; i++) {
             await Article.create({
-                articleName: faker.commerce.productName(),
+                name: faker.commerce.productName(),
                 code: faker.datatype.number(),
                 price: faker.commerce.price(),
                 stock: faker.datatype.number(),

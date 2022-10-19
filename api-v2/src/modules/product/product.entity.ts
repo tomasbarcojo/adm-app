@@ -38,7 +38,7 @@ export class Product extends BaseEntity {
     example: 'product name',
   })
   @Column({ type: 'varchar', length: 255, nullable: false })
-  articleName!: string;
+  name!: string;
 
   @ApiProperty({
     description: 'the code of the product',
