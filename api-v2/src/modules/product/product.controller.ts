@@ -24,8 +24,8 @@ import { UpdateProductInput } from './dto/update-product-input.dto';
 import { PaginationDto } from '../dto/pagination.dto';
 import { GetProductByCategoryId } from './dto/get-product-by-categoryid.dto';
 
-@ApiTags('article')
-@Controller('article')
+@ApiTags('product')
+@Controller('product')
 export class ProductController {
   constructor(private readonly service: ProductService) {}
 
@@ -38,7 +38,7 @@ export class ProductController {
     summary: 'create a new product',
     description: 'create a new product',
   })
-  @Post('/createArticle')
+  @Post('/createProduct')
   async create(@Body() input: CreateProductInput): Promise<Product> {
     return this.service.create(input);
   }
@@ -141,6 +141,19 @@ export class ProductController {
     @Param('categoryId') categoryId: string,
     @Query() { page = 1, limit = 30 }: PaginationDto,
   ): Promise<GetProductByCategoryId> {
-    return this.service.getProductByCategoryId(categoryId, {page, limit});
+    return this.service.getProductByCategoryId(categoryId, { page, limit });
+  }
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'an updated stock product',
+    type: Product,
+  })
+  @ApiOperation({
+    summary: 'update an stock of a product',
+    description: 'update an stock of a product, based on the id',
+  })
+  @Patch('/stock/:id')
+  async updateStock(@Body('stock') stock: number, @Param('id') id: number): Promise<Product> {
+    return this.service.updateStock(stock, id);
   }
 }

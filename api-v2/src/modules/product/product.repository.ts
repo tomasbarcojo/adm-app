@@ -17,3 +17,4 @@ export class ProductRepository {
       return { data, totalPages, totalData: data.length, total: dataCount };
     }
 }
+

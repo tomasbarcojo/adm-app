@@ -52,7 +52,7 @@ export class PricelistService extends BaseService<Pricelist> {
     
           if (q)
             query
-              .where('articleName like :q', {
+              .where('name like :q', {
                 q: `%${q}%`,
               })
               .andWhere('id = :q', { q: `%${q}%` });
