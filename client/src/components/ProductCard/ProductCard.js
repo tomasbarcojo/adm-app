@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RecipeReviewCard({ props }) {
+export default function ProductCard({ props }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const string = 'SMOKING REGULAR (Diam 8mm / Long 15mm)';
@@ -58,10 +58,10 @@ export default function RecipeReviewCard({ props }) {
 
   return (
     <Card className={classes.root}>
-      <CardMedia className={classes.media} image={props.image} title={props.articleName} />
+      <CardMedia className={classes.media} image={props.image} title={props.name} />
       <CardContent>
         <Typography className={classes.title} gutterBottom variant="h6">
-          {props.articleName.length > 32 ? props.articleName.substring(0, 32) + '...' : props.articleName}
+          {props.name.length > 32 ? props.name.substring(0, 32) + '...' : props.name}
         </Typography>
         <Typography variant="h5" color="textSecondary" component="p">
           {props.price.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}

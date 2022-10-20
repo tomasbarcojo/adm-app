@@ -9,7 +9,7 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import TableList from '../views/Clients/Clients.js';
 import ClientList from '../views/Clients/ClientsList';
 import Articles from '../views/Articles/Articles.js';
-import ArticlesList from '../views/Articles/ProductList.js';
+import ProductList from '../views/Articles/ProductList.js';
 import Categories from '../views/Category/Categories';
 
 export const purchases = [
@@ -72,7 +72,7 @@ export const artAndCat = [
     path: '/products',
     name: 'Productos',
     icon: ListIcon,
-    component: ArticlesList,
+    component: ProductList,
     layout: '/admin',
   },
   {
