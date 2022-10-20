@@ -22,10 +22,10 @@ import { GetAllProductsInput } from './dto/get-all-products-input.dto';
 import { GetOneProductInput } from './dto/get-one-product-input.dto';
 import { UpdateProductInput } from './dto/update-product-input.dto';
 import { PaginationDto } from '../dto/pagination.dto';
-import { GetProductByCategoryId } from './dto/get-product-by-categoryid.dto';
+import { GetAllProductsOutput } from './dto/get-product-by-categoryid.dto';
 
-@ApiTags('article')
-@Controller('article')
+@ApiTags('product')
+@Controller('product')
 export class ProductController {
   constructor(private readonly service: ProductService) {}
 
@@ -38,7 +38,7 @@ export class ProductController {
     summary: 'create a new product',
     description: 'create a new product',
   })
-  @Post('/createArticle')
+  @Post('/createProduct')
   async create(@Body() input: CreateProductInput): Promise<Product> {
     return this.service.create(input);
   }
@@ -53,8 +53,11 @@ export class ProductController {
     description: 'get a list of product, based on the conditions',
   })
   @Get()
-  async getAll(@Query() input: GetAllProductsInput): Promise<Product[]> {
-    return this.service.getAll(input);
+  async getAll(
+    @Query() input: GetAllProductsInput,
+    @Query() pagination: PaginationDto,
+  ): Promise<GetAllProductsOutput> {
+    return this.service.getAll(input, pagination);
   }
 
   @ApiResponse({
@@ -125,22 +128,5 @@ export class ProductController {
   @Patch('/:id/finish')
   async finish(@Param() input: GetOneProductInput): Promise<Product> {
     return this.service.finish({ id: input.id });
-  }
-
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'a category',
-    type: Product,
-  })
-  @ApiOperation({
-    summary: 'get a category',
-    description: 'get a category, based on the id',
-  })
-  @Get('/category/:categoryId')
-  async getProductByCategoryId(
-    @Param('categoryId') categoryId: string,
-    @Query() { page = 1, limit = 30 }: PaginationDto,
-  ): Promise<GetProductByCategoryId> {
-    return this.service.getProductByCategoryId(categoryId, {page, limit});
   }
 }

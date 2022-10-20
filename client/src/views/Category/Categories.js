@@ -90,11 +90,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Articles() {
+export default function Categories() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const [showNew, setShowNew] = useState(false);
+  const [showNew, setShowNew] = useState(true);
   const [progress, setProgress] = useState(0);
   const [files, setFiles] = useState(null);
   const [preview, setPreview] = useState(null);

@@ -18,7 +18,7 @@ import EditPricelist from '../views/PriceLists/EditPricelist';
 import AddIcon from '@material-ui/icons/Add';
 
 // import purchases from './purchases'
-import { clients, purchases, artAndCat } from './purchases';
+import { clients, purchases, artAndCat } from './nestedRoutes';
 
 const dashboardRoutes = [
   {
@@ -57,7 +57,7 @@ const dashboardRoutes = [
   // },
   {
     // path: "/articles",
-    name: 'Articulos/Categorias',
+    name: 'Productos/Categorias',
     icon: BubbleChart,
     // layout: "/admin",
     notSideBar: true,

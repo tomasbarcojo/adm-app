@@ -52,7 +52,7 @@ const boostrap = async () => {
   }
   for (var i = 0; i < 300; i++) {
     await productService.create({
-      articleName: faker.commerce.productName(),
+      name: faker.commerce.productName(),
       code: String(faker.commerce.product()),
       price: Number(faker.commerce.price()),
       stock: faker.datatype.number(),
@@ -74,16 +74,16 @@ const boostrap = async () => {
   //     altphone: faker.phone.phoneNumber(),
   //   });
   // }
-  // await Article.create({
-  //   articleName: 'Prueba articulo 2',
+  // await productService.create({
+  //   name: 'Prueba articulo 2',
   //   price: '1000',
   //   stock: '10',
   //   image: '8719',
   //   categoryId: 1,
   //   supplierId: 1,
   // });
-  // await Article.create({
-  //   articleName: 'Prueba articulo 3',
+  // await productService.create({
+  //   name: 'Prueba articulo 3',
   //   price: '1000',
   //   stock: '10',
   //   image: '8719',

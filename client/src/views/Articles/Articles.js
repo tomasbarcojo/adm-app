@@ -21,7 +21,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import Card from '../../components/Card/Card.js';
 import CardHeader from '../../components/Card/CardHeader.js';
 import CardBody from '../../components/Card/CardBody.js';
-import Categories from './Categories.js';
+import Categories from '../Category/Categories.js';
 
 import alt from '../../images/producto-sin-imagen.png';
 
@@ -101,7 +101,7 @@ export default function Articles() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const [showNew, setShowNew] = useState(false);
+  const [showNew, setShowNew] = useState(true);
   const [progress, setProgress] = useState(0);
   const [files, setFiles] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -196,9 +196,9 @@ export default function Articles() {
   return (
     <>
       <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
+        {/* <GridItem xs={12} sm={12} md={12}>
           <Categories />
-        </GridItem>
+        </GridItem> */}
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
