@@ -22,6 +22,7 @@ import { JwtAuthGuard } from './modules/auth/jwt-auth.guard';
 import { CategoryModule } from './modules/category/category.module';
 import { PricelistModule } from './modules/pricelist/pricelist.module';
 import { PurchaseModule } from './modules/purchase/purcharse.module';
+import { SupplierModule } from './modules/supplier/supplier.module';
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { PurchaseModule } from './modules/purchase/purcharse.module';
     CategoryModule,
     PricelistModule,
     PurchaseModule,
+    SupplierModule
   ],
   controllers: [AppController, HealthController],
   providers: [
