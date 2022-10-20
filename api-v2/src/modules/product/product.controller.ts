@@ -24,8 +24,8 @@ import { UpdateProductInput } from './dto/update-product-input.dto';
 import { PaginationDto } from '../dto/pagination.dto';
 import { GetAllProductsOutput } from './dto/get-product-by-categoryid.dto';
 
-@ApiTags('article')
-@Controller('article')
+@ApiTags('product')
+@Controller('product')
 export class ProductController {
   constructor(private readonly service: ProductService) {}
 
@@ -38,7 +38,7 @@ export class ProductController {
     summary: 'create a new product',
     description: 'create a new product',
   })
-  @Post('/createArticle')
+  @Post('/createProduct')
   async create(@Body() input: CreateProductInput): Promise<Product> {
     return this.service.create(input);
   }

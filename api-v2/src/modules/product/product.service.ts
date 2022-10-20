@@ -20,7 +20,7 @@ import { GetAllProductsOutput } from './dto/get-product-by-categoryid.dto';
 @Injectable()
 export class ProductService extends BaseService<Product> {
   constructor(
-    @Inject(appConfig.KEY) 
+    @Inject(appConfig.KEY)
     private readonly appConfiguration: ConfigType<typeof appConfig>,
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
@@ -78,6 +78,24 @@ export class ProductService extends BaseService<Product> {
       ...input,
     });
 
+    const saved = await this.productRepository.save(preloaded);
+
+    return {
+      ...existing,
+      ...saved,
+    } as Product;
+  }
+
+  public async updateStock(stock: number, id: number): Promise<Product> {
+    const existing = await this.getOneByOneFields({
+      fields: { id },
+      checkIfExists: true,
+    });
+
+    const preloaded = await this.productRepository.preload({
+      id: existing.id,
+      stock,
+    });
     const saved = await this.productRepository.save(preloaded);
 
     return {

@@ -9,7 +9,7 @@ export class CreateProductInput {
   })
   @Length(1, 255)
   @IsString()
-  readonly articleName: string;
+  readonly name: string;
 
   @ApiProperty({
     description: 'the code of the product',
