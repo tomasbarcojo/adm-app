@@ -1,12 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString } from "class-validator";
 
-export class GetOnePurchaseInput {
+export class GetSupplierDetailInput {
     @ApiProperty({
-        description: 'purcharse id',
+        description: 'supplier id',
         type: 'string',
         example: '1',
       })
       @IsString()
-      readonly id?: number;
+      readonly suppierId?: number;
 }

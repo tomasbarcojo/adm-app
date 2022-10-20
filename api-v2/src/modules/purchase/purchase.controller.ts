@@ -59,7 +59,7 @@ export class PurchaseController {
   })
   @ApiOperation({
     summary: 'get a purchase',
-    description: 'get a purcharse, based on the id',
+    description: 'get a purchase, based on the id',
   })
   @Get('/:id')
   async getOne(@Param() input: GetOnePurchaseInput): Promise<Purchase> {
@@ -73,7 +73,7 @@ export class PurchaseController {
   })
   @ApiOperation({
     summary: 'update a purchase',
-    description: 'update a purcharse, based on the id',
+    description: 'update a purchase, based on the id',
   })
   @Patch('/:id')
   async update(@Param() getOneInput: GetOnePurchaseInput, @Body() input: UpdatePurchaseInput): Promise<Purchase> {
