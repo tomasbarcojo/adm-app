@@ -19,7 +19,7 @@ async function bootstrap() {
   app.enableCors();
 
   // global endpoint validations with class-validator
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
   // getting the config service
   const configService = app.get(ConfigService);

@@ -22,7 +22,7 @@ import { GetAllProductsInput } from './dto/get-all-products-input.dto';
 import { GetOneProductInput } from './dto/get-one-product-input.dto';
 import { UpdateProductInput } from './dto/update-product-input.dto';
 import { PaginationDto } from '../dto/pagination.dto';
-import { GetProductByCategoryId } from './dto/get-product-by-categoryid.dto';
+import { GetAllProductsOutput } from './dto/get-product-by-categoryid.dto';
 
 @ApiTags('product')
 @Controller('product')
@@ -53,8 +53,11 @@ export class ProductController {
     description: 'get a list of product, based on the conditions',
   })
   @Get()
-  async getAll(@Query() input: GetAllProductsInput): Promise<Product[]> {
-    return this.service.getAll(input);
+  async getAll(
+    @Query() input: GetAllProductsInput,
+    @Query() pagination: PaginationDto,
+  ): Promise<GetAllProductsOutput> {
+    return this.service.getAll(input, pagination);
   }
 
   @ApiResponse({
@@ -125,35 +128,5 @@ export class ProductController {
   @Patch('/:id/finish')
   async finish(@Param() input: GetOneProductInput): Promise<Product> {
     return this.service.finish({ id: input.id });
-  }
-
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'a category',
-    type: Product,
-  })
-  @ApiOperation({
-    summary: 'get a category',
-    description: 'get a category, based on the id',
-  })
-  @Get('/category/:categoryId')
-  async getProductByCategoryId(
-    @Param('categoryId') categoryId: string,
-    @Query() { page = 1, limit = 30 }: PaginationDto,
-  ): Promise<GetProductByCategoryId> {
-    return this.service.getProductByCategoryId(categoryId, { page, limit });
-  }
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'an updated stock product',
-    type: Product,
-  })
-  @ApiOperation({
-    summary: 'update an stock of a product',
-    description: 'update an stock of a product, based on the id',
-  })
-  @Patch('/stock/:id')
-  async updateStock(@Body('stock') stock: number, @Param('id') id: number): Promise<Product> {
-    return this.service.updateStock(stock, id);
   }
 }

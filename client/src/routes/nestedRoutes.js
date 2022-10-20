@@ -9,7 +9,8 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import TableList from '../views/Clients/Clients.js';
 import ClientList from '../views/Clients/ClientsList';
 import Articles from '../views/Articles/Articles.js';
-import ArticlesList from '../views/Articles/ArticlesList.js';
+import ArticlesList from '../views/Articles/ProductList.js';
+import Categories from '../views/Category/Categories';
 
 export const purchases = [
   {
@@ -61,29 +62,29 @@ export const clients = [
 
 export const artAndCat = [
   {
-    path: '/newarticle',
-    name: 'Añadir cliente',
+    path: '/newproduct',
+    name: 'Añadir producto',
     icon: AddIcon,
     component: Articles,
     layout: '/admin',
   },
   {
-    path: '/articles',
-    name: 'Clientes',
+    path: '/products',
+    name: 'Productos',
     icon: ListIcon,
     component: ArticlesList,
     layout: '/admin',
   },
   {
     path: '/newcategory',
-    name: 'Añadir cliente',
+    name: 'Añadir categoria',
     icon: AddIcon,
-    component: TableList,
+    component: Categories,
     layout: '/admin',
   },
   {
     path: '/categories',
-    name: 'Clientes',
+    name: 'Categorias',
     icon: ListIcon,
     component: ClientList,
     layout: '/admin',

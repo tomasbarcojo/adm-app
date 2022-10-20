@@ -9,6 +9,7 @@ import CategoryProducts from '../components/CategoryProducts/CategoryProducts';
 import { useDispatch } from 'react-redux';
 import { getUser } from '../actions/users';
 import { useEffect } from 'react';
+import ProductList from '../views/Articles/ProductList';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ const App = () => {
         <Route exact path="/register" component={Register} />
         <PrivateRoutes path="/admin" component={Admin} />
         <Route exact path="/category/:id" component={CategoryProducts} />
+        <Route exact path="/asd" component={ProductList} />
       </Switch>
     </Router>
   );
