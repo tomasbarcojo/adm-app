@@ -50,25 +50,21 @@ export const createArticle = (data, token, enqueueSnackbar, closeSnackbar) => as
   }
 };
 
-export const getArticles = (token) => async (dispatch) => {
-  try {
-    await fetch(`${REACT_APP_URL_API}/article`, {
-      headers: {
-        'Content-Type': 'application/json',
-        'auth-token': token,
-      },
-    })
-      .then((data) => data.json())
-      .then((res) => {
-        if (res.status === 200) {
-          dispatch({
-            type: 'GET_ARTICLES',
-            payload: res.articles,
-          });
-        }
-      });
-  } catch (err) {
-    console.log(err);
+export const getArticles = (token, page, limit) => async (dispatch) => {
+  const res = await fetch(`${REACT_APP_URL_API}/article?skip=${page}&limit=30`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const result = await res.json();
+
+  if (res.status === 200) {
+    dispatch({
+      type: 'GET_ARTICLES',
+      payload: result,
+    });
   }
 };
 
