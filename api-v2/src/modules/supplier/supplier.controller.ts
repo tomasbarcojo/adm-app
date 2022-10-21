@@ -7,7 +7,7 @@ import { UpdateSupplierInput } from "./dto/update-supplier-input.dto";
 import { Supplier } from "./supplier.entity";
 import { SupplierService } from "./supplier.service";
 
-@ApiTags('supplier')
+@ApiTags('supplier') //
 @Controller('supplier')
 export class SupplierController {
   constructor(private readonly service: SupplierService) {}
