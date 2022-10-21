@@ -11,6 +11,7 @@ import ClientList from '../views/Clients/ClientsList';
 import Articles from '../views/Articles/Articles.js';
 import ArticlesList from '../views/Articles/ProductList.js';
 import Categories from '../views/Category/Categories';
+import CategoriesList from '../views/Category/CategoriesList';
 
 export const purchases = [
   {
@@ -86,7 +87,7 @@ export const artAndCat = [
     path: '/categories',
     name: 'Categorias',
     icon: ListIcon,
-    component: ClientList,
+    component: CategoriesList,
     layout: '/admin',
   },
 ];
