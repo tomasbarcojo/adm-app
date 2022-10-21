@@ -2,9 +2,9 @@ import { drawerWidth, transition, container } from '../stylesVariables';
 
 const appStyle = (theme) => ({
   wrapper: {
-    position: 'relative',
-    top: '0',
-    height: '100vh',
+    // position: 'relative',
+    // top: '0',
+    // height: '100vh',
   },
   mainPanel: {
     [theme.breakpoints.up('md')]: {

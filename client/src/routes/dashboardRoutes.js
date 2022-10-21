@@ -19,6 +19,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 // import purchases from './purchases'
 import { clients, purchases, artAndCat } from './nestedRoutes';
+import ProductList from '../views/Products/ProductList';
 
 const dashboardRoutes = [
   {
@@ -28,6 +29,13 @@ const dashboardRoutes = [
     component: DashboardPage,
     layout: '/admin',
   },
+  // {
+  //   path: '/dashboard2',
+  //   name: 'Panel2',
+  //   icon: Dashboard,
+  //   component: ProductList,
+  //   layout: '/admin',
+  // },
   {
     // path: "/suppliers",
     name: 'Proveedores',

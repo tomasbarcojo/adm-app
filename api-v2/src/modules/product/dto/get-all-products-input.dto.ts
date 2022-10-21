@@ -6,21 +6,11 @@ export class GetAllProductsInput {
   @ApiPropertyOptional({
     description: 'search string',
     type: 'string',
-    example: 'Product Test',
+    example: 'test',
   })
   @IsOptional()
   @IsString()
-  readonly name?: string;
-
-  @ApiPropertyOptional({
-    description: 'search string',
-    type: 'number',
-    example: '1',
-  })
-  @IsOptional()
-  @IsNumber()
-  @Type(() => Number)
-  readonly id?: number;
+  readonly search?: string;
 
   @ApiPropertyOptional({
     description: 'categoryId of the product',

@@ -6,23 +6,21 @@ import { Product } from './product.entity';
 
 export class ProductRepository {
   async getAllProducts(input: GetAllProductsInput, pagination: PaginationDto): Promise<GetAllProductsOutput> {
-    const { id, categoryId, name } = input;
+    const { search, categoryId } = input;
     const { page, limit } = pagination;
+    const dataQuery = getConnection().createQueryBuilder().select('*').from(Product, 'P').where('P.deletedAt IS NULL');
 
-    const dataQuery = getConnection().createQueryBuilder().select('*').from(Product, 'P');
-
-    if (id) {
-      dataQuery.where('P.id like :q', {
-        id: `%${id}%`,
-      });
-    }
-    if (name) {
-      dataQuery.where('P.name like :q', {
-        name: `%${name}%`,
-      });
+    if (search) {
+      dataQuery
+        .andWhere('P.id like :search', {
+          search: `%${search}%`,
+        })
+        .orWhere('P.name like :search', {
+          search: `%${search}%`,
+        });
     }
     if (categoryId) {
-      dataQuery.where('P.categoryId = :categoryId', { categoryId: categoryId });
+      dataQuery.andWhere('P.categoryId = :categoryId', { categoryId: categoryId });
     }
 
     const dataCount = await dataQuery.getCount();
@@ -35,4 +33,3 @@ export class ProductRepository {
     return { data, totalPages, totalData: data.length, total: dataCount };
   }
 }
-
