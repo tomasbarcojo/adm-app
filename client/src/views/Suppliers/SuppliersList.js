@@ -58,6 +58,7 @@ export default function SuppliersList() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const suppliers = useSelector((state) => state.suppliers);
+  console.log("SUPPLIER", suppliers)
   var token = Token();
 
   useEffect(() => {
