@@ -12,7 +12,7 @@ export class ProductRepository {
 
     if (search) {
       dataQuery
-        .andWhere('P.id like :search', {
+        .orWhere('P.id like :search', {
           search: `%${search}%`,
         })
         .orWhere('P.name like :search', {

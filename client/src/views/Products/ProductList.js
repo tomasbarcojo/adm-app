@@ -21,7 +21,7 @@ export default function ProductList() {
     setIsLoading(true);
     const newPage = page + 1;
     // await new Promise((resolve) => setTimeout(resolve, 2000))
-    const res = await fetch(`${REACT_APP_URL_API}/product?page=${page}&limit=50`, {
+    const res = await fetch(`${REACT_APP_URL_API}/product?page=${page}`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
