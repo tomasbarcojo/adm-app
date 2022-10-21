@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
@@ -28,7 +28,6 @@ import alt from '../../images/producto-sin-imagen.png';
 import { getSuppliers } from '../../actions/suppliers';
 import { getCategories } from '../../actions/categories';
 import { createArticle } from '../../actions/article';
-import { useEffect } from 'react';
 import Token from '../../Token/Token';
 
 const useStyles = makeStyles((theme) => ({

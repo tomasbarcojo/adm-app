@@ -9,7 +9,7 @@ import CategoryProducts from '../components/CategoryProducts/CategoryProducts';
 import { useDispatch } from 'react-redux';
 import { getUser } from '../actions/users';
 import { useEffect } from 'react';
-import ProductList from '../views/Articles/ProductList';
+import ProductList from '../views/Products/ProductList';
 
 const App = () => {
   const dispatch = useDispatch();

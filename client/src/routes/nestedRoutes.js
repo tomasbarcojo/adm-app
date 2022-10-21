@@ -8,8 +8,8 @@ import ListIcon from '@material-ui/icons/List';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import TableList from '../views/Clients/Clients.js';
 import ClientList from '../views/Clients/ClientsList';
-import Articles from '../views/Articles/Articles.js';
-import ProductList from '../views/Articles/ProductList.js';
+import Articles from '../views/Products/Articles.js';
+import ProductList from '../views/Products/ProductList.js';
 import Categories from '../views/Category/Categories';
 
 export const purchases = [

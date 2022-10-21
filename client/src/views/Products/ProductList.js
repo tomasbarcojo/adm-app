@@ -19,9 +19,8 @@ export default function ProductList() {
   const fetchProducts = async () => {
     if (isLoading) return;
     setIsLoading(true);
-    console.log('2');
     const newPage = page + 1;
-
+    // await new Promise((resolve) => setTimeout(resolve, 2000))
     const res = await fetch(`${REACT_APP_URL_API}/product?page=${page}&limit=50`, {
       headers: {
         'Content-Type': 'application/json',
@@ -33,23 +32,18 @@ export default function ProductList() {
     setTotalCount(result.total);
 
     if (result && result.data) {
-      console.log('3');
       const newProducts = [...listProducts, ...result.data];
       console.log(newProducts.length, totalCount);
       if (newProducts.length >= totalCount) {
-        console.log('4');
         setHasMore(false);
       }
       setListProducts(newProducts);
 
       setPage(newPage);
     }
-    console.log('6');
 
     setIsLoading(false);
   };
-console.log('bokita', isLoading, hasMore)
-
 
   return (
     <>
@@ -62,10 +56,6 @@ console.log('bokita', isLoading, hasMore)
           </div>
         }
         pageStart={0}
-        useWindow
-        style={{background: 'red', height: 'auto'}}
-
-        threshold={5}
       >
         {listProducts.map((item, index) => {
           return <div>This is a div element #{index + 1} inside InfiniteScroll</div>;
