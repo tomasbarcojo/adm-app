@@ -14,7 +14,6 @@ const initialstate = {
 };
 
 export default function rootReducer(state = initialstate, action) {
-  
   switch (action.type) {
     // USER
 
@@ -73,7 +72,7 @@ export default function rootReducer(state = initialstate, action) {
       };
 
     // CLIENTS
-    
+
     case 'GET_CLIENTS':
       return {
         ...state,

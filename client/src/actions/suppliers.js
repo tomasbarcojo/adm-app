@@ -11,10 +11,12 @@ export const getSuppliers = (token) => async (dispatch) => {
     })
       .then((data) => data.json())
       .then((res) => {
-        return dispatch({
-          type: 'GET_SUPPLIERS',
-          payload: res,
-        });
+        if (res.status === 200) {
+          dispatch({
+            type: 'GET_SUPPLIERS',
+            payload: res.suppliers,
+          });
+        }
       });
   } catch (err) {
     console.log(err);
@@ -33,10 +35,12 @@ export const getSuppliersByName = (token, name) => async (dispatch) => {
     })
       .then((data) => data.json())
       .then((res) => {
-        return dispatch({
-          type: 'GET_SUPPLIERS',
-          payload: res,
-        });
+        if (res.status === 200) {
+          dispatch({
+            type: 'GET_SUPPLIERS',
+            payload: res.suppliers,
+          });
+        }
       });
   } catch (err) {
     console.log(err);
