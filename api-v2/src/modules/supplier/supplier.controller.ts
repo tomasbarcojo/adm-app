@@ -21,7 +21,7 @@ export class SupplierController {
     summary: 'create a new supplier',
     description: 'create a new supplier',
   })
-  @Post('/createSupplier')
+  @Post('/createsupplier')
   async create(@Body() input: CreateSupplierInput): Promise<Supplier> {
     return this.service.create(input);
   }
