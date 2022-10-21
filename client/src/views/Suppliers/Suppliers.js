@@ -147,7 +147,7 @@ export default function Suppliers() {
                           onChange={handleChange}
                           fullWidth
                           autoComplete="off"
-                          type="number"
+                          type="string"
                           value={data.cuit}
                         />
                       </GridItem>
