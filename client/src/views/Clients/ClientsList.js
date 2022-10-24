@@ -1,5 +1,5 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import GridItem from '../../components/Grid/GridItem.js';
 import GridContainer from '../../components/Grid/GridContainer.js';
@@ -7,6 +7,7 @@ import Table from '../../components/Table/Table.js';
 import Card from '../../components/Card/Card.js';
 import CardHeader from '../../components/Card/CardHeader.js';
 import CardBody from '../../components/Card/CardBody.js';
+import { getClients } from '../../actions/clients.js';
 
 import Token from '../../Token/Token';
 
@@ -33,6 +34,11 @@ export default function ClientsList() {
   var token = Token();
   const classes = useStyles();
   const clients = useSelector((state) => state.clients);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getClients(token));
+  }, []);
 
   return (
     <GridContainer>
@@ -46,7 +52,7 @@ export default function ClientsList() {
             {clients && clients.length > 0 ? (
               <Table
                 tableHeaderColor="primary"
-                tableHead={['ID', 'Razon social', 'Cuit', 'Telefono', 'Direccion', 'Equipo asociado']}
+                tableHead={['ID', 'Razon social', 'Cuit', 'Telefono', 'Telefono Alt', 'Direccion', 'Equipo asociado']}
                 tableData={
                   clients && clients.length > 0
                     ? clients.map((client, index) => {
@@ -57,8 +63,9 @@ export default function ClientsList() {
                             client.businessName,
                             client.cuit,
                             client.phone,
+                            client.altPhone ? client.altPhone : 'none',
                             client.address,
-                            client.pricelistId,
+                            client.pricelistId ? client.pricelistId : 'none',
                           ],
                         };
                       })
