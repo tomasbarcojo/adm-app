@@ -7,8 +7,10 @@ import { CategoryModule } from '../../modules/category/category.module';
 import { CategoryService } from '../../modules/category/category.service';
 import { ProductModule } from '../../modules/product/product.module';
 import { ProductService } from '../../modules/product/product.service';
-import { PricelistModule } from '../../modules/pricelist/pricelist.module'
+import { PricelistModule } from '../../modules/pricelist/pricelist.module';
 import { PricelistService } from '../../modules/pricelist/pricelist.service';
+import { ClientModule } from 'src/modules/client/client.module';
+import { ClientService } from 'src/modules/client/client.service';
 
 const boostrap = async () => {
   const app = await NestFactory.createApplicationContext(AppModule);
@@ -16,6 +18,7 @@ const boostrap = async () => {
   const productService = app.select(ProductModule).get(ProductService, { strict: true });
   const categoryService = app.select(CategoryModule).get(CategoryService, { strict: true });
   const pricelistService = app.select(PricelistModule).get(PricelistService, { strict: true });
+  const clientService = app.select(ClientModule).get(ClientService, { strict: true });
 
   await userService.create({
     firstName: 'Admin',
@@ -64,14 +67,14 @@ const boostrap = async () => {
     });
   }
   // for (var i = 0; i < 600; i++) {
-  //   await Client.create({
+  //   await clientService.create({
   //     businessName: faker.internet.userName(),
-  //     cuit: i,
+  //     cuit: `${i}`,
   //     address: faker.address.streetName(),
   //     city: faker.address.cityName(),
   //     CP: faker.address.zipCode(),
   //     phone: faker.phone.phoneNumber(),
-  //     altphone: faker.phone.phoneNumber(),
+  //     altPhone: faker.phone.phoneNumber(),
   //   });
   // }
   // await productService.create({

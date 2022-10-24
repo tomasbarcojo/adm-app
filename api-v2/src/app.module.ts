@@ -23,6 +23,7 @@ import { CategoryModule } from './modules/category/category.module';
 import { PricelistModule } from './modules/pricelist/pricelist.module';
 import { PurchaseModule } from './modules/purchase/purcharse.module';
 import { SupplierModule } from './modules/supplier/supplier.module';
+import { ClientModule } from './modules/client/client.module';
 
 @Module({
   imports: [
@@ -61,15 +62,16 @@ import { SupplierModule } from './modules/supplier/supplier.module';
     CategoryModule,
     PricelistModule,
     PurchaseModule,
-    SupplierModule
+    SupplierModule,
+    ClientModule,
   ],
   controllers: [AppController, HealthController],
   providers: [
     AppService,
-     {
-       provide: APP_GUARD,
-       useClass: JwtAuthGuard,
-     },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: JwtAuthGuard,
+    // },
   ],
 })
 export class AppModule {}
