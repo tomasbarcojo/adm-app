@@ -10,7 +10,6 @@ import PageNotFound from '../components/NotFound/NotFound'
 import { useDispatch } from 'react-redux';
 import { getUser } from '../actions/users';
 import { useEffect } from 'react';
-import ProductList from '../views/Products/ProductList';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -40,7 +39,6 @@ const App = () => {
         <PrivateRoutes path="/admin" component={Admin} />
         <Route exact path="/category/:id" component={CategoryProducts} />
         <Route path="*" component={PageNotFound} />
-        <Route exact path="/asd" component={ProductList} />
       </Switch>
     </Router>
   );

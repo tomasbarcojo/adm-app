@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TerminusModule } from '@nestjs/terminus';
@@ -45,6 +45,10 @@ import { SupplierModule } from './modules/supplier/supplier.module';
         };
       },
     }),
+
+    // CacheModule.register({
+    //   ttl: 120, // seconds
+    // }),
 
     // Common Module
     CommonModule,

@@ -1,12 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroller';
-import { useDispatch, useSelector } from 'react-redux';
-import { v4 as generateGuid } from 'uuid';
-import { getArticles } from '../../actions/article';
+import React, { useState } from 'react';
 import Token from '../../Token/Token';
+import Table2 from '../../components/Table/Table2';
+import GridContainer from '../../components/Grid/GridContainer';
+import GridItem from '../../components/Grid/GridItem';
+import Card from '../../components/Card/Card';
+import CardHeader from '../../components/Card/CardHeader';
+import CardBody from '../../components/Card/CardBody';
+import styles from '../../styles/components/tableStyle'
+import { makeStyles } from '@material-ui/core';
 const { REACT_APP_URL_API } = process.env;
 
+const useStyles = makeStyles(styles);
+
 export default function ProductList() {
+  const classes = useStyles();
   const [listProducts, setListProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -46,21 +53,34 @@ export default function ProductList() {
   };
 
   return (
-    <>
-      <InfiniteScroll
-        loadMore={fetchProducts}
-        hasMore={hasMore}
-        loader={
-          <div className="loader" key={0}>
-            Loading ...
-          </div>
-        }
-        pageStart={0}
-      >
-        {listProducts.map((item, index) => {
-          return <div>This is a div element #{index + 1} inside InfiniteScroll</div>;
-        })}
-      </InfiniteScroll>
-    </>
+    <div>
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={12}>
+          <Card>
+            <CardHeader color="primary">
+              <div className={classes.card}>
+                <div>
+                  <h4 className={classes.cardTitleWhite}>Proveedores</h4>
+                  <p className={classes.cardCategoryWhite}>Listado de proveedores</p>
+                </div>
+                {/* <input
+                  className="searchInput"
+                  type="search"
+                  placeholder="Buscar..."
+                  onChange={handleChangeSearchInput}
+                /> */}
+              </div>
+            </CardHeader>
+            <CardBody>
+              <Table2
+                tableHeaderColor="primary"
+                tableHead={['ID', 'Razon Social', 'CUIT', 'Test1', 'Test2']}
+                options={true}
+              ></Table2>
+            </CardBody>
+          </Card>
+        </GridItem>
+      </GridContainer>
+    </div>
   );
 }

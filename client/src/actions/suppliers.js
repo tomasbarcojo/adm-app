@@ -6,7 +6,7 @@ export const getSuppliers = (token) => async (dispatch) => {
     await fetch(`${REACT_APP_URL_API}/supplier`, {
       headers: {
         'Content-Type': 'application/json',
-        'auth-token': token,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((data) => data.json())
