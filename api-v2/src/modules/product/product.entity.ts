@@ -12,7 +12,6 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Category } from '../category/category.entity';
-import { Pricelist } from '../pricelist/pricelist.entity';
 
 @Entity({ name: 'Product' })
 export class Product extends BaseEntity {

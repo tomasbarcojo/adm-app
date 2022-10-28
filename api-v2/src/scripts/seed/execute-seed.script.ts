@@ -13,6 +13,8 @@ import { SupplierModule } from 'src/modules/supplier/supplier.module';
 import { SupplierService } from 'src/modules/supplier/supplier.service';
 import { getConnection, getManager } from 'typeorm';
 import * as argon from 'argon2';
+import { ClientModule } from 'src/modules/client/client.module';
+import { ClientService } from 'src/modules/client/client.service';
 
 const boostrap = async () => {
   const app = await NestFactory.createApplicationContext(AppModule);
@@ -20,6 +22,7 @@ const boostrap = async () => {
   const productService = app.select(ProductModule).get(ProductService, { strict: true });
   const categoryService = app.select(CategoryModule).get(CategoryService, { strict: true });
   const pricelistService = app.select(PricelistModule).get(PricelistService, { strict: true });
+  const clientService = app.select(ClientModule).get(ClientService, { strict: true });
   const supplerService = app.select(SupplierModule).get(SupplierService, { strict: true });
 
   const entities = getConnection().entityMetadatas;
@@ -78,14 +81,14 @@ const boostrap = async () => {
     });
   }
   // for (var i = 0; i < 600; i++) {
-  //   await Client.create({
+  //   await clientService.create({
   //     businessName: faker.internet.userName(),
-  //     cuit: i,
+  //     cuit: `${i}`,
   //     address: faker.address.streetName(),
   //     city: faker.address.cityName(),
   //     CP: faker.address.zipCode(),
   //     phone: faker.phone.phoneNumber(),
-  //     altphone: faker.phone.phoneNumber(),
+  //     altPhone: faker.phone.phoneNumber(),
   //   });
   // }
 

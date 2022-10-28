@@ -10,12 +10,10 @@ export const getClients = (token) => async (dispatch) => {
     })
       .then((data) => data.json())
       .then((res) => {
-        if (res.status === 200) {
-          dispatch({
-            type: 'GET_CLIENTS',
-            payload: res.clients,
-          });
-        }
+        dispatch({
+          type: 'GET_CLIENTS',
+          payload: res,
+        });
       });
   } catch (err) {
     console.log(err);

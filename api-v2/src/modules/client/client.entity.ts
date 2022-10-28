@@ -9,23 +9,23 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity({ name: 'Supplier' })
-export class Supplier extends BaseEntity {
+@Entity({ name: 'Client' })
+export class Client extends BaseEntity {
   @ApiProperty({
-    description: 'the id of de supplier',
+    description: 'the id of the client',
     type: 'number',
     example: 1,
   })
   @PrimaryGeneratedColumn()
-  id!: number;
+  id: number;
 
   @ApiProperty({
-    description: 'the bussines name',
+    description: 'the businessName',
     type: 'string',
-    example: 'Arcor',
+    example: 'businessName name',
   })
   @Column({ type: 'varchar', length: 255, nullable: false })
-  businessName!: string;
+  businessName: string;
 
   @ApiProperty({
     description: 'the cuit of supprier',
@@ -33,31 +33,31 @@ export class Supplier extends BaseEntity {
     example: '20-20202020-2',
   })
   @Column({ type: 'varchar', length: 16, nullable: false })
-  cuit!: string;
+  cuit: string;
 
   @ApiProperty({
     description: 'the phone number',
     type: 'string',
     example: '3426123123',
   })
-  @Column({ type: 'varchar', length: 16, nullable: false })
-  phone!: string;
+  @Column({ type: 'varchar', length: 20, nullable: false })
+  phone: string;
 
   @ApiProperty({
     description: 'alternative phone',
     type: 'string',
     example: '3426123123',
   })
-  @Column({ type: 'varchar', length: 16, nullable: true })
+  @Column({ type: 'varchar', length: 20, nullable: false })
   altPhone?: string;
 
   @ApiProperty({
-    description: 'adress',
+    description: 'address',
     type: 'string',
     example: '3426123123',
   })
   @Column({ type: 'varchar', length: 255, nullable: false })
-  address!: string;
+  address: string;
 
   @ApiProperty({
     description: 'city',
@@ -65,47 +65,15 @@ export class Supplier extends BaseEntity {
     example: 'Santa Fe',
   })
   @Column({ type: 'varchar', length: 255, nullable: false })
-  city!: string;
+  city: string;
 
   @ApiProperty({
     description: 'postal code',
     type: 'string',
     example: '3000',
   })
-  @Column({ type: 'varchar', length: 10, nullable: false })
-  CP!: string;
-
-  @ApiProperty({
-    description: 'bankaccount number one',
-    type: 'string',
-    example: '00000123123123',
-  })
-  @Column({ type: 'varchar', length: 255, nullable: false })
-  bankaccount1!: string;
-
-  @ApiProperty({
-    description: 'bankaccount number two',
-    type: 'string',
-    example: '00000123123123',
-  })
-  @Column({ type: 'varchar', length: 255, nullable: true })
-  bankaccount2?: string;
-
-  @ApiProperty({
-    description: 'bankaccount number tree',
-    type: 'string',
-    example: '00000123123123',
-  })
-  @Column({ type: 'varchar', length: 255, nullable: true })
-  bankaccount3?: string;
-
-  @ApiProperty({
-    description: 'observations',
-    type: 'string',
-    example: 'nothing to say',
-  })
-  @Column({ type: 'varchar', length: 255, nullable: true })
-  obs: string;
+  @Column({ type: 'varchar', length: 16, nullable: false })
+  CP: string;
 
   @ApiProperty({
     description: 'the date of creation of the supplier',
@@ -130,7 +98,4 @@ export class Supplier extends BaseEntity {
   })
   @DeleteDateColumn()
   deletedAt: Date;
-
-  // relations
 }
-//businessName, cuit, phone, altPhone, address, city, CP, bankaccount1, bankaccount2, bankaccount3, obs

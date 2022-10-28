@@ -21,9 +21,9 @@ export class CreateSupplierInput {
   readonly cuit: string;
 
   @ApiProperty({
-    description:'the phone number',
-    type:'string',
-    example:'3426123123',
+    description: 'the phone number',
+    type: 'string',
+    example: '3426123123',
   })
   @Length(1, 16)
   @IsString()
@@ -31,8 +31,8 @@ export class CreateSupplierInput {
 
   @ApiProperty({
     description: 'alternative phone',
-    type:'string',
-    example: '3426123123'
+    type: 'string',
+    example: '3426123123',
   })
   @IsString()
   @IsOptional()
@@ -40,7 +40,7 @@ export class CreateSupplierInput {
 
   @ApiProperty({
     description: 'adress',
-    type:'string',
+    type: 'string',
     example: 'Necochea 2556',
   })
   @IsString()
@@ -48,8 +48,8 @@ export class CreateSupplierInput {
 
   @ApiProperty({
     description: 'city',
-    type:'string',
-    example: 'Santa Fe'
+    type: 'string',
+    example: 'Santa Fe',
   })
   @IsString()
   readonly city: string;
@@ -64,16 +64,16 @@ export class CreateSupplierInput {
 
   @ApiProperty({
     description: 'bankaccount number one',
-    type:'string',
-    example: '00000123123123'
+    type: 'string',
+    example: '00000123123123',
   })
   @IsString()
   readonly bankaccount1: string;
 
   @ApiProperty({
     description: 'bankaccount number two',
-    type:'string',
-    example: '00000123123123'
+    type: 'string',
+    example: '00000123123123',
   })
   @IsString()
   @IsOptional()
@@ -81,8 +81,8 @@ export class CreateSupplierInput {
 
   @ApiProperty({
     description: 'bankaccount number tree',
-    type:'string',
-    example: '00000123123123'
+    type: 'string',
+    example: '00000123123123',
   })
   @IsString()
   @IsOptional()
@@ -90,8 +90,8 @@ export class CreateSupplierInput {
 
   @ApiProperty({
     description: 'observations',
-    type:'string',
-    example: 'nothing to say'
+    type: 'string',
+    example: 'nothing to say',
   })
   @IsString()
   @IsOptional()
