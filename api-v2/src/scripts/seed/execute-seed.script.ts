@@ -9,6 +9,10 @@ import { ProductModule } from '../../modules/product/product.module';
 import { ProductService } from '../../modules/product/product.service';
 import { PricelistModule } from '../../modules/pricelist/pricelist.module';
 import { PricelistService } from '../../modules/pricelist/pricelist.service';
+import { SupplierModule } from 'src/modules/supplier/supplier.module';
+import { SupplierService } from 'src/modules/supplier/supplier.service';
+import { getConnection, getManager } from 'typeorm';
+import * as argon from 'argon2';
 import { ClientModule } from 'src/modules/client/client.module';
 import { ClientService } from 'src/modules/client/client.service';
 
@@ -19,34 +23,44 @@ const boostrap = async () => {
   const categoryService = app.select(CategoryModule).get(CategoryService, { strict: true });
   const pricelistService = app.select(PricelistModule).get(PricelistService, { strict: true });
   const clientService = app.select(ClientModule).get(ClientService, { strict: true });
+  const supplerService = app.select(SupplierModule).get(SupplierService, { strict: true });
+
+  const entities = getConnection().entityMetadatas;
+  const connection = await getManager();
+  await connection.query('SET foreign_key_checks = 0');
+  for (const entity of entities) {
+    const repository = await getConnection().getRepository(entity.name);
+    await repository.query(`TRUNCATE TABLE ${entity.tableName}`);
+  }
+  await connection.query('SET foreign_key_checks = 1');
 
   await userService.create({
     firstName: 'Admin',
     lastName: 'Admin',
     email: faker.internet.email(),
     username: 'admin',
-    password: '12345',
+    password: await argon.hash('1234'),
   });
-  // await Supplier.create({
-  //   businessName: 'Activa SRL',
-  //   cuit: '30707651926',
-  //   phone: '3424663535',
-  //   address: '25 de Mayo 2387',
-  //   city: 'Santa Fe',
-  //   CP: '3000',
-  //   bankaccout1: '519925-12',
-  // });
-  // for (var i = 0; i < 100; i++) {
-  //   await Supplier.create({
-  //     businessName: faker.company.companyName(),
-  //     cuit: i,
-  //     phone: faker.phone.phoneNumber(),
-  //     address: '25 de Mayo 2387',
-  //     city: faker.address.streetAddress(),
-  //     CP: faker.address.zipCode(),
-  //     bankaccount1: faker.finance.account(),
-  //   });
-  // }
+  await supplerService.create({
+    businessName: 'Activa SRL',
+    cuit: '30707651926',
+    phone: '3424663535',
+    address: '25 de Mayo 2387',
+    city: 'Santa Fe',
+    CP: '3000',
+    bankaccount1: '519925-12',
+  });
+  for (var i = 0; i < 100; i++) {
+    await supplerService.create({
+      businessName: faker.company.name(),
+      cuit: `${i}`,
+      phone: faker.phone.number('##########'),
+      address: '25 de Mayo 2387',
+      city: faker.address.streetAddress(),
+      CP: faker.address.zipCode(),
+      bankaccount1: faker.finance.account(),
+    });
+  }
   for (var i = 0; i < 10; i++) {
     await categoryService.create({
       categoryName: `Categoria ${i}`,
@@ -77,22 +91,6 @@ const boostrap = async () => {
   //     altPhone: faker.phone.phoneNumber(),
   //   });
   // }
-  // await productService.create({
-  //   name: 'Prueba articulo 2',
-  //   price: '1000',
-  //   stock: '10',
-  //   image: '8719',
-  //   categoryId: 1,
-  //   supplierId: 1,
-  // });
-  // await productService.create({
-  //   name: 'Prueba articulo 3',
-  //   price: '1000',
-  //   stock: '10',
-  //   image: '8719',
-  //   categoryId: 1,
-  //   supplierId: 2,
-  // });
 
   await app.close();
 };

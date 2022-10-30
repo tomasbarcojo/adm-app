@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsString, Length } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString, Length } from 'class-validator';
 
 export class CreateSupplierInput {
   @ApiProperty({
@@ -16,6 +16,7 @@ export class CreateSupplierInput {
     type: 'string',
     example: '20-20202020-2',
   })
+  @Length(1, 16)
   @IsString()
   readonly cuit: string;
 
@@ -24,6 +25,7 @@ export class CreateSupplierInput {
     type: 'string',
     example: '3426123123',
   })
+  @Length(1, 16)
   @IsString()
   readonly phone: string;
 
@@ -33,7 +35,8 @@ export class CreateSupplierInput {
     example: '3426123123',
   })
   @IsString()
-  readonly altPhone: string;
+  @IsOptional()
+  readonly altPhone?: string;
 
   @ApiProperty({
     description: 'adress',
@@ -41,7 +44,7 @@ export class CreateSupplierInput {
     example: 'Necochea 2556',
   })
   @IsString()
-  readonly adress: string;
+  readonly address: string;
 
   @ApiProperty({
     description: 'city',
@@ -53,8 +56,8 @@ export class CreateSupplierInput {
 
   @ApiProperty({
     description: 'postal code',
-    type: 'string',
-    example: '3000',
+    type:'string',
+    example: '3000'
   })
   @IsString()
   readonly CP: string;
@@ -73,7 +76,8 @@ export class CreateSupplierInput {
     example: '00000123123123',
   })
   @IsString()
-  readonly bankaccount2: string;
+  @IsOptional()
+  readonly bankaccount2?: string;
 
   @ApiProperty({
     description: 'bankaccount number tree',
@@ -81,7 +85,8 @@ export class CreateSupplierInput {
     example: '00000123123123',
   })
   @IsString()
-  readonly bankaccount3: string;
+  @IsOptional()
+  readonly bankaccount3?: string;
 
   @ApiProperty({
     description: 'observations',
@@ -89,5 +94,6 @@ export class CreateSupplierInput {
     example: 'nothing to say',
   })
   @IsString()
-  readonly obs: string;
+  @IsOptional()
+  readonly obs?: string;
 }

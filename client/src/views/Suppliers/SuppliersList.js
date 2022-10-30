@@ -97,12 +97,14 @@ export default function SuppliersList() {
                 <Table
                   tableHeaderColor="primary"
                   tableHead={['ID', 'Razon Social', 'CUIT', 'Test1', 'Test2']}
+                  options={true}
                   tableData={
                     suppliers && suppliers.length > 0
                       ? suppliers.map((supplier, index) => {
                           return {
                             id: supplier.id,
                             data: [supplier.id, supplier.businessName, supplier.cuit, supplier.phone, supplier.CP],
+                            deletepathname: 'supplier'
                           };
                         })
                       : null

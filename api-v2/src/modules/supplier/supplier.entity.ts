@@ -24,7 +24,7 @@ export class Supplier extends BaseEntity {
     type: 'string',
     example: 'Arcor',
   })
-  @Column()
+  @Column({ type: 'varchar', length: 255, nullable: false })
   businessName!: string;
 
   @ApiProperty({
@@ -32,7 +32,7 @@ export class Supplier extends BaseEntity {
     type: 'string',
     example: '20-20202020-2',
   })
-  @Column()
+  @Column({ type: 'varchar', length: 16, nullable: false })
   cuit!: string;
 
   @ApiProperty({
@@ -40,7 +40,7 @@ export class Supplier extends BaseEntity {
     type: 'string',
     example: '3426123123',
   })
-  @Column()
+  @Column({ type: 'varchar', length: 16, nullable: false })
   phone!: string;
 
   @ApiProperty({
@@ -48,15 +48,15 @@ export class Supplier extends BaseEntity {
     type: 'string',
     example: '3426123123',
   })
-  @Column()
-  altPhone!: string;
+  @Column({ type: 'varchar', length: 16, nullable: true })
+  altPhone?: string;
 
   @ApiProperty({
     description: 'adress',
     type: 'string',
     example: '3426123123',
   })
-  @Column()
+  @Column({ type: 'varchar', length: 255, nullable: false })
   address!: string;
 
   @ApiProperty({
@@ -64,6 +64,7 @@ export class Supplier extends BaseEntity {
     type: 'string',
     example: 'Santa Fe',
   })
+  @Column({ type: 'varchar', length: 255, nullable: false })
   city!: string;
 
   @ApiProperty({
@@ -71,7 +72,7 @@ export class Supplier extends BaseEntity {
     type: 'string',
     example: '3000',
   })
-  @Column()
+  @Column({ type: 'varchar', length: 10, nullable: false })
   CP!: string;
 
   @ApiProperty({
@@ -79,7 +80,7 @@ export class Supplier extends BaseEntity {
     type: 'string',
     example: '00000123123123',
   })
-  @Column()
+  @Column({ type: 'varchar', length: 255, nullable: false })
   bankaccount1!: string;
 
   @ApiProperty({
@@ -87,23 +88,23 @@ export class Supplier extends BaseEntity {
     type: 'string',
     example: '00000123123123',
   })
-  @Column()
-  bankaccount2!: string;
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  bankaccount2?: string;
 
   @ApiProperty({
     description: 'bankaccount number tree',
     type: 'string',
     example: '00000123123123',
   })
-  @Column()
-  bankaccount3!: string;
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  bankaccount3?: string;
 
   @ApiProperty({
     description: 'observations',
     type: 'string',
     example: 'nothing to say',
   })
-  @Column()
+  @Column({ type: 'varchar', length: 255, nullable: true })
   obs: string;
 
   @ApiProperty({
