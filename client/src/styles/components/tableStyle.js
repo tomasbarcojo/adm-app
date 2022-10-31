@@ -103,7 +103,6 @@ const tableStyle = (theme) => ({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
-    flexDirection: 'row',
     // height: '100vh'
   },
   totalPurchase: {
@@ -112,28 +111,6 @@ const tableStyle = (theme) => ({
     alignItems: 'center',
     width: 'auto',
     justifyContent: 'flex-end',
-  },
-  cardCategoryWhite: {
-    color: 'rgba(255,255,255,.62)',
-    margin: '0',
-    fontSize: '14px',
-    marginTop: '0',
-    marginBottom: '0',
-  },
-  cardTitleWhite: {
-    color: '#FFFFFF',
-    marginTop: '0px',
-    minHeight: 'auto',
-    fontWeight: '300',
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: '3px',
-    textDecoration: 'none',
-  },
-  card: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
   },
   input: {
     margin: '27px 0 0 0',

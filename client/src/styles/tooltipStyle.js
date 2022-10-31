@@ -18,7 +18,7 @@ const tooltipStyle = {
     maxWidth: '200px',
     textAlign: 'center',
     fontFamily: '"Helvetica Neue",Helvetica,Arial,sans-serif',
-    fontSize: '13px',
+    fontSize: '14px',
     fontStyle: 'normal',
     fontWeight: '400',
     textShadow: 'none',
