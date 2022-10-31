@@ -8,7 +8,7 @@ import ListIcon from '@material-ui/icons/List';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import TableList from '../views/Clients/Clients.js';
 import ClientList from '../views/Clients/ClientsList';
-import Articles from '../views/Products/Articles.js';
+import Products from '../views/Products/Product.js';
 import ProductList from '../views/Products/ProductList.js';
 import Categories from '../views/Category/Categories';
 import CategoriesList from '../views/Category/CategoriesList';
@@ -66,7 +66,7 @@ export const artAndCat = [
     path: '/newproduct',
     name: 'Añadir producto',
     icon: AddIcon,
-    component: Articles,
+    component: Products,
     layout: '/admin',
   },
   {
