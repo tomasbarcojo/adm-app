@@ -1,6 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { Product } from '../product/product.entity';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Product } from '../../product/product.entity';
+import { PricelistProduct } from './pricelist-product.entity';
 
 @Entity({ name: 'Pricelist' })
 export class Pricelist extends BaseEntity {
@@ -15,9 +27,9 @@ export class Pricelist extends BaseEntity {
   @ApiProperty({
     description: 'the name of de pricelist',
     type: 'string',
-    example: 'pricelist name'
+    example: 'pricelist name',
   })
-  @Column({ type: 'varchar', length: 255, nullable: false})
+  @Column({ type: 'varchar', length: 255, nullable: false })
   pricelistName!: string;
 
   @ApiProperty({
@@ -45,6 +57,10 @@ export class Pricelist extends BaseEntity {
   deletedAt: Date;
 
   // relation
+
+  @ManyToMany(() => PricelistProduct, (pricelistProduct) => pricelistProduct.pricelist)
+  @JoinColumn()
+  pricelistProduct: PricelistProduct;
   // @OneToMany(() => Product, (product) => product.pricelist)
   // @JoinColumn()
   // product: Product;

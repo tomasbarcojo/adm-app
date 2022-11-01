@@ -30,6 +30,8 @@ const boostrap = async () => {
   await connection.query('SET foreign_key_checks = 0');
   for (const entity of entities) {
     const repository = await getConnection().getRepository(entity.name);
+    console.log(entity.name)
+    console.log(entity.tableName)
     await repository.query(`TRUNCATE TABLE ${entity.tableName}`);
   }
   await connection.query('SET foreign_key_checks = 1');
