@@ -5,9 +5,12 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Product } from '../product/product.entity';
 
 @Entity({ name: 'Supplier' })
 export class Supplier extends BaseEntity {
@@ -132,5 +135,9 @@ export class Supplier extends BaseEntity {
   deletedAt: Date;
 
   // relations
+
+  @OneToMany(() => Product, (product) => product.supplier)
+  @JoinColumn()
+  product: Product;
 }
 //businessName, cuit, phone, altPhone, address, city, CP, bankaccount1, bankaccount2, bankaccount3, obs
