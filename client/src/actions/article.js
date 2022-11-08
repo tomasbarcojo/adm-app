@@ -2,7 +2,7 @@ const { REACT_APP_URL_API } = process.env;
 
 export const createArticle = (data, token, enqueueSnackbar, closeSnackbar) => async (dispatch) => {
   try {
-    await fetch(`${REACT_APP_URL_API}/article/createarticle`, {
+    await fetch(`${REACT_APP_URL_API}/product`, {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
@@ -35,7 +35,7 @@ export const createArticle = (data, token, enqueueSnackbar, closeSnackbar) => as
             type: 'CREATE_ARTICLE',
             payload: res.newCategory,
           });
-          enqueueSnackbar('Articulo añadidp con exito', {
+          enqueueSnackbar('Articulo añadido con exito', {
             variant: 'success',
             action: (key) => (
               <button className="notistackButton" onClick={() => closeSnackbar(key)}>
@@ -51,7 +51,7 @@ export const createArticle = (data, token, enqueueSnackbar, closeSnackbar) => as
 };
 
 export const getArticles = (token, page, limit) => async (dispatch) => {
-  const res = await fetch(`${REACT_APP_URL_API}/article?skip=${page}&limit=30`, {
+  const res = await fetch(`${REACT_APP_URL_API}/product?skip=${page}&limit=30`, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,

@@ -24,6 +24,7 @@ import { PricelistModule } from './modules/pricelist/pricelist.module';
 import { PurchaseModule } from './modules/purchase/purcharse.module';
 import { SupplierModule } from './modules/supplier/supplier.module';
 import { ClientModule } from './modules/client/client.module';
+import { UploadFilesModule } from './modules/upload-image/upload-file.module';
 
 @Module({
   imports: [
@@ -68,6 +69,7 @@ import { ClientModule } from './modules/client/client.module';
     PurchaseModule,
     SupplierModule,
     ClientModule,
+    UploadFilesModule,
   ],
   controllers: [AppController, HealthController],
   providers: [
