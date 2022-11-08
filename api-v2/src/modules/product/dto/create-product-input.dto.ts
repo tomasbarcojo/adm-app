@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsNumber, IsString, Length } from 'class-validator';
+import { IsEnum, IsNumber, IsOptional, IsString, Length } from 'class-validator';
 
 export class CreateProductInput {
   @ApiProperty({
@@ -65,8 +65,8 @@ export class CreateProductInput {
     type: 'string',
     example: '',
   })
-  @Length(1, 255)
   @IsString()
+  @IsOptional()
   readonly image: string;
 
   @ApiProperty({

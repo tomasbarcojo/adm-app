@@ -165,13 +165,13 @@ export default function PriceLists() {
                   </GridContainer>
                   <h5>Articulos:</h5>
 
-                  {articles && articles.length > 0 ? (
-                    articles.map((article) => {
+                  {articles && articles.data.length > 0 ? (
+                    articles.data.map((article) => {
                       return (
                         <div key={article.id} className={classes.articleRow}>
                           <GridContainer>
                             <GridItem xs={12} sm={12} md={9}>
-                              <label>{article.articleName}</label>
+                              <label>{article.name}</label>
                             </GridItem>
                             <GridItem xs={12} sm={12} md={3}>
                               <input

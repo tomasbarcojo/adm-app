@@ -38,7 +38,7 @@ export class ProductController {
     summary: 'create a new product',
     description: 'create a new product',
   })
-  @Post('/createProduct')
+  @Post()
   async create(@Body() input: CreateProductInput): Promise<Product> {
     return this.service.create(input);
   }
