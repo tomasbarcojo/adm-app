@@ -4,7 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import appConfig from '../../config/app.config';
 
-import { Pricelist } from './pricelist.entity';
+import { Pricelist } from './entity/pricelist.entity';
 
 import { PricelistService } from './pricelist.service';
 import { PricelistController } from './pricelist.controller';

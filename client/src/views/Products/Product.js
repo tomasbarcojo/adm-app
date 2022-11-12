@@ -21,14 +21,14 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import Card from '../../components/Card/Card.js';
 import CardHeader from '../../components/Card/CardHeader.js';
 import CardBody from '../../components/Card/CardBody.js';
-import Categories from '../Category/Categories.js';
-
 import alt from '../../images/producto-sin-imagen.png';
 
 import { getSuppliers } from '../../actions/suppliers';
 import { getCategories } from '../../actions/categories';
 import { createArticle } from '../../actions/article';
 import Token from '../../Token/Token';
+
+const { REACT_APP_URL_API } = process.env;
 
 const useStyles = makeStyles((theme) => ({
   typo: {
@@ -108,11 +108,13 @@ export default function Articles() {
   const categories = useSelector((state) => state.categories);
   var token = Token();
   const [data, setData] = useState({
-    articleName: '',
+    name: '',
     code: '',
-    category: '',
-    supplier: '',
     price: '',
+    categoryId: '',
+    supplierId: '',
+    stock: '',
+    stockAlert: '',
     obs: '',
   });
 
@@ -124,13 +126,17 @@ export default function Articles() {
   const resetForm = () => {
     setData({
       ...data,
-      articleName: '',
+      name: '',
       code: '',
-      category: '',
-      supplier: '',
       price: '',
+      categoryId: '',
+      supplierId: '',
+      stock: '',
+      stockAlert: '',
       obs: '',
     });
+    setPreview(null);
+    setProgress(0);
   };
 
   const handleNewSupplier = () => {
@@ -157,23 +163,25 @@ export default function Articles() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('images', files);
+    formData.append('file', files);
     await axios
-      .post('http://localhost:3001/upload/', formData, {
+      .post(`${REACT_APP_URL_API}/upload`, formData, {
         onUploadProgress: (ProgressEvent) => {
           setProgress((ProgressEvent.loaded / ProgressEvent.total) * 100);
         },
       })
       .then((img) => {
         const dataArticle = {
-          articleName: data.articleName,
-          categoryId: data.categoryId,
-          supplierId: data.supplierId,
+          name: data.name,
+          code: data.code,
           price: data.price,
-          image: img.data,
+          categoryId: Number(data.categoryId),
+          supplierId: Number(data.supplierId),
+          stock: Number(data.stock),
+          stockAlert: Number(data.stockAlert),
+          image: img.data.path,
           obs: data.obs,
         };
-        console.log(dataArticle);
         dispatch(createArticle(dataArticle, token, enqueueSnackbar, closeSnackbar));
         resetForm();
       });
@@ -195,9 +203,6 @@ export default function Articles() {
   return (
     <>
       <GridContainer>
-        {/* <GridItem xs={12} sm={12} md={12}>
-          <Categories />
-        </GridItem> */}
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
@@ -221,11 +226,11 @@ export default function Articles() {
                             <TextField
                               className={classes.input}
                               label="Nombre"
-                              id="articleName"
+                              id="name"
                               onChange={handleChange}
                               fullWidth
                               autoComplete="off"
-                              value={data.articleName}
+                              value={data.name}
                             />
                           </GridItem>
                         </GridContainer>
@@ -237,8 +242,12 @@ export default function Articles() {
                               className={classes.input}
                               options={categories}
                               getOptionLabel={(option) => option.categoryName}
-                              onChange={(event, value) => console.log(event, value)}
+                              onChange={(event, newValue) => {
+                                if (newValue) setData({ ...data, categoryId: newValue.id });
+                                else setData({ ...data, categoryId: '' });
+                              }}
                               fullWidth={true}
+                              autoHighlight
                               renderInput={(params) => <TextField {...params} label="Categoria" />}
                             />
                           </GridItem>
@@ -249,8 +258,12 @@ export default function Articles() {
                               className={classes.input}
                               options={suppliers}
                               getOptionLabel={(option) => option.businessName}
-                              onChange={(event, value) => console.log(event, value)}
+                              onChange={(event, newValue) => {
+                                if (newValue) setData({ ...data, supplierId: newValue.id });
+                                else setData({ ...data, supplierId: '' });
+                              }}
                               fullWidth={true}
+                              autoHighlight
                               renderInput={(params) => <TextField {...params} label="Proveedor" />}
                             />
                           </GridItem>
@@ -286,24 +299,24 @@ export default function Articles() {
                             <TextField
                               className={classes.input}
                               label="Stock inicial"
-                              id="stockini"
+                              id="stock"
                               onChange={handleChange}
                               fullWidth
                               autoComplete="off"
                               type="number"
-                              value={data.stockini}
+                              value={data.stock}
                             />
                           </GridItem>
                           <GridItem xs={12} sm={12} md={6}>
                             <TextField
                               className={classes.input}
                               label="Alerta de stock"
-                              id="stockalert"
+                              id="stockAlert"
                               onChange={handleChange}
                               fullWidth
                               autoComplete="off"
                               type="number"
-                              value={data.stockalert}
+                              value={data.stockAlert}
                             />
                           </GridItem>
                         </GridContainer>

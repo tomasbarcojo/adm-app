@@ -6,12 +6,16 @@ import {
   DeleteDateColumn,
   Entity,
   JoinColumn,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Category } from '../category/category.entity';
+import { PricelistProduct } from '../pricelist/entity/pricelist-product.entity';
+import { Pricelist } from '../pricelist/entity/pricelist.entity';
+import { Supplier } from '../supplier/supplier.entity';
 
 @Entity({ name: 'Product' })
 export class Product extends BaseEntity {
@@ -30,6 +34,14 @@ export class Product extends BaseEntity {
   })
   @Column({ type: 'int', nullable: false })
   categoryId!: number;
+
+  @ApiProperty({
+    description: 'the supplier of the product',
+    type: 'number',
+    example: '1',
+  })
+  @Column({ type: 'int', nullable: true })
+  supplierId: number;
 
   @ApiProperty({
     description: 'the name of the product',
@@ -116,7 +128,14 @@ export class Product extends BaseEntity {
   @JoinColumn()
   category: Category;
 
-  // @ManyToOne(() => Pricelist, (product) => pricelist.product)
-  // @JoinColumn()
-  // product: Product;
+  @ManyToOne(() => Supplier, (supplier) => supplier.product)
+  @JoinColumn()
+  supplier: Supplier;
+
+  //   @ManyToOne(() => Pricelist, (pricelist) => pricelist.product)
+  //   @JoinColumn()
+  //   pricelist: Pricelist;
+  @ManyToMany(() => PricelistProduct, (pricelistProduct) => pricelistProduct.product)
+  @JoinColumn()
+  pricelistProduct: PricelistProduct;
 }
