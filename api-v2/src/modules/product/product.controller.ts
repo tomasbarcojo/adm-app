@@ -22,7 +22,7 @@ import { GetAllProductsInput } from './dto/get-all-products-input.dto';
 import { GetOneProductInput } from './dto/get-one-product-input.dto';
 import { UpdateProductInput } from './dto/update-product-input.dto';
 import { PaginationDto } from '../dto/pagination.dto';
-import { GetAllProductsOutput } from './dto/get-product-by-categoryid.dto';
+import { GetAllOutput } from './dto/get-product-by-categoryid.dto';
 
 @ApiTags('product')
 @Controller('product')
@@ -56,7 +56,7 @@ export class ProductController {
   async getAll(
     @Query() input: GetAllProductsInput,
     @Query() pagination: PaginationDto,
-  ): Promise<GetAllProductsOutput> {
+  ): Promise<GetAllOutput> {
     return this.service.getAll(input, pagination);
   }
 

@@ -15,7 +15,7 @@ import { GetAllProductsInput } from './dto/get-all-products-input.dto';
 import { UpdateProductInput } from './dto/update-product-input.dto';
 import { ProductRepository } from './product.repository';
 import { PaginationDto } from '../dto/pagination.dto';
-import { GetAllProductsOutput } from './dto/get-product-by-categoryid.dto';
+import { GetAllOutput } from './dto/get-product-by-categoryid.dto';
 
 @Injectable()
 export class ProductService extends BaseService<Product> {
@@ -50,7 +50,7 @@ export class ProductService extends BaseService<Product> {
     return existing;
   }
 
-  public async getAll(input: GetAllProductsInput, pagination: PaginationDto): Promise<GetAllProductsOutput> {
+  public async getAll(input: GetAllProductsInput, pagination: PaginationDto): Promise<GetAllOutput> {
     try {
       const products = await this.productRepositoryV2.getAllProducts(input, pagination);
 
