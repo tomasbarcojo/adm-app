@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber } from 'class-validator';
 import { Product } from '../product.entity';
 
-export class GetAllProductsOutput {
+export class GetAllOutput {
   @ApiProperty({
     description: 'category id',
     type: 'number',

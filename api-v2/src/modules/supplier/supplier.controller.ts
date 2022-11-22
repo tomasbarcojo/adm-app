@@ -1,11 +1,13 @@
-import { Controller, HttpStatus, Post, Body, Get, Query, Param, Patch, Delete } from "@nestjs/common";
-import { ApiTags, ApiResponse, ApiOperation } from "@nestjs/swagger";
-import { CreateSupplierInput } from "./dto/create-supplier-input.dto";
-import { GetAllSupplierInput } from "./dto/get-all-supplier-input.dto";
-import { GetOneSupplierInput } from "./dto/get-one-supplier-input.dto";
-import { UpdateSupplierInput } from "./dto/update-supplier-input.dto";
-import { Supplier } from "./supplier.entity";
-import { SupplierService } from "./supplier.service";
+import { Controller, HttpStatus, Post, Body, Get, Query, Param, Patch, Delete } from '@nestjs/common';
+import { ApiTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
+import { PaginationDto } from '../dto/pagination.dto';
+import { GetAllOutput } from '../product/dto/get-product-by-categoryid.dto';
+import { CreateSupplierInput } from './dto/create-supplier-input.dto';
+import { GetAllSupplierInput } from './dto/get-all-supplier-input.dto';
+import { GetOneSupplierInput } from './dto/get-one-supplier-input.dto';
+import { UpdateSupplierInput } from './dto/update-supplier-input.dto';
+import { Supplier } from './supplier.entity';
+import { SupplierService } from './supplier.service';
 
 @ApiTags('supplier')
 @Controller('supplier')
@@ -36,8 +38,8 @@ export class SupplierController {
     description: 'get a list of supplier, based on the conditions',
   })
   @Get()
-  async getAll(@Query() input: GetAllSupplierInput): Promise<Supplier[]> {
-    return this.service.getAll(input);
+  async getAll(@Query() input: GetAllSupplierInput, @Query() pagination: PaginationDto): Promise<GetAllOutput> {
+    return this.service.getAll(input, pagination);
   }
 
   @ApiResponse({
