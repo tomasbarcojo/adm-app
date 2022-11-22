@@ -30,7 +30,7 @@ export default function ProductList() {
   const [listProducts, setListProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const [totalCount, setTotalCount] = useState(100);
+  const [totalCount, setTotalCount] = useState();
   const [page, setPage] = useState(1);
   const token = Token();
   const filters = useQueryParams();

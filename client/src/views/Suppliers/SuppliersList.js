@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
 import { addSupplier, getSuppliers, getSuppliersByName } from '../../actions/suppliers';
-import MaterialTable from 'material-table';
+import InfiniteScroll from 'react-infinite-scroller';
+import { Link } from 'react-router-dom';
 // @material-ui/core components
+import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+import Edit from '@material-ui/icons/Edit';
+import Tooltip from '@material-ui/core/Tooltip';
 // core components
 import GridItem from '../../components/Grid/GridItem.js';
 import GridContainer from '../../components/Grid/GridContainer.js';
@@ -14,64 +19,74 @@ import Button from '../../components/CustomButtons/Button.js';
 import Card from '../../components/Card/Card.js';
 import CardHeader from '../../components/Card/CardHeader.js';
 import CardBody from '../../components/Card/CardBody.js';
-import Table from '../../components/Table/Table.js';
-
-import avatar from '../../images/faces/marc.jpg';
+import { useQueryParams } from '../../utils/useQueryParams';
 import Token from '../../Token/Token';
-
-const styles = {
-  cardCategoryWhite: {
-    color: 'rgba(255,255,255,.62)',
-    margin: '0',
-    fontSize: '14px',
-    marginTop: '0',
-    marginBottom: '0',
-  },
-  cardTitleWhite: {
-    color: '#FFFFFF',
-    marginTop: '0px',
-    minHeight: 'auto',
-    fontWeight: '300',
-    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: '3px',
-    textDecoration: 'none',
-  },
-  card: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  input: {
-    margin: '27px 0 0 0',
-    paddingBottom: '10px',
-  },
-  searchInput: {
-    backgroudColor: 'red',
-    background: 'white',
-  },
-};
+import styles from '../../styles/components/tableStyle';
+import styles2 from '../../styles/components/tasksStyle.js';
 
 const useStyles = makeStyles(styles);
+const useStyles2 = makeStyles(styles2);
+
+const { REACT_APP_URL_API } = process.env;
 
 export default function SuppliersList() {
   const classes = useStyles();
+  const classes2 = useStyles2();
   const dispatch = useDispatch();
   const suppliers = useSelector((state) => state.suppliers);
   var token = Token();
+  const [listSuppliers, setListSuppliers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [totalCount, setTotalCount] = useState();
+  const [page, setPage] = useState(1);
+  const filters = useQueryParams();
+  const castedFilters = {
+    search: filters.params.search || '',
+  };
+
+  const fetchSuppliers = async () => {
+    if (isLoading) return;
+    setIsLoading(true);
+    const newPage = page + 1;
+    const res = await fetch(`${REACT_APP_URL_API}/supplier?page=${newPage}&search=${castedFilters.search}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await res.json();
+    setTotalCount(result.total);
+    if (result && result.data) {
+      const newSuppliers = [...listSuppliers, ...result.data];
+      if (newSuppliers.length >= totalCount) {
+        setHasMore(false);
+      }
+      setListSuppliers(newSuppliers);
+      setPage(newPage);
+    }
+    setIsLoading(false);
+  };
 
   useEffect(() => {
-    dispatch(getSuppliers(token));
-  }, []);
-
-  const handleChangeSearchInput = (e) => {
-    const name = { name: e.target.value };
-    if (name.name.length > 0) {
-      dispatch(getSuppliersByName(token, name));
-    } else {
-      dispatch(getSuppliers(token));
+    async function fetchData() {
+      if (isLoading) return;
+      setIsLoading(true);
+      const res = await fetch(`${REACT_APP_URL_API}/supplier?page=1&search=${castedFilters.search}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const result = await res.json();
+      setTotalCount(result.total);
+      if (result && result.data) {
+        setListSuppliers(result.data);
+      }
+      setIsLoading(false);
     }
-  };
+    fetchData();
+  }, [JSON.stringify(castedFilters)]);
 
   return (
     <div>
@@ -88,31 +103,87 @@ export default function SuppliersList() {
                   className="searchInput"
                   type="search"
                   placeholder="Buscar..."
-                  onChange={handleChangeSearchInput}
+                  defaultValue={filters.params.search}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      filters.setParam('search', e.target.value);
+                    }
+                  }}
                 />
               </div>
             </CardHeader>
             <CardBody>
-              {suppliers && suppliers.length > 0 ? (
-                <Table
-                  tableHeaderColor="primary"
-                  tableHead={['ID', 'Razon Social', 'CUIT', 'Test1', 'Test2']}
-                  options={true}
-                  tableData={
-                    suppliers && suppliers.length > 0
-                      ? suppliers.map((supplier, index) => {
-                          return {
-                            id: supplier.id,
-                            data: [supplier.id, supplier.businessName, supplier.cuit, supplier.phone, supplier.CP],
-                            deletepathname: 'supplier'
-                          };
-                        })
-                      : null
-                  }
-                />
-              ) : (
-                <h5 style={{ display: 'flex', justifyContent: 'center' }}>No existen proveedores</h5>
-              )}
+              <div className={classes.tableResponsive}>
+                <Table className={classes.table}>
+                  <TableHead className={classes.primaryTableHeader}>
+                    <TableRow className={classes.tableHeadRow}>
+                      <TableCell className={classes.tableCell + ' ' + classes.tableHeadCell}>ID</TableCell>
+                      <TableCell className={classes.tableCell + ' ' + classes.tableHeadCell}>Razon Social</TableCell>
+                      <TableCell className={classes.tableCell + ' ' + classes.tableHeadCell}>CUIT</TableCell>
+                      <TableCell className={classes.tableCell + ' ' + classes.tableHeadCell}>Test1</TableCell>
+                      <TableCell className={classes.tableCell + ' ' + classes.tableHeadCell}>Test2</TableCell>
+                      <TableCell align="right" className={classes.tableCell + ' ' + classes.tableHeadCell}>
+                        Opciones
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <InfiniteScroll
+                    initialLoad={false}
+                    loadMore={fetchSuppliers}
+                    hasMore={hasMore}
+                    element="tbody"
+                    pageStart={2}
+                    loader={
+                      <tr key={0}>
+                        <td>
+                          <div style={{ display: 'flex' }}>Loading...</div>
+                        </td>
+                      </tr>
+                    }
+                  >
+                    {listSuppliers.map((item, key) => {
+                      return (
+                        <TableRow key={key} className={classes.tableBodyRow} hover={true}>
+                          <TableCell className={classes.tableCell} key={item.id}>
+                            {item.id}
+                          </TableCell>
+                          <TableCell className={classes.tableCell} key={item.businessName}>
+                            {item.businessName}
+                          </TableCell>
+                          <TableCell className={classes.tableCell} key={item.cuit}>
+                            {item.cuit}
+                          </TableCell>
+                          <TableCell className={classes.tableCell} key={item.phone}>
+                            {item.phone}
+                          </TableCell>
+                          <TableCell className={classes.tableCell} key={item.CP}>
+                            {item.CP}
+                          </TableCell>
+                          <TableCell align="right" className={classes.tableCell} key={key}>
+                            <Tooltip
+                              id="tooltip-top-start"
+                              title={`Editar`}
+                              placement="top"
+                              classes={{ tooltip: classes2.tooltip }}
+                            >
+                              <Link to={`${item.id}`}>
+                                <IconButton
+                                  aria-label={`Editar + ${item.id}`}
+                                  className={classes2.tableActionButton}
+                                  // onClick={() => console.log(prop.editpathname)}
+                                >
+                                  <Edit className={classes2.tableActionButtonIcon + ' ' + classes2.edit} />
+                                </IconButton>
+                              </Link>
+                            </Tooltip>
+                            {/* <DeleteDialog path={'/products'} id={item.id} /> */}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </InfiniteScroll>
+                </Table>
+              </div>
             </CardBody>
           </Card>
         </GridItem>
@@ -120,3 +191,4 @@ export default function SuppliersList() {
     </div>
   );
 }
+
