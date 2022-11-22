@@ -1,25 +1,8 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNumberString, IsOptional, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class GetAllProductsInput {
-  @ApiPropertyOptional({
-    description: 'rows limit',
-    type: 'number',
-    example: 10,
-  })
-  @IsOptional()
-  @IsNumberString()
-  readonly limit?: number;
-
-  @ApiPropertyOptional({
-    description: 'rows to skip',
-    type: 'number',
-    example: 0,
-  })
-  @IsOptional()
-  @IsNumberString()
-  readonly skip?: number;
-
   @ApiPropertyOptional({
     description: 'search string',
     type: 'string',
@@ -27,5 +10,15 @@ export class GetAllProductsInput {
   })
   @IsOptional()
   @IsString()
-  readonly q?: string;
+  readonly search?: string;
+
+  @ApiPropertyOptional({
+    description: 'categoryId of the product',
+    type: 'number',
+    example: '1',
+  })
+  @IsOptional()
+  @IsNumber()
+  @Type(() => Number)
+  readonly categoryId?: number;
 }

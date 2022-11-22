@@ -13,6 +13,9 @@ import { CreateProductInput } from './dto/create-product-input.dto';
 import { GetOneProductInput } from './dto/get-one-product-input.dto';
 import { GetAllProductsInput } from './dto/get-all-products-input.dto';
 import { UpdateProductInput } from './dto/update-product-input.dto';
+import { ProductRepository } from './product.repository';
+import { PaginationDto } from '../dto/pagination.dto';
+import { GetAllProductsOutput } from './dto/get-product-by-categoryid.dto';
 
 @Injectable()
 export class ProductService extends BaseService<Product> {
@@ -21,6 +24,7 @@ export class ProductService extends BaseService<Product> {
     private readonly appConfiguration: ConfigType<typeof appConfig>,
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
+    @Inject('productRepository') private readonly productRepositoryV2: ProductRepository,
   ) {
     super(productRepository);
   }
@@ -28,16 +32,14 @@ export class ProductService extends BaseService<Product> {
   // CRUD
 
   public async create(input: CreateProductInput): Promise<Product> {
-    const created = this.productRepository.create({
-      ...input,
-    });
+    const created = this.productRepository.create(input);
 
     const saved = await this.productRepository.save(created);
 
     return saved;
   }
 
-  public async getOne(input: GetOneProductInput): Promise<Product | undefined> {
+  public async getOne(input: GetOneProductInput): Promise<Product> {
     const { id } = input;
 
     const existing = await this.getOneByOneFields({
@@ -48,23 +50,11 @@ export class ProductService extends BaseService<Product> {
     return existing;
   }
 
-  public async getAll(input: GetAllProductsInput): Promise<Product[]> {
+  public async getAll(input: GetAllProductsInput, pagination: PaginationDto): Promise<GetAllProductsOutput> {
     try {
-      const { limit, skip, q } = input;
-      const query = this.productRepository.createQueryBuilder().loadAllRelationIds();
+      const products = await this.productRepositoryV2.getAllProducts(input, pagination);
 
-      if (q)
-        query
-          .where('articleName like :q', {
-            q: `%${q}%`,
-          })
-          .andWhere('id = :q', { q: `%${q}%` });
-
-      query.limit(limit || 10).skip(skip);
-
-      const products = await query.getMany();
-
-      if (products.length === 0) {
+      if (products.data.length === 0) {
         throw new NotFoundException('No products');
       }
 
@@ -87,6 +77,24 @@ export class ProductService extends BaseService<Product> {
       ...input,
     });
 
+    const saved = await this.productRepository.save(preloaded);
+
+    return {
+      ...existing,
+      ...saved,
+    } as Product;
+  }
+
+  public async updateStock(stock: number, id: number): Promise<Product> {
+    const existing = await this.getOneByOneFields({
+      fields: { id },
+      checkIfExists: true,
+    });
+
+    const preloaded = await this.productRepository.preload({
+      id: existing.id,
+      stock,
+    });
     const saved = await this.productRepository.save(preloaded);
 
     return {

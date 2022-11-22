@@ -1,47 +1,54 @@
-import Dashboard from "@material-ui/icons/Dashboard";
-import Person from "@material-ui/icons/Person";
-import BubbleChart from "@material-ui/icons/BubbleChart";
-import LocationOn from "@material-ui/icons/LocationOn";
-import Notifications from "@material-ui/icons/Notifications";
-import Unarchive from "@material-ui/icons/Unarchive";
-import Language from "@material-ui/icons/Language";
+import Dashboard from '@material-ui/icons/Dashboard';
+import Person from '@material-ui/icons/Person';
+import BubbleChart from '@material-ui/icons/BubbleChart';
+import LocationOn from '@material-ui/icons/LocationOn';
+import Notifications from '@material-ui/icons/Notifications';
+import Unarchive from '@material-ui/icons/Unarchive';
+import Language from '@material-ui/icons/Language';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
-import DashboardPage from "../views/Dashboard/Dashboard";
-import PriceLists from "../views/PriceLists/PriceLists.js"
-import Maps from "../views/Maps/Maps.js";
-import NotificationsPage from "../views/Notifications/Notifications.js";
-import UpgradeToPro from "../views/UpgradeToPro/UpgradeToPro.js";
+import DashboardPage from '../views/Dashboard/Dashboard';
+import PriceLists from '../views/PriceLists/PriceLists.js';
+import Maps from '../views/Maps/Maps.js';
+import NotificationsPage from '../views/Notifications/Notifications.js';
+import UpgradeToPro from '../views/UpgradeToPro/UpgradeToPro.js';
 // core components/views for RTL layout
-import RTLPage from "../views/RTLPage/RTLPage.js";
-import EditPricelist from '../views/PriceLists/EditPricelist'
+import RTLPage from '../views/RTLPage/RTLPage.js';
+import EditPricelist from '../views/PriceLists/EditPricelist';
 import AddIcon from '@material-ui/icons/Add';
 
 // import purchases from './purchases'
-import { clients, purchases, artAndCat } from './purchases'
+import { clients, purchases, artAndCat } from './nestedRoutes';
+import ProductList from '../views/Products/ProductList';
 
 const dashboardRoutes = [
   {
-    path: "/dashboard",
-    name: "Panel",
+    path: '/dashboard',
+    name: 'Panel',
     icon: Dashboard,
     component: DashboardPage,
-    layout: "/admin"
+    layout: '/admin',
   },
+  // {
+  //   path: '/dashboard2',
+  //   name: 'Panel2',
+  //   icon: Dashboard,
+  //   component: ProductList,
+  //   layout: '/admin',
+  // },
   {
     // path: "/suppliers",
-    name: "Proveedores",
+    name: 'Proveedores',
     icon: Language,
     // component: Suppliers,
     // layout: "/admin",
     notSideBar: true,
     nestedList: true,
     nestedData: purchases,
-
   },
   {
     // path: "/clients",
-    name: "Clientes",
+    name: 'Clientes',
     icon: Person,
     // component: TableList,
     // layout: "/admin",
@@ -58,7 +65,7 @@ const dashboardRoutes = [
   // },
   {
     // path: "/articles",
-    name: "Articulos/Categorias",
+    name: 'Productos/Categorias',
     icon: BubbleChart,
     // layout: "/admin",
     notSideBar: true,
@@ -66,25 +73,25 @@ const dashboardRoutes = [
     nestedData: artAndCat,
   },
   {
-    path: "/pricelist",
-    name: "Listado de precios",
-    icon: "content_paste",
+    path: '/pricelist',
+    name: 'Listado de precios',
+    icon: 'content_paste',
     component: PriceLists,
-    layout: "/admin"
+    layout: '/admin',
   },
   {
-    path: "/maps",
-    name: "Maps",
+    path: '/maps',
+    name: 'Maps',
     icon: LocationOn,
     component: Maps,
-    layout: "/admin"
+    layout: '/admin',
   },
   {
-    path: "/notifications",
-    name: "Notifications",
+    path: '/notifications',
+    name: 'Notifications',
     icon: Notifications,
     component: NotificationsPage,
-    layout: "/admin"
+    layout: '/admin',
   },
   // {
   //   path: "/rtl-page",
@@ -94,28 +101,28 @@ const dashboardRoutes = [
   //   layout: "/admin"
   // },
   {
-    path: "/profile",
-    name: "Perfil",
+    path: '/profile',
+    name: 'Perfil',
     notSideBar: true,
     // icon: Language,
     component: RTLPage,
-    layout: "/admin"
+    layout: '/admin',
   },
   {
-    path: "/settings",
-    name: "Ajustes",
+    path: '/settings',
+    name: 'Ajustes',
     notSideBar: true,
     // icon: Language,
     // component: RTLPage,
-    layout: "/admin"
+    layout: '/admin',
   },
   {
     path: '/editpricelist/:id',
-    name: "Editar listado de precio",
+    name: 'Editar listado de precio',
     notSideBar: true,
     // icon: Language,
     component: EditPricelist,
-    layout: "/admin"
+    layout: '/admin',
   },
   // {
   //   // path: "/purchases",
@@ -123,8 +130,8 @@ const dashboardRoutes = [
   //   icon: ShoppingCartIcon,
   //   // component: Purchases,
   //   layout: "/admin",
-    // notSideBar: true,
-    // nestedList: true,
+  // notSideBar: true,
+  // nestedList: true,
   //   nestedData: purchases
   // },
   // {

@@ -6,13 +6,13 @@ import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import Copyright from '../../utils/Copyright'
-import NavBar from './NavBar'
+import Copyright from '../../utils/Copyright';
+import NavBar from './NavBar';
 import GridList from '@material-ui/core/GridList';
 import CategoriesCard from '../CategoriesCard/CategoriesCard';
 
-import { useDispatch, useSelector } from 'react-redux'
-import { getCategories } from '../../actions/categories'
+import { useDispatch, useSelector } from 'react-redux';
+import { getCategories } from '../../actions/categories';
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -38,8 +38,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(8, 0, 6),
   },
   cardHeader: {
-    backgroundColor:
-      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[700],
+    backgroundColor: theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[700],
   },
   cardPricing: {
     display: 'flex',
@@ -61,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     height: '80%',
-  }
+  },
 }));
 
 const footers = [
@@ -92,11 +91,11 @@ export default function UsersManagment() {
   } else {
     token = JSON.parse(sessionStorage.getItem('token'));
   }
-  const categories = useSelector(state => state.categories)
+  const categories = useSelector((state) => state.categories);
 
   useEffect(() => {
     dispatch(getCategories(token));
-  }, [])
+  }, []);
 
   return (
     <React.Fragment>
@@ -113,15 +112,13 @@ export default function UsersManagment() {
       </GridList> */}
 
       <GridList cellHeight={450} className={classes.gridList} cols={4} spacing={0}>
-        {categories && categories.length > 0 ?
-        categories.map(cat => {
-          console.log(cat)
-          return (
-            <CategoriesCard props={cat} />
-          )
-        })
-        : <h5 style={{ display: "flex", justifyContent: "center" }}>No existen categorias</h5>
-        }
+        {categories && categories.length > 0 ? (
+          categories.map((cat) => {
+            return <CategoriesCard props={cat} />;
+          })
+        ) : (
+          <h5 style={{ display: 'flex', justifyContent: 'center' }}>No existen categorias</h5>
+        )}
       </GridList>
 
       {/* Hero unit */}

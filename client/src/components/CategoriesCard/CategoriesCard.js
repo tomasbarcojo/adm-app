@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 const useStyles = makeStyles({
   root: {
     minWidth: 345,
-    margin: '10px'
+    margin: '10px',
   },
   media: {
     height: 140,
@@ -26,8 +26,9 @@ export default function MediaCard({ props }) {
         <CardActionArea>
           <CardMedia
             className={classes.media}
-            image={`http://localhost:3001/images/${props.image}`}
-            title='Product image'
+            // image={`http://localhost:3001/images/${props.image}`} // uncomment if images are from server
+            image={`${props.image}`} // uncomment if images aren't from server
+            title="Product image"
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">

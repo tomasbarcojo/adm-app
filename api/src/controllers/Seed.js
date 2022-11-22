@@ -9,7 +9,7 @@ module.exports = {
             lastName: 'Barcojo',
             email: 'tomasbarcojo@gmail.com',
             username: 'tomi',
-            password: 'tomasito15'
+            password: '112233'
         });
         await Supplier.create({
             businessName: 'Activa SRL',
@@ -39,7 +39,7 @@ module.exports = {
         }
         for (var i = 0; i < 300; i++) {
             await Article.create({
-                articleName: faker.commerce.productName(),
+                name: faker.commerce.productName(),
                 code: faker.datatype.number(),
                 price: faker.commerce.price(),
                 stock: faker.datatype.number(),

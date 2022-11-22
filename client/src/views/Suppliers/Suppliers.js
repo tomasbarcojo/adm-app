@@ -1,47 +1,47 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import { addSupplier, getSuppliers, getSuppliersByName } from '../../actions/suppliers'
-import MaterialTable from 'material-table'
+import { addSupplier, getSuppliers, getSuppliersByName } from '../../actions/suppliers';
+import MaterialTable from 'material-table';
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 // core components
-import GridItem from "../../components/Grid/GridItem.js";
-import GridContainer from "../../components/Grid/GridContainer.js";
-import Button from "../../components/CustomButtons/Button.js";
-import Card from "../../components/Card/Card.js";
-import CardHeader from "../../components/Card/CardHeader.js";
-import CardBody from "../../components/Card/CardBody.js";
-import CardFooter from "../../components/Card/CardFooter.js";
-import Table from "../../components/Table/Table.js";
+import GridItem from '../../components/Grid/GridItem.js';
+import GridContainer from '../../components/Grid/GridContainer.js';
+import Button from '../../components/CustomButtons/Button.js';
+import Card from '../../components/Card/Card.js';
+import CardHeader from '../../components/Card/CardHeader.js';
+import CardBody from '../../components/Card/CardBody.js';
+import CardFooter from '../../components/Card/CardFooter.js';
+import Table from '../../components/Table/Table.js';
 
-import avatar from "../../images/faces/marc.jpg";
-import Token from '../../Token/Token'
+import avatar from '../../images/faces/marc.jpg';
+import Token from '../../Token/Token';
 
 const styles = {
   cardCategoryWhite: {
-    color: "rgba(255,255,255,.62)",
-    margin: "0",
-    fontSize: "14px",
-    marginTop: "0",
-    marginBottom: "0"
+    color: 'rgba(255,255,255,.62)',
+    margin: '0',
+    fontSize: '14px',
+    marginTop: '0',
+    marginBottom: '0',
   },
   cardTitleWhite: {
-    color: "#FFFFFF",
-    marginTop: "0px",
-    minHeight: "auto",
-    fontWeight: "300",
+    color: '#FFFFFF',
+    marginTop: '0px',
+    minHeight: 'auto',
+    fontWeight: '300',
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
-    textDecoration: "none"
+    marginBottom: '3px',
+    textDecoration: 'none',
   },
   card: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   input: {
     margin: '27px 0 0 0',
@@ -49,19 +49,19 @@ const styles = {
   },
   searchInput: {
     backgroudColor: 'red',
-    background: 'white'
-  }
+    background: 'white',
+  },
 };
 
 const useStyles = makeStyles(styles);
 
 export default function Suppliers() {
   const classes = useStyles();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const url = useLocation();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   var token = Token();
-  const suppliers = useSelector(state => state.suppliers);
+  const suppliers = useSelector((state) => state.suppliers);
   const [showNew, setShowNew] = useState(true);
   const [data, setData] = useState({
     businessName: '',
@@ -74,7 +74,7 @@ export default function Suppliers() {
     bankaccount1: '',
     bankaccount2: '',
     bankaccount3: '',
-    obs: ''
+    obs: '',
   });
 
   const resetForm = () => {
@@ -91,22 +91,22 @@ export default function Suppliers() {
       bankaccount2: '',
       bankaccount3: '',
       obs: '',
-    })
-  }
+    });
+  };
 
   const handleNewSupplier = () => {
-    setShowNew(!showNew)
-  }
+    setShowNew(!showNew);
+  };
 
   const handleChange = (event) => {
-    setData({ ...data, [event.target.id]: event.target.value })
-  }
+    setData({ ...data, [event.target.id]: event.target.value });
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    dispatch(addSupplier(data, token, enqueueSnackbar, closeSnackbar))
-    resetForm()
-  }
+    e.preventDefault();
+    dispatch(addSupplier(data, token, enqueueSnackbar, closeSnackbar));
+    resetForm();
+  };
 
   return (
     <div>
@@ -116,10 +116,14 @@ export default function Suppliers() {
             <CardHeader color="primary">
               <div className={classes.card}>
                 <h4 className={classes.cardTitleWhite}>Nuevo proveedor</h4>
-                {showNew ? null : <Button className={classes.buttonCard} color="info" onClick={handleNewSupplier}>Añadir</Button>}
+                {showNew ? null : (
+                  <Button className={classes.buttonCard} color="info" onClick={handleNewSupplier}>
+                    Añadir
+                  </Button>
+                )}
               </div>
             </CardHeader>
-            {showNew ?
+            {showNew ? (
               <>
                 <form onSubmit={handleSubmit}>
                   <CardBody>
@@ -131,7 +135,7 @@ export default function Suppliers() {
                           id="businessName"
                           onChange={handleChange}
                           fullWidth
-                          autoComplete='off'
+                          autoComplete="off"
                           value={data.businessName}
                         />
                       </GridItem>
@@ -142,8 +146,8 @@ export default function Suppliers() {
                           id="cuit"
                           onChange={handleChange}
                           fullWidth
-                          autoComplete='off'
-                          type='number'
+                          autoComplete="off"
+                          type="string"
                           value={data.cuit}
                         />
                       </GridItem>
@@ -156,8 +160,8 @@ export default function Suppliers() {
                           id="phone"
                           onChange={handleChange}
                           fullWidth
-                          autoComplete='off'
-                          type='number'
+                          autoComplete="off"
+                          type="number"
                           value={data.phone}
                         />
                       </GridItem>
@@ -168,8 +172,8 @@ export default function Suppliers() {
                           id="altPhone"
                           onChange={handleChange}
                           fullWidth
-                          autoComplete='off'
-                          type='number'
+                          autoComplete="off"
+                          type="number"
                           value={data.altPhone}
                         />
                       </GridItem>
@@ -182,7 +186,7 @@ export default function Suppliers() {
                           id="address"
                           onChange={handleChange}
                           fullWidth
-                          autoComplete='off'
+                          autoComplete="off"
                           value={data.address}
                         />
                       </GridItem>
@@ -193,7 +197,7 @@ export default function Suppliers() {
                           id="city"
                           onChange={handleChange}
                           fullWidth
-                          autoComplete='off'
+                          autoComplete="off"
                           value={data.city}
                         />
                       </GridItem>
@@ -204,7 +208,7 @@ export default function Suppliers() {
                           id="CP"
                           onChange={handleChange}
                           fullWidth
-                          autoComplete='off'
+                          autoComplete="off"
                           value={data.CP}
                         />
                       </GridItem>
@@ -217,7 +221,7 @@ export default function Suppliers() {
                           id="bankaccount1"
                           onChange={handleChange}
                           fullWidth
-                          autoComplete='off'
+                          autoComplete="off"
                           value={data.bankaccount1}
                         />
                       </GridItem>
@@ -228,7 +232,7 @@ export default function Suppliers() {
                           id="bankaccount2"
                           onChange={handleChange}
                           fullWidth
-                          autoComplete='off'
+                          autoComplete="off"
                           value={data.bankaccount2}
                         />
                       </GridItem>
@@ -239,7 +243,7 @@ export default function Suppliers() {
                           id="bankaccount3"
                           onChange={handleChange}
                           fullWidth
-                          autoComplete='off'
+                          autoComplete="off"
                           value={data.bankaccount3}
                         />
                       </GridItem>
@@ -255,20 +259,23 @@ export default function Suppliers() {
                           fullWidth
                           multiline
                           rows={4}
-                          autoComplete='off'
+                          autoComplete="off"
                           value={data.obs}
                         />
                       </GridItem>
                     </GridContainer>
                   </CardBody>
                   <CardFooter>
-                    <Button color="primary" type='submit'>Listo</Button>
-                    <Button color="danger" onClick={handleNewSupplier}>Cancelar</Button>
+                    <Button color="primary" type="submit">
+                      Listo
+                    </Button>
+                    <Button color="danger" onClick={handleNewSupplier}>
+                      Cancelar
+                    </Button>
                   </CardFooter>
                 </form>
               </>
-              : null
-            }
+            ) : null}
           </Card>
         </GridItem>
 

@@ -27,7 +27,7 @@ import { LoginUserInput } from './dto/login-user-input.dto';
 @Controller('user')
 export class UserController {
   constructor(private readonly service: UserService) {}
-
+// ruta getAll
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'list of users',
@@ -41,7 +41,7 @@ export class UserController {
   async getAll(@Query() input: GetAllCategoriesInput): Promise<User[]> {
     return this.service.getAll(input);
   }
-
+// ruta getUser
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'a user',
@@ -55,7 +55,7 @@ export class UserController {
   async getOne(@Param() input: GetOneUserInput): Promise<User> {
     return this.service.getOne(input);
   }
-
+// ruta editUser
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'an updated user',
@@ -65,11 +65,11 @@ export class UserController {
     summary: 'update a user',
     description: 'update a user, based on the id',
   })
-  @Patch('/:id')
+  @Patch('/editUser/:id')
   async update(@Param() getOneInput: GetOneUserInput, @Body() input: UpdateUserInput): Promise<User> {
     return this.service.update(getOneInput, input);
   }
-
+// route deleteUser
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'a deleted user',
@@ -79,7 +79,7 @@ export class UserController {
     summary: 'delete a user',
     description: 'delete a user, based on the id',
   })
-  @Delete('/:id')
+  @Delete('/deleteUser/:id')
   async delete(@Param() getOneInput: GetOneUserInput): Promise<User> {
     return this.service.delete(getOneInput);
   }

@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
-    minWidth: 250
+    minWidth: 250,
   },
   formControl: {
     // margin: theme.spacing(1),
@@ -30,12 +30,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 export default function DialogSelect({ state, purchaseId, to, name }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [purchaseState, setPurchaseState] = useState(state);
-  const [data, setData] = useState(null)
+  const [data, setData] = useState(null);
 
   const handleChange = async (event) => {
     setPurchaseState(event.target.value);
@@ -54,30 +53,32 @@ export default function DialogSelect({ state, purchaseId, to, name }) {
 
   const handleClickOpen = async () => {
     setOpen(true);
-    const data = await fetch(`http://localhost:3001/purchase/detail/${purchaseId}`)
-    const purchaseAux = await data.json()
-    setData(purchaseAux)
-    console.log(purchaseAux)
+    const data = await fetch(`http://localhost:3001/purchase/detail/${purchaseId}`);
+    const purchaseAux = await data.json();
+    setData(purchaseAux);
+    console.log(purchaseAux);
   };
 
   const handleOkButton = () => {
     if (purchaseState === 'recibida' && purchaseState !== state) {
-      data.purchase.map(prod => {
-        console.log(prod)
-        let newStock = prod.article.stock + prod.quantity
+      data.purchase.map((prod) => {
+        console.log(prod);
+        let newStock = prod.article.stock + prod.quantity;
         const product = {
-          stock: newStock
-        }
+          stock: newStock,
+        };
         try {
           fetch(`http://localhost:3001/article/stock/${prod.articleId}`, {
             method: 'PUT',
             body: JSON.stringify(product),
             headers: {
-              'Content-Type': 'application/json'
-            }
-          })
-        } catch (err) { console.log(err) }
-      })
+              'Content-Type': 'application/json',
+            },
+          });
+        } catch (err) {
+          console.log(err);
+        }
+      });
     }
     if (purchaseState !== state) {
       try {
@@ -87,22 +88,22 @@ export default function DialogSelect({ state, purchaseId, to, name }) {
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-          }
+          },
         })
-          .then(res => res.json())
-          .then(data => console.log(data))
-          .catch(e => console.log(e))
+          .then((res) => res.json())
+          .then((data) => console.log(data))
+          .catch((e) => console.log(e));
         setOpen(false);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     }
     setOpen(false);
-  }
+  };
 
   const handleClose = () => {
     setOpen(false);
-  }
+  };
 
   // else {
   //   try {
@@ -126,50 +127,44 @@ export default function DialogSelect({ state, purchaseId, to, name }) {
   // sendMail()
   // }
 
-return (
-  <div>
-    <Button onClick={handleClickOpen}
-      size={'small'}
-      variant={purchaseState === 'en transito' ? 'outlined' : 'text'}
-      disabled={purchaseState === 'en transito' ? false : true}
-      classes={{
-        root: classes.stateButton,
-        disabled: classes.disabled,
-      }}
-    >
-      {purchaseState}
-    </Button>
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Cambiar estado</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          Compra con nº de ID #{purchaseId}
-        </DialogContentText>
-        <form className={classes.container}>
-          {/* <FormControl className={classes.formControl}> */}
-          <InputLabel>Estado</InputLabel>
-          <Select
-            native
-            value={purchaseState}
-            onChange={handleChange}
-            style={{ width: '100%' }}
-          >
-            <option value={"en transito"}>En transito</option>
-            <option value={"recibida"}>Recibida</option>
-            <option value={"cancelada"}>Cancelada</option>
-          </Select>
-          {/* </FormControl> */}
-        </form>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose} color="primary">
-          Cancelar
-        </Button>
-        <Button onClick={handleOkButton} color="primary">
-          Ok
-        </Button>
-      </DialogActions>
-    </Dialog>
-  </div>
-);
+  return (
+    <div>
+      <Button
+        onClick={handleClickOpen}
+        size={'small'}
+        variant={purchaseState === 'en transito' ? 'outlined' : 'text'}
+        disabled={purchaseState === 'en transito' ? false : true}
+        classes={{
+          root: classes.stateButton,
+          disabled: classes.disabled,
+        }}
+      >
+        {purchaseState}
+      </Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Cambiar estado</DialogTitle>
+        <DialogContent>
+          <DialogContentText>Compra con nº de ID #{purchaseId}</DialogContentText>
+          <form className={classes.container}>
+            {/* <FormControl className={classes.formControl}> */}
+            <InputLabel>Estado</InputLabel>
+            <Select native value={purchaseState} onChange={handleChange} style={{ width: '100%' }}>
+              <option value={'en transito'}>En transito</option>
+              <option value={'recibida'}>Recibida</option>
+              <option value={'cancelada'}>Cancelada</option>
+            </Select>
+            {/* </FormControl> */}
+          </form>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancelar
+          </Button>
+          <Button onClick={handleOkButton} color="primary">
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
 }

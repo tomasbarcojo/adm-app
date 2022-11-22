@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 import Toolbar from '@material-ui/core/Toolbar';
 import AppBar from '@material-ui/core/AppBar';
 import { makeStyles } from '@material-ui/core/styles';
-import Logo from '../../images/Logo/Logo4.png'
+import Logo from '../../images/Logo/Logo4.png';
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -28,8 +28,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(8, 0, 6),
   },
   cardHeader: {
-    backgroundColor:
-      theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[700],
+    backgroundColor: theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[700],
   },
   cardPricing: {
     display: 'flex',
@@ -56,8 +55,7 @@ export default function NavBar() {
     <div>
       <AppBar position="static" color="primary" elevation={0} className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
-
-          <img className='ActivaLogo' src={Logo} alt='Activa SRL Logo' />
+          <img className="ActivaLogo" src={Logo} alt="Activa SRL Logo" />
           {/* <Link href="/users">
             <img className='Logo' src={Logo} alt='Wispro Logo' />
           </Link>
@@ -81,5 +79,5 @@ export default function NavBar() {
         </Toolbar>
       </AppBar>
     </div>
-  )
+  );
 }

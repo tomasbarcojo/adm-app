@@ -31,7 +31,7 @@
     "migration:revert": "npm run typeorm migration:revert",
     "schema:drop": "npm run typeorm schema:drop",
     "schema:sync": "npm run typeorm schema:sync",
-    "seed:run": "npx ts-node ./src/database/seeds"
+    "seed:dev:run": "nest start --debug --config nest-cli.execute-seed.json"
   },
   "dependencies": {
     "@nestjs/axios": "0.0.4",
@@ -48,8 +48,10 @@
     "@opentelemetry/auto-instrumentations-node": "0.28.0",
     "@opentelemetry/sdk-node": "0.27.0",
     "argon2": "^0.29.1",
+    "cache-manager": "^5.1.1",
     "class-transformer": "0.5.1",
     "class-validator": "0.13.2",
+    "faker": "^6.6.6",
     "fastify-helmet": "6.0.0",
     "fastify-swagger": "4.13.1",
     "i": "0.3.7",
@@ -64,12 +66,14 @@
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
     "rxjs": "7.5.2",
+    "swagger-ui-express": "^4.5.0",
     "typeorm": "0.2.41",
     "winston": "3.6.0"
   },
   "devDependencies": {
     "@commitlint/cli": "16.0.2",
     "@commitlint/config-conventional": "16.0.0",
+    "@faker-js/faker": "^7.6.0",
     "@nestjs/cli": "8.2.0",
     "@nestjs/schematics": "8.0.5",
     "@nestjs/testing": "8.2.5",
@@ -77,6 +81,7 @@
     "@types/jest": "27.4.0",
     "@types/k6": "0.35.2",
     "@types/luxon": "2.0.9",
+    "@types/multer": "^1.4.7",
     "@types/node": "17.0.8",
     "@types/passport-jwt": "^3.0.7",
     "@types/passport-local": "^1.0.34",
