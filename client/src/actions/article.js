@@ -70,21 +70,21 @@ export const getArticles = (token, page, limit) => async (dispatch) => {
 
 export const getArticlesBySupplierId = (token, id) => async (dispatch) => {
   try {
-    await fetch(`${REACT_APP_URL_API}/article/supplier/${id}`, {
+    const res = await fetch(`${REACT_APP_URL_API}/product?supplierId=${id}`, {
       headers: {
         'Content-Type': 'application/json',
         'auth-token': token,
       },
-    })
-      .then((data) => data.json())
-      .then((res) => {
-        if (res.status === 200) {
-          dispatch({
-            type: 'GET_ARTICLES',
-            payload: res.articles,
-          });
-        }
+    });
+
+    const result = await res.json();
+
+    if (res.status === 200) {
+      dispatch({
+        type: 'GET_ARTICLES',
+        payload: result,
       });
+    }
   } catch (err) {
     console.log(err);
   }

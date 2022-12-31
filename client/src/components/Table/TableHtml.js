@@ -1,10 +1,8 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import Row from './Row';
 
 export default function TableHtml(props) {
   const { tableData } = props;
-  const total = useSelector((state) => state.purchaseTotal);
 
   return (
     <div style={{ overflowX: 'auto' }}>

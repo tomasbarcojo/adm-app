@@ -76,7 +76,7 @@ export default function Counter({ props }) {
   const handleChangePrice = (event) => {
     const value = event.target.value;
     if (value < 1) {
-      setPrice(0);
+      setPrice('0');
     } else {
       var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -86,11 +86,11 @@ export default function Counter({ props }) {
         //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
         //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
       });
-      console.log(formatter.format(value).replace('$', ''));
-      console.log(parseInt(formatter.format(value).replace('$', '')));
+      console.log('1', formatter.format(value).replace('$', ''));
+      console.log('2', parseInt(formatter.format(value).replace('$', '')));
       // console.log(formatter.format(value))
       // console.log(typeof(formatter.format(value)))
-      const newVal = setPrice(formatter.format(value));
+      const newVal = setPrice(formatter.format(value).replace('$', ''));
     }
   };
 

@@ -6,7 +6,7 @@ import { Product } from './product.entity';
 
 export class ProductRepository {
   async getAllProducts(input: GetAllProductsInput, pagination: PaginationDto): Promise<GetAllOutput> {
-    const { search, categoryId } = input;
+    const { search, categoryId, supplierId } = input;
     const { page, limit } = pagination;
     const dataQuery = getConnection().createQueryBuilder().select('*').from(Product, 'P').where('P.deletedAt IS NULL');
 
@@ -21,6 +21,9 @@ export class ProductRepository {
     }
     if (categoryId) {
       dataQuery.andWhere('P.categoryId = :categoryId', { categoryId: categoryId });
+    }
+    if (supplierId) {
+      dataQuery.andWhere('P.supplierId = :supplierId', { supplierId: supplierId });
     }
 
     const dataCount = await dataQuery.getCount();

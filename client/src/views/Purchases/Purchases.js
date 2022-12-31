@@ -180,7 +180,7 @@ export default function PriceLists() {
                     <GridItem xs={12} sm={12} md={8}>
                       <Autocomplete
                         id="Supplier"
-                        options={suppliers}
+                        options={suppliers.data}
                         getOptionLabel={(option) => option.businessName}
                         onChange={(event, value) => handleChangePriceListName(value)}
                         fullWidth={true}
@@ -190,16 +190,16 @@ export default function PriceLists() {
                     </GridItem>
                   </GridContainer>
 
-                  {articles && articles.length > 0 ? (
+                  {articles && articles.data?.length > 0 ? (
                     <>
                       <h5>Articulos:</h5>
                       <TableHtml
                         tableData={
-                          articles && articles.length > 0
-                            ? articles.map((article) => {
+                          articles.data && articles.data.length > 0
+                            ? articles.data.map((article) => {
                                 return {
                                   id: article.id,
-                                  articleName: article.articleName,
+                                  articleName: article.name,
                                   stock: article.stock,
                                 };
                               })
@@ -219,7 +219,6 @@ export default function PriceLists() {
                             <KeyboardDatePicker
                               className={classes.datePicker}
                               orientation="landscape"
-                              variant="static"
                               openTo="date"
                               showTodayButton
                               variant="outlined"
