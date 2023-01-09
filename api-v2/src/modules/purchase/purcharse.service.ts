@@ -7,7 +7,7 @@ import { GetAllPurchaseInput } from './dto/get-all-purchase-input.dto';
 import { GetOnePurchaseInput } from './dto/get-one-purchase-input.dto';
 import { GetPurchaseDetailInput } from './dto/get-purchase-detail-input.dto';
 import { UpdatePurchaseInput } from './dto/update-purchase-input.dto';
-import { Purchase } from './purchase.entity';
+import { Purchase } from './entities/purchase.entity';
 
 @Injectable()
 export class PurchaseService extends BaseService<Purchase> {
@@ -62,7 +62,6 @@ export class PurchaseService extends BaseService<Purchase> {
   }
 
   public async getDetail(input: GetPurchaseDetailInput): Promise<Purchase> {
-
     const existing = await this.getOneByOneFields({
       fields: input,
       checkIfExists: false,

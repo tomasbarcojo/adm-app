@@ -6,6 +6,7 @@ import {
   DeleteDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   OneToMany,
@@ -13,8 +14,10 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Category } from '../category/category.entity';
-import { PricelistProduct } from '../pricelist/entity/pricelist-product.entity';
-import { Pricelist } from '../pricelist/entity/pricelist.entity';
+import { PricelistProduct } from '../pricelist/entities/pricelist-product.entity';
+import { Pricelist } from '../pricelist/entities/pricelist.entity';
+import { PurchasedProduct } from '../purchase/entities/purchase-product.entity';
+import { Purchase } from '../purchase/entities/purchase.entity';
 import { Supplier } from '../supplier/supplier.entity';
 
 @Entity({ name: 'Product' })
@@ -132,10 +135,9 @@ export class Product extends BaseEntity {
   @JoinColumn()
   supplier: Supplier;
 
-  //   @ManyToOne(() => Pricelist, (pricelist) => pricelist.product)
-  //   @JoinColumn()
-  //   pricelist: Pricelist;
   @ManyToMany(() => PricelistProduct, (pricelistProduct) => pricelistProduct.product)
-  @JoinColumn()
   pricelistProduct: PricelistProduct;
+
+  @OneToMany(() => PurchasedProduct, (purchaseProduct) => purchaseProduct.product)
+  purchasedProduct: PurchasedProduct;
 }

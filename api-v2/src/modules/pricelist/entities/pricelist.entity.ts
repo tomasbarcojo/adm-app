@@ -59,7 +59,6 @@ export class Pricelist extends BaseEntity {
   // relation
 
   @ManyToMany(() => PricelistProduct, (pricelistProduct) => pricelistProduct.pricelist)
-  @JoinColumn()
   pricelistProduct: PricelistProduct;
   // @OneToMany(() => Product, (product) => product.pricelist)
   // @JoinColumn()

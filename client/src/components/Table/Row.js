@@ -4,18 +4,18 @@ import { addDataPurchase, updateTotal } from '../../actions/purchases';
 import NumberFormat from 'react-number-format';
 
 export default function Counter({ props }) {
-  const [quantity, setQuantity] = useState(0);
-  const dispatch = useDispatch();
   const purchase = useSelector((state) => state.purchase);
+  const dispatch = useDispatch();
+  const [quantity, setQuantity] = useState(0);
   const [price, setPrice] = useState(0);
-  const [float, setFloat] = useState(0);
+  const [discount, setDiscount] = useState(0);
   var total = 0;
 
   useEffect(() => {
     if (quantity !== 0 || purchase.length > 0) {
       let arrPurchase = purchase;
       var changeMade = false;
-      arrPurchase.map((el) => {
+      arrPurchase.forEach((el) => {
         if (el.articleId === props.id) {
           el.quantity = quantity;
           el.price = price;
@@ -40,11 +40,9 @@ export default function Counter({ props }) {
     }
   }, [quantity, price]);
 
-  useEffect(() => {}, [price]);
-
   const getTotal = (arrPurchase) => {
-    arrPurchase.map((el) => {
-      total = total + el.total;
+    arrPurchase.forEach((el) => {
+      total += el.total;
     });
     dispatch(updateTotal(total));
   };
@@ -76,22 +74,23 @@ export default function Counter({ props }) {
   const handleChangePrice = (event) => {
     const value = event.target.value;
     if (value < 1) {
-      setPrice('0');
+      setPrice(0);
     } else {
-      var formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-
-        // These options are needed to round to whole numbers if that's what you want.
-        //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-        //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
-      });
-      console.log('1', formatter.format(value).replace('$', ''));
-      console.log('2', parseInt(formatter.format(value).replace('$', '')));
-      // console.log(formatter.format(value))
-      // console.log(typeof(formatter.format(value)))
-      const newVal = setPrice(value);
+      setPrice(value);
     }
+  };
+
+  const handleChangeDiscount = (event) => {
+    const value = event.target.value;
+    if (value < 1) {
+      setDiscount(0);
+    } else {
+      setDiscount(value);
+    }
+  }
+
+  const handleFocus = (event) => {
+    event.target.select();
   };
 
   return (
@@ -119,15 +118,30 @@ export default function Counter({ props }) {
       <td className="htmlTableTD">
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           ${' '}
-          <NumberFormat
+          {/* <NumberFormat
             value={price}
             style={{ width: '70px', marginLeft: '7px' }}
             displayType={'input'}
-            thousandSeparator={false}
+            thousandSeparator={true}
             decimalScale={3}
             onChange={handleChangePrice}
+          /> */}
+          <input
+            style={{ width: '70px', marginLeft: '7px' }}
+            onChange={handleChangePrice}
+            onFocus={handleFocus}
+            value={price}
           />
         </div>
+      </td>
+      <td>
+        ${' '}
+        <input
+          style={{ width: '70px', marginLeft: '7px' }}
+          onChange={handleChangeDiscount}
+          onFocus={handleFocus}
+          value={discount}
+        />
       </td>
       <td className="htmlTableTD">
         {quantity && price

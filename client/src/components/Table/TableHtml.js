@@ -6,18 +6,23 @@ export default function TableHtml(props) {
 
   return (
     <div style={{ overflowX: 'auto' }}>
-      <table>
-        <tr>
-          <th className="htmlTableTH">ID</th>
-          <th className="htmlTableTH">Articulo</th>
-          <th className="htmlTableTH">Stock actual</th>
-          <th className="htmlTableTH">Cantidad</th>
-          <th className="htmlTableTH">Precio de compra</th>
-          <th className="htmlTableTH">Monto</th>
-        </tr>
-        {tableData.map((prop, key) => {
-          return <Row key={key} props={prop} />;
-        })}
+      <table className='htmlTableStyle'>
+        <thead>
+          <tr>
+            <th className="htmlTableTH">ID</th>
+            <th className="htmlTableTH">Articulo</th>
+            <th className="htmlTableTH">Stock actual</th>
+            <th className="htmlTableTH">Cantidad</th>
+            <th className="htmlTableTH">Precio unitario + IVA</th>
+            <th className="htmlTableTH">Monto descuento</th>
+            <th className="htmlTableTH">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tableData.map((prop, key) => {
+            return <Row key={key} props={prop} />;
+          })}
+        </tbody>
       </table>
     </div>
   );

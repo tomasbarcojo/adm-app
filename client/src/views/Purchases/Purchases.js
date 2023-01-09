@@ -287,7 +287,15 @@ export default function PriceLists() {
                         </div> */}
 
                       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-                        <h3>Total de la compra: $ {total.toFixed(2)}</h3>
+                        <h3>
+                          Total de la compra: ${' '}
+                          {total.toLocaleString('es-AR', {
+                            style: 'currency',
+                            currency: 'ARS',
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
+                        </h3>
                       </div>
                     </>
                   ) : (

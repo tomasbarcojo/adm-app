@@ -1,11 +1,46 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsNumber, IsOptional, ValidateNested } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsNumber, IsOptional, ValidateNested } from 'class-validator';
 
 class ProductListData {
-  articleId: number;
+  @ApiProperty({
+    description: 'the id of the product',
+    type: 'number',
+    example: '1',
+  })
+  @IsNumber()
+  productId: number;
+
+  @ApiProperty({
+    description: 'the price of the product',
+    type: 'string',
+    example: '1',
+  })
+  @IsNotEmpty()
   price: string;
+
+  @ApiProperty({
+    description: 'the quantity of the product',
+    type: 'number',
+    example: '1',
+  })
+  @IsNumber()
   quantity: number;
-  total: number;
+
+  @ApiProperty({
+    description: 'total calculated by (quantity * price) - discount',
+    type: 'string',
+    example: '1',
+  })
+  @IsNotEmpty()
+  discount: string;
+
+  @ApiProperty({
+    description: 'total calculated by (quantity * price) - discount',
+    type: 'number',
+    example: '1',
+  })
+  @IsNotEmpty()
+  total: string;
 }
 export class CreatePurchaseInput {
   @ApiProperty({

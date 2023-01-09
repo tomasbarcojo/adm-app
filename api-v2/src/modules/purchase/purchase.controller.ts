@@ -1,22 +1,10 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpStatus,
-  Param,
-  Patch,
-  Post,
-  Query,
-  UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Query } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreatePurchaseInput } from './dto/create-purchase-input.dto';
 import { GetAllPurchaseInput } from './dto/get-all-purchase-input.dto';
 import { GetOnePurchaseInput } from './dto/get-one-purchase-input.dto';
 import { UpdatePurchaseInput } from './dto/update-purchase-input.dto';
-import { Purchase } from './purchase.entity';
+import { Purchase } from './entities/purchase.entity';
 import { PurchaseService } from './purcharse.service';
 
 @ApiTags('purchase')

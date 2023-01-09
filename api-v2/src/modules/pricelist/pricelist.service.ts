@@ -7,7 +7,7 @@ import { BaseService } from 'src/base/base.service';
 
 import appConfig from 'src/config/app.config';
 
-import { Pricelist } from './entity/pricelist.entity';
+import { Pricelist } from './entities/pricelist.entity';
 
 import { CreatePricelistInput } from './dto/create-pricelist-input.dto';
 import { GetOnePricelistInput } from './dto/get-one-pricelist-input.dto';

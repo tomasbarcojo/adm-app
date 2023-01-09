@@ -165,7 +165,7 @@ export default function rootReducer(state = initialstate, action) {
     case 'ADD_DATA_PURCHASE':
       return {
         ...state,
-        purchase: action.payload,
+        purchase: action.payload.filter((el) => el.quantity > 0 || el.price > 0),
       };
 
     case 'UPDATE_TOTAL_PURCHASE':
