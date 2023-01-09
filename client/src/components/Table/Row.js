@@ -90,12 +90,12 @@ export default function Counter({ props }) {
       console.log('2', parseInt(formatter.format(value).replace('$', '')));
       // console.log(formatter.format(value))
       // console.log(typeof(formatter.format(value)))
-      const newVal = setPrice(formatter.format(value).replace('$', ''));
+      const newVal = setPrice(value);
     }
   };
 
   return (
-    <>
+    <tr>
       <td className="htmlTableTD">{props.id}</td>
       <td className="htmlTableTD">{props.articleName}</td>
       <td className="htmlTableTD">{props.stock}</td>
@@ -118,25 +118,6 @@ export default function Counter({ props }) {
       </td>
       <td className="htmlTableTD">
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-          {/* $ <input  
-      id={props.id}
-      style={{width: '70px', marginLeft: '7px'}}
-      onChange={handleChangePrice}
-      // type='number'
-      value={price}
-    /> */}
-          {/* $ <NumberFormat
-        thousandsGroupStyle="thousand"
-        value={price}
-        onChange={handleChangePrice}
-        style={{width: '70px', marginLeft: '7px'}}
-        decimalSeparator=","
-        displayType="input"
-        type="text"
-        // value='number'
-        thousandSeparator={false}
-        allowNegative={true}
-        decimalScale={3} /> */}
           ${' '}
           <NumberFormat
             value={price}
@@ -148,7 +129,16 @@ export default function Counter({ props }) {
           />
         </div>
       </td>
-      <td className="htmlTableTD">$ {quantity && price ? (quantity * price).toFixed(2) : 0}</td>
-    </>
+      <td className="htmlTableTD">
+        {quantity && price
+          ? (quantity * price).toLocaleString('es-AR', {
+              style: 'currency',
+              currency: 'ARS',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+          : '$ 0'}
+      </td>
+    </tr>
   );
 }

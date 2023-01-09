@@ -16,11 +16,7 @@ export default function TableHtml(props) {
           <th className="htmlTableTH">Monto</th>
         </tr>
         {tableData.map((prop, key) => {
-          return (
-            <tr>
-              <Row key={key} props={prop} />
-            </tr>
-          );
+          return <Row key={key} props={prop} />;
         })}
       </table>
     </div>
