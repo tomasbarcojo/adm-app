@@ -4,7 +4,7 @@ export const addDataPurchase = (data) => async (dispatch) => {
   try {
     dispatch({
       type: 'ADD_DATA_PURCHASE',
-      payload: data,
+      payload: data.filter((el) => el.quantity > 0 && el.price > 0),
     });
   } catch (err) {
     console.log(err);

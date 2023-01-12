@@ -1,16 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpStatus,
-  Param,
-  Patch,
-  Post,
-  Query,
-  UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Body, CacheKey, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Query } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { Product } from './product.entity';
@@ -22,7 +10,7 @@ import { GetAllProductsInput } from './dto/get-all-products-input.dto';
 import { GetOneProductInput } from './dto/get-one-product-input.dto';
 import { UpdateProductInput } from './dto/update-product-input.dto';
 import { PaginationDto } from '../dto/pagination.dto';
-import { GetAllOutput } from './dto/get-product-by-categoryid.dto';
+import { GetAllOutput } from './dto/get-all-products-output.dto';
 
 @ApiTags('product')
 @Controller('product')
@@ -53,10 +41,7 @@ export class ProductController {
     description: 'get a list of product, based on the conditions',
   })
   @Get()
-  async getAll(
-    @Query() input: GetAllProductsInput,
-    @Query() pagination: PaginationDto,
-  ): Promise<GetAllOutput> {
+  async getAll(@Query() input: GetAllProductsInput, @Query() pagination: PaginationDto): Promise<GetAllOutput> {
     return this.service.getAll(input, pagination);
   }
 

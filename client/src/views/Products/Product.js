@@ -256,7 +256,7 @@ export default function Articles() {
                               id="supplierId"
                               name="supplierId"
                               className={classes.input}
-                              options={suppliers}
+                              options={suppliers.data}
                               getOptionLabel={(option) => option.businessName}
                               onChange={(event, newValue) => {
                                 if (newValue) setData({ ...data, supplierId: newValue.id });

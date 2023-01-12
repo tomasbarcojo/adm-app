@@ -50,7 +50,7 @@ const boostrap = async () => {
     CP: '3000',
     bankaccount1: '519925-12',
   });
-  for (var i = 0; i < 100; i++) {
+  for (let i = 0; i < 100; i++) {
     await supplerService.create({
       businessName: faker.company.name(),
       cuit: `${i}`,
@@ -61,13 +61,13 @@ const boostrap = async () => {
       bankaccount1: faker.finance.account(),
     });
   }
-  for (var i = 0; i < 10; i++) {
+  for (let i = 0; i < 10; i++) {
     await categoryService.create({
       categoryName: `Categoria ${i}`,
       image: faker.image.business(640, 480, true),
     });
   }
-  for (var i = 0; i < 300; i++) {
+  for (let i = 0; i < 300; i++) {
     await productService.create({
       name: faker.commerce.productName(),
       code: String(faker.commerce.product()),
@@ -80,7 +80,7 @@ const boostrap = async () => {
       obs: faker.commerce.productDescription(),
     });
   }
-  // for (var i = 0; i < 600; i++) {
+  // for (let i = 0; i < 600; i++) {
   //   await clientService.create({
   //     businessName: faker.internet.userName(),
   //     cuit: `${i}`,
