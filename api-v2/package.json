@@ -31,7 +31,7 @@
     "migration:revert": "npm run typeorm migration:revert",
     "schema:drop": "npm run typeorm schema:drop",
     "schema:sync": "npm run typeorm schema:sync",
-    "seed:dev:run": "nest start --debug --config nest-cli.execute-seed.json"
+    "seed": "nest start --debug --config nest-cli.execute-seed.json"
   },
   "dependencies": {
     "@nestjs/axios": "0.0.4",

@@ -1,16 +1,16 @@
-import { Inject, Injectable, NotFoundException } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { BaseService } from "src/base/base.service";
-import { Repository } from "typeorm";
-import { PaginationDto } from "../dto/pagination.dto";
-import { GetAllOutput } from "../product/dto/get-product-by-categoryid.dto";
-import { CreateSupplierInput } from "./dto/create-supplier-input.dto";
-import { GetAllSupplierInput } from "./dto/get-all-supplier-input.dto";
-import { GetOneSupplierInput } from "./dto/get-one-supplier-input.dto";
-import { GetSupplierDetailInput } from "./dto/get-supplier-detail-input.dto";
-import { UpdateSupplierInput } from "./dto/update-supplier-input.dto";
-import { Supplier } from "./supplier.entity";
-import { SupplierRepository } from "./supplier.repository";
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { BaseService } from 'src/base/base.service';
+import { Repository } from 'typeorm';
+import { PaginationDto } from '../dto/pagination.dto';
+import { GetAllOutput } from '../product/dto/get-all-products-output.dto';
+import { CreateSupplierInput } from './dto/create-supplier-input.dto';
+import { GetAllSupplierInput } from './dto/get-all-supplier-input.dto';
+import { GetOneSupplierInput } from './dto/get-one-supplier-input.dto';
+import { GetSupplierDetailInput } from './dto/get-supplier-detail-input.dto';
+import { UpdateSupplierInput } from './dto/update-supplier-input.dto';
+import { Supplier } from './supplier.entity';
+import { SupplierRepository } from './supplier.repository';
 
 @Injectable()
 export class SupplierService extends BaseService<Supplier> {
@@ -80,7 +80,6 @@ export class SupplierService extends BaseService<Supplier> {
   }
 
   public async getDetail(input: GetSupplierDetailInput): Promise<Supplier> {
-
     const existing = await this.getOneByOneFields({
       fields: input,
       checkIfExists: false,

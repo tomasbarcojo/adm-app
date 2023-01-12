@@ -1,7 +1,7 @@
 import { getConnection } from 'typeorm';
 import { PaginationDto } from '../dto/pagination.dto';
 import { GetAllProductsInput } from './dto/get-all-products-input.dto';
-import { GetAllOutput } from './dto/get-product-by-categoryid.dto';
+import { GetAllOutput } from './dto/get-all-products-output.dto';
 import { Product } from './product.entity';
 
 export class ProductRepository {

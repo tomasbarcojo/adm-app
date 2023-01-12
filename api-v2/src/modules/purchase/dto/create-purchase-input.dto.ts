@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsNotEmpty, IsNumber, IsOptional, ValidateNested } from 'class-validator';
+import { IsArray, IsDateString, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
 
 class ProductListData {
   @ApiProperty({
@@ -31,7 +31,7 @@ class ProductListData {
     type: 'string',
     example: '1',
   })
-  @IsNotEmpty()
+  @IsOptional()
   discount: string;
 
   @ApiProperty({
@@ -40,7 +40,7 @@ class ProductListData {
     example: '1',
   })
   @IsNotEmpty()
-  total: string;
+  total: number;
 }
 export class CreatePurchaseInput {
   @ApiProperty({
@@ -62,9 +62,9 @@ export class CreatePurchaseInput {
 
   @ApiProperty({
     description: 'array of purchased products',
-    type: 'number',
-    example: '1',
+    type: 'array',
+    example: [{ productId: 42, quantity: 1, price: '1', discout: '0', total: 1 }],
   })
-  @ValidateNested()
-  readonly data: ProductListData[];
+  @IsArray()
+  readonly productList: ProductListData[];
 }

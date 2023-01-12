@@ -97,7 +97,7 @@ export default function PriceLists() {
   const dispatch = useDispatch();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   var token = Token();
-  const purchaseList = useSelector((state) => state.purchase);
+  const productList = useSelector((state) => state.purchase);
   const articles = useSelector((state) => state.articles);
   const suppliers = useSelector((state) => state.suppliers);
   const [supplierId, setSupplierId] = useState();
@@ -141,8 +141,8 @@ export default function PriceLists() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const dataObj = {
-      supplierId: supplierId,
-      data: purchaseList,
+      supplierId,
+      productList,
       paymentExpirationDate: paymentExpDate,
     };
     dispatch(newPurchase(dataObj, token, enqueueSnackbar, closeSnackbar));

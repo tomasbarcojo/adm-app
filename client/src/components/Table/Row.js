@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addDataPurchase, updateTotal } from '../../actions/purchases';
-import NumberFormat from 'react-number-format';
 
 export default function Counter({ props }) {
   const purchase = useSelector((state) => state.purchase);
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(0);
-  const [price, setPrice] = useState(0);
-  const [discount, setDiscount] = useState(0);
+  const [price, setPrice] = useState("0");
+  const [discount, setDiscount] = useState("0");
   var total = 0;
 
   useEffect(() => {
@@ -16,19 +15,21 @@ export default function Counter({ props }) {
       let arrPurchase = purchase;
       var changeMade = false;
       arrPurchase.forEach((el) => {
-        if (el.articleId === props.id) {
+        if (el.productId === props.id) {
           el.quantity = quantity;
           el.price = price;
-          el.total = quantity * price;
+          el.discount = discount;
+          el.total = (quantity * price) - discount;
           changeMade = true;
         }
       });
       if (!changeMade) {
         const newData = {
-          articleId: props.id,
-          quantity: quantity,
-          price: price,
-          total: quantity * price,
+          productId: props.id,
+          quantity,
+          price,
+          discount,
+          total: (quantity * price) - discount,
         };
         arrPurchase.push(newData);
         dispatch(addDataPurchase(arrPurchase));
@@ -38,7 +39,7 @@ export default function Counter({ props }) {
         getTotal(arrPurchase);
       }
     }
-  }, [quantity, price]);
+  }, [quantity, price, discount]);
 
   const getTotal = (arrPurchase) => {
     arrPurchase.forEach((el) => {
@@ -87,7 +88,7 @@ export default function Counter({ props }) {
     } else {
       setDiscount(value);
     }
-  }
+  };
 
   const handleFocus = (event) => {
     event.target.select();
@@ -95,10 +96,10 @@ export default function Counter({ props }) {
 
   return (
     <tr>
-      <td className="htmlTableTD">{props.id}</td>
-      <td className="htmlTableTD">{props.articleName}</td>
-      <td className="htmlTableTD">{props.stock}</td>
-      <td className="htmlTableTD">
+      <td>{props.id}</td>
+      <td>{props.articleName}</td>
+      <td>{props.stock}</td>
+      <td>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <button type="button" onClick={handleAddCounter}>
             +
@@ -115,18 +116,11 @@ export default function Counter({ props }) {
           </button>
         </div>
       </td>
-      <td className="htmlTableTD">
+      <td>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           ${' '}
-          {/* <NumberFormat
-            value={price}
-            style={{ width: '70px', marginLeft: '7px' }}
-            displayType={'input'}
-            thousandSeparator={true}
-            decimalScale={3}
-            onChange={handleChangePrice}
-          /> */}
           <input
+            type="number"
             style={{ width: '70px', marginLeft: '7px' }}
             onChange={handleChangePrice}
             onFocus={handleFocus}
@@ -137,15 +131,16 @@ export default function Counter({ props }) {
       <td>
         ${' '}
         <input
+          type="number"
           style={{ width: '70px', marginLeft: '7px' }}
           onChange={handleChangeDiscount}
           onFocus={handleFocus}
           value={discount}
         />
       </td>
-      <td className="htmlTableTD">
+      <td>
         {quantity && price
-          ? (quantity * price).toLocaleString('es-AR', {
+          ? ((quantity * price) - discount).toLocaleString('es-AR', {
               style: 'currency',
               currency: 'ARS',
               minimumFractionDigits: 2,

@@ -36,7 +36,7 @@ export class Purchase extends BaseEntity {
     type: 'string',
     example: '2020-01-01T00:00:00.000Z',
   })
-  @CreateDateColumn()
+  @Column({ type: 'datetime', nullable: true })
   paymentExpirationDate: Date;
 
   @ApiProperty({
