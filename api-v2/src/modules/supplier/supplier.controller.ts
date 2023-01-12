@@ -1,7 +1,7 @@
 import { Controller, HttpStatus, Post, Body, Get, Query, Param, Patch, Delete } from '@nestjs/common';
 import { ApiTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
 import { PaginationDto } from '../dto/pagination.dto';
-import { GetAllOutput } from '../product/dto/get-product-by-categoryid.dto';
+import { GetAllOutput } from '../product/dto/get-all-products-output.dto';
 import { CreateSupplierInput } from './dto/create-supplier-input.dto';
 import { GetAllSupplierInput } from './dto/get-all-supplier-input.dto';
 import { GetOneSupplierInput } from './dto/get-one-supplier-input.dto';

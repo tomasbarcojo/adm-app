@@ -1,4 +1,4 @@
-import { Inject, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -15,7 +15,7 @@ import { GetAllProductsInput } from './dto/get-all-products-input.dto';
 import { UpdateProductInput } from './dto/update-product-input.dto';
 import { ProductRepository } from './product.repository';
 import { PaginationDto } from '../dto/pagination.dto';
-import { GetAllOutput } from './dto/get-product-by-categoryid.dto';
+import { GetAllOutput } from './dto/get-all-products-output.dto';
 
 @Injectable()
 export class ProductService extends BaseService<Product> {

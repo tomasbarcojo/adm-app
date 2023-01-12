@@ -48,8 +48,13 @@ import { UploadFilesModule } from './modules/upload-image/upload-file.module';
       },
     }),
 
-    // CacheModule.register({
-    //   ttl: 120, // seconds
+    // CacheModule.registerAsync({
+    //   imports: [ConfigModule],
+    //   inject: [ConfigService],
+    //   useFactory: async (configService: ConfigService) => ({
+    //     ttl: configService.get<number>('CACHE_TTL'),
+    //     isGlobal: true,
+    //   }),
     // }),
 
     // Common Module

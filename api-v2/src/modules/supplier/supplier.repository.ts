@@ -1,6 +1,6 @@
 import { getConnection } from 'typeorm';
 import { PaginationDto } from '../dto/pagination.dto';
-import { GetAllOutput } from '../product/dto/get-product-by-categoryid.dto';
+import { GetAllOutput } from '../product/dto/get-all-products-output.dto';
 import { GetAllSupplierInput } from './dto/get-all-supplier-input.dto';
 import { Supplier } from './supplier.entity';
 

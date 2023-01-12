@@ -1,5 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Product } from 'src/modules/product/product.entity';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { PurchasedProduct } from './purchase-product.entity';
 
 @Entity({ name: 'Purchase' })
 export class Purchase extends BaseEntity {
@@ -16,7 +28,7 @@ export class Purchase extends BaseEntity {
     type: 'string',
     example: 'en transito',
   })
-  @Column({ type: 'enum',  enum: ["en transito", "recibida", "cancelada"], default: 'en transito', nullable: false })
+  @Column({ type: 'enum', enum: ['en transito', 'recibida', 'cancelada'], default: 'en transito', nullable: false })
   purchaseState: string;
 
   @ApiProperty({
@@ -24,7 +36,7 @@ export class Purchase extends BaseEntity {
     type: 'string',
     example: '2020-01-01T00:00:00.000Z',
   })
-  @CreateDateColumn()
+  @Column({ type: 'datetime', nullable: true })
   paymentExpirationDate: Date;
 
   @ApiProperty({
@@ -52,4 +64,6 @@ export class Purchase extends BaseEntity {
   deletedAt: Date;
 
   // relations
+  @OneToMany(() => PurchasedProduct, (purchaseProduct) => purchaseProduct.purchase)
+  purchasedProduct: PurchasedProduct;
 }

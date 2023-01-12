@@ -21,4 +21,14 @@ export class GetAllProductsInput {
   @IsNumber()
   @Type(() => Number)
   readonly categoryId?: number;
+
+  @ApiPropertyOptional({
+    description: 'supplierId of the product',
+    type: 'number',
+    example: '1',
+  })
+  @IsOptional()
+  @IsNumber()
+  @Type(() => Number)
+  readonly supplierId?: number;
 }

@@ -16,7 +16,7 @@ import { CreatePricelistInput } from './dto/create-pricelist-input.dto';
 import { GetAllPricelistInput } from './dto/get-all-pricelist-input.dto';
 import { GetOnePricelistInput } from './dto/get-one-pricelist-input.dto';
 import { UpdatePricelistInput } from './dto/update-pricelist-input.dto';
-import { Pricelist } from './entity/pricelist.entity';
+import { Pricelist } from './entities/pricelist.entity';
 import { PricelistService } from './pricelist.service';
 
 @ApiTags('pricelist')
