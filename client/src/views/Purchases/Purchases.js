@@ -1,27 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
-import { getPriceList, addPriceList } from '../../actions/pricelists';
 import 'date-fns';
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import DateFnsUtils from '@date-io/date-fns';
 import esLocale from 'date-fns/locale/es';
 import {
   MuiPickersUtilsProvider,
-  KeyboardTimePicker,
   KeyboardDatePicker,
-  DatePicker,
-  TimePicker,
-  DateTimePicker,
 } from '@material-ui/pickers';
 // core components
 import GridItem from '../../components/Grid/GridItem.js';
@@ -101,7 +92,6 @@ export default function PriceLists() {
   const articles = useSelector((state) => state.articles);
   const suppliers = useSelector((state) => state.suppliers);
   const [supplierId, setSupplierId] = useState();
-  const [showNew, setShowNew] = useState(true);
   const [purchaseState, setPurchaseState] = useState('');
   const total = useSelector((state) => state.purchaseTotal);
   const createdPurchases = useSelector((state) => state.createdPurchases);
@@ -124,10 +114,6 @@ export default function PriceLists() {
   //     document.getElementById(i).value = ''
   //   }
   // };
-
-  const handleNewPurchase = () => {
-    setShowNew(!showNew);
-  };
 
   const handleChangePriceListName = (value) => {
     if (value) setSupplierId(value.id);
@@ -165,85 +151,79 @@ export default function PriceLists() {
           <CardHeader color="primary">
             <div className={classes.card}>
               <h4 className={classes.cardTitleWhite}>Nueva compra</h4>
-              {showNew ? null : (
-                <Button color="info" onClick={handleNewPurchase}>
-                  Añadir
-                </Button>
-              )}
             </div>
           </CardHeader>
-          {showNew ? (
-            <>
-              <form onSubmit={handleSubmit}>
-                <CardBody>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={8}>
-                      <Autocomplete
-                        id="Supplier"
-                        options={suppliers.data}
-                        getOptionLabel={(option) => option.businessName}
-                        onChange={(event, value) => handleChangePriceListName(value)}
-                        fullWidth={true}
-                        renderInput={(params) => <TextField {...params} label="Proveedor" />}
-                        getOptionSelected={(option, value) => option.id === value.id}
+          <>
+            <form onSubmit={handleSubmit}>
+              <CardBody>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={8}>
+                    <Autocomplete
+                      id="Supplier"
+                      options={suppliers.data}
+                      getOptionLabel={(option) => option.businessName}
+                      onChange={(event, value) => handleChangePriceListName(value)}
+                      fullWidth={true}
+                      renderInput={(params) => <TextField {...params} label="Proveedor" />}
+                      getOptionSelected={(option, value) => option.id === value.id}
+                    />
+                  </GridItem>
+                </GridContainer>
+
+                {articles && articles.data?.length > 0 ? (
+                  <>
+                    <h5>Articulos:</h5>
+                    <TableHtml
+                      tableData={
+                        articles.data && articles.data.length > 0
+                          ? articles.data.map((article) => {
+                              return {
+                                id: article.id,
+                                articleName: article.name,
+                                stock: article.stock,
+                              };
+                            })
+                          : null
+                      }
+                    />
+
+                    <div className={classes.checkboxrow}>
+                      <FormControlLabel
+                        className={classes.checkbox}
+                        control={<Checkbox onClick={handleHaveExpDate} color="primary" />}
+                        label="Añadir fecha de vencimiento de pago"
                       />
-                    </GridItem>
-                  </GridContainer>
 
-                  {articles && articles.data?.length > 0 ? (
-                    <>
-                      <h5>Articulos:</h5>
-                      <TableHtml
-                        tableData={
-                          articles.data && articles.data.length > 0
-                            ? articles.data.map((article) => {
-                                return {
-                                  id: article.id,
-                                  articleName: article.name,
-                                  stock: article.stock,
-                                };
-                              })
-                            : null
-                        }
-                      />
+                      {haveExpDate ? (
+                        <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
+                          <KeyboardDatePicker
+                            className={classes.datePicker}
+                            orientation="landscape"
+                            openTo="date"
+                            showTodayButton
+                            variant="outlined"
+                            format="dd/MM/yyyy"
+                            margin="normal"
+                            id="date-picker-inline"
+                            label="Vencimiento de pago"
+                            value={paymentExpDate}
+                            onChange={handleDateChange}
+                            KeyboardButtonProps={{
+                              'aria-label': 'change date',
+                            }}
+                            cancelLabel="Cancelar"
+                            okLabel="OK"
+                            todayLabel="HOY"
+                            disablePast
+                            emptyLabel
+                            leftArrowIcon
+                            loadingIndicator
+                          />
+                        </MuiPickersUtilsProvider>
+                      ) : null}
+                    </div>
 
-                      <div className={classes.checkboxrow}>
-                        <FormControlLabel
-                          className={classes.checkbox}
-                          control={<Checkbox onClick={handleHaveExpDate} color="primary" />}
-                          label="Añadir fecha de vencimiento de pago"
-                        />
-
-                        {haveExpDate ? (
-                          <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
-                            <KeyboardDatePicker
-                              className={classes.datePicker}
-                              orientation="landscape"
-                              openTo="date"
-                              showTodayButton
-                              variant="outlined"
-                              format="dd/MM/yyyy"
-                              margin="normal"
-                              id="date-picker-inline"
-                              label="Vencimiento de pago"
-                              value={paymentExpDate}
-                              onChange={handleDateChange}
-                              KeyboardButtonProps={{
-                                'aria-label': 'change date',
-                              }}
-                              cancelLabel="Cancelar"
-                              okLabel="OK"
-                              todayLabel="HOY"
-                              disablePast
-                              emptyLabel
-                              leftArrowIcon
-                              loadingIndicator
-                            />
-                          </MuiPickersUtilsProvider>
-                        ) : null}
-                      </div>
-
-                      {/* <div className={classes.checkboxrow}>
+                    {/* <div className={classes.checkboxrow}>
                           <FormControlLabel
                             className={classes.checkbox}
                             control={
@@ -286,33 +266,30 @@ export default function PriceLists() {
                           }
                         </div> */}
 
-                      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-                        <h3>
-                          Total de la compra: ${' '}
-                          {total.toLocaleString('es-AR', {
-                            style: 'currency',
-                            currency: 'ARS',
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                          })}
-                        </h3>
-                      </div>
-                    </>
-                  ) : (
-                    <h5 className="messageEmptyDataTable">Seleccione un proveedor para desplegar sus productos</h5>
-                  )}
-                </CardBody>
-                <CardFooter>
-                  <Button color="primary" type="submit">
-                    Listo
-                  </Button>
-                  <Button color="danger" onClick={handleNewPurchase}>
-                    Cancelar
-                  </Button>
-                </CardFooter>
-              </form>
-            </>
-          ) : null}
+                    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                      <h3>
+                        Total de la compra: ${' '}
+                        {total.toLocaleString('es-AR', {
+                          style: 'currency',
+                          currency: 'ARS',
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                      </h3>
+                    </div>
+                  </>
+                ) : (
+                  <h5 className="messageEmptyDataTable">Seleccione un proveedor para desplegar sus productos</h5>
+                )}
+              </CardBody>
+              <CardFooter>
+                <Button color="primary" type="submit">
+                  Añadir
+                </Button>
+                <Button color="danger">Cancelar</Button>
+              </CardFooter>
+            </form>
+          </>
         </Card>
       </GridItem>
     </GridContainer>

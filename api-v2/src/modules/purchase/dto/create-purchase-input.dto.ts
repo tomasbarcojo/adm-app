@@ -54,7 +54,7 @@ export class CreatePurchaseInput {
   @ApiProperty({
     description: 'the payment expiration date of the purchase',
     type: 'number',
-    example: '01/01/2023',
+    example: '2020-02-08 00:00:00',
   })
   @IsOptional()
   @IsDateString()

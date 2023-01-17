@@ -19,8 +19,8 @@ export class PurchaseService {
 
   //CRUD
 
-  public async create(input: CreatePurchaseInput): Promise<Purchase> {
-    return this.purchaseRepository.createPurchase(input);
+  public async createPurchase(input: CreatePurchaseInput): Promise<Purchase> {
+    return await this.purchaseRepository.createPurchase(input);
   }
 
   // public async getOne(input: GetOnePurchaseInput): Promise<Purchase | undefined> {
@@ -35,26 +35,6 @@ export class PurchaseService {
   public async getAll(input: GetAllPurchasesInput, pagination: PaginationDto): Promise<any> {
     try {
       const purchasesData = this.purchaseRepository.getAllPurchases(input, pagination);
-      // const { limit, skip, q } = input;
-      // const query = this.purchaseRepository
-      //   .createQueryBuilder('P')
-      //   .select('*')
-      //   .innerJoin(PurchasedProduct, 'PP', 'P.id = PP.purchaseId');
-      // if (q)
-      //   query
-      //     .where('purcharseName like :q', {
-      //       q: `%${q}%`,
-      //     })
-      //     .andWhere('id = :q', { q: `%${q}%` });
-
-      // query.limit(limit || 10).skip(skip);
-
-      // const purcharse = await query.getRawMany();
-
-      // if (purchasesData.length === 0) {
-      //   throw new NotFoundException('No purchases');
-      // }
-
       return purchasesData;
     } catch (error) {
       return error;

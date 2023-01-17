@@ -9,7 +9,7 @@ import { PurchaseController } from './purchase.controller';
 import { PurchaseRepository } from './purchase.repository';
 
 @Module({
-  imports: [ConfigModule.forFeature(appConfig), TypeOrmModule.forFeature([PurchasedProduct])],
+  imports: [ConfigModule.forFeature(appConfig), TypeOrmModule.forFeature([Purchase, PurchasedProduct])],
   providers: [
     PurchaseService,
     {

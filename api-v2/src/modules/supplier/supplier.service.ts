@@ -40,40 +40,9 @@ export class SupplierService extends BaseService<Supplier> {
     return existing;
   }
 
-  // public async getAll(input: GetAllSupplierInput): Promise<Supplier[]> {
-  //   try {
-  //     const { limit, skip, q } = input;
-  //     const query = this.supplierRepository.createQueryBuilder().loadAllRelationIds();
-  //     if (q)
-  //       query
-  //         .where('purcharseName like :q', {
-  //           q: `%${q}%`,
-  //         })
-  //         .andWhere('id = :q', { q: `%${q}%` });
-
-  //     query.limit(limit || 25).skip(skip);
-
-  //     const purcharse = await query.getMany();
-
-  //     if (purcharse.length === 0) {
-  //       throw new NotFoundException('No supplier');
-  //     }
-
-  //     return purcharse;
-  //   } catch (error) {
-  //     return error;
-  //   }
-  // }
-
   public async getAll(input: GetAllSupplierInput, pagination: PaginationDto): Promise<GetAllOutput> {
     try {
-      const products = await this.supplierRepositoryV2.getAllSuppliers(input, pagination);
-
-      if (products.data.length === 0) {
-        throw new NotFoundException('No products');
-      }
-
-      return products;
+      return await this.supplierRepositoryV2.getAllSuppliers(input, pagination);
     } catch (error) {
       return error;
     }

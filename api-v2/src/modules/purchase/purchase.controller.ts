@@ -24,7 +24,7 @@ export class PurchaseController {
   })
   @Post('/createpurchase')
   async create(@Body() input: CreatePurchaseInput): Promise<Purchase> {
-    return this.service.create(input);
+    return this.service.createPurchase(input);
   }
 
   @ApiResponse({

@@ -52,13 +52,7 @@ export class ProductService extends BaseService<Product> {
 
   public async getAll(input: GetAllProductsInput, pagination: PaginationDto): Promise<GetAllOutput> {
     try {
-      const products = await this.productRepositoryV2.getAllProducts(input, pagination);
-
-      if (products.data.length === 0) {
-        throw new NotFoundException('No products');
-      }
-
-      return products;
+      return await this.productRepositoryV2.getAllProducts(input, pagination);
     } catch (error) {
       return error;
     }
