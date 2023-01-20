@@ -15,12 +15,33 @@ import { PurchaseRepository } from './purchase.repository';
 
 @Injectable()
 export class PurchaseService {
-  constructor(@Inject('purchaseRepository') private readonly purchaseRepository: PurchaseRepository) {}
+  constructor(
+    private readonly purchaseRepository: PurchaseRepository,
+    @InjectRepository(PurchasedProduct) private readonly purchasedProductRepository: Repository<PurchasedProduct>,
+  ) {}
 
   //CRUD
 
-  public async createPurchase(input: CreatePurchaseInput): Promise<Purchase> {
-    return await this.purchaseRepository.createPurchase(input);
+  public async createPurchase(input: CreatePurchaseInput) {
+    const { productList } = input;
+
+    const newPurchase = await this.purchaseRepository.createPurchase(input);
+
+    const productArr = [];
+    for (const product of productList) {
+      productArr.push({
+        productId: product.productId,
+        purchaseId: newPurchase.id,
+        quantity: product.quantity,
+        price: product.price,
+        discount: product.discount,
+      });
+    }
+
+    const prodListInstance = this.purchasedProductRepository.create(productArr);
+    await this.purchasedProductRepository.save(prodListInstance);
+
+    return newPurchase;
   }
 
   // public async getOne(input: GetOnePurchaseInput): Promise<Purchase | undefined> {
@@ -34,7 +55,16 @@ export class PurchaseService {
 
   public async getAll(input: GetAllPurchasesInput, pagination: PaginationDto): Promise<any> {
     try {
-      const purchasesData = this.purchaseRepository.getAllPurchases(input, pagination);
+      const purchasesData = await this.purchaseRepository.getAllPurchases(input, pagination);
+      const purchasesMap = new Map();
+
+      for (const purchase of purchasesData.data) {
+        purchasesMap.set(purchase.id, {
+          id: purchase.id,
+          purchaseState: purchase.purchaseState,
+          paymentExpirationDate: purchase.paymentExpirationDate,
+        });
+      }
       return purchasesData;
     } catch (error) {
       return error;

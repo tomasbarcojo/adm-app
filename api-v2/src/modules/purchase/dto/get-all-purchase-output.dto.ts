@@ -1,15 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber } from 'class-validator';
-import { Product } from '../product.entity';
+import { Purchase } from '../entities/purchase.entity';
 
-export class GetAllProductsOutput {
+export class GetAllPurchasesOutput {
   @ApiProperty({
     description: 'category id',
     type: 'number',
     example: '1',
   })
   @IsNumber()
-  readonly data: Product[];
+  readonly data: Purchase[];
 
   @ApiProperty({
     description: 'total pages',

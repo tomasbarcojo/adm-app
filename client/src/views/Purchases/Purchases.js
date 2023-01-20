@@ -10,10 +10,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import DateFnsUtils from '@date-io/date-fns';
 import esLocale from 'date-fns/locale/es';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 // core components
 import GridItem from '../../components/Grid/GridItem.js';
 import GridContainer from '../../components/Grid/GridContainer.js';
@@ -157,7 +154,18 @@ export default function PriceLists() {
             <form onSubmit={handleSubmit}>
               <CardBody>
                 <GridContainer>
-                  <GridItem xs={12} sm={12} md={8}>
+                  <GridItem xs={12} sm={12} md={4}>
+                    <TextField
+                      className={classes.input}
+                      label="Nombre"
+                      id="name"
+                      // onChange={handleChange}
+                      fullWidth
+                      autoComplete="off"
+                      // value={data.name}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={4}>
                     <Autocomplete
                       id="Supplier"
                       options={suppliers.data}
@@ -165,6 +173,17 @@ export default function PriceLists() {
                       onChange={(event, value) => handleChangePriceListName(value)}
                       fullWidth={true}
                       renderInput={(params) => <TextField {...params} label="Proveedor" />}
+                      getOptionSelected={(option, value) => option.id === value.id}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={4}>
+                    <Autocomplete
+                      id="Supplier"
+                      options={suppliers.data}
+                      getOptionLabel={(option) => option.businessName}
+                      onChange={(event, value) => handleChangePriceListName(value)}
+                      fullWidth={true}
+                      renderInput={(params) => <TextField {...params} label="Categoria" />}
                       getOptionSelected={(option, value) => option.id === value.id}
                     />
                   </GridItem>

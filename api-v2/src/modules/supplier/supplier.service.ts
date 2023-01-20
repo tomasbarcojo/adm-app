@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { BaseService } from 'src/base/base.service';
 import { Repository } from 'typeorm';
 import { PaginationDto } from '../dto/pagination.dto';
-import { GetAllOutput } from '../product/dto/get-all-products-output.dto';
 import { CreateSupplierInput } from './dto/create-supplier-input.dto';
 import { GetAllSupplierInput } from './dto/get-all-supplier-input.dto';
 import { GetOneSupplierInput } from './dto/get-one-supplier-input.dto';
@@ -40,7 +39,7 @@ export class SupplierService extends BaseService<Supplier> {
     return existing;
   }
 
-  public async getAll(input: GetAllSupplierInput, pagination: PaginationDto): Promise<GetAllOutput> {
+  public async getAll(input: GetAllSupplierInput, pagination: PaginationDto) {
     try {
       return await this.supplierRepositoryV2.getAllSuppliers(input, pagination);
     } catch (error) {
