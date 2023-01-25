@@ -20,11 +20,13 @@ import CardBody from '../../components/Card/CardBody.js';
 import Button from '../../components/CustomButtons/Button.js';
 import CardFooter from '../../components/Card/CardFooter.js';
 
-import { clearArticleData, getArticlesBySupplierId } from '../../actions/article';
-import { getPurchases, newPurchase } from '../../actions/purchases';
+import { clearArticleData, getArticles } from '../../actions/article';
+import { newPurchase } from '../../actions/purchases';
 import Token from '../../Token/Token';
 import { getSuppliers } from '../../actions/suppliers';
 import TableHtml from '../../components/Table/TableHtml';
+import { useQueryParams } from '../../utils/useQueryParams.js';
+import { getCategories } from '../../actions/categories.js';
 
 const useStyles = makeStyles((theme) => ({
   cardCategoryWhite: {
@@ -80,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PriceLists() {
+export default function Purchase() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -91,19 +93,38 @@ export default function PriceLists() {
   const [supplierId, setSupplierId] = useState();
   const [purchaseState, setPurchaseState] = useState('');
   const total = useSelector((state) => state.purchaseTotal);
-  const createdPurchases = useSelector((state) => state.createdPurchases);
   const [paymentExpDate, setPaymentExpDate] = useState();
+  const categories = useSelector((state) => state.categories);
   const [haveExpDate, setHaveExpDate] = useState(false);
+  const filters = useQueryParams();
+  const castedFilters = {
+    supplierId: filters.params.supplierId || '',
+    categoryId: filters.params.categoryId || '',
+    search: filters.params.search || '',
+  };
+  const [purchaseData, setPurchaseData] = useState({
+    supplierId: '',
+    receiptType: 'Comprobante de compra',
+    purchaseState: 'En transito',
+    paymentExpDate: '',
+  });
 
   useEffect(() => {
     dispatch(clearArticleData());
     dispatch(getSuppliers(token));
-    dispatch(getPurchases(token));
+    dispatch(getCategories(token));
   }, []);
 
   useEffect(() => {
-    if (supplierId) dispatch(getArticlesBySupplierId(token, supplierId));
-  }, [supplierId]);
+    dispatch(
+      getArticles({
+        token,
+        supplierId: castedFilters.supplierId,
+        categoryId: castedFilters.categoryId,
+        search: castedFilters.search,
+      }),
+    );
+  }, [JSON.stringify(castedFilters)]);
 
   // const resetForm = () => {
   //   setpriceListName('')
@@ -112,28 +133,34 @@ export default function PriceLists() {
   //   }
   // };
 
-  const handleChangePriceListName = (value) => {
-    if (value) setSupplierId(value.id);
-    else dispatch(clearArticleData());
+  const handleChangeSupplierId = (value) => {
+    if (value) filters.setParam('supplierId', value.id);
+    else filters.setParam('supplierId', '');
   };
 
-  const handleChangePurchaseState = (event) => {
-    setPurchaseState(event.target.value);
+  const handleChangeCategoryId = (value) => {
+    if (value) filters.setParam('categoryId', value.id);
+    else filters.setParam('categoryId', '');
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const dataObj = {
-      supplierId,
+      supplierId: purchaseData.supplierId,
       productList,
-      paymentExpirationDate: paymentExpDate,
+      paymentExpirationDate: purchaseData.paymentExpDate || null,
+      purchaseState: purchaseData.purchaseState.toLocaleLowerCase(),
     };
     dispatch(newPurchase(dataObj, token, enqueueSnackbar, closeSnackbar));
     // resetForm();
   };
 
   const handleDateChange = (date) => {
-    setPaymentExpDate(date.toISOString());
+    setPurchaseData({ ...purchaseData, paymentExpDate: date.toISOString() });
+  };
+
+  const handleChangeName = (e) => {
+    filters.setParam('search', e.target.value);
   };
 
   const handleHaveExpDate = () => {
@@ -153,35 +180,77 @@ export default function PriceLists() {
           <>
             <form onSubmit={handleSubmit}>
               <CardBody>
+                <h5>Informacion del Comprobante</h5>
                 <GridContainer>
-                  <GridItem xs={12} sm={12} md={4}>
-                    <TextField
-                      className={classes.input}
-                      label="Nombre"
-                      id="name"
-                      // onChange={handleChange}
-                      fullWidth
-                      autoComplete="off"
-                      // value={data.name}
-                    />
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
+                  <GridItem xs={12} sm={4} md={4}>
                     <Autocomplete
                       id="Supplier"
+                      autoComplete={true}
                       options={suppliers.data}
                       getOptionLabel={(option) => option.businessName}
-                      onChange={(event, value) => handleChangePriceListName(value)}
+                      onChange={(event, value) =>
+                        setPurchaseData({ ...purchaseData, supplierId: value ? value.id : '' })
+                      }
                       fullWidth={true}
                       renderInput={(params) => <TextField {...params} label="Proveedor" />}
                       getOptionSelected={(option, value) => option.id === value.id}
                     />
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={4}>
+                  <GridItem xs={12} sm={4} md={4}>
+                    <Autocomplete
+                      id="ReceiptType"
+                      options={['Comprobante de compra', 'Factura']}
+                      value={purchaseData.receiptType}
+                      getOptionLabel={(option) => option}
+                      onChange={(event, value) => setPurchaseData({ ...purchaseData, receiptType: value })}
+                      fullWidth={true}
+                      renderInput={(params) => <TextField {...params} label="Tipo de comprobante" />}
+                      getOptionSelected={(option, value) => option.id === value.id}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={4} md={4}>
+                    <Autocomplete
+                      id="PurchaseState"
+                      options={['En transito', 'Recibida']}
+                      value={purchaseData.purchaseState}
+                      getOptionLabel={(option) => option}
+                      onChange={(event, value) => setPurchaseData({ ...purchaseData, purchaseState: value })}
+                      fullWidth={true}
+                      renderInput={(params) => <TextField {...params} label="Estado de la compra" />}
+                      getOptionSelected={(option, value) => option.id === value.id}
+                    />
+                  </GridItem>
+                </GridContainer>
+                <h5>Filtros de busqueda:</h5>
+                <GridContainer>
+                  <GridItem xs={12} sm={4} md={4}>
+                    <TextField
+                      className={classes.input}
+                      label="Nombre"
+                      id="name"
+                      onChange={handleChangeName}
+                      fullWidth
+                      autoComplete="off"
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={4} md={4}>
                     <Autocomplete
                       id="Supplier"
+                      // value={castedFilters.supplierId}
                       options={suppliers.data}
                       getOptionLabel={(option) => option.businessName}
-                      onChange={(event, value) => handleChangePriceListName(value)}
+                      onChange={(event, value) => handleChangeSupplierId(value)}
+                      fullWidth={true}
+                      renderInput={(params) => <TextField {...params} label="Proveedor" />}
+                      getOptionSelected={(option, value) => option.id === value.id}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={4} md={4}>
+                    <Autocomplete
+                      id="Cateogry"
+                      options={categories}
+                      getOptionLabel={(option) => option.categoryName}
+                      onChange={(event, value) => handleChangeCategoryId(value)}
                       fullWidth={true}
                       renderInput={(params) => <TextField {...params} label="Categoria" />}
                       getOptionSelected={(option, value) => option.id === value.id}
@@ -226,7 +295,9 @@ export default function PriceLists() {
                             id="date-picker-inline"
                             label="Vencimiento de pago"
                             value={paymentExpDate}
-                            onChange={handleDateChange}
+                            onChange={(date) =>
+                              setPurchaseData({ ...purchaseData, paymentExpDate: date.toISOString() })
+                            }
                             KeyboardButtonProps={{
                               'aria-label': 'change date',
                             }}
@@ -241,49 +312,6 @@ export default function PriceLists() {
                         </MuiPickersUtilsProvider>
                       ) : null}
                     </div>
-
-                    {/* <div className={classes.checkboxrow}>
-                          <FormControlLabel
-                            className={classes.checkbox}
-                            control={
-                              <Checkbox
-                                onClick={handleHaveExpDate}
-                                color="primary"
-                              />
-                            }
-                            label="Añadir pago"
-                          />
-
-                          {haveExpDate ?
-                            <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
-                              <KeyboardDatePicker
-                                className={classes.datePicker}
-                                orientation="landscape"
-                                variant="static"
-                                openTo="date"
-                                showTodayButton
-                                variant="outlined"
-                                format="dd/MM/yyyy"
-                                margin="normal"
-                                id="date-picker-inline"
-                                label="Vencimiento de pago"
-                                value={paymentExpDate}
-                                onChange={handleDateChange}
-                                KeyboardButtonProps={{
-                                  'aria-label': 'change date',
-                                }}
-                                cancelLabel='Cancelar'
-                                okLabel='OK'
-                                todayLabel='HOY'
-                                disablePast
-                                emptyLabel
-                                leftArrowIcon
-                                loadingIndicator
-                              />
-                            </MuiPickersUtilsProvider>
-                            : null
-                          }
-                        </div> */}
 
                     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
                       <h3>

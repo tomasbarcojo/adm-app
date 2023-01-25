@@ -1,5 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsDateString, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  ArrayMinSize,
+  IsArray,
+  IsDateString,
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  ValidateNested,
+} from 'class-validator';
+import { PurchaseState } from '../entities/purchase.entity';
 
 class ProductListData {
   @ApiProperty({
@@ -27,11 +38,11 @@ class ProductListData {
   quantity: number;
 
   @ApiProperty({
-    description: 'total calculated by (quantity * price) - discount',
+    description: 'discount of the product',
     type: 'string',
     example: '1',
   })
-  @IsOptional()
+  @IsNumber()
   discount: string;
 
   @ApiProperty({
@@ -52,6 +63,14 @@ export class CreatePurchaseInput {
   readonly supplierId: number;
 
   @ApiProperty({
+    description: 'the state of the purcharse',
+    type: 'string',
+    example: PurchaseState.EN_TRANSITO,
+  })
+  @IsEnum(PurchaseState)
+  readonly purchaseState: string;
+
+  @ApiProperty({
     description: 'the payment expiration date of the purchase',
     type: 'number',
     example: '2020-02-08 00:00:00',
@@ -66,5 +85,8 @@ export class CreatePurchaseInput {
     example: [{ productId: 42, quantity: 1, price: '1', discout: '0', total: 1 }],
   })
   @IsArray()
+  @ArrayMinSize(1)
+  @ValidateNested()
+  @Type(() => ProductListData)
   readonly productList: ProductListData[];
 }

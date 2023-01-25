@@ -41,7 +41,7 @@ export class CreateUserInput {
   @ApiProperty({
     description: 'the password of the user (hashed)',
     type: 'string',
-    example: '',
+    example: '1234',
   })
   @Length(1, 255)
   @IsString()

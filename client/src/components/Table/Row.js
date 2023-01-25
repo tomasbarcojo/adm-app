@@ -6,8 +6,8 @@ export default function Counter({ props }) {
   const purchase = useSelector((state) => state.purchase);
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(0);
-  const [price, setPrice] = useState("0");
-  const [discount, setDiscount] = useState("0");
+  const [price, setPrice] = useState('0');
+  const [discount, setDiscount] = useState('0');
   var total = 0;
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export default function Counter({ props }) {
           el.quantity = quantity;
           el.price = price;
           el.discount = discount;
-          el.total = (quantity * price) - discount;
+          el.total = quantity * price - discount;
           changeMade = true;
         }
       });
@@ -29,7 +29,7 @@ export default function Counter({ props }) {
           quantity,
           price,
           discount,
-          total: (quantity * price) - discount,
+          total: quantity * price - discount,
         };
         arrPurchase.push(newData);
         dispatch(addDataPurchase(arrPurchase));
@@ -129,18 +129,20 @@ export default function Counter({ props }) {
         </div>
       </td>
       <td>
-        ${' '}
-        <input
-          type="number"
-          style={{ width: '70px', marginLeft: '7px' }}
-          onChange={handleChangeDiscount}
-          onFocus={handleFocus}
-          value={discount}
-        />
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          ${' '}
+          <input
+            type="number"
+            style={{ width: '70px', marginLeft: '7px' }}
+            onChange={handleChangeDiscount}
+            onFocus={handleFocus}
+            value={discount}
+          />
+        </div>
       </td>
       <td>
         {quantity && price
-          ? ((quantity * price) - discount).toLocaleString('es-AR', {
+          ? (quantity * price - discount).toLocaleString('es-AR', {
               style: 'currency',
               currency: 'ARS',
               minimumFractionDigits: 2,
