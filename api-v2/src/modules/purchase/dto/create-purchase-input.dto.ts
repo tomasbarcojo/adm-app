@@ -8,6 +8,7 @@ import {
   IsNotEmpty,
   IsNumber,
   IsOptional,
+  IsString,
   ValidateNested,
 } from 'class-validator';
 import { PurchaseState } from '../entities/purchase.entity';
@@ -27,6 +28,7 @@ class ProductListData {
     example: '1',
   })
   @IsNotEmpty()
+  @IsString()
   price: string;
 
   @ApiProperty({
@@ -42,7 +44,8 @@ class ProductListData {
     type: 'string',
     example: '1',
   })
-  @IsNumber()
+  @IsNotEmpty()
+  @IsString()
   discount: string;
 
   @ApiProperty({

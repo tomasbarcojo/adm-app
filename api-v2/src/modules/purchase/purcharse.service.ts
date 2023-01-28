@@ -6,6 +6,7 @@ import { PaginationDto } from '../dto/pagination.dto';
 import { Product } from '../product/product.entity';
 import { CreatePurchaseInput } from './dto/create-purchase-input.dto';
 import { GetAllPurchasesInput } from './dto/get-all-purchase-input.dto';
+import { GetDetailsByPurchaseId } from './dto/get-details-by-purchase-id.dto';
 import { GetOnePurchaseInput } from './dto/get-one-purchase-input.dto';
 import { GetPurchaseDetailInput } from './dto/get-purchase-detail-input.dto';
 import { UpdatePurchaseInput } from './dto/update-purchase-input.dto';
@@ -44,18 +45,9 @@ export class PurchaseService {
     return newPurchase;
   }
 
-  // public async getOne(input: GetOnePurchaseInput): Promise<Purchase | undefined> {
-  //   const existing = await this.getOneByOneFields({
-  //     fields: input,
-  //     checkIfExists: false,
-  //   });
-
-  //   return existing;
-  // }
-
-  public async getAll(input: GetAllPurchasesInput, pagination: PaginationDto): Promise<any> {
+  public async getAll(pagination: PaginationDto): Promise<any> {
     try {
-      const purchasesData = await this.purchaseRepository.getAllPurchases(input, pagination);
+      const purchasesData = await this.purchaseRepository.getAllPurchases(pagination);
       const purchasesMap = new Map();
 
       for (const purchase of purchasesData.data) {
@@ -69,6 +61,13 @@ export class PurchaseService {
     } catch (error) {
       return error;
     }
+  }
+
+  public async getDetailsByPurchaseId(input: GetOnePurchaseInput): Promise<GetDetailsByPurchaseId> {
+    const purchaseDetail = await this.purchaseRepository.getDetailsByPurchaseId(input);
+    const initialValue = 0;
+    const total = purchaseDetail.reduce((accumulator, product) => accumulator + product.price * product.quantity, initialValue);
+    return { products: purchaseDetail, total: total };
   }
 
   // public async getDetail(input: GetPurchaseDetailInput): Promise<Purchase> {

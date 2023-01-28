@@ -3,6 +3,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PaginationDto } from '../dto/pagination.dto';
 import { CreatePurchaseInput } from './dto/create-purchase-input.dto';
 import { GetAllPurchasesInput } from './dto/get-all-purchase-input.dto';
+import { GetDetailsByPurchaseId } from './dto/get-details-by-purchase-id.dto';
 import { GetOnePurchaseInput } from './dto/get-one-purchase-input.dto';
 import { UpdatePurchaseInput } from './dto/update-purchase-input.dto';
 import { Purchase } from './entities/purchase.entity';
@@ -11,7 +12,7 @@ import { PurchaseService } from './purcharse.service';
 @ApiTags('purchase')
 @Controller('purchase')
 export class PurchaseController {
-  constructor(private readonly service: PurchaseService) {}
+  constructor(private readonly purchaseService: PurchaseService) {}
 
   @ApiResponse({
     status: HttpStatus.CREATED,
@@ -24,7 +25,7 @@ export class PurchaseController {
   })
   @Post('/createpurchase')
   async create(@Body() input: CreatePurchaseInput): Promise<Purchase> {
-    return this.service.createPurchase(input);
+    return this.purchaseService.createPurchase(input);
   }
 
   @ApiResponse({
@@ -37,23 +38,23 @@ export class PurchaseController {
     description: 'get a list of purchase, based on the conditions',
   })
   @Get()
-  async getAll(@Query() input: GetAllPurchasesInput, @Query() pagination: PaginationDto): Promise<Purchase[]> {
-    return this.service.getAll(input, pagination);
+  async getAll(@Query() pagination: PaginationDto): Promise<Purchase[]> {    
+    return this.purchaseService.getAll(pagination);
   }
 
-  // @ApiResponse({
-  //   status: HttpStatus.OK,
-  //   description: 'a purchase',
-  //   type: Purchase,
-  // })
-  // @ApiOperation({
-  //   summary: 'get a purchase',
-  //   description: 'get a purchase, based on the id',
-  // })
-  // @Get('/:id')
-  // async getOne(@Param() input: GetOnePurchaseInput): Promise<Purchase> {
-  //   return this.service.getOne(input);
-  // }
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'a purchase',
+    type: Purchase,
+  })
+  @ApiOperation({
+    summary: 'get a purchase',
+    description: 'get a purchase, based on the id',
+  })
+  @Get('/:purchaseId')
+  async getDetailsByPurchaseId(@Param() input: GetOnePurchaseInput): Promise<GetDetailsByPurchaseId> {
+    return this.purchaseService.getDetailsByPurchaseId(input);
+  }
 
   // @ApiResponse({
   //   status: HttpStatus.OK,
