@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -6,8 +6,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
-import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import DialogContentText from '@material-ui/core/DialogContentText';
 // import { cancelMail, dispatchMail } from "../../actions";
@@ -53,10 +51,10 @@ export default function DialogSelect({ state, purchaseId, to, name }) {
 
   const handleClickOpen = async () => {
     setOpen(true);
-    const data = await fetch(`http://localhost:3001/purchase/detail/${purchaseId}`);
-    const purchaseAux = await data.json();
-    setData(purchaseAux);
-    console.log(purchaseAux);
+    // const data = await fetch(`http://localhost:3003/purchase/${purchaseId}`);
+    // const purchaseAux = await data.json();
+    // setData(purchaseAux);
+    // console.log(purchaseAux);
   };
 
   const handleOkButton = () => {
@@ -132,8 +130,9 @@ export default function DialogSelect({ state, purchaseId, to, name }) {
       <Button
         onClick={handleClickOpen}
         size={'small'}
-        variant={purchaseState === 'en transito' ? 'outlined' : 'text'}
-        disabled={purchaseState === 'en transito' ? false : true}
+        // variant={purchaseState === 'en transito' ? 'outlined' : 'text'}
+        // disabled={purchaseState === 'en transito' ? false : true}
+        variant='outlined'
         classes={{
           root: classes.stateButton,
           disabled: classes.disabled,

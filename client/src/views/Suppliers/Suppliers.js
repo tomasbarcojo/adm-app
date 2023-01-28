@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { addSupplier, getSuppliers, getSuppliersByName } from '../../actions/suppliers';
-import MaterialTable from 'material-table';
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';

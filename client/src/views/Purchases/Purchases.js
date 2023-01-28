@@ -87,13 +87,10 @@ export default function Purchase() {
   const dispatch = useDispatch();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   var token = Token();
-  const productList = useSelector((state) => state.purchase);
+  const productList = useSelector((state) => state.newPurchase);
   const articles = useSelector((state) => state.articles);
   const suppliers = useSelector((state) => state.suppliers);
-  const [supplierId, setSupplierId] = useState();
-  const [purchaseState, setPurchaseState] = useState('');
   const total = useSelector((state) => state.purchaseTotal);
-  const [paymentExpDate, setPaymentExpDate] = useState();
   const categories = useSelector((state) => state.categories);
   const [haveExpDate, setHaveExpDate] = useState(false);
   const filters = useQueryParams();
@@ -148,15 +145,11 @@ export default function Purchase() {
     const dataObj = {
       supplierId: purchaseData.supplierId,
       productList,
-      paymentExpirationDate: purchaseData.paymentExpDate || null,
       purchaseState: purchaseData.purchaseState.toLocaleLowerCase(),
     };
+    if (purchaseData.paymentExpDate) dataObj.paymentExpirationDate = purchaseData.paymentExpDate;
     dispatch(newPurchase(dataObj, token, enqueueSnackbar, closeSnackbar));
     // resetForm();
-  };
-
-  const handleDateChange = (date) => {
-    setPurchaseData({ ...purchaseData, paymentExpDate: date.toISOString() });
   };
 
   const handleChangeName = (e) => {
@@ -294,7 +287,7 @@ export default function Purchase() {
                             margin="normal"
                             id="date-picker-inline"
                             label="Vencimiento de pago"
-                            value={paymentExpDate}
+                            value={purchaseData.paymentExpDate}
                             onChange={(date) =>
                               setPurchaseData({ ...purchaseData, paymentExpDate: date.toISOString() })
                             }
@@ -315,8 +308,7 @@ export default function Purchase() {
 
                     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
                       <h3>
-                        Total de la compra: ${' '}
-                        {total.toLocaleString('es-AR', {
+                        {'Total de la compra: ' + total.toLocaleString('es-AR', {
                           style: 'currency',
                           currency: 'ARS',
                           minimumFractionDigits: 2,

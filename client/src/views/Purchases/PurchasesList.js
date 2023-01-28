@@ -30,7 +30,7 @@ export default function CustomTable(props) {
   var token = Token();
   const dispatch = useDispatch();
   const { tableHead, tableData, tableHeaderColor, options } = props;
-  const createdPurchases = useSelector((state) => state.createdPurchases);
+  const purchases = useSelector((state) => state.purchases);
 
   useEffect(() => {
     dispatch(getPurchases(token));
@@ -59,7 +59,7 @@ export default function CustomTable(props) {
             </div>
           </CardHeader>
           <CardBody>
-            {createdPurchases && createdPurchases.length !== 0 ? (
+            {purchases.data && purchases.data.length !== 0 ? (
               <div className={classes.tableResponsive}>
                 <Table className={classes.table}>
                   <TableHead className={classes['primary' + 'TableHeader']}>
@@ -73,26 +73,26 @@ export default function CustomTable(props) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {createdPurchases.map((prop, key) => {
+                    {purchases.data.map((prop, key) => {
                       return (
                         <TableRow key={key} className={classes.tableBodyRow} hover={true}>
                           <TableCell className={classes.tableCell} key={key}>
                             {prop.id}
                           </TableCell>
                           <TableCell className={classes.tableCell} key={key}>
-                            {prop.supplier.businessName}
+                            {prop.businessName}
                           </TableCell>
                           <TableCell>
                             <ButtonStateDialog
-                              state={prop.state}
+                              state={prop.purchaseState}
                               purchaseId={prop.id} /*to={row.user.email} name={row.user.firstName}*/
                             />
                           </TableCell>
                           <TableCell className={classes.tableCell} key={key}>
-                            {prop.createdAt.slice('T', 10)} / {prop.createdAt.split('T')[1].slice(0, 5)}
+                            {prop.createdAt.slice('T', 10)} / {prop.createdAt.split('T')[1].slice(0, 5)}hs
                           </TableCell>
                           <TableCell className={classes.tableCell} key={key}>
-                            {prop.updatedAt.slice('T', 10)} / {prop.updatedAt.split('T')[1].slice(0, 5)}
+                            {prop.updatedAt.slice('T', 10)} / {prop.updatedAt.split('T')[1].slice(0, 5)}hs
                           </TableCell>
                           <TableCell className={classes.tableCell} key={key}>
                             <ButtonDetailPurchase purchaseId={prop.id} />

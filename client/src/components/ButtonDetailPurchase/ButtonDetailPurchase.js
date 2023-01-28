@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 // Material-UI imports
 import Button from '@material-ui/core/Button';
@@ -15,6 +15,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { Link } from 'react-router-dom';
 import Divider from '@material-ui/core/Divider';
+
+const { REACT_APP_URL_API } = process.env;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,18 +57,13 @@ const useStyles = makeStyles((theme) => ({
 export default function OrderDetailPurchase({ purchaseId }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [order, setOrder] = useState(null);
-  let orderTotal = 0;
-
-  if (order) {
-    order.purchase.map((purchase) => (orderTotal = orderTotal + purchase.price * purchase.quantity));
-  }
+  const [purchaseDetail, setPurchaseDetail] = useState(null);
 
   const handleClickOpen = async () => {
     setOpen(true);
-    const data = await fetch(`http://localhost:3001/purchase/detail/${purchaseId}`);
-    const orderX = await data.json();
-    setOrder(orderX);
+    const data = await fetch(`${REACT_APP_URL_API}/purchase/${purchaseId}`);
+    const purchaseDetailData = await data.json();
+    setPurchaseDetail(purchaseDetailData);
   };
 
   const handleClose = () => {
@@ -84,49 +81,55 @@ export default function OrderDetailPurchase({ purchaseId }) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        {order && (
-          <div className={classes.container}>
-            <DialogTitle id="alert-dialog-title">Compra</DialogTitle>
-            <DialogContent>
-              <div className={classes.resumen} style={{ justifyContent: 'space-between' }}>
+        <div className={classes.container}>
+          <DialogTitle id="alert-dialog-title">Compra</DialogTitle>
+          <DialogContent>
+            <div className={classes.resumen} style={{ justifyContent: 'space-between' }}>
+              <Typography variant="body1" gutterBottom>
+                Resumen de compra
+              </Typography>
+              <div style={{ marginLeft: 'auto' }}>
                 <Typography variant="body1" gutterBottom>
-                  Resumen de compra
+                  Total
                 </Typography>
-                <div style={{ marginLeft: 'auto' }}>
-                  <Typography variant="body1" gutterBottom>
-                    Total
-                  </Typography>
-                </div>
               </div>
-              <Divider variant="middle" />
-              <List disablePadding>
-                {order.purchase.map((purchase) => (
+            </div>
+            <Divider variant="middle" />
+            <List disablePadding>
+              {purchaseDetail &&
+                purchaseDetail.products.map((product) => (
                   //   <Link key={purchase.id} to={{ pathname: `/purchases/${purchase.id}` }} className={classes.list} >
                   <ListItem className={classes.listItem}>
                     <ListItemText
                       className={classes.text}
-                      primary={`${purchase.article.articleName} x${purchase.quantity}`} /*secondary={purchase.description}*/
+                      primary={`${product.name} x${product.quantity}`} /*secondary={purchase.description}*/
                     />
                     <Typography variant="body2">
-                      {(purchase.price * purchase.quantity * 1.12).toLocaleString('en-US', {
+                      {(product.price * product.quantity).toLocaleString('es-AR', {
                         style: 'currency',
-                        currency: 'USD',
+                        currency: 'ARS',
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
                       })}
                     </Typography>
                   </ListItem>
                   //   </Link>
                 ))}
-                <Divider variant="middle" />
-                <ListItem className={classes.listItem}>
-                  <ListItemText className={classes.totalText} primary="Total" />
-                  <Typography variant="subtitle1" className={classes.totalText}>
-                    {(orderTotal * 1.12).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
-                  </Typography>
-                </ListItem>
-              </List>
-            </DialogContent>
-          </div>
-        )}
+              <Divider variant="middle" />
+              <ListItem className={classes.listItem}>
+                <ListItemText className={classes.totalText} primary="Total" />
+                <Typography variant="subtitle1" className={classes.totalText}>
+                  {purchaseDetail && purchaseDetail.total.toLocaleString('es-AR', {
+                    style: 'currency',
+                    currency: 'ARS',
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </Typography>
+              </ListItem>
+            </List>
+          </DialogContent>
+        </div>
         <DialogActions>
           <Button onClick={handleClose} color="primary" autoFocus>
             Salir

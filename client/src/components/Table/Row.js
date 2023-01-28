@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addDataPurchase, updateTotal } from '../../actions/purchases';
 
 export default function Counter({ props }) {
-  const purchase = useSelector((state) => state.purchase);
+  const purchase = useSelector((state) => state.newPurchase);
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(0);
   const [price, setPrice] = useState('0');
