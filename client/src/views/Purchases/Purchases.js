@@ -27,7 +27,7 @@ import { getSuppliers } from '../../actions/suppliers';
 import TableHtml from '../../components/Table/TableHtml';
 import { useQueryParams } from '../../utils/useQueryParams.js';
 import { getCategories } from '../../actions/categories.js';
-import GoogleMaps from '../../components/SearchProductsInput/SearchProductInput';
+import SearchProductsInput from '../../components/SearchProductsInput/SearchProductInput';
 
 const useStyles = makeStyles((theme) => ({
   cardCategoryWhite: {
