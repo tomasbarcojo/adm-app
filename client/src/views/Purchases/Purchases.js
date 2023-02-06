@@ -20,13 +20,11 @@ import CardBody from '../../components/Card/CardBody.js';
 import Button from '../../components/CustomButtons/Button.js';
 import CardFooter from '../../components/Card/CardFooter.js';
 
-import { clearArticleData, getArticles } from '../../actions/article';
+import { clearArticleData } from '../../actions/article';
 import { newPurchase } from '../../actions/purchases';
 import Token from '../../Token/Token';
 import { getSuppliers } from '../../actions/suppliers';
 import TableHtml from '../../components/Table/TableHtml';
-import { useQueryParams } from '../../utils/useQueryParams.js';
-import { getCategories } from '../../actions/categories.js';
 import SearchProductsInput from '../../components/SearchProductsInput/SearchProductInput';
 
 const useStyles = makeStyles((theme) => ({
@@ -88,20 +86,10 @@ export default function Purchase() {
   const dispatch = useDispatch();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   var token = Token();
-  const productList = useSelector((state) => state.newPurchase);
-  const articles = useSelector((state) => state.articles);
+  const newPurchaseData = useSelector((state) => state.newPurchase);
   const suppliers = useSelector((state) => state.suppliers);
   const total = useSelector((state) => state.purchaseTotal);
-  const categories = useSelector((state) => state.categories);
   const [haveExpDate, setHaveExpDate] = useState(false);
-  const filters = useQueryParams();
-  const castedFilters = {
-    supplierId: filters.params.supplierId || '',
-    categoryId: filters.params.categoryId || '',
-    search: filters.params.search || '',
-    page: filters.params.page || 1,
-    limit: filters.params.limit || 1,
-  };
   const [purchaseData, setPurchaseData] = useState({
     supplierId: null,
     receiptType: 'Comprobante de compra',
@@ -112,59 +100,27 @@ export default function Purchase() {
   useEffect(() => {
     dispatch(clearArticleData());
     dispatch(getSuppliers(token));
-    // dispatch(getCategories(token));
   }, []);
 
   useEffect(() => {
-    // dispatch(
-    //   getArticles({
-    //     token,
-    //     supplierId: castedFilters.supplierId,
-    //     categoryId: castedFilters.categoryId,
-    //     search: castedFilters.search,
-    //     page: castedFilters.page,
-    //     limit: castedFilters.limit
-    //   }),
-    // );
-    // console.log(!purchaseData.supplierId && productList.length !== 0)
     console.log(!purchaseData.supplierId);
-    console.log(productList.every((obj) => obj.hasOwnProperty('quantity') && obj['quantity'] !== 0));
+    // console.log(newPurchaseData.productList.every((obj) => obj.hasOwnProperty('quantity') && obj['quantity'] !== 0));
     console.log(
-      !purchaseData.supplierId || productList.forEach((obj) => obj.hasOwnProperty('quantity') && obj['quantity'] !== 0),
+      !purchaseData.supplierId ||
+        newPurchaseData.productList.forEach((obj) => obj.hasOwnProperty('quantity') && obj['quantity'] !== 0),
     );
-  }, [purchaseData, productList]);
-
-  // const resetForm = () => {
-  //   setpriceListName('')
-  //   for (let i = 1; i < articles.length + 1; i++) {
-  //     document.getElementById(i).value = ''
-  //   }
-  // };
-
-  const handleChangeSupplierId = (value) => {
-    if (value) filters.setParam('supplierId', value.id);
-    else filters.setParam('supplierId', '');
-  };
-
-  const handleChangeCategoryId = (value) => {
-    if (value) filters.setParam('categoryId', value.id);
-    else filters.setParam('categoryId', '');
-  };
+  }, [purchaseData, newPurchaseData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const dataObj = {
       supplierId: purchaseData.supplierId,
-      productList,
+      newPurchaseData,
       purchaseState: purchaseData.purchaseState.toLocaleLowerCase(),
     };
     if (purchaseData.paymentExpDate) dataObj.paymentExpirationDate = purchaseData.paymentExpDate;
     dispatch(newPurchase(dataObj, token, enqueueSnackbar, closeSnackbar));
     // resetForm();
-  };
-
-  const handleChangeName = (e) => {
-    filters.setParam('search', e.target.value);
   };
 
   const handleHaveExpDate = () => {
@@ -196,10 +152,9 @@ export default function Purchase() {
                         setPurchaseData({ ...purchaseData, supplierId: value ? value.id : '' })
                       }
                       fullWidth={true}
-                      renderInput={(params) => <TextField {...params} label="Proveedor" />}
+                      renderInput={(params) => <TextField error={false} helperText="" {...params} label="Proveedor" />}
                       getOptionSelected={(option, value) => option.id === value.id}
                     />
-                  <p>Error</p>
                   </GridItem>
                   <GridItem xs={12} sm={4} md={4}>
                     <Autocomplete
@@ -264,13 +219,13 @@ export default function Purchase() {
                   </GridItem>
                 </GridContainer> */}
 
-                {productList && productList.length > 0 ? (
+                {newPurchaseData.productList && newPurchaseData.productList.length > 0 ? (
                   <>
                     <h5>Detalle de compra</h5>
                     <TableHtml
                       tableData={
-                        productList && productList.length > 0
-                          ? productList.map((article) => {
+                        newPurchaseData.productList && newPurchaseData.productList.length > 0
+                          ? newPurchaseData.productList.map((article) => {
                               return {
                                 productId: article.productId,
                                 name: article.name,

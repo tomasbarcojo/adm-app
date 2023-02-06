@@ -11,7 +11,7 @@ import { addDataPurchase } from '../../actions/purchases';
 
 const { REACT_APP_URL_API } = process.env;
 
-export default function SearchProductsInput() {
+export default function SearchSuppliersInput() {
   const token = Token();
   const [value, setValue] = useState(null);
   const [inputValue, setInputValue] = useState('');
@@ -60,14 +60,7 @@ export default function SearchProductsInput() {
     setOptions(newValue ? [newValue, ...options] : options);
     setValue(newValue);
     if (newValue) {
-      const productDataObj = {
-        productId: newValue.id,
-        name: newValue.name,
-        stock: newValue.stock,
-        price: newValue.price,
-      };
-      console.log(productDataObj);
-      dispatch(addDataPurchase({ data: [...newPurchase, productDataObj] }));
+      dispatch(addDataPurchase({ data: newPurchase.productList, supplierId: newValue.id }));
     }
   };
 

@@ -1,16 +1,18 @@
 const { REACT_APP_URL_API } = process.env;
 
-export const addDataPurchase = (data) => async (dispatch) => {
-  try {
-    const deleteDuplicated = data.filter((v, i, a) => a.findIndex((t) => t.productId === v.productId) === i);
-    dispatch({
-      type: 'ADD_DATA_PURCHASE',
-      payload: deleteDuplicated,
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
+export const addDataPurchase =
+  ({ data, supplierId }) =>
+  async (dispatch) => {
+    try {
+      const productList = data?.filter((v, i, a) => a.findIndex((t) => t.productId === v.productId) === i);
+      dispatch({
+        type: 'ADD_DATA_PURCHASE',
+        payload: { supplierId, productList },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
 export const updateTotal = (total) => async (dispatch) => {
   try {
