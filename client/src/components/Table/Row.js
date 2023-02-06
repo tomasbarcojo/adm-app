@@ -3,41 +3,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addDataPurchase, updateTotal } from '../../actions/purchases';
 
 export default function Counter({ props }) {
-  const purchase = useSelector((state) => state.newPurchase);
+  const newPurchase = useSelector((state) => state.newPurchase);
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(0);
-  const [price, setPrice] = useState('0');
+  const [price, setPrice] = useState(props.price);
   const [discount, setDiscount] = useState('0');
   var total = 0;
 
   useEffect(() => {
-    if (quantity !== 0 || purchase.length > 0) {
-      let arrPurchase = purchase;
-      var changeMade = false;
-      arrPurchase.forEach((el) => {
-        if (el.productId === props.id) {
-          el.quantity = quantity;
-          el.price = price;
-          el.discount = discount;
-          el.total = quantity * price - discount;
-          changeMade = true;
-        }
-      });
-      if (!changeMade) {
-        const newData = {
-          productId: props.id,
-          quantity,
-          price,
-          discount,
-          total: quantity * price - discount,
-        };
-        arrPurchase.push(newData);
-        dispatch(addDataPurchase(arrPurchase));
-        getTotal(arrPurchase);
-      } else {
-        dispatch(addDataPurchase(arrPurchase));
-        getTotal(arrPurchase);
-      }
+    // console.log('entro', quantity, price, discount);
+    if (quantity !== 0 && price !== '0') {
+      const purchaseEl = newPurchase.find((el) => el.productId === props.productId);
+      purchaseEl.quantity = quantity;
+      purchaseEl.price = price;
+      purchaseEl.discount = discount;
+      purchaseEl.total = quantity * price - discount;
+      dispatch(addDataPurchase(newPurchase));
     }
   }, [quantity, price, discount]);
 
@@ -96,8 +77,8 @@ export default function Counter({ props }) {
 
   return (
     <tr>
-      <td>{props.id}</td>
-      <td>{props.articleName}</td>
+      <td>{props.productId}</td>
+      <td>{props.name}</td>
       <td>{props.stock}</td>
       <td>
         <div style={{ display: 'flex', flexDirection: 'row' }}>

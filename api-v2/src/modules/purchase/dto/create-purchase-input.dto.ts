@@ -85,7 +85,7 @@ export class CreatePurchaseInput {
   @ApiProperty({
     description: 'array of purchased products',
     type: 'array',
-    example: [{ productId: 42, quantity: 1, price: '1', discout: '0', total: 1 }],
+    example: [{ id: 42, quantity: 1, price: '1', discout: '0', total: 1 }],
   })
   @IsArray()
   @ArrayMinSize(1)

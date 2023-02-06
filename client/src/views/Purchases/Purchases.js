@@ -27,6 +27,7 @@ import { getSuppliers } from '../../actions/suppliers';
 import TableHtml from '../../components/Table/TableHtml';
 import { useQueryParams } from '../../utils/useQueryParams.js';
 import { getCategories } from '../../actions/categories.js';
+import GoogleMaps from '../../components/SearchProductsInput/SearchProductInput';
 
 const useStyles = makeStyles((theme) => ({
   cardCategoryWhite: {
@@ -98,30 +99,40 @@ export default function Purchase() {
     supplierId: filters.params.supplierId || '',
     categoryId: filters.params.categoryId || '',
     search: filters.params.search || '',
+    page: filters.params.page || 1,
+    limit: filters.params.limit || 1,
   };
   const [purchaseData, setPurchaseData] = useState({
-    supplierId: '',
+    supplierId: null,
     receiptType: 'Comprobante de compra',
     purchaseState: 'En transito',
-    paymentExpDate: '',
+    paymentExpDate: null,
   });
 
   useEffect(() => {
     dispatch(clearArticleData());
     dispatch(getSuppliers(token));
-    dispatch(getCategories(token));
+    // dispatch(getCategories(token));
   }, []);
 
   useEffect(() => {
-    dispatch(
-      getArticles({
-        token,
-        supplierId: castedFilters.supplierId,
-        categoryId: castedFilters.categoryId,
-        search: castedFilters.search,
-      }),
+    // dispatch(
+    //   getArticles({
+    //     token,
+    //     supplierId: castedFilters.supplierId,
+    //     categoryId: castedFilters.categoryId,
+    //     search: castedFilters.search,
+    //     page: castedFilters.page,
+    //     limit: castedFilters.limit
+    //   }),
+    // );
+    // console.log(!purchaseData.supplierId && productList.length !== 0)
+    console.log(!purchaseData.supplierId);
+    console.log(productList.every((obj) => obj.hasOwnProperty('quantity') && obj['quantity'] !== 0));
+    console.log(
+      !purchaseData.supplierId || productList.forEach((obj) => obj.hasOwnProperty('quantity') && obj['quantity'] !== 0),
     );
-  }, [JSON.stringify(castedFilters)]);
+  }, [purchaseData, productList]);
 
   // const resetForm = () => {
   //   setpriceListName('')
@@ -188,6 +199,7 @@ export default function Purchase() {
                       renderInput={(params) => <TextField {...params} label="Proveedor" />}
                       getOptionSelected={(option, value) => option.id === value.id}
                     />
+                  <p>Error</p>
                   </GridItem>
                   <GridItem xs={12} sm={4} md={4}>
                     <Autocomplete
@@ -215,7 +227,8 @@ export default function Purchase() {
                   </GridItem>
                 </GridContainer>
                 <h5>Filtros de busqueda:</h5>
-                <GridContainer>
+                <SearchProductsInput />
+                {/* <GridContainer>
                   <GridItem xs={12} sm={4} md={4}>
                     <TextField
                       className={classes.input}
@@ -249,19 +262,20 @@ export default function Purchase() {
                       getOptionSelected={(option, value) => option.id === value.id}
                     />
                   </GridItem>
-                </GridContainer>
+                </GridContainer> */}
 
-                {articles && articles.data?.length > 0 ? (
+                {productList && productList.length > 0 ? (
                   <>
-                    <h5>Articulos:</h5>
+                    <h5>Detalle de compra</h5>
                     <TableHtml
                       tableData={
-                        articles.data && articles.data.length > 0
-                          ? articles.data.map((article) => {
+                        productList && productList.length > 0
+                          ? productList.map((article) => {
                               return {
-                                id: article.id,
-                                articleName: article.name,
+                                productId: article.productId,
+                                name: article.name,
                                 stock: article.stock,
+                                price: article.price,
                               };
                             })
                           : null
@@ -308,12 +322,13 @@ export default function Purchase() {
 
                     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
                       <h3>
-                        {'Total de la compra: ' + total.toLocaleString('es-AR', {
-                          style: 'currency',
-                          currency: 'ARS',
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })}
+                        {'Total de la compra: ' +
+                          total.toLocaleString('es-AR', {
+                            style: 'currency',
+                            currency: 'ARS',
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
                       </h3>
                     </div>
                   </>
@@ -322,7 +337,7 @@ export default function Purchase() {
                 )}
               </CardBody>
               <CardFooter>
-                <Button color="primary" type="submit">
+                <Button disabled={!purchaseData.supplierId} color="primary" type="submit">
                   Añadir
                 </Button>
                 <Button color="danger">Cancelar</Button>
