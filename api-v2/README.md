@@ -24,7 +24,7 @@
 
 ## Description
 
-[Chiper](https://www.chiper.co/) TypeScript microservices starter repository.
+TypeScript microservices starter repository.
 
 ## Installation
 

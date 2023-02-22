@@ -1,7 +1,6 @@
 import { Controller, HttpStatus, Post, Body, Get, Query, Param, Patch, Delete } from '@nestjs/common';
 import { ApiTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
 import { PaginationDto } from '../dto/pagination.dto';
-import { GetAllOutput } from '../product/dto/get-all-products-output.dto';
 import { CreateSupplierInput } from './dto/create-supplier-input.dto';
 import { GetAllSupplierInput } from './dto/get-all-supplier-input.dto';
 import { GetOneSupplierInput } from './dto/get-one-supplier-input.dto';
@@ -38,7 +37,7 @@ export class SupplierController {
     description: 'get a list of supplier, based on the conditions',
   })
   @Get()
-  async getAll(@Query() input: GetAllSupplierInput, @Query() pagination: PaginationDto): Promise<GetAllOutput> {
+  async getAll(@Query() input: GetAllSupplierInput, @Query() pagination: PaginationDto) {
     return this.service.getAll(input, pagination);
   }
 

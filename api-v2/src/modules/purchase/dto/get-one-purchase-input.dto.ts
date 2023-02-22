@@ -1,12 +1,14 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsString } from "class-validator";
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class GetOnePurchaseInput {
-    @ApiProperty({
-        description: 'purcharse id',
-        type: 'string',
-        example: '1',
-      })
-      @IsString()
-      readonly id?: number;
+  @ApiPropertyOptional({
+    description: 'search by purchaseId',
+    type: 'number',
+    example: '1',
+  })
+  @IsNumber()
+  @Type(() => Number) 
+  readonly purchaseId: number;
 }

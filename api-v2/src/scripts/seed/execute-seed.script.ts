@@ -72,7 +72,7 @@ const boostrap = async () => {
       name: faker.commerce.productName(),
       code: String(faker.commerce.product()),
       price: Number(faker.commerce.price()),
-      stock: faker.datatype.number(),
+      stock: faker.datatype.number({ min: 0, max: 1000 }),
       stockAlert: faker.datatype.number({ min: 10, max: 30 }),
       image: faker.image.business(640, 480, true),
       categoryId: Math.floor(Math.random() * 10) + 1,

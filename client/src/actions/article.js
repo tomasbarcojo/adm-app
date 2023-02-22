@@ -50,32 +50,18 @@ export const createArticle = (data, token, enqueueSnackbar, closeSnackbar) => as
   }
 };
 
-export const getArticles = (token, page, limit) => async (dispatch) => {
-  const res = await fetch(`${REACT_APP_URL_API}/product?skip=${page}&limit=30`, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  const result = await res.json();
-
-  if (res.status === 200) {
-    dispatch({
-      type: 'GET_ARTICLES',
-      payload: result,
-    });
-  }
-};
-
-export const getArticlesBySupplierId = (token, id) => async (dispatch) => {
-  try {
-    const res = await fetch(`${REACT_APP_URL_API}/product?supplierId=${id}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        'auth-token': token,
+export const getArticles =
+  ({ token, page = 1, limit = 30, supplierId, categoryId, search = '' }) =>
+  async (dispatch) => {
+    const res = await fetch(
+      `${REACT_APP_URL_API}/product?page=${page}&limit=${limit}&supplierId=${supplierId}&categoryId=${categoryId}&search=${search}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
       },
-    });
+    );
 
     const result = await res.json();
 
@@ -85,10 +71,7 @@ export const getArticlesBySupplierId = (token, id) => async (dispatch) => {
         payload: result,
       });
     }
-  } catch (err) {
-    console.log(err);
-  }
-};
+  };
 
 export const getArticlesByCategoryId = (token, id) => async (dispatch) => {
   try {

@@ -199,13 +199,19 @@ input[type=number] {
   height: 40px;
 }
 
-.htmlTableStyle {
+#htmlTableStyle {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
 
-.htmlTableStyle td, th {
+#htmlTableStyle th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+#htmlTableStyle td {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;

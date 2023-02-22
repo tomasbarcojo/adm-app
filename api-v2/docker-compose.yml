@@ -3,7 +3,7 @@ version: '3.8'
 services:
   db:
     image: mysql:8.0
-    container_name: chiper-nestjs-api-template
+    container_name: nestjs-api-activa
     restart: 'no'
     ports:
       - 3306:3306

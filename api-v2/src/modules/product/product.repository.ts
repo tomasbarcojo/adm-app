@@ -1,11 +1,11 @@
 import { getConnection } from 'typeorm';
 import { PaginationDto } from '../dto/pagination.dto';
 import { GetAllProductsInput } from './dto/get-all-products-input.dto';
-import { GetAllOutput } from './dto/get-all-products-output.dto';
+import { GetAllProductsOutput } from './dto/get-all-products-output.dto';
 import { Product } from './product.entity';
 
 export class ProductRepository {
-  async getAllProducts(input: GetAllProductsInput, pagination: PaginationDto): Promise<GetAllOutput> {
+  async getAllProducts(input: GetAllProductsInput, pagination: PaginationDto): Promise<GetAllProductsOutput> {
     const { search, categoryId, supplierId } = input;
     const { page, limit } = pagination;
     const dataQuery = getConnection().createQueryBuilder().select('*').from(Product, 'P').where('P.deletedAt IS NULL');
