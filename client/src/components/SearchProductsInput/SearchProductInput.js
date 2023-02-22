@@ -21,7 +21,7 @@ export default function SearchProductsInput() {
 
   const fetchData = async (isOpened) => {
     let active = true;
-    if (inputValue === '' && !isOpened) {
+    if (!inputValue && !isOpened) {
       setOptions(value ? [value] : []);
       return undefined;
     }
@@ -66,8 +66,8 @@ export default function SearchProductsInput() {
         stock: newValue.stock,
         price: newValue.price,
       };
-      console.log(productDataObj);
-      dispatch(addDataPurchase({ data: [...newPurchase, productDataObj] }));
+      newPurchase.productList = [...newPurchase.productList, productDataObj]
+      dispatch(addDataPurchase(newPurchase));
     }
   };
 

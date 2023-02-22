@@ -34,7 +34,7 @@ export class PurchaseRepository extends Repository<Purchase> {
       .select([
         'P.id as id',
         'S.businessName as businessName',
-        'P.purchaseState as purchaseState',
+        'P.purchaseStatus as purchaseStatus',
         'P.createdAt as createdAt',
         'P.updatedAt as updatedAt',
         'P.paymentExpirationDate as paymentExpirationDate',

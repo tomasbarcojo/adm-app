@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
+import Dialog from '@mui/material/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
+import Select from '@mui/material/Select';
 import DialogContentText from '@material-ui/core/DialogContentText';
+import FormControl from '@mui/material/FormControl';
 // import { cancelMail, dispatchMail } from "../../actions";
+import MenuItem from '@mui/material/MenuItem';
+import { useDispatch } from 'react-redux';
+import { updatePurchaseStatus } from '../../actions/purchases';
+import Token from '../../Token/Token';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -30,12 +36,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DialogSelect({ state, purchaseId, to, name }) {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const [purchaseState, setPurchaseState] = useState(state);
-  const [data, setData] = useState(null);
+  const [purchaseNewStatus, setPurchaseNewState] = useState(state);
+  const [purchaseActualStatus, setPurchaseActualState] = useState(state);
+  const token = Token();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
 
   const handleChange = async (event) => {
-    setPurchaseState(event.target.value);
+    setPurchaseNewState(event.target.value);
   };
 
   // const sendMail = () => {
@@ -50,109 +60,49 @@ export default function DialogSelect({ state, purchaseId, to, name }) {
   // }
 
   const handleClickOpen = async () => {
+    setPurchaseActualState(state);
     setOpen(true);
-    // const data = await fetch(`http://localhost:3003/purchase/${purchaseId}`);
-    // const purchaseAux = await data.json();
-    // setData(purchaseAux);
-    // console.log(purchaseAux);
   };
 
   const handleOkButton = () => {
-    if (purchaseState === 'recibida' && purchaseState !== state) {
-      data.purchase.map((prod) => {
-        console.log(prod);
-        let newStock = prod.article.stock + prod.quantity;
-        const product = {
-          stock: newStock,
-        };
-        try {
-          fetch(`http://localhost:3001/article/stock/${prod.articleId}`, {
-            method: 'PUT',
-            body: JSON.stringify(product),
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-        } catch (err) {
-          console.log(err);
-        }
-      });
-    }
-    if (purchaseState !== state) {
-      try {
-        fetch(`http://localhost:3001/purchase/state/${purchaseId}`, {
-          method: 'PUT',
-          body: JSON.stringify({ state: purchaseState }),
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-        })
-          .then((res) => res.json())
-          .then((data) => console.log(data))
-          .catch((e) => console.log(e));
-        setOpen(false);
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    dispatch(updatePurchaseStatus(token, { purchaseStatus: purchaseNewStatus }, purchaseId, enqueueSnackbar, closeSnackbar));
+    setPurchaseActualState(purchaseNewStatus);
+    // sendMail()
     setOpen(false);
   };
 
   const handleClose = () => {
     setOpen(false);
+    setPurchaseNewState(state);
   };
-
-  // else {
-  //   try {
-  //     fetch(`http://localhost:3001/orders/detail/${purchaseId}`, {
-  //       method: 'PUT',
-  //       body: JSON.stringify({ state: purchaseState }),
-  //       headers: {
-  //         Accept: 'application/json',
-  //         'Content-Type': 'application/json',
-  //       },
-  //       credentials: 'include',
-  //     })
-  //       .then(res => res.json())
-  //       .then(data => console.log(data))
-  //       .catch(e => console.log(e))
-  //     setOpen(false);
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // };
-  // sendMail()
-  // }
 
   return (
     <div>
       <Button
         onClick={handleClickOpen}
         size={'small'}
-        // variant={purchaseState === 'en transito' ? 'outlined' : 'text'}
-        // disabled={purchaseState === 'en transito' ? false : true}
-        variant='outlined'
+        variant={purchaseActualStatus === 'en transito' ? 'outlined' : 'text'}
+        disabled={purchaseActualStatus === 'en transito' ? false : true}
         classes={{
           root: classes.stateButton,
           disabled: classes.disabled,
         }}
       >
-        {purchaseState}
+        {purchaseActualStatus}
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Cambiar estado</DialogTitle>
         <DialogContent>
-          <DialogContentText>Compra con nº de ID #{purchaseId}</DialogContentText>
+          <DialogContentText>Id de la compra: {purchaseId}</DialogContentText>
           <form className={classes.container}>
-            {/* <FormControl className={classes.formControl}> */}
-            <InputLabel>Estado</InputLabel>
-            <Select native value={purchaseState} onChange={handleChange} style={{ width: '100%' }}>
-              <option value={'en transito'}>En transito</option>
-              <option value={'recibida'}>Recibida</option>
-              <option value={'cancelada'}>Cancelada</option>
-            </Select>
-            {/* </FormControl> */}
+            <FormControl fullWidth>
+              <InputLabel>Estado</InputLabel>
+              <Select value={purchaseNewStatus} onChange={handleChange} style={{ width: '100%' }}>
+                <MenuItem value={'en transito'}>En transito</MenuItem>
+                <MenuItem value={'recibida'}>Recibida</MenuItem>
+                <MenuItem value={'cancelada'}>Cancelada</MenuItem>
+              </Select>
+            </FormControl>
           </form>
         </DialogContent>
         <DialogActions>

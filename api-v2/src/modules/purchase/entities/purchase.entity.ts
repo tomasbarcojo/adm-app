@@ -14,7 +14,7 @@ import {
 } from 'typeorm';
 import { PurchasedProduct } from './purchase-product.entity';
 
-export enum PurchaseState {
+export enum PurchaseStatus {
   EN_TRANSITO = 'en transito',
   RECIBIDA = 'recibida',
   CANCELADA = 'cancelada',
@@ -43,8 +43,8 @@ export class Purchase extends BaseEntity {
     type: 'string',
     example: 'en transito',
   })
-  @Column({ type: 'enum', enum: PurchaseState, default: PurchaseState.EN_TRANSITO, nullable: false })
-  purchaseState: string;
+  @Column({ type: 'enum', enum: PurchaseStatus, default: PurchaseStatus.EN_TRANSITO, nullable: false })
+  purchaseStatus: string;
 
   @ApiProperty({
     description: 'the date of payment expiration',

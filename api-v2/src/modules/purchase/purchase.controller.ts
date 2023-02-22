@@ -6,7 +6,7 @@ import { GetAllPurchasesInput } from './dto/get-all-purchase-input.dto';
 import { GetDetailsByPurchaseId } from './dto/get-details-by-purchase-id.dto';
 import { GetOnePurchaseInput } from './dto/get-one-purchase-input.dto';
 import { UpdatePurchaseInput } from './dto/update-purchase-input.dto';
-import { Purchase } from './entities/purchase.entity';
+import { Purchase, PurchaseStatus } from './entities/purchase.entity';
 import { PurchaseService } from './purcharse.service';
 
 @ApiTags('purchase')
@@ -23,7 +23,7 @@ export class PurchaseController {
     summary: 'create a new purchase',
     description: 'create a new purchase',
   })
-  @Post('/createpurchase')
+  @Post()
   async create(@Body() input: CreatePurchaseInput): Promise<Purchase> {
     return this.purchaseService.createPurchase(input);
   }
@@ -56,19 +56,19 @@ export class PurchaseController {
     return this.purchaseService.getDetailsByPurchaseId(input);
   }
 
-  // @ApiResponse({
-  //   status: HttpStatus.OK,
-  //   description: 'an updated purchase',
-  //   type: Purchase,
-  // })
-  // @ApiOperation({
-  //   summary: 'update a purchase',
-  //   description: 'update a purchase, based on the id',
-  // })
-  // @Patch('/:id')
-  // async update(@Param() getOneInput: GetOnePurchaseInput, @Body() input: UpdatePurchaseInput): Promise<Purchase> {
-  //   return this.service.update(getOneInput, input);
-  // }
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'an updated purchase',
+    type: Purchase,
+  })
+  @ApiOperation({
+    summary: 'update a purchase',
+    description: 'update a purchase, based on the id',
+  })
+  @Patch('/status/:purchaseId')
+  async updateStatus(@Param('purchaseId') purchaseId: number, @Body() body: { purchaseStatus: PurchaseStatus }): Promise<Purchase | string> {
+    return this.purchaseService.updateStatus(purchaseId, body.purchaseStatus);
+  }
 
   // @ApiResponse({
   //   status: HttpStatus.OK,

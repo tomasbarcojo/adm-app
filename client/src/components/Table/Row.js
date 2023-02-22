@@ -11,13 +11,13 @@ export default function Counter({ props }) {
   var total = 0;
 
   useEffect(() => {
-    // console.log('entro', quantity, price, discount);
     if (quantity !== 0 && price !== '0') {
-      const purchaseEl = newPurchase.find((el) => el.productId === props.productId);
+      const purchaseEl = newPurchase.productList.find((el) => el.productId === props.productId);
       purchaseEl.quantity = quantity;
       purchaseEl.price = price;
       purchaseEl.discount = discount;
       purchaseEl.total = quantity * price - discount;
+      getTotal(newPurchase.productList);
       dispatch(addDataPurchase(newPurchase));
     }
   }, [quantity, price, discount]);

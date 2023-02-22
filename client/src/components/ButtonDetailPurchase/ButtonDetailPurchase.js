@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function OrderDetailPurchase({ purchaseId }) {
+export default function ButtonDetailPurchase({ purchaseId }) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [purchaseDetail, setPurchaseDetail] = useState(null);
@@ -99,7 +99,7 @@ export default function OrderDetailPurchase({ purchaseId }) {
               {purchaseDetail &&
                 purchaseDetail.products.map((product) => (
                   //   <Link key={purchase.id} to={{ pathname: `/purchases/${purchase.id}` }} className={classes.list} >
-                  <ListItem className={classes.listItem}>
+                  <ListItem key={product.productId} className={classes.listItem}>
                     <ListItemText
                       className={classes.text}
                       primary={`${product.name} x${product.quantity}`} /*secondary={purchase.description}*/

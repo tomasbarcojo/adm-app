@@ -6,7 +6,10 @@ const initialstate = {
   pricelistsbyid: [],
   categories: [],
   articles: [],
-  newPurchase: [],
+  newPurchase: {
+    supplierId: null,
+    productList: [],
+  },
   purchaseTotal: 0,
   purchases: [],
   userLogged: false,
@@ -149,8 +152,7 @@ export default function rootReducer(state = initialstate, action) {
     case 'CLEAR_ARTICLES':
       return {
         ...state,
-        articles: [],
-        newPurchase: [],
+        newPurchase: { supplierId: null, productList: [] },
         purchaseTotal: 0,
       };
 

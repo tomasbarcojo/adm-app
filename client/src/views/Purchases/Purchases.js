@@ -21,11 +21,12 @@ import Button from '../../components/CustomButtons/Button.js';
 import CardFooter from '../../components/Card/CardFooter.js';
 
 import { clearArticleData } from '../../actions/article';
-import { newPurchase } from '../../actions/purchases';
+import { addDataPurchase, newPurchase } from '../../actions/purchases';
 import Token from '../../Token/Token';
 import { getSuppliers } from '../../actions/suppliers';
 import TableHtml from '../../components/Table/TableHtml';
 import SearchProductsInput from '../../components/SearchProductsInput/SearchProductInput';
+import SearchSuppliersInput from '../../components/SearchSuppliersInput/SearchSuppliersInput';
 
 const useStyles = makeStyles((theme) => ({
   cardCategoryWhite: {
@@ -86,15 +87,15 @@ export default function Purchase() {
   const dispatch = useDispatch();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   var token = Token();
-  const newPurchaseData = useSelector((state) => state.newPurchase);
-  const suppliers = useSelector((state) => state.suppliers);
+  const productList = useSelector((state) => state.newPurchase.productList);
+  const newPurchaseSupplierId = useSelector((state) => state.newPurchase.supplierId);
   const total = useSelector((state) => state.purchaseTotal);
   const [haveExpDate, setHaveExpDate] = useState(false);
   const [purchaseData, setPurchaseData] = useState({
     supplierId: null,
     receiptType: 'Comprobante de compra',
     purchaseState: 'En transito',
-    paymentExpDate: null,
+    paymentExpDate: new Date(),
   });
 
   useEffect(() => {
@@ -103,19 +104,22 @@ export default function Purchase() {
   }, []);
 
   useEffect(() => {
-    console.log(!purchaseData.supplierId);
-    // console.log(newPurchaseData.productList.every((obj) => obj.hasOwnProperty('quantity') && obj['quantity'] !== 0));
-    console.log(
-      !purchaseData.supplierId ||
-        newPurchaseData.productList.forEach((obj) => obj.hasOwnProperty('quantity') && obj['quantity'] !== 0),
-    );
-  }, [purchaseData, newPurchaseData]);
+    // console.log(!purchaseData.supplierId);
+    // console.log(productList.productList.every((obj) => obj.hasOwnProperty('quantity') && obj['quantity'] !== 0));
+    // console.log(
+    //   !purchaseData.supplierId ||
+    //     productList.productList.forEach((obj) => obj.hasOwnProperty('quantity') && obj['quantity'] !== 0),
+    // );
+    console.log(!newPurchaseSupplierId);
+    console.log(productList.length === 0);
+    console.log(!newPurchaseSupplierId || productList.length !== 0);
+  }, [newPurchaseSupplierId, productList]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const dataObj = {
-      supplierId: purchaseData.supplierId,
-      newPurchaseData,
+      supplierId: newPurchaseSupplierId,
+      productList,
       purchaseState: purchaseData.purchaseState.toLocaleLowerCase(),
     };
     if (purchaseData.paymentExpDate) dataObj.paymentExpirationDate = purchaseData.paymentExpDate;
@@ -143,18 +147,20 @@ export default function Purchase() {
                 <h5>Informacion del Comprobante</h5>
                 <GridContainer>
                   <GridItem xs={12} sm={4} md={4}>
-                    <Autocomplete
+                    {/* <Autocomplete
                       id="Supplier"
                       autoComplete={true}
-                      options={suppliers.data}
+                      options={suppliers.length > 0 ? suppliers.data : []}
                       getOptionLabel={(option) => option.businessName}
-                      onChange={(event, value) =>
-                        setPurchaseData({ ...purchaseData, supplierId: value ? value.id : '' })
-                      }
+                      onChange={(event, value) => {
+                        setPurchaseData({ ...purchaseData, supplierId: value ? value.id : '' });
+                        dispatch(addDataPurchase({ data: productList.productList, supplierId: value.id }));
+                      }}
                       fullWidth={true}
                       renderInput={(params) => <TextField error={false} helperText="" {...params} label="Proveedor" />}
                       getOptionSelected={(option, value) => option.id === value.id}
-                    />
+                    /> */}
+                    <SearchSuppliersInput />
                   </GridItem>
                   <GridItem xs={12} sm={4} md={4}>
                     <Autocomplete
@@ -166,6 +172,11 @@ export default function Purchase() {
                       fullWidth={true}
                       renderInput={(params) => <TextField {...params} label="Tipo de comprobante" />}
                       getOptionSelected={(option, value) => option.id === value.id}
+                      sx={{
+                        'button.MuiAutocomplete-clearIndicator': {
+                          visibility: 'visible',
+                        },
+                      }}
                     />
                   </GridItem>
                   <GridItem xs={12} sm={4} md={4}>
@@ -219,22 +230,18 @@ export default function Purchase() {
                   </GridItem>
                 </GridContainer> */}
 
-                {newPurchaseData.productList && newPurchaseData.productList.length > 0 ? (
+                {productList && productList.length > 0 ? (
                   <>
                     <h5>Detalle de compra</h5>
                     <TableHtml
-                      tableData={
-                        newPurchaseData.productList && newPurchaseData.productList.length > 0
-                          ? newPurchaseData.productList.map((article) => {
-                              return {
-                                productId: article.productId,
-                                name: article.name,
-                                stock: article.stock,
-                                price: article.price,
-                              };
-                            })
-                          : null
-                      }
+                      tableData={productList.map((product) => {
+                        return {
+                          productId: product.productId,
+                          name: product.name,
+                          stock: product.stock,
+                          price: product.price,
+                        };
+                      })}
                     />
 
                     <div className={classes.checkboxrow}>
@@ -257,9 +264,9 @@ export default function Purchase() {
                             id="date-picker-inline"
                             label="Vencimiento de pago"
                             value={purchaseData.paymentExpDate}
-                            onChange={(date) =>
-                              setPurchaseData({ ...purchaseData, paymentExpDate: date.toISOString() })
-                            }
+                            onChange={(date) => {
+                              setPurchaseData({ ...purchaseData, paymentExpDate: date ? date : 'Invalid Date' });
+                            }}
                             KeyboardButtonProps={{
                               'aria-label': 'change date',
                             }}
@@ -287,12 +294,10 @@ export default function Purchase() {
                       </h3>
                     </div>
                   </>
-                ) : (
-                  <h5 className="messageEmptyDataTable">Seleccione un proveedor para desplegar sus productos</h5>
-                )}
+                ) : null}
               </CardBody>
               <CardFooter>
-                <Button disabled={!purchaseData.supplierId} color="primary" type="submit">
+                <Button disabled={!newPurchaseSupplierId || productList.length === 0} color="primary" type="submit">
                   Añadir
                 </Button>
                 <Button color="danger">Cancelar</Button>

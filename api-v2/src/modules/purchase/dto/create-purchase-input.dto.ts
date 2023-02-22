@@ -11,7 +11,7 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { PurchaseState } from '../entities/purchase.entity';
+import { PurchaseStatus } from '../entities/purchase.entity';
 
 class ProductListData {
   @ApiProperty({
@@ -63,14 +63,15 @@ export class CreatePurchaseInput {
     example: '1',
   })
   @IsNumber()
+  @Type(() => Number)
   readonly supplierId: number;
 
   @ApiProperty({
     description: 'the state of the purcharse',
     type: 'string',
-    example: PurchaseState.EN_TRANSITO,
+    example: PurchaseStatus.EN_TRANSITO,
   })
-  @IsEnum(PurchaseState)
+  @IsEnum(PurchaseStatus)
   readonly purchaseState: string;
 
   @ApiProperty({

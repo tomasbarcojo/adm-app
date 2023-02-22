@@ -79,7 +79,25 @@ export class ProductService extends BaseService<Product> {
     } as Product;
   }
 
-  public async updateStock(stock: number, id: number): Promise<Product> {
+  public async updateStock(id: number, stock: number): Promise<Product> {
+    const existing = await this.getOneByOneFields({
+      fields: { id },
+      checkIfExists: true,
+    });
+
+    const preloaded = await this.productRepository.preload({
+      id: existing.id,
+      stock,
+    });
+    const saved = await this.productRepository.save(preloaded);
+
+    return {
+      ...existing,
+      ...saved,
+    } as Product;
+  }
+
+  public async massiveStockUpdate(id: number, stock: number): Promise<Product> {
     const existing = await this.getOneByOneFields({
       fields: { id },
       checkIfExists: true,

@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -63,38 +61,38 @@ export default function CustomTable(props) {
               <div className={classes.tableResponsive}>
                 <Table className={classes.table}>
                   <TableHead className={classes['primary' + 'TableHeader']}>
-                    <TableRow className={classes.tableHeadRow}>
+                    <TableRow key={'bbb'} className={classes.tableHeadRow}>
                       <TableCell className={classes.tableCell + ' ' + classes.tableHeadCell}>ID</TableCell>
                       <TableCell className={classes.tableCell + ' ' + classes.tableHeadCell}>Proveedor</TableCell>
                       <TableCell className={classes.tableCell + ' ' + classes.tableHeadCell}>Estado</TableCell>
+                      <TableCell className={classes.tableCell + ' ' + classes.tableHeadCell}>Fecha de expiracion</TableCell>
                       <TableCell className={classes.tableCell + ' ' + classes.tableHeadCell}>Creado</TableCell>
-                      <TableCell className={classes.tableCell + ' ' + classes.tableHeadCell}>Ultima mod.</TableCell>
                       <TableCell className={classes.tableCell + ' ' + classes.tableHeadCell}>Detalle</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {purchases.data.map((prop, key) => {
                       return (
-                        <TableRow key={key} className={classes.tableBodyRow} hover={true}>
-                          <TableCell className={classes.tableCell} key={key}>
-                            {prop.id}
-                          </TableCell>
-                          <TableCell className={classes.tableCell} key={key}>
-                            {prop.businessName}
-                          </TableCell>
+                        <TableRow key={prop.id} className={classes.tableBodyRow} hover={true}>
+                          <TableCell className={classes.tableCell}>{prop.id}</TableCell>
+                          <TableCell className={classes.tableCell}>{prop.businessName}</TableCell>
                           <TableCell>
                             <ButtonStateDialog
-                              state={prop.purchaseState}
+                              state={prop.purchaseStatus}
                               purchaseId={prop.id} /*to={row.user.email} name={row.user.firstName}*/
                             />
                           </TableCell>
-                          <TableCell className={classes.tableCell} key={key}>
+                          <TableCell className={classes.tableCell}>
+                            {prop.paymentExpirationDate
+                              ? `${prop.paymentExpirationDate.slice('T', 10)} / ${prop.paymentExpirationDate
+                                  .split('T')[1]
+                                  .slice(0, 5)}hs`
+                              : 'Sin expiracion'}
+                          </TableCell>
+                          <TableCell className={classes.tableCell}>
                             {prop.createdAt.slice('T', 10)} / {prop.createdAt.split('T')[1].slice(0, 5)}hs
                           </TableCell>
-                          <TableCell className={classes.tableCell} key={key}>
-                            {prop.updatedAt.slice('T', 10)} / {prop.updatedAt.split('T')[1].slice(0, 5)}hs
-                          </TableCell>
-                          <TableCell className={classes.tableCell} key={key}>
+                          <TableCell className={classes.tableCell}>
                             <ButtonDetailPurchase purchaseId={prop.id} />
                           </TableCell>
                         </TableRow>

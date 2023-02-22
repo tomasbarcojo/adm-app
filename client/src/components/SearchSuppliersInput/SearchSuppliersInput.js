@@ -26,7 +26,7 @@ export default function SearchSuppliersInput() {
       return undefined;
     }
 
-    const res = await fetch(`${REACT_APP_URL_API}/product?search=${inputValue}`, {
+    const res = await fetch(`${REACT_APP_URL_API}/supplier?search=${inputValue}`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
@@ -59,22 +59,21 @@ export default function SearchSuppliersInput() {
   const handleChange = (newValue) => {
     setOptions(newValue ? [newValue, ...options] : options);
     setValue(newValue);
-    if (newValue) {
-      dispatch(addDataPurchase({ data: newPurchase.productList, supplierId: newValue.id }));
-    }
+    newPurchase.supplierId = newValue ? newValue.id : null;
+    dispatch(addDataPurchase(newPurchase));
   };
 
   return (
     <Autocomplete
-      id="SearchProductsInput"
-      getOptionLabel={(option) => option.name}
+      id="SearchSuppliersInput"
+      getOptionLabel={(option) => option.businessName}
       filterOptions={(x) => x}
       options={options}
       autoComplete
       includeInputInList
       filterSelectedOptions
       value={value}
-      noOptionsText="No encontramos productos"
+      noOptionsText="No encontramos proveedores"
       onOpen={() => fetchData(true)}
       onChange={(event, newValue) => {
         handleChange(newValue);
@@ -82,7 +81,7 @@ export default function SearchSuppliersInput() {
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
       }}
-      renderInput={(params) => <TextField variant="standard" {...params} label="Buscar productos" />}
+      renderInput={(params) => <TextField variant="standard" {...params} label="Buscar proveedores" />}
       renderOption={(props, option) => {
         return (
           <li {...props}>
@@ -92,7 +91,7 @@ export default function SearchSuppliersInput() {
               </Grid>
               <Grid item sx={{ width: 'calc(100% - 44px)', wordWrap: 'break-word' }}>
                 <Box key={option.id} component="span" sx={{ fontWeight: option.highlight ? 'bold' : 'regular' }}>
-                  {option.name}
+                  {option.businessName}
                 </Box>
 
                 <Typography variant="body2" color="text.secondary">
