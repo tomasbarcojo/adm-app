@@ -11,6 +11,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Product } from '../product/product.entity';
+import { Purchase } from '../purchase/entities/purchase.entity';
 
 @Entity({ name: 'Supplier' })
 export class Supplier extends BaseEntity {
@@ -139,5 +140,7 @@ export class Supplier extends BaseEntity {
   @OneToMany(() => Product, (product) => product.supplier)
   @JoinColumn()
   product: Product;
+
+  @OneToMany(() => Purchase, (purchase) => purchase.supplier)
+  purchase: Purchase;
 }
-//businessName, cuit, phone, altPhone, address, city, CP, bankaccount1, bankaccount2, bankaccount3, obs

@@ -3,19 +3,19 @@ import Row from './Row';
 
 export default function TableHtml(props) {
   const { tableData } = props;
-
+  
   return (
     <div style={{ overflowX: 'auto' }}>
-      <table className='htmlTableStyle'>
+      <table id='htmlTableStyle'>
         <thead>
           <tr>
-            <th className="htmlTableTH">ID</th>
-            <th className="htmlTableTH">Articulo</th>
-            <th className="htmlTableTH">Stock actual</th>
-            <th className="htmlTableTH">Cantidad</th>
-            <th className="htmlTableTH">Precio unitario + IVA</th>
-            <th className="htmlTableTH">Monto descuento</th>
-            <th className="htmlTableTH">Total</th>
+            <th>ID</th>
+            <th>Articulo</th>
+            <th>Stock actual</th>
+            <th>Cantidad</th>
+            <th>Precio unitario + IVA</th>
+            <th>Monto descuento</th>
+            <th>Total</th>
           </tr>
         </thead>
         <tbody>

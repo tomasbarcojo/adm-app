@@ -1,11 +1,10 @@
 import { getConnection } from 'typeorm';
 import { PaginationDto } from '../dto/pagination.dto';
-import { GetAllOutput } from '../product/dto/get-all-products-output.dto';
 import { GetAllSupplierInput } from './dto/get-all-supplier-input.dto';
 import { Supplier } from './supplier.entity';
 
 export class SupplierRepository {
-  async getAllSuppliers(input: GetAllSupplierInput, pagination: PaginationDto): Promise<GetAllOutput> {
+  async getAllSuppliers(input: GetAllSupplierInput, pagination: PaginationDto) {
     const { search } = input;
     const { page, limit } = pagination;
     const dataQuery = getConnection().createQueryBuilder().select('*').from(Supplier, 'P').where('P.deletedAt IS NULL');

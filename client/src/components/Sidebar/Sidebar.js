@@ -11,7 +11,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core/styles';
 // core components
 import AdminNavbarLinks from '../Navbar/AdminNavbarLinks';
 import RTLNavbarLinks from '../Navbar/RTLNavbarLinks.js';
@@ -30,7 +30,7 @@ import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import AddIcon from '@material-ui/icons/Add';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 
-const NestedLinksTheme = createMuiTheme({
+const NestedLinksTheme = createTheme({
   overrides: {
     // Style sheet name ⚛️
     MuiListItemIcon: {

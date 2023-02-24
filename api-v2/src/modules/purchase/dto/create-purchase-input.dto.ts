@@ -1,5 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsDateString, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  ArrayMinSize,
+  IsArray,
+  IsDateString,
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+import { PurchaseStatus } from '../entities/purchase.entity';
 
 class ProductListData {
   @ApiProperty({
@@ -16,6 +28,7 @@ class ProductListData {
     example: '1',
   })
   @IsNotEmpty()
+  @IsString()
   price: string;
 
   @ApiProperty({
@@ -27,11 +40,12 @@ class ProductListData {
   quantity: number;
 
   @ApiProperty({
-    description: 'total calculated by (quantity * price) - discount',
+    description: 'discount of the product',
     type: 'string',
     example: '1',
   })
-  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
   discount: string;
 
   @ApiProperty({
@@ -49,12 +63,21 @@ export class CreatePurchaseInput {
     example: '1',
   })
   @IsNumber()
+  @Type(() => Number)
   readonly supplierId: number;
+
+  @ApiProperty({
+    description: 'the state of the purcharse',
+    type: 'string',
+    example: PurchaseStatus.EN_TRANSITO,
+  })
+  @IsEnum(PurchaseStatus)
+  readonly purchaseState: string;
 
   @ApiProperty({
     description: 'the payment expiration date of the purchase',
     type: 'number',
-    example: '01/01/2023',
+    example: '2020-02-08 00:00:00',
   })
   @IsOptional()
   @IsDateString()
@@ -63,8 +86,11 @@ export class CreatePurchaseInput {
   @ApiProperty({
     description: 'array of purchased products',
     type: 'array',
-    example: [{ productId: 42, quantity: 1, price: '1', discout: '0', total: 1 }],
+    example: [{ id: 42, quantity: 1, price: '1', discout: '0', total: 1 }],
   })
   @IsArray()
+  @ArrayMinSize(1)
+  @ValidateNested()
+  @Type(() => ProductListData)
   readonly productList: ProductListData[];
 }

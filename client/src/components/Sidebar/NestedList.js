@@ -8,12 +8,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import Icon from '@material-ui/core/Icon';
 import { NavLink } from 'react-router-dom';
 import styles from '../../styles/components/sidebarStyle.js';
 
-const NestedLinksTheme = createMuiTheme({
+const NestedLinksTheme = createTheme({
   overrides: {
     MuiListItemIcon: {
       root: {

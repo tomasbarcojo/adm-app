@@ -1,29 +1,40 @@
-FROM node:lts-alpine as development
+# FROM node:19.7.0-alpine3.17 as development
 
-WORKDIR /app
+# WORKDIR /app
 
+# COPY . .
 
-COPY package.json ./
+# RUN npm install
 
-COPY . .
+# RUN npm run build
+
+# CMD ["npm", "run", "start:prod"]
+
+FROM node:19.5.0-alpine3.17 AS development
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
 
 RUN npm install
 
+COPY . .
+
 RUN npm run build
 
-FROM node:lts-alpine as production
+FROM node:19.5.0-alpine3.17 as production
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
-COPY package.json ./
-
-COPY . .
+COPY package*.json ./
 
 RUN npm install
 
-COPY --from=development /app/dist ./dist
+COPY . .
 
-CMD ["node", "dist/main"]
+COPY --from=development /usr/src/app/dist ./dist
+
+CMD ["npm", "run", "start:prod"]

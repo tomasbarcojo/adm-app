@@ -1,12 +1,63 @@
+# version: '3.8'
+
+# services:
+#   mysql:
+#     image: mysql:8.0
+#     container_name: mysql-database
+#     restart: 'no'
+#     ports:
+#       - 3307:3306
+#     environment:
+#       MYSQL_ROOT_PASSWORD: activadev
+#       MYSQL_DATABASE: activa
+#       USER: develop
+
+#   nestjs-api:
+#     image: nestjs-api
+#     env_file:
+#       - .env
+#     ports:
+#       - "3000:3000"
+#     depends_on:
+#       - mysql
+#     networks:
+#       - mysql
+
 version: '3.8'
 
 services:
-  db:
-    image: mysql:8.0
-    container_name: chiper-nestjs-api-template
-    restart: 'no'
-    ports:
-      - 3306:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: toor
-      MYSQL_DATABASE: nestjs-api-template
+    dev:
+        container_name: nestjs_api_dev
+        image: nestjs-api-dev:1.0.0
+        build:
+            context: .
+            target: development
+            dockerfile: ./Dockerfile
+        command: npm run start:dev
+        ports:
+            - 3003:3003
+        networks:
+            - nesjs-network
+        volumes:
+            - .:/usr/src/app
+            - /usr/src/app/node_modules
+        restart: unless-stopped
+    prod:
+        container_name: nestjs_api_prod
+        image: nestjs-api-prod:1.0.0
+        build:
+            context: .
+            target: production
+            dockerfile: ./Dockerfile
+        command: npm run start:prod
+        ports:
+            - 3000:3000
+        networks:
+            - nesjs-network
+        volumes:
+            - .:/usr/src/app
+            - /usr/src/app/node_modules
+        restart: unless-stopped
+
+networks:
+    nesjs-network:

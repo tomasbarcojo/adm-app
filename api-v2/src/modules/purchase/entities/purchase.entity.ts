@@ -1,17 +1,24 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Product } from 'src/modules/product/product.entity';
+import { Supplier } from 'src/modules/supplier/supplier.entity';
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  ManyToMany,
+  JoinColumn,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { PurchasedProduct } from './purchase-product.entity';
+
+export enum PurchaseStatus {
+  EN_TRANSITO = 'en transito',
+  RECIBIDA = 'recibida',
+  CANCELADA = 'cancelada',
+}
 
 @Entity({ name: 'Purchase' })
 export class Purchase extends BaseEntity {
@@ -24,12 +31,20 @@ export class Purchase extends BaseEntity {
   id: number;
 
   @ApiProperty({
+    description: 'the supplier from whom the purchase is made',
+    type: 'number',
+    example: '1',
+  })
+  @Column({ type: 'int', nullable: false })
+  supplierId: number;
+
+  @ApiProperty({
     description: 'the state of the purchase',
     type: 'string',
     example: 'en transito',
   })
-  @Column({ type: 'enum', enum: ['en transito', 'recibida', 'cancelada'], default: 'en transito', nullable: false })
-  purchaseState: string;
+  @Column({ type: 'enum', enum: PurchaseStatus, default: PurchaseStatus.EN_TRANSITO, nullable: false })
+  purchaseStatus: string;
 
   @ApiProperty({
     description: 'the date of payment expiration',
@@ -66,4 +81,8 @@ export class Purchase extends BaseEntity {
   // relations
   @OneToMany(() => PurchasedProduct, (purchaseProduct) => purchaseProduct.purchase)
   purchasedProduct: PurchasedProduct;
+
+  @ManyToOne(() => Supplier, (supplier) => supplier.purchase)
+  @JoinColumn()
+  supplier: Supplier;
 }

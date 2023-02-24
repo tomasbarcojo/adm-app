@@ -15,7 +15,7 @@ import { GetAllProductsInput } from './dto/get-all-products-input.dto';
 import { UpdateProductInput } from './dto/update-product-input.dto';
 import { ProductRepository } from './product.repository';
 import { PaginationDto } from '../dto/pagination.dto';
-import { GetAllOutput } from './dto/get-all-products-output.dto';
+import { GetAllProductsOutput } from './dto/get-all-products-output.dto';
 
 @Injectable()
 export class ProductService extends BaseService<Product> {
@@ -50,15 +50,9 @@ export class ProductService extends BaseService<Product> {
     return existing;
   }
 
-  public async getAll(input: GetAllProductsInput, pagination: PaginationDto): Promise<GetAllOutput> {
+  public async getAll(input: GetAllProductsInput, pagination: PaginationDto): Promise<GetAllProductsOutput> {
     try {
-      const products = await this.productRepositoryV2.getAllProducts(input, pagination);
-
-      if (products.data.length === 0) {
-        throw new NotFoundException('No products');
-      }
-
-      return products;
+      return await this.productRepositoryV2.getAllProducts(input, pagination);
     } catch (error) {
       return error;
     }
@@ -85,7 +79,25 @@ export class ProductService extends BaseService<Product> {
     } as Product;
   }
 
-  public async updateStock(stock: number, id: number): Promise<Product> {
+  public async updateStock(id: number, stock: number): Promise<Product> {
+    const existing = await this.getOneByOneFields({
+      fields: { id },
+      checkIfExists: true,
+    });
+
+    const preloaded = await this.productRepository.preload({
+      id: existing.id,
+      stock,
+    });
+    const saved = await this.productRepository.save(preloaded);
+
+    return {
+      ...existing,
+      ...saved,
+    } as Product;
+  }
+
+  public async massiveStockUpdate(id: number, stock: number): Promise<Product> {
     const existing = await this.getOneByOneFields({
       fields: { id },
       checkIfExists: true,

@@ -9,7 +9,7 @@ export class LoggingMiddleware implements NestMiddleware {
         LoggingMiddleware.name,
       );
     });
-    
+
     next();
   }
 }

@@ -6,9 +6,12 @@ const initialstate = {
   pricelistsbyid: [],
   categories: [],
   articles: [],
-  purchase: [],
+  newPurchase: {
+    supplierId: null,
+    productList: [],
+  },
   purchaseTotal: 0,
-  createdPurchases: [],
+  purchases: [],
   userLogged: false,
   notifications: [],
 };
@@ -149,8 +152,7 @@ export default function rootReducer(state = initialstate, action) {
     case 'CLEAR_ARTICLES':
       return {
         ...state,
-        articles: [],
-        purchase: [],
+        newPurchase: { supplierId: null, productList: [] },
         purchaseTotal: 0,
       };
 
@@ -165,7 +167,7 @@ export default function rootReducer(state = initialstate, action) {
     case 'ADD_DATA_PURCHASE':
       return {
         ...state,
-        purchase: action.payload,
+        newPurchase: action.payload,
       };
 
     case 'UPDATE_TOTAL_PURCHASE':
@@ -177,7 +179,7 @@ export default function rootReducer(state = initialstate, action) {
     case 'GET_PURCHASES':
       return {
         ...state,
-        createdPurchases: action.payload,
+        purchases: action.payload,
       };
 
     default:
