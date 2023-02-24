@@ -1,15 +1,3 @@
-# FROM node:19.7.0-alpine3.17 as development
-
-# WORKDIR /app
-
-# COPY . .
-
-# RUN npm install
-
-# RUN npm run build
-
-# CMD ["npm", "run", "start:prod"]
-
 FROM node:19.5.0-alpine3.17 AS development
 
 WORKDIR /usr/src/app

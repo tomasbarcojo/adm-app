@@ -1,9 +1,13 @@
 pipeline {
-    agent any 
+    agent {
+        docker { image 'node:19.5.0-alpine3.17' }
+    }
     stages {
         stage('Static Analysis') {
             steps {
                 echo 'Run the static analysis to the code' 
+                echo 'TESTTTTTTTTTTTTTT'
+                echo 'node --version'
             }
         }
         stage('Compile') {
