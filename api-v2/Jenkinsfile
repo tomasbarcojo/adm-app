@@ -4,13 +4,13 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building...'
-                echo '${env.TEST_JENKINS_VAR}'
                 // sh 'docker build -t my-image .'
             }
         }
         stage('Test') {
             steps {
                 echo 'Testing...'
+                echo '${env.TEST_JENKINS_VAR}'
             }
         }
         stage('Deploy') {
