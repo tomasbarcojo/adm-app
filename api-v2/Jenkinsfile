@@ -1,34 +1,28 @@
 pipeline {
     agent any 
     stages {
-        stage('Static Analysis') {
+        stage('Build') {
             steps {
-                echo 'Run the static analysis to the code' 
+                echo 'Building...'
+                echo '${env.TEST_JENKINS_VAR}'
+                // sh 'docker build -t my-image .'
             }
         }
-        stage('Compile') {
+        stage('Test') {
             steps {
-                echo 'Compile the source code' 
+                echo 'Testing...'
             }
         }
-        stage('Security Check') {
+        stage('Deploy') {
             steps {
-                echo 'Run the security check against the application' 
+                echo 'Deploying...'
             }
         }
-        stage('Run Unit Tests') {
+        stage('Publish') {
             steps {
-                echo 'Run unit tests from the source code' 
-            }
-        }
-        stage('Run Integration Tests') {
-            steps {
-                echo 'Run only crucial integration tests from the source code' 
-            }
-        }
-        stage('Publish Artifacts') {
-            steps {
-                echo 'Save the assemblies generated from the compilation' 
+                // sh 'docker login -u my-username -p my-password'
+                // sh 'docker tag my-image my-username/my-repo:my-tag'
+                // sh 'docker push my-username/my-repo:my-tag'
             }
         }
     }
