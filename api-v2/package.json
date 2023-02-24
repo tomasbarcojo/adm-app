@@ -1,13 +1,13 @@
 {
-  "name": "nestjs-api-template",
-  "version": "0.0.1",
+  "name": "nestjs-api",
+  "version": "1.0.0",
   "description": "",
-  "author": "chiper",
+  "author": "Tomas Barcojo",
   "private": true,
   "license": "UNLICENSED",
   "engines": {
-    "node": "16.x",
-    "npm": "8.x"
+    "node": "19.x",
+    "npm": "9.x"
   },
   "scripts": {
     "postinstall": "cd .. && npx husky install",
