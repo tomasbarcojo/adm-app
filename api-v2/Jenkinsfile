@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        agent { dockerfile true }
+        docker { image 'node:19.5.0-alpine3.17' }
     }
     stages {
         stage('Static Analysis') {
