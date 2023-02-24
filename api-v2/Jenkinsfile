@@ -1,10 +1,13 @@
 pipeline {
-    agent any 
+    agent {
+        agent { dockerfile true }
+    }
     stages {
         stage('Static Analysis') {
             steps {
                 echo 'Run the static analysis to the code' 
-                echo 'TESTTTTTTTTTTTTTT' 
+                echo 'TESTTTTTTTTTTTTTT'
+                echo 'node --version'
             }
         }
         stage('Compile') {
