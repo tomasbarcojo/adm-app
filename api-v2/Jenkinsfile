@@ -10,7 +10,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing...'
-                echo '${env.TEST_JENKINS_VAR}'
+                // echo '${env.TEST_JENKINS_VAR}'
             }
         }
         stage('Deploy') {
