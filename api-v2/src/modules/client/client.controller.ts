@@ -1,29 +1,28 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Query } from "@nestjs/common";
-import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { Client } from "./client.entity";
-import { ClientService } from "./client.service";
-import { CreateClientInput } from "./dto/create-client-input.dto";
-import { GetAllClientInput } from "./dto/get-all-client-input.dto";
-import { GetOneClientInput } from "./dto/get-one-client-input.dto";
-import { UpdateClientInput } from "./dto/update-client-input.dto";
+import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Query } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Client } from './client.entity';
+import { ClientService } from './client.service';
+import { CreateClientInput } from './dto/create-client-input.dto';
+import { GetAllClientInput } from './dto/get-all-client-input.dto';
+import { GetOneClientInput } from './dto/get-one-client-input.dto';
+import { UpdateClientInput } from './dto/update-client-input.dto';
 
 @ApiTags('client')
 @Controller('client')
 export class ClientController {
-    constructor(private readonly service: ClientService) {}
+  constructor(private readonly service: ClientService) {}
 
-    @ApiResponse({
-        status: HttpStatus.CREATED,
-        description: 'successfully created client',
-        type: Client,
-    })
-
-@ApiOperation({
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: 'successfully created client',
+    type: Client,
+  })
+  @ApiOperation({
     summary: 'create a new client',
     description: 'create a new client',
-})
-@Post('/createClient')
-async create(@Body() input: CreateClientInput): Promise<Client> {
+  })
+  @Post('/createClient')
+  async create(@Body() input: CreateClientInput): Promise<Client> {
     return this.service.create(input);
   }
   @ApiResponse({
