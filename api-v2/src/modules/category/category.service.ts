@@ -3,8 +3,6 @@ import { ConfigType } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { BaseService } from '../../base/base.service';
-
 import appConfig from '../../config/app.config';
 
 import { Category } from './category.entity';
@@ -15,15 +13,13 @@ import { GetAllCategoriesInput } from './dto/get-all-categories-input.dto';
 import { UpdateCategoryInput } from './dto/update-category-input.dto';
 
 @Injectable()
-export class CategoryService extends BaseService<Category> {
+export class CategoryService {
   constructor(
     @Inject(appConfig.KEY)
     private readonly appConfiguration: ConfigType<typeof appConfig>,
     @InjectRepository(Category)
     private readonly categoryRepository: Repository<Category>,
-  ) {
-    super(categoryRepository);
-  }
+  ) {}
 
   // CRUD
 
@@ -40,9 +36,8 @@ export class CategoryService extends BaseService<Category> {
   public async getOne(input: GetOneCategoryInput): Promise<Category | undefined> {
     const { id } = input;
 
-    const existing = await this.getOneByOneFields({
-      fields: { id },
-      checkIfExists: false,
+    const existing = await this.categoryRepository.findOne({
+      where: { id: id },
     });
 
     return existing;
@@ -68,9 +63,8 @@ export class CategoryService extends BaseService<Category> {
   public async update(getOneInput: GetOneCategoryInput, input: UpdateCategoryInput): Promise<Category> {
     const { id } = getOneInput;
 
-    const existing = await this.getOneByOneFields({
-      fields: { id },
-      checkIfExists: true,
+    const existing = await this.categoryRepository.findOne({
+      where: { id: id },
     });
 
     const preloaded = await this.categoryRepository.preload({
@@ -89,9 +83,8 @@ export class CategoryService extends BaseService<Category> {
   public async delete(input: any): Promise<Category> {
     const { id } = input;
 
-    const existing = await this.getOneByOneFields({
-      fields: { id },
-      checkIfExists: true,
+    const existing = await this.categoryRepository.findOne({
+      where: { id: id },
     });
 
     const clone = { ...existing };
@@ -106,9 +99,8 @@ export class CategoryService extends BaseService<Category> {
   public async finish(input: GetOneCategoryInput): Promise<Category> {
     const { id } = input;
 
-    const existing = await this.getOneByOneFields({
-      fields: { id },
-      checkIfExists: true,
+    const existing = await this.categoryRepository.findOne({
+      where: { id: id },
     });
 
     const preloaded = await this.categoryRepository.preload({

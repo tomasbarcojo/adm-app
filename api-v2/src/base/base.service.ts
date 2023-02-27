@@ -3,6 +3,9 @@ import { BaseEntity, Repository } from 'typeorm';
 
 import { GetOneByOneFieldInput } from './dto/get-one-input.dto';
 
+///////    DON'T USE     ///////
+///////    THIS          ///////
+///////     CODE          ///////
 export class BaseService<Entity extends BaseEntity> {
   constructor(private readonly repository: Repository<Entity>) {}
 
@@ -11,7 +14,7 @@ export class BaseService<Entity extends BaseEntity> {
 
     const existing = await this.repository.findOne({
       loadRelationIds: !relations?.length ? true : false,
-      where: { ...fields },
+      // where: { ...fields },
       relations,
     });
 

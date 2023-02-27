@@ -1,14 +1,16 @@
-import { getConnection } from 'typeorm';
+import { InjectDataSource } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
 import { PaginationDto } from '../dto/pagination.dto';
 import { GetAllProductsInput } from './dto/get-all-products-input.dto';
 import { GetAllProductsOutput } from './dto/get-all-products-output.dto';
 import { Product } from './product.entity';
 
 export class ProductRepository {
+  constructor(@InjectDataSource() private dataSource: DataSource) {}
   async getAllProducts(input: GetAllProductsInput, pagination: PaginationDto): Promise<GetAllProductsOutput> {
     const { search, categoryId, supplierId } = input;
     const { page, limit } = pagination;
-    const dataQuery = getConnection().createQueryBuilder().select('*').from(Product, 'P').where('P.deletedAt IS NULL');
+    const dataQuery = this.dataSource.createQueryBuilder().select('*').from(Product, 'P').where('P.deletedAt IS NULL');
 
     if (search) {
       dataQuery

@@ -1,21 +1,18 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { BaseService } from "src/base/base.service";
-import { Repository } from "typeorm";
-import { Client } from "./client.entity";
-import { CreateClientInput } from "./dto/create-client-input.dto";
-import { GetAllClientInput } from "./dto/get-all-client-input.dto";
-import { GetOneClientInput } from "./dto/get-one-client-input.dto";
-import { UpdateClientInput } from "./dto/update-client-input.dto";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Client } from './client.entity';
+import { CreateClientInput } from './dto/create-client-input.dto';
+import { GetAllClientInput } from './dto/get-all-client-input.dto';
+import { GetOneClientInput } from './dto/get-one-client-input.dto';
+import { UpdateClientInput } from './dto/update-client-input.dto';
 
 @Injectable()
-export class ClientService extends BaseService<Client> {
+export class ClientService {
   constructor(
     @InjectRepository(Client)
     private readonly clientRepository: Repository<Client>,
-  ) {
-    super(clientRepository);
-  }
+  ) {}
 
   //CRUD
 
@@ -27,9 +24,9 @@ export class ClientService extends BaseService<Client> {
   }
 
   public async getOne(input: GetOneClientInput): Promise<Client | undefined> {
-    const existing = await this.getOneByOneFields({
-      fields: input,
-      checkIfExists: false,
+    const { id } = input;
+    const existing = await this.clientRepository.findOne({
+      where: { id: id },
     });
 
     return existing;
@@ -63,9 +60,8 @@ export class ClientService extends BaseService<Client> {
   public async update(getOneInput: GetOneClientInput, input: UpdateClientInput): Promise<Client> {
     const { id } = getOneInput;
 
-    const existing = await this.getOneByOneFields({
-      fields: { id },
-      checkIfExists: true,
+    const existing = await this.clientRepository.findOne({
+      where: { id: id },
     });
 
     const preloaded = await this.clientRepository.preload({
@@ -84,9 +80,8 @@ export class ClientService extends BaseService<Client> {
   public async delete(input: any): Promise<Client> {
     const { id } = input;
 
-    const existing = await this.getOneByOneFields({
-      fields: { id },
-      checkIfExists: true,
+    const existing = await this.clientRepository.findOne({
+      where: { id: id },
     });
 
     const clone = { ...existing };
@@ -101,9 +96,8 @@ export class ClientService extends BaseService<Client> {
   public async finish(input: GetOneClientInput): Promise<Client> {
     const { id } = input;
 
-    const existing = await this.getOneByOneFields({
-      fields: { id },
-      checkIfExists: true,
+    const existing = await this.clientRepository.findOne({
+      where: { id: id },
     });
 
     const preloaded = await this.clientRepository.preload({

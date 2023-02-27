@@ -1,6 +1,5 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseService } from 'src/base/base.service';
 import { Repository } from 'typeorm';
 import { PaginationDto } from '../dto/pagination.dto';
 import { CreateSupplierInput } from './dto/create-supplier-input.dto';
@@ -12,14 +11,12 @@ import { Supplier } from './supplier.entity';
 import { SupplierRepository } from './supplier.repository';
 
 @Injectable()
-export class SupplierService extends BaseService<Supplier> {
+export class SupplierService {
   constructor(
     @InjectRepository(Supplier)
     private readonly supplierRepository: Repository<Supplier>,
     @Inject('productRepository') private readonly supplierRepositoryV2: SupplierRepository,
-  ) {
-    super(supplierRepository);
-  }
+  ) {}
 
   //CRUD
 
@@ -31,9 +28,8 @@ export class SupplierService extends BaseService<Supplier> {
   }
 
   public async getOne(input: GetOneSupplierInput): Promise<Supplier | undefined> {
-    const existing = await this.getOneByOneFields({
-      fields: input,
-      checkIfExists: false,
+    const existing = await this.supplierRepository.findOne({
+      where: { id: input.id },
     });
 
     return existing;
@@ -48,9 +44,8 @@ export class SupplierService extends BaseService<Supplier> {
   }
 
   public async getDetail(input: GetSupplierDetailInput): Promise<Supplier> {
-    const existing = await this.getOneByOneFields({
-      fields: input,
-      checkIfExists: false,
+    const existing = await this.supplierRepository.findOne({
+      where: { id: input.suppierId },
     });
 
     return existing;
@@ -59,9 +54,8 @@ export class SupplierService extends BaseService<Supplier> {
   public async update(getOneInput: GetOneSupplierInput, input: UpdateSupplierInput): Promise<Supplier> {
     const { id } = getOneInput;
 
-    const existing = await this.getOneByOneFields({
-      fields: { id },
-      checkIfExists: true,
+    const existing = await this.supplierRepository.findOne({
+      where: { id: getOneInput.id },
     });
 
     const preloaded = await this.supplierRepository.preload({
@@ -80,9 +74,8 @@ export class SupplierService extends BaseService<Supplier> {
   public async delete(input: any): Promise<Supplier> {
     const { id } = input;
 
-    const existing = await this.getOneByOneFields({
-      fields: { id },
-      checkIfExists: true,
+    const existing = await this.supplierRepository.findOne({
+      where: { id: id },
     });
 
     const clone = { ...existing };
@@ -97,9 +90,8 @@ export class SupplierService extends BaseService<Supplier> {
   public async finish(input: GetOneSupplierInput): Promise<Supplier> {
     const { id } = input;
 
-    const existing = await this.getOneByOneFields({
-      fields: { id },
-      checkIfExists: true,
+    const existing = await this.supplierRepository.findOne({
+      where: { id: id },
     });
 
     const preloaded = await this.supplierRepository.preload({

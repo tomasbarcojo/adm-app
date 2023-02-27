@@ -3,8 +3,6 @@ import { ConfigType } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { BaseService } from 'src/base/base.service';
-
 import appConfig from 'src/config/app.config';
 
 import { Pricelist } from './entities/pricelist.entity';
@@ -15,15 +13,13 @@ import { GetAllPricelistInput } from './dto/get-all-pricelist-input.dto';
 import { UpdatePricelistInput } from './dto/update-pricelist-input.dto';
 
 @Injectable()
-export class PricelistService extends BaseService<Pricelist> {
+export class PricelistService {
   constructor(
     @Inject(appConfig.KEY)
     private readonly appConfiguration: ConfigType<typeof appConfig>,
     @InjectRepository(Pricelist)
     private readonly pricelistRepository: Repository<Pricelist>,
-  ) {
-    super(pricelistRepository);
-  }
+  ) {}
 
   //CRUD
 
@@ -36,9 +32,10 @@ export class PricelistService extends BaseService<Pricelist> {
   }
 
   public async getOne(input: GetOnePricelistInput): Promise<Pricelist | undefined> {
-    const existing = await this.getOneByOneFields({
-      fields: input,
-      checkIfExists: false,
+    const { id } = input;
+
+    const existing = await this.pricelistRepository.findOne({
+      where: { id: id },
     });
 
     return existing;
@@ -73,9 +70,8 @@ export class PricelistService extends BaseService<Pricelist> {
   public async update(getOneInput: GetOnePricelistInput, input: UpdatePricelistInput): Promise<Pricelist> {
     const { id } = getOneInput;
 
-    const existing = await this.getOneByOneFields({
-      fields: { id },
-      checkIfExists: true,
+    const existing = await this.pricelistRepository.findOne({
+      where: { id: id },
     });
 
     const preloaded = await this.pricelistRepository.preload({
@@ -94,9 +90,8 @@ export class PricelistService extends BaseService<Pricelist> {
   public async delete(input: any): Promise<Pricelist> {
     const { id } = input;
 
-    const existing = await this.getOneByOneFields({
-      fields: { id },
-      checkIfExists: true,
+    const existing = await this.pricelistRepository.findOne({
+      where: { id: id },
     });
 
     const clone = { ...existing };
@@ -109,9 +104,8 @@ export class PricelistService extends BaseService<Pricelist> {
   public async finish(input: GetOnePricelistInput): Promise<Pricelist> {
     const { id } = input;
 
-    const existing = await this.getOneByOneFields({
-      fields: { id },
-      checkIfExists: true,
+    const existing = await this.pricelistRepository.findOne({
+      where: { id: id },
     });
 
     const preloaded = await this.pricelistRepository.preload({

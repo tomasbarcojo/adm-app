@@ -1,7 +1,6 @@
 import { CacheModule, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TerminusModule } from '@nestjs/terminus';
 import { HttpModule } from '@nestjs/axios';
 
 import { AppController } from './app.controller';
@@ -9,11 +8,11 @@ import { AppService } from './app.service';
 
 import appConfig from './config/app.config';
 import appConfigSchema from './config/app.schema';
-import ormConfig from './ormconfig';
+import { dataSourceOptions } from './ormconfig';
 
 import { CommonModule } from './common/common.module';
 
-import { HealthController } from './health/health.controller';
+// import { HealthController } from './health/health.controller';
 import { ProductModule } from './modules/product/product.module';
 import { UserModule } from './modules/user/user.module';
 import { APP_GUARD } from '@nestjs/core';
@@ -41,7 +40,7 @@ import { UploadFilesModule } from './modules/upload-image/upload-file.module';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
         return {
-          ...ormConfig,
+          ...dataSourceOptions,
           logging: configService.get<string>('config.database.log') === 'yes',
           timezone: 'Z',
         };
@@ -60,9 +59,6 @@ import { UploadFilesModule } from './modules/upload-image/upload-file.module';
     // Common Module
     CommonModule,
 
-    // Terminus module
-    TerminusModule,
-
     HttpModule,
 
     // Modules
@@ -76,7 +72,7 @@ import { UploadFilesModule } from './modules/upload-image/upload-file.module';
     ClientModule,
     UploadFilesModule,
   ],
-  controllers: [AppController, HealthController],
+  controllers: [AppController],
   providers: [
     AppService,
     // {

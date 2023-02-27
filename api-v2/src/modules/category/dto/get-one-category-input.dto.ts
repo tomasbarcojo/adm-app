@@ -8,5 +8,5 @@ export class GetOneCategoryInput {
     example: '1',
   })
   @IsNumber()
-  readonly id: string;
+  readonly id: number;
 }

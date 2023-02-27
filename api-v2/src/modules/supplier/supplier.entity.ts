@@ -14,7 +14,7 @@ import { Product } from '../product/product.entity';
 import { Purchase } from '../purchase/entities/purchase.entity';
 
 @Entity({ name: 'Supplier' })
-export class Supplier extends BaseEntity {
+export class Supplier {
   @ApiProperty({
     description: 'the id of de supplier',
     type: 'number',

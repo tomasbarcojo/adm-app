@@ -2,8 +2,6 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Not, Repository } from 'typeorm';
 
-import { BaseService } from '../../base/base.service';
-
 import { User } from './user.entity';
 
 import { CreateUserInput } from './dto/create-user-input.dto';
@@ -13,20 +11,18 @@ import { UpdateUserInput } from './dto/update-user-input.dto';
 import { LoginUserInput } from './dto/login-user-input.dto';
 
 @Injectable()
-export class UserService extends BaseService<User> {
+export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-  ) {
-    super(userRepository);
-  }
+  ) {}
 
   // CRUD
 
   public async create(input: CreateUserInput): Promise<User> {
     const { email } = input;
     const existing = await this.userRepository.findOne({
-      email,
+      where: { email: email },
     });
     if (existing) {
       throw new BadRequestException(`User already exists`);
@@ -42,11 +38,9 @@ export class UserService extends BaseService<User> {
   }
 
   public async getOne(input: GetOneUserInput): Promise<User | undefined> {
-    const existing = await this.getOneByOneFields({
-      fields: input,
-      checkIfExists: false,
+    const existing = await this.userRepository.findOne({
+      where: { id: input.id },
     });
-
     return existing;
   }
 
@@ -56,9 +50,13 @@ export class UserService extends BaseService<User> {
     const query = this.userRepository.createQueryBuilder('user').loadAllRelationIds();
 
     if (q)
-      query.where('user.description like :q', {
-        q: `%${q}%`,
-      });
+      query
+        .where('user.id like :q', {
+          q: `%${q}%`,
+        })
+        .orWhere('user.firstName like :q', {
+          q: `%${q}%`,
+        });
 
     query.limit(limit || 10).skip(skip);
 
@@ -70,9 +68,8 @@ export class UserService extends BaseService<User> {
   public async update(getOneInput: GetOneUserInput, input: UpdateUserInput): Promise<User> {
     const { id } = getOneInput;
 
-    const existing = await this.getOneByOneFields({
-      fields: { id },
-      checkIfExists: true,
+    const existing = await this.userRepository.findOne({
+      where: { id: id },
     });
 
     const preloaded = await this.userRepository.preload({
@@ -91,9 +88,8 @@ export class UserService extends BaseService<User> {
   public async delete(input: any): Promise<User> {
     const { id } = input;
 
-    const existing = await this.getOneByOneFields({
-      fields: { id },
-      checkIfExists: true,
+    const existing = await this.userRepository.findOne({
+      where: { id: id },
     });
 
     const clone = { ...existing };
@@ -108,9 +104,8 @@ export class UserService extends BaseService<User> {
   public async finish(input: GetOneUserInput): Promise<User> {
     const { id } = input;
 
-    const existing = await this.getOneByOneFields({
-      fields: { id },
-      checkIfExists: true,
+    const existing = await this.userRepository.findOne({
+      where: { id: id },
     });
 
     const preloaded = await this.userRepository.preload({

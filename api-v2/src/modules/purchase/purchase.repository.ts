@@ -1,5 +1,5 @@
-import { InjectRepository } from '@nestjs/typeorm';
-import { EntityRepository, getConnection, Repository } from 'typeorm';
+import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
+import { DataSource, EntityRepository, getConnection, getManager, Repository } from 'typeorm';
 import { PaginationDto } from '../dto/pagination.dto';
 import { Product } from '../product/product.entity';
 import { Supplier } from '../supplier/supplier.entity';
@@ -10,14 +10,14 @@ import { PurchasedProductList } from './dto/get-details-by-purchase-id.dto';
 import { GetOnePurchaseInput } from './dto/get-one-purchase-input.dto';
 import { PurchasedProduct } from './entities/purchase-product.entity';
 import { Purchase } from './entities/purchase.entity';
-
 @EntityRepository(Purchase)
 export class PurchaseRepository extends Repository<Purchase> {
   constructor(
+    @InjectDataSource() private dataSource: DataSource,
     @InjectRepository(PurchasedProduct)
     private readonly purchasedProductRepository: Repository<PurchasedProduct>,
   ) {
-    super();
+    super(Purchase, dataSource.createEntityManager());
   }
 
   async createPurchase(input: CreatePurchaseInput) {
@@ -29,8 +29,7 @@ export class PurchaseRepository extends Repository<Purchase> {
 
   async getAllPurchases(pagination: PaginationDto): Promise<GetAllPurchasesOutput> {
     const { page, limit } = pagination;
-    const dataQuery = getConnection()
-      .createQueryBuilder()
+    const dataQuery = this.createQueryBuilder()
       .select([
         'P.id as id',
         'S.businessName as businessName',
@@ -58,7 +57,13 @@ export class PurchaseRepository extends Repository<Purchase> {
 
     const dataQuery = getConnection()
       .createQueryBuilder()
-      .select(['PP.productId as productId', 'PP.quantity as quantity', 'PP.price as price', 'PP.discount as discount', 'PR.name as name'])
+      .select([
+        'PP.productId as productId',
+        'PP.quantity as quantity',
+        'PP.price as price',
+        'PP.discount as discount',
+        'PR.name as name',
+      ])
       .from(Purchase, 'P')
       .innerJoin(PurchasedProduct, 'PP', 'PP.purchaseId = P.id')
       .innerJoin(Product, 'PR', 'PR.id = PP.productId')

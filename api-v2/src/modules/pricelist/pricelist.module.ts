@@ -8,9 +8,10 @@ import { Pricelist } from './entities/pricelist.entity';
 
 import { PricelistService } from './pricelist.service';
 import { PricelistController } from './pricelist.controller';
+import { PricelistProduct } from './entities/pricelist-product.entity';
 
 @Module({
-  imports: [ConfigModule.forFeature(appConfig), TypeOrmModule.forFeature([Pricelist])],
+  imports: [ConfigModule.forFeature(appConfig), TypeOrmModule.forFeature([Pricelist, PricelistProduct])],
   providers: [PricelistService],
   exports: [PricelistService],
   controllers: [PricelistController],

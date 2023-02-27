@@ -1,7 +1,6 @@
-import { HttpException, HttpStatus, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BaseService } from 'src/base/base.service';
-import { Connection, Repository, In } from 'typeorm';
+import { Repository, In, DataSource } from 'typeorm';
 import { PaginationDto } from '../dto/pagination.dto';
 import { Product } from '../product/product.entity';
 import { CreatePurchaseInput } from './dto/create-purchase-input.dto';
@@ -17,7 +16,7 @@ import { PurchaseRepository } from './purchase.repository';
 @Injectable()
 export class PurchaseService {
   constructor(
-    private connection: Connection,
+    private dataSource: DataSource,
     private readonly purchaseRepository: PurchaseRepository,
     @InjectRepository(PurchasedProduct) private readonly purchasedProductRepository: Repository<PurchasedProduct>,
     @InjectRepository(Product) private readonly productRepository: Repository<Product>,
@@ -61,7 +60,7 @@ export class PurchaseService {
       }
       return purchasesData;
     } catch (error) {
-      return error;
+      console.log(error);
     }
   }
 
@@ -132,7 +131,7 @@ export class PurchaseService {
           el.stock += stock;
           productsMap.set(el.id, el);
         });
-        this.connection.transaction(async (manager) => {
+        this.dataSource.transaction(async (manager) => {
           await manager.save(await this.productRepository.save(Array.from(productsMap.values())));
           await manager.save(await this.purchaseRepository.save(preloadedReceived));
         });

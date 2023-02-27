@@ -3,8 +3,6 @@ import { ConfigType } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { BaseService } from '../../base/base.service';
-
 import appConfig from '../../config/app.config';
 
 import { Product } from './product.entity';
@@ -18,16 +16,14 @@ import { PaginationDto } from '../dto/pagination.dto';
 import { GetAllProductsOutput } from './dto/get-all-products-output.dto';
 
 @Injectable()
-export class ProductService extends BaseService<Product> {
+export class ProductService {
   constructor(
     @Inject(appConfig.KEY)
     private readonly appConfiguration: ConfigType<typeof appConfig>,
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
     @Inject('productRepository') private readonly productRepositoryV2: ProductRepository,
-  ) {
-    super(productRepository);
-  }
+  ) {}
 
   // CRUD
 
@@ -42,9 +38,8 @@ export class ProductService extends BaseService<Product> {
   public async getOne(input: GetOneProductInput): Promise<Product> {
     const { id } = input;
 
-    const existing = await this.getOneByOneFields({
-      fields: { id },
-      checkIfExists: false,
+    const existing = await this.productRepository.findOne({
+      where: { id: id },
     });
 
     return existing;
@@ -61,9 +56,8 @@ export class ProductService extends BaseService<Product> {
   public async update(getOneInput: GetOneProductInput, input: UpdateProductInput): Promise<Product> {
     const { id } = getOneInput;
 
-    const existing = await this.getOneByOneFields({
-      fields: { id },
-      checkIfExists: true,
+    const existing = await this.productRepository.findOne({
+      where: { id: id },
     });
 
     const preloaded = await this.productRepository.preload({
@@ -80,9 +74,8 @@ export class ProductService extends BaseService<Product> {
   }
 
   public async updateStock(id: number, stock: number): Promise<Product> {
-    const existing = await this.getOneByOneFields({
-      fields: { id },
-      checkIfExists: true,
+    const existing = await this.productRepository.findOne({
+      where: { id: id },
     });
 
     const preloaded = await this.productRepository.preload({
@@ -98,9 +91,8 @@ export class ProductService extends BaseService<Product> {
   }
 
   public async massiveStockUpdate(id: number, stock: number): Promise<Product> {
-    const existing = await this.getOneByOneFields({
-      fields: { id },
-      checkIfExists: true,
+    const existing = await this.productRepository.findOne({
+      where: { id: id },
     });
 
     const preloaded = await this.productRepository.preload({
@@ -118,9 +110,8 @@ export class ProductService extends BaseService<Product> {
   public async delete(input: any): Promise<Product> {
     const { id } = input;
 
-    const existing = await this.getOneByOneFields({
-      fields: { id },
-      checkIfExists: true,
+    const existing = await this.productRepository.findOne({
+      where: { id: id },
     });
 
     const clone = { ...existing };
@@ -135,9 +126,8 @@ export class ProductService extends BaseService<Product> {
   public async finish(input: GetOneProductInput): Promise<Product> {
     const { id } = input;
 
-    const existing = await this.getOneByOneFields({
-      fields: { id },
-      checkIfExists: true,
+    const existing = await this.productRepository.findOne({
+      where: { id: id },
     });
 
     const preloaded = await this.productRepository.preload({

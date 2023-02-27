@@ -38,7 +38,7 @@ export class PurchaseController {
     description: 'get a list of purchase, based on the conditions',
   })
   @Get()
-  async getAll(@Query() pagination: PaginationDto): Promise<Purchase[]> {    
+  async getAll(@Query() pagination: PaginationDto): Promise<Purchase[]> {
     return this.purchaseService.getAll(pagination);
   }
 
@@ -66,7 +66,10 @@ export class PurchaseController {
     description: 'update a purchase, based on the id',
   })
   @Patch('/status/:purchaseId')
-  async updateStatus(@Param('purchaseId') purchaseId: number, @Body() body: { purchaseStatus: PurchaseStatus }): Promise<Purchase | string> {
+  async updateStatus(
+    @Param('purchaseId') purchaseId: number,
+    @Body() body: { purchaseStatus: PurchaseStatus },
+  ): Promise<Purchase | string> {
     return this.purchaseService.updateStatus(purchaseId, body.purchaseStatus);
   }
 
