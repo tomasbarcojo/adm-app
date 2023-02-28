@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from '../../actions/categories';
-// @material-ui/core components
-import { makeStyles } from '@material-ui/core/styles';
+// @mui/material components
+import { makeStyles } from '@mui/material/styles';
 // core components
 import GridItem from '../../components/Grid/GridItem.js';
 import GridContainer from '../../components/Grid/GridContainer.js';

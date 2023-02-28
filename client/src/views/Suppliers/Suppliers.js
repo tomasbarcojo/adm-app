@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { addSupplier, getSuppliers, getSuppliersByName } from '../../actions/suppliers';
-// @material-ui/core components
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+// @mui/material components
+import { makeStyles } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
 // core components
 import GridItem from '../../components/Grid/GridItem.js';
 import GridContainer from '../../components/Grid/GridContainer.js';

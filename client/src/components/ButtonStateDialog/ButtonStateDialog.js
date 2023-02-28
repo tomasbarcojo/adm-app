@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import { makeStyles } from '@mui/material/styles';
+import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import InputLabel from '@material-ui/core/InputLabel';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
-import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogContentText from '@mui/material/DialogContentText';
 import FormControl from '@mui/material/FormControl';
 // import { cancelMail, dispatchMail } from "../../actions";
 import MenuItem from '@mui/material/MenuItem';
@@ -43,7 +43,6 @@ export default function DialogSelect({ state, purchaseId, to, name }) {
   const token = Token();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-
   const handleChange = async (event) => {
     setPurchaseNewState(event.target.value);
   };
@@ -65,7 +64,9 @@ export default function DialogSelect({ state, purchaseId, to, name }) {
   };
 
   const handleOkButton = () => {
-    dispatch(updatePurchaseStatus(token, { purchaseStatus: purchaseNewStatus }, purchaseId, enqueueSnackbar, closeSnackbar));
+    dispatch(
+      updatePurchaseStatus(token, { purchaseStatus: purchaseNewStatus }, purchaseId, enqueueSnackbar, closeSnackbar),
+    );
     setPurchaseActualState(purchaseNewStatus);
     // sendMail()
     setOpen(false);

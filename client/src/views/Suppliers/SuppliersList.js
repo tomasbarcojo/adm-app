@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addSupplier, getSuppliers, getSuppliersByName } from '../../actions/suppliers';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Link } from 'react-router-dom';
-// @material-ui/core components
-import IconButton from '@material-ui/core/IconButton';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
-import Edit from '@material-ui/icons/Edit';
-import Tooltip from '@material-ui/core/Tooltip';
+// @mui/material components
+import IconButton from '@mui/material/IconButton';
+import { makeStyles } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
+import Edit from '@mui/icons-material/Edit';
+import Tooltip from '@mui/material/Tooltip';
 // core components
 import GridItem from '../../components/Grid/GridItem.js';
 import GridContainer from '../../components/Grid/GridContainer.js';
@@ -191,4 +191,3 @@ export default function SuppliersList() {
     </div>
   );
 }
-

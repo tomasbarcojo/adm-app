@@ -2,7 +2,7 @@ import Swal from 'sweetalert2';
 import '../App.css';
 const { REACT_APP_URL_API } = process.env;
 
-export const userLoginOld = (data, history, keepLogged, enqueueSnackbar, closeSnackbar) => async (dispatch) => {
+export const userLoginOld = (data, navigate, keepLogged, enqueueSnackbar, closeSnackbar) => async (dispatch) => {
   try {
     await fetch(`${REACT_APP_URL_API}/auth/local/signin`, {
       method: 'POST',
@@ -56,7 +56,7 @@ export const userLoginOld = (data, history, keepLogged, enqueueSnackbar, closeSn
               </button>
             ),
           });
-          history.push('/admin/dashboard');
+          navigate('/admin/dashboard');
         } else {
           Swal.fire('Something went wrong :(', '', 'error');
           enqueueSnackbar(`Something went wrong :(`, {
@@ -75,7 +75,7 @@ export const userLoginOld = (data, history, keepLogged, enqueueSnackbar, closeSn
   }
 };
 
-export const userLogin = (data, history, keepLogged, enqueueSnackbar, closeSnackbar) => async (dispatch) => {
+export const userLogin = (data, navigate, keepLogged, enqueueSnackbar, closeSnackbar) => async (dispatch) => {
   const response = await fetch(`${REACT_APP_URL_API}/auth/local/signin`, {
     method: 'POST',
     headers: {
@@ -129,7 +129,7 @@ export const userLogin = (data, history, keepLogged, enqueueSnackbar, closeSnack
         </button>
       ),
     });
-    history.push('/admin/dashboard');
+    navigate('/admin/dashboard');
   } else {
     Swal.fire('Something went wrong :(', '', 'error');
     enqueueSnackbar(`Something went wrong :(`, {
@@ -144,7 +144,7 @@ export const userLogin = (data, history, keepLogged, enqueueSnackbar, closeSnack
   }
 };
 
-export const addUser = (user, history, enqueueSnackbar, closeSnackbar) => async (dispatch) => {
+export const addUser = (user, navigate, enqueueSnackbar, closeSnackbar) => async (dispatch) => {
   try {
     const res = await fetch(`${REACT_APP_URL_API}/auth/local/signup`, {
       method: 'POST',
@@ -172,7 +172,7 @@ export const addUser = (user, history, enqueueSnackbar, closeSnackbar) => async 
           </button>
         ),
       });
-      history.push('/admin/dashboard');
+      navigate('/admin/dashboard');
     }
   } catch (err) {
     console.log(err);
@@ -198,14 +198,14 @@ export const resetPassword = (userId, token) => async (dispatch) => {
     );
 };
 
-export const userLogout = (history) => async (dispatch) => {
+export const userLogout = (navigate) => async (dispatch) => {
   try {
     localStorage.clear();
     sessionStorage.clear();
     dispatch({
       type: 'USER_LOGOUT',
     });
-    history.push('/login');
+    navigate('/login');
   } catch (err) {
     console.log(err);
   }

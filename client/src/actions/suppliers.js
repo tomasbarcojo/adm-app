@@ -112,7 +112,7 @@ export const resetPassword = (userId, token) => async (dispatch) => {
     );
 };
 
-export const userLogout = (history) => async (dispatch) => {
+export const userLogout = (navigate) => async (dispatch) => {
   await fetch(`${REACT_APP_URL_API}/user/logout`, {
     credentials: 'include',
   }).then(() => {
@@ -120,7 +120,7 @@ export const userLogout = (history) => async (dispatch) => {
     dispatch({
       type: 'USER_LOGOUT',
     });
-    history.push('/');
+    navigate('/');
   });
 };
 

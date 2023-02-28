@@ -3,9 +3,9 @@ import Suppliers from '../views/Suppliers/Suppliers.js';
 import SupplierList from '../views/Suppliers/SuppliersList';
 import PurchasesList from '../views/Purchases/PurchasesList';
 
-import AddIcon from '@material-ui/icons/Add';
-import ListIcon from '@material-ui/icons/List';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import AddIcon from '@mui/icons-material/Add';
+import ListIcon from '@mui/icons-material/List';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import TableList from '../views/Clients/Clients.js';
 import ClientList from '../views/Clients/ClientsList';
 import Products from '../views/Products/Product.js';

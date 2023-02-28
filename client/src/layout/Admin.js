@@ -1,10 +1,10 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 // creates a beautiful scrollbar
 // import PerfectScrollbar from "perfect-scrollbar";
 // import "perfect-scrollbar/css/perfect-scrollbar.css";
-// @material-ui/core components
-import { makeStyles } from '@material-ui/core/styles';
+// @mui/material components
+import { makeStyles } from '@mui/material/styles';
 // core components
 import Navbar from '../components/Navbar/Navbar.js';
 import Footer from '../components/Footer/Footer.js';
@@ -20,7 +20,7 @@ import logo from '../images/reactlogo.png';
 import Dashboard from '../views/Dashboard/Dashboard.js';
 
 const switchRoutes = (
-  <Switch>
+  <Routes>
     {routes.map((prop, key) => {
       if (prop.nestedData) {
         return prop.nestedData.map((route, key) => {
@@ -28,8 +28,8 @@ const switchRoutes = (
         });
       } else return <Route exact path={prop.layout + prop.path} component={prop.component} key={key} />;
     })}
-    <Redirect from="/admin" to="/admin/dashboard" />
-  </Switch>
+    <Navigate to="/admin/dashboard" />
+  </Routes>
 );
 
 const useStyles = makeStyles(styles);

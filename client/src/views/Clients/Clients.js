@@ -4,13 +4,13 @@ import { useLocation } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { getClients, addClient } from '../../actions/clients';
 import { getPriceList } from '../../actions/pricelists';
-// @material-ui/core components
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
+// @mui/material components
+import { makeStyles } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 // core components
 import GridItem from '../../components/Grid/GridItem.js';
 import GridContainer from '../../components/Grid/GridContainer.js';

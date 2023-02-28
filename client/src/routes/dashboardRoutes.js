@@ -1,11 +1,11 @@
-import Dashboard from '@material-ui/icons/Dashboard';
-import Person from '@material-ui/icons/Person';
-import BubbleChart from '@material-ui/icons/BubbleChart';
-import LocationOn from '@material-ui/icons/LocationOn';
-import Notifications from '@material-ui/icons/Notifications';
-import Unarchive from '@material-ui/icons/Unarchive';
-import Language from '@material-ui/icons/Language';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import Dashboard from '@mui/icons-material/Dashboard';
+import Person from '@mui/icons-material/Person';
+import BubbleChart from '@mui/icons-material/BubbleChart';
+import LocationOn from '@mui/icons-material/LocationOn';
+import Notifications from '@mui/icons-material/Notifications';
+import Unarchive from '@mui/icons-material/Unarchive';
+import Language from '@mui/icons-material/Language';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import DashboardPage from '../views/Dashboard/Dashboard';
 import PriceLists from '../views/PriceLists/PriceLists.js';
@@ -15,7 +15,7 @@ import UpgradeToPro from '../views/UpgradeToPro/UpgradeToPro.js';
 // core components/views for RTL layout
 import RTLPage from '../views/RTLPage/RTLPage.js';
 import EditPricelist from '../views/PriceLists/EditPricelist';
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from '@mui/icons-material/Add';
 
 // import purchases from './purchases'
 import { clients, purchases, artAndCat } from './nestedRoutes';

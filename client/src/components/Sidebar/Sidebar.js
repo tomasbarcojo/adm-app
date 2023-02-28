@@ -3,15 +3,15 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-// @material-ui/core components
-import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Icon from '@material-ui/core/Icon';
-import { createTheme } from '@material-ui/core/styles';
+// @mui/material components
+import { makeStyles } from '@mui/material/styles';
+import Drawer from '@mui/material/Drawer';
+import Hidden from '@mui/material/Hidden';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Icon from '@mui/material/Icon';
+import { createTheme } from '@mui/material/styles';
 // core components
 import AdminNavbarLinks from '../Navbar/AdminNavbarLinks';
 import RTLNavbarLinks from '../Navbar/RTLNavbarLinks.js';
@@ -19,16 +19,16 @@ import RTLNavbarLinks from '../Navbar/RTLNavbarLinks.js';
 import styles from '../../styles/components/sidebarStyle.js';
 import NestedList from './NestedList';
 
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Collapse from '@material-ui/core/Collapse';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
-import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
-import AddIcon from '@material-ui/icons/Add';
-import ShoppingCart from '@material-ui/icons/ShoppingCart';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Collapse from '@mui/material/Collapse';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import DraftsIcon from '@mui/icons-material/Drafts';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import StarBorder from '@mui/icons-material/StarBorder';
+import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
+import AddIcon from '@mui/icons-material/Add';
+import ShoppingCart from '@mui/icons-material/ShoppingCart';
 
 const NestedLinksTheme = createTheme({
   overrides: {

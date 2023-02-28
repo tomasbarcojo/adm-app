@@ -2,10 +2,10 @@
 import React from 'react';
 // nodejs library to set properties for components
 import PropTypes from 'prop-types';
-// @material-ui/core components
-import { makeStyles } from '@material-ui/core/styles';
-// @material-ui/icons
-import AddAlert from '@material-ui/icons/AddAlert';
+// @mui/material components
+import { makeStyles } from '@mui/material/styles';
+// @mui/icons-material
+import AddAlert from '@mui/icons-material/AddAlert';
 // core components
 import GridItem from '../../components/Grid/GridItem.js';
 import GridContainer from '../../components/Grid/GridContainer.js';

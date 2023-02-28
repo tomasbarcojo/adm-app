@@ -3,16 +3,16 @@ import { useDispatch } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import axios from 'axios';
 import { useEffect } from 'react';
-// @material-ui/core components
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+// @mui/material components
+import { makeStyles } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
 import GridItem from '../../components/Grid/GridItem.js';
 import GridContainer from '../../components/Grid/GridContainer.js';
 import Button from '../../components/CustomButtons/Button.js';
 import CardFooter from '../../components/Card/CardFooter.js';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
 // core components
 import Card from '../../components/Card/Card.js';
 import CardHeader from '../../components/Card/CardHeader.js';

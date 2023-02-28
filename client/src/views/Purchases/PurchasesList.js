@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// @material-ui/core components
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-// @material-ui/icons
-import Edit from '@material-ui/icons/Edit';
+// @mui/material components
+import { makeStyles } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+// @mui/icons-material
+import Edit from '@mui/icons-material/Edit';
 // core components
 import Card from '../../components/Card/Card.js';
 import CardHeader from '../../components/Card/CardHeader.js';
@@ -65,7 +65,9 @@ export default function CustomTable(props) {
                       <TableCell className={classes.tableCell + ' ' + classes.tableHeadCell}>ID</TableCell>
                       <TableCell className={classes.tableCell + ' ' + classes.tableHeadCell}>Proveedor</TableCell>
                       <TableCell className={classes.tableCell + ' ' + classes.tableHeadCell}>Estado</TableCell>
-                      <TableCell className={classes.tableCell + ' ' + classes.tableHeadCell}>Fecha de expiracion</TableCell>
+                      <TableCell className={classes.tableCell + ' ' + classes.tableHeadCell}>
+                        Fecha de expiracion
+                      </TableCell>
                       <TableCell className={classes.tableCell + ' ' + classes.tableHeadCell}>Creado</TableCell>
                       <TableCell className={classes.tableCell + ' ' + classes.tableHeadCell}>Detalle</TableCell>
                     </TableRow>
