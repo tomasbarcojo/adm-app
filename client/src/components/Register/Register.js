@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import { Link } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@mui/material/Grid';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import { makeStyles } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../../actions/users';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
@@ -38,7 +38,7 @@ export default function SignUp() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [data, setData] = useState({
     firstName: '',
     lastName: '',
@@ -94,7 +94,7 @@ export default function SignUp() {
     e.preventDefault();
 
     if (formValid(data)) {
-      dispatch(addUser(data, history, enqueueSnackbar, closeSnackbar)); //add user
+      dispatch(addUser(data, navigate, enqueueSnackbar, closeSnackbar)); //add user
     } else {
       enqueueSnackbar('Todos los campos son obligatorios', {
         variant: 'warning',

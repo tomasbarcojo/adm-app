@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Box from '@material-ui/core/Box';
+import CssBaseline from '@mui/material/CssBaseline';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
+import { makeStyles } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 import Copyright from '../../utils/Copyright';
 import NavBar from './NavBar';
-import GridList from '@material-ui/core/GridList';
 import CategoriesCard from '../CategoriesCard/CategoriesCard';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -111,7 +110,7 @@ export default function UsersManagment() {
         <ProductCard /> <ProductCard /> <ProductCard /><ProductCard /><ProductCard /><ProductCard /><ProductCard /> <ProductCard /><ProductCard /><ProductCard /><ProductCard />
       </GridList> */}
 
-      <GridList cellHeight={450} className={classes.gridList} cols={4} spacing={0}>
+      <Grid container cellHeight={450} className={classes.gridList} cols={4}>
         {categories && categories.length > 0 ? (
           categories.map((cat) => {
             return <CategoriesCard props={cat} />;
@@ -119,7 +118,7 @@ export default function UsersManagment() {
         ) : (
           <h5 style={{ display: 'flex', justifyContent: 'center' }}>No existen categorias</h5>
         )}
-      </GridList>
+      </Grid>
 
       {/* Hero unit */}
       {/* <Container maxWidth="sm" component="main" className={classes.heroContent}>

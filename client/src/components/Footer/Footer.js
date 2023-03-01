@@ -1,10 +1,10 @@
 /*eslint-disable*/
 import React from 'react';
 import PropTypes from 'prop-types';
-// @material-ui/core components
-import { makeStyles } from '@material-ui/core/styles';
-import ListItem from '@material-ui/core/ListItem';
-import List from '@material-ui/core/List';
+// @mui/material components
+import { makeStyles } from '@mui/material/styles';
+import ListItem from '@mui/material/ListItem';
+import List from '@mui/material/List';
 // core components
 import styles from '../../styles/components/footerStyle';
 

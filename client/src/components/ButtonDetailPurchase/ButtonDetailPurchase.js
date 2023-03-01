@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 
 // Material-UI imports
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import MenuOpenIcon from '@material-ui/icons/MenuOpen';
-import IconButton from '@material-ui/core/IconButton';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+import IconButton from '@mui/material/IconButton';
+import { makeStyles } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 import { Link } from 'react-router-dom';
-import Divider from '@material-ui/core/Divider';
+import Divider from '@mui/material/Divider';
 
 const { REACT_APP_URL_API } = process.env;
 
@@ -119,12 +119,13 @@ export default function ButtonDetailPurchase({ purchaseId }) {
               <ListItem className={classes.listItem}>
                 <ListItemText className={classes.totalText} primary="Total" />
                 <Typography variant="subtitle1" className={classes.totalText}>
-                  {purchaseDetail && purchaseDetail.total.toLocaleString('es-AR', {
-                    style: 'currency',
-                    currency: 'ARS',
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
+                  {purchaseDetail &&
+                    purchaseDetail.total.toLocaleString('es-AR', {
+                      style: 'currency',
+                      currency: 'ARS',
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
                 </Typography>
               </ListItem>
             </List>

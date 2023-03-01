@@ -1,7 +1,7 @@
 import React from 'react';
-import Toolbar from '@material-ui/core/Toolbar';
-import AppBar from '@material-ui/core/AppBar';
-import { makeStyles } from '@material-ui/core/styles';
+import Toolbar from '@mui/material/Toolbar';
+import AppBar from '@mui/material/AppBar';
+import { makeStyles } from '@mui/material/styles';
 import Logo from '../../images/Logo/Logo4.png';
 
 const useStyles = makeStyles((theme) => ({

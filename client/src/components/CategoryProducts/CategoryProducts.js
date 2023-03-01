@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Box from '@material-ui/core/Box';
+import { useParams, useNavigate } from 'react-router-dom';
+import CssBaseline from '@mui/material/CssBaseline';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
+import { makeStyles } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 import Copyright from '../../utils/Copyright';
 import NavBar from '../Home/NavBar';
-import GridList from '@material-ui/core/GridList';
 import ProductCard from '../ProductCard/ProductCard';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -103,7 +102,7 @@ export default function CategoryProducts() {
 
       <NavBar />
 
-      <GridList cellHeight={450} className={classes.gridList} cols={4} spacing={0}>
+      <Grid cellHeight={450} className={classes.gridList} cols={4} spacing={0}>
         {articles && articles.length > 0 ? (
           articles.map((article) => {
             console.log(article);
@@ -112,7 +111,7 @@ export default function CategoryProducts() {
         ) : (
           <h5 style={{ display: 'flex', justifyContent: 'center' }}>No existen productos</h5>
         )}
-      </GridList>
+      </Grid>
 
       {/* Hero unit */}
       {/* <Container maxWidth="sm" component="main" className={classes.heroContent}>

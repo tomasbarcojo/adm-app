@@ -1,10 +1,10 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 import SideBar from '../../Dashboard/SideBar';
-import AddIcon from '@material-ui/icons/Add';
-import Button from '@material-ui/core/Button';
+import AddIcon from '@mui/icons-material/Add';
+import Button from '@mui/material/Button';
 
 const useStyles = makeStyles((theme) => ({
   root: {

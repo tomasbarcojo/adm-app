@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Switch, useHistory } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PrivateRoutes from '../auth/PrivateRoutes';
 import LogIn from '../components/Login/Login';
 import Register from '../components/Register/Register';
@@ -13,7 +13,6 @@ import { useEffect } from 'react';
 
 const App = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
   let user = '';
   let token = '';
   if (localStorage.length > 0) {
@@ -26,20 +25,20 @@ const App = () => {
 
   useEffect(() => {
     if (user) {
-      dispatch(getUser(user.id, token, history));
+      dispatch(getUser(user.id, token));
     }
   }, []);
 
   return (
     <Router>
-      <Switch>
+      <Routes>
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={LogIn} />
         <Route exact path="/register" component={Register} />
         <PrivateRoutes path="/admin" component={Admin} />
         <Route exact path="/category/:id" component={CategoryProducts} />
         <Route path="*" component={PageNotFound} />
-      </Switch>
+      </Routes>
     </Router>
   );
 };

@@ -2,15 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import 'date-fns';
-// @material-ui/core components
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+// @mui/material components
+import { makeStyles } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import DateFnsUtils from '@date-io/date-fns';
 import esLocale from 'date-fns/locale/es';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+// import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 // core components
 import GridItem from '../../components/Grid/GridItem.js';
 import GridContainer from '../../components/Grid/GridContainer.js';
@@ -252,33 +254,43 @@ export default function Purchase() {
                       />
 
                       {haveExpDate ? (
-                        <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
-                          <KeyboardDatePicker
-                            className={classes.datePicker}
-                            orientation="landscape"
-                            openTo="date"
-                            showTodayButton
-                            variant="outlined"
-                            format="dd/MM/yyyy"
-                            margin="normal"
-                            id="date-picker-inline"
-                            label="Vencimiento de pago"
-                            value={purchaseData.paymentExpDate}
-                            onChange={(date) => {
-                              setPurchaseData({ ...purchaseData, paymentExpDate: date ? date : 'Invalid Date' });
+                        // <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
+                        //   <KeyboardDatePicker
+                        //     className={classes.datePicker}
+                        //     orientation="landscape"
+                        //     openTo="date"
+                        //     showTodayButton
+                        //     variant="outlined"
+                        //     format="dd/MM/yyyy"
+                        //     margin="normal"
+                        //     id="date-picker-inline"
+                        //     label="Vencimiento de pago"
+                        //     value={purchaseData.paymentExpDate}
+                        //     onChange={(date) => {
+                        //       setPurchaseData({ ...purchaseData, paymentExpDate: date ? date : 'Invalid Date' });
+                        //     }}
+                        //     KeyboardButtonProps={{
+                        //       'aria-label': 'change date',
+                        //     }}
+                        //     cancelLabel="Cancelar"
+                        //     okLabel="OK"
+                        //     todayLabel="HOY"
+                        //     disablePast
+                        //     emptyLabel
+                        //     leftArrowIcon
+                        //     loadingIndicator
+                        //   />
+                        // </MuiPickersUtilsProvider>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DatePicker
+                            label="Basic example"
+                            value={value}
+                            onChange={(newValue) => {
+                              setValue(newValue);
                             }}
-                            KeyboardButtonProps={{
-                              'aria-label': 'change date',
-                            }}
-                            cancelLabel="Cancelar"
-                            okLabel="OK"
-                            todayLabel="HOY"
-                            disablePast
-                            emptyLabel
-                            leftArrowIcon
-                            loadingIndicator
+                            renderInput={(params) => <TextField {...params} />}
                           />
-                        </MuiPickersUtilsProvider>
+                        </LocalizationProvider>
                       ) : null}
                     </div>
 
