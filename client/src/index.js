@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import './index.css';
 import App from './routes/App';
 import reportWebVitals from './reportWebVitals';
@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import store from './store/index.js';
 import { SnackbarProvider } from 'notistack';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.render(
   //<React.StrictMode>
   <Provider store={store}>
     <Router>
@@ -18,6 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </Router>
   </Provider>,
   //</React.StrictMode>,
+  document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -4,32 +4,33 @@
   "private": true,
   "dependencies": {
     "@date-io/date-fns": "^1.1.0",
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
     "@material-ui/pickers": "^3.2.2",
-    "@mui/icons-material": "^5.11.0",
-    "@mui/material": "^5.11.6",
-    "axios": "^1.1.3",
+    "@mui/icons-material": "^5.11.11",
+    "@mui/material": "^5.11.11",
+    "axios": "^0.21.1",
     "chartist": "0.10.1",
     "date-fns": "^2.0.0-alpha.27",
     "dotenv": "^16.0.2",
+    "infinite-scroll": "^4.0.1",
+    "material-table": "^1.69.3",
     "notistack": "^1.0.3",
-    "prettier": "^2.7.1",
-    "react": "^18.2.0",
+    "react": "^17.0.1",
     "react-chartist": "0.14.3",
-    "react-dom": "^18.2.0",
+    "react-dom": "^17.0.1",
     "react-google-maps": "^9.4.5",
     "react-images-upload": "^1.2.8",
     "react-infinite-scroller": "^1.2.6",
     "react-number-format": "^4.5.5",
-    "react-redux": "^8.0.5",
+    "react-redux": "^7.2.2",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^5.0.1",
+    "react-scripts": "4.0.1",
     "react-window": "^1.8.6",
-    "recharts": "^2.3.2",
+    "recharts": "^2.0.3",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "sweetalert2": "^10.13.0",
@@ -39,19 +40,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "format": "prettier --write \"src/**/*.js\"",
-    "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx ."
+    "eject": "react-scripts eject"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": [
-      "prettier --write",
-      "eslint . --ext .js,.jsx,.ts,.tsx --fix"
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
     ]
   },
   "browserslist": {
