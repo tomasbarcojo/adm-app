@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from '../../actions/categories';
 // @mui/material components
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 // core components
 import GridItem from '../../components/Grid/GridItem.js';
 import GridContainer from '../../components/Grid/GridContainer.js';

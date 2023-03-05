@@ -1,7 +1,7 @@
 // PrivateRoutes
 
 import React from 'react';
-import { Route, useNavigate } from 'react-router-dom';
+import { Navigate, Route, useNavigate } from 'react-router-dom';
 
 const PrivateRoutes = ({ component: Component, ...rest }) => {
   const navigate = useNavigate();
@@ -13,12 +13,7 @@ const PrivateRoutes = ({ component: Component, ...rest }) => {
     logged = JSON.parse(sessionStorage.getItem('logged'));
   }
 
-  if (!logged) {
-    navigate('/login');
-    return null;
-  }
-
-  return <Route {...rest} render={(props) => <Component {...props} />} />;
+  return logger ? <Route {...rest} render={(props) => <Component {...props} />} /> : <Navigate to='/login' />;
 };
 
 export default PrivateRoutes;

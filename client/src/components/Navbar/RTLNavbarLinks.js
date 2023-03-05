@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 // @mui/material components
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import Grow from '@mui/material/Grow';

@@ -1,6 +1,6 @@
 import React from 'react';
 // @mui/material components
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 // core components
 import GridItem from '../../components/Grid/GridItem.js';
 import GridContainer from '../../components/Grid/GridContainer.js';

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import { getPriceList, addPriceList } from '../../actions/pricelists';
 // @mui/material components
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import TextField from '@mui/material/TextField';
 
 // core components

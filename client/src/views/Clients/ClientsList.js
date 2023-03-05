@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import GridItem from '../../components/Grid/GridItem.js';
 import GridContainer from '../../components/Grid/GridContainer.js';
 import Table from '../../components/Table/Table.js';

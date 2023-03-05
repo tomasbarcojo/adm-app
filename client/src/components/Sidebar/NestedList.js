@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@mui/material/styles';
 import classNames from 'classnames';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -8,7 +7,9 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider, makeStyles } from '@mui/styles';
+import { createTheme } from '@mui/material/styles';
+
 import Icon from '@mui/material/Icon';
 import { NavLink } from 'react-router-dom';
 import styles from '../../styles/components/sidebarStyle.js';

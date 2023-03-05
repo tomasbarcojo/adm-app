@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // @mui/material components
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 // core components
 import styles from '../../styles/components/typographyStyle.js';
 

@@ -5,7 +5,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { Link } from 'react-router-dom';
 // @mui/material components
 import IconButton from '@mui/material/IconButton';
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';

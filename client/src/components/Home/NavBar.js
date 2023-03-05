@@ -1,7 +1,7 @@
 import React from 'react';
 import Toolbar from '@mui/material/Toolbar';
 import AppBar from '@mui/material/AppBar';
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import Logo from '../../images/Logo/Logo4.png';
 
 const useStyles = makeStyles((theme) => ({

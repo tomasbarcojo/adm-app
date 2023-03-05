@@ -2,7 +2,7 @@ import React from 'react';
 // react plugin for creating charts
 // import ChartistGraph from 'react-chartist';
 // @mui/material
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import Icon from '@mui/material/Icon';
 // @mui/icons-material
 import Store from '@mui/icons-material/Store';
@@ -31,7 +31,7 @@ import CardFooter from '../../components/Card/CardFooter.js';
 
 import { bugs, website, server } from '../../variables/general.js';
 
-import { dailySalesChart, emailsSubscriptionChart, completedTasksChart } from '../../variables/charts.js';
+// import { dailySalesChart, emailsSubscriptionChart, completedTasksChart } from '../../variables/charts.js';
 
 import styles from '../../styles/views/dashboardStyle.js';
 
@@ -123,7 +123,7 @@ export default function Dashboard() {
         <GridItem xs={12} sm={12} md={4}>
           <Card chart>
             <CardHeader color="success">
-              ChartistGraph
+              dailySalesChart
               {/* <ChartistGraph
                 className="ct-chart"
                 data={dailySalesChart.data}
@@ -151,14 +151,15 @@ export default function Dashboard() {
         <GridItem xs={12} sm={12} md={4}>
           <Card chart>
             <CardHeader color="warning">
-              <ChartistGraph
+              emailsSubscriptionChart
+              {/* <ChartistGraph
                 className="ct-chart"
                 data={emailsSubscriptionChart.data}
                 type="Bar"
                 options={emailsSubscriptionChart.options}
                 responsiveOptions={emailsSubscriptionChart.responsiveOptions}
                 listener={emailsSubscriptionChart.animation}
-              />
+              /> */}
             </CardHeader>
             <CardBody>
               <h4 className={classes.cardTitle}>Email Subscriptions</h4>
@@ -174,13 +175,14 @@ export default function Dashboard() {
         <GridItem xs={12} sm={12} md={4}>
           <Card chart>
             <CardHeader color="danger">
-              <ChartistGraph
+              completedTasksChart
+              {/* <ChartistGraph
                 className="ct-chart"
                 data={completedTasksChart.data}
                 type="Line"
                 options={completedTasksChart.options}
                 listener={completedTasksChart.animation}
-              />
+              /> */}
             </CardHeader>
             <CardBody>
               <h4 className={classes.cardTitle}>Completed Tasks</h4>

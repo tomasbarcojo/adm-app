@@ -8,7 +8,7 @@ import { Link, Redirect, useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import { useSnackbar } from 'notistack';
 import { useDispatch } from 'react-redux';
 import { userLogin } from '../../actions/users';

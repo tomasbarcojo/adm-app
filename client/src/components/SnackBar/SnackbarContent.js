@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 // @mui/material components
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import Snack from '@mui/material/SnackbarContent';
 import IconButton from '@mui/material/IconButton';
 // @mui/icons-material

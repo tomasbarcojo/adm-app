@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import clsx from 'clsx';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';

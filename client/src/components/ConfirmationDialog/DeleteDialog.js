@@ -12,7 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import EditIcon from '@mui/icons-material/Edit';
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 // import { removeProduct, removeCategory } from "../../actions";
 
 const useStyles = makeStyles((theme) => ({

@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../../actions/users';
 import { useNavigate } from 'react-router-dom';

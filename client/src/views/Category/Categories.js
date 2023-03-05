@@ -4,7 +4,7 @@ import { useSnackbar } from 'notistack';
 import axios from 'axios';
 import { useEffect } from 'react';
 // @mui/material components
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import TextField from '@mui/material/TextField';
 import GridItem from '../../components/Grid/GridItem.js';
 import GridContainer from '../../components/Grid/GridContainer.js';

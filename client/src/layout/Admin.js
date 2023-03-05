@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 // import PerfectScrollbar from "perfect-scrollbar";
 // import "perfect-scrollbar/css/perfect-scrollbar.css";
 // @mui/material components
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 // core components
 import Navbar from '../components/Navbar/Navbar.js';
 import Footer from '../components/Footer/Footer.js';

@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // @mui/material components
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import ListItem from '@mui/material/ListItem';
 import List from '@mui/material/List';
 // core components

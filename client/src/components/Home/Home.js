@@ -3,7 +3,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Copyright from '../../utils/Copyright';
@@ -81,7 +81,7 @@ const footers = [
   },
 ];
 
-export default function UsersManagment() {
+export default function Home() {
   const classes = useStyles();
   const dispatch = useDispatch();
   var token = '';
@@ -110,7 +110,7 @@ export default function UsersManagment() {
         <ProductCard /> <ProductCard /> <ProductCard /><ProductCard /><ProductCard /><ProductCard /><ProductCard /> <ProductCard /><ProductCard /><ProductCard /><ProductCard />
       </GridList> */}
 
-      <Grid container cellHeight={450} className={classes.gridList} cols={4}>
+      <Grid container className={classes.gridList} cols={4}>
         {categories && categories.length > 0 ? (
           categories.map((cat) => {
             return <CategoriesCard props={cat} />;

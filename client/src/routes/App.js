@@ -5,7 +5,7 @@ import Register from '../components/Register/Register';
 import Home from '../components/Home/Home';
 import Admin from '../layout/Admin';
 import CategoryProducts from '../components/CategoryProducts/CategoryProducts';
-import PageNotFound from '../components/NotFound/NotFound'
+import PageNotFound from '../components/NotFound/NotFound';
 
 import { useDispatch } from 'react-redux';
 import { getUser } from '../actions/users';
@@ -32,12 +32,14 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/login" component={LogIn} />
-        <Route exact path="/register" component={Register} />
-        <PrivateRoutes path="/admin" component={Admin} />
-        <Route exact path="/category/:id" component={CategoryProducts} />
-        <Route path="*" component={PageNotFound} />
+        {/* <Route exact path="/" element={<Home />} /> */}
+        <Route exact path="/login" element={<LogIn />} />
+        {/* <Route exact path="/register" element={<Register />} /> */}
+        {/* <Route exact path="/admin" element={<PrivateRoutes />}> */}
+          {/* <Route path="/admin" element={<Admin />} /> */}
+        {/* </Route> */}
+        {/* <Route exact path="/category/:id" element={<CategoryProducts />} /> */}
+        {/* <Route path="*" element={<PageNotFound />} /> */}
       </Routes>
     </Router>
   );

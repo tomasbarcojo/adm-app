@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
 // material-ui components
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 // core components

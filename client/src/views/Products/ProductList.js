@@ -16,8 +16,9 @@ import Edit from '@mui/icons-material/Edit';
 import styles from '../../styles/components/tableStyle';
 import styles2 from '../../styles/components/tasksStyle.js';
 import InfiniteScroll from 'react-infinite-scroller';
-import { makeStyles } from '@mui/material';
+import { styled } from '@mui/system';
 import { useQueryParams } from '../../utils/useQueryParams';
+import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles(styles);
 const useStyles2 = makeStyles(styles2);

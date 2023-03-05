@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';

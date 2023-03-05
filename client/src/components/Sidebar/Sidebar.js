@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 // @mui/material components
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import Drawer from '@mui/material/Drawer';
 import Hidden from '@mui/material/Hidden';
 import List from '@mui/material/List';

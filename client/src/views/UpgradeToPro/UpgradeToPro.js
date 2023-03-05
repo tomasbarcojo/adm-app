@@ -1,6 +1,6 @@
 import React from 'react';
 // @mui/material components
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 // @mui/icons-material
 import Close from '@mui/icons-material/Close';
 import Check from '@mui/icons-material/Check';

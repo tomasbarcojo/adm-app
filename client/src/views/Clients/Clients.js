@@ -5,7 +5,7 @@ import { useSnackbar } from 'notistack';
 import { getClients, addClient } from '../../actions/clients';
 import { getPriceList } from '../../actions/pricelists';
 // @mui/material components
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';

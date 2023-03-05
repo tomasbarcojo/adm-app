@@ -1,7 +1,7 @@
 /*eslint-disable*/
 import React from 'react';
 // @mui/material components
-import { makeStyles } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import Hidden from '@mui/material/Hidden';
 // core components
 import GridItem from '../../components/Grid/GridItem.js';
