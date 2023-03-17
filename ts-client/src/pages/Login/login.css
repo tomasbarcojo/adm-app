@@ -1,0 +1,145 @@
+.loginContainer {
+  display: flex;
+  flex-direction: row;
+  background: #e9e9e9;
+}
+
+.loginLeft,
+.loginRight {
+  height: 100%; /* Ajusta la altura al 100% */
+}
+
+.loginLeft {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 45%;
+  height: 100vh;
+
+  background: linear-gradient(
+      0deg,
+      rgba(23, 113, 191, 0.75),
+      rgba(23, 113, 191, 0.75)
+    ),
+    url('../../images/citylogin 1.png');
+  border-radius: 0px 50px 50px 0px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.loginRight {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 55%;
+  height: 100vh;
+}
+
+.welcomeTitle {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 500px;
+  font-size: 37px;
+  line-height: 44px;
+
+  color: #ffffff;
+}
+
+.registerButton {
+  width: 394px;
+  height: 55px;
+
+  background: #0e4473;
+  border-radius: 8px;
+
+  font-family: 'Lato', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 19.2px;
+  line-height: 23px;
+
+  color: #ffffff;
+  border: none;
+}
+
+.firstTimeTile {
+  display: flex;
+  justify-content: center;
+  font-family: 'Lato', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 19.2px;
+  line-height: 23px;
+  color: #ffffff;
+}
+
+.loginTitle {
+  font-family: 'Lato', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 37.5px;
+  line-height: 45px;
+  /* identical to box height */
+  text-align: center;
+  color: #1d90f2;
+
+  margin-bottom: 59px;
+}
+
+.loginForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.loginForm input {
+  width: 341px;
+  height: 55px;
+  background: #d6dfe8;
+  border-radius: 8px;
+  border: none;
+  padding: 0px 0px 0px 53px;
+
+  font-family: 'Lato', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 19.2px;
+  line-height: 23px;
+  margin-bottom: 37px;
+}
+
+button {
+  background: #1d90f2;
+  border-radius: 8px;
+  border: none;
+  width: 394px;
+  height: 55px;
+
+  /* font-family: 'Lato', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 19.2px;
+  line-height: 23px;
+  color: white; */
+}
+
+.loginForm label {
+  position: relative;
+}
+
+.loginForm label > .icon {
+  position: absolute;
+  top: auto;
+  top: 18px;
+  left: 20px;
+}
+
+.rememberOrForgottenPassword {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 400px;
+}

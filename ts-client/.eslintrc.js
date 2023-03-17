@@ -26,6 +26,7 @@ module.exports = {
   ],
   rules: {
     'prettier/prettier': 'error',
-    '@typescript-eslint/no-floating-promises': 'off'
+    '@typescript-eslint/no-floating-promises': 'off',
+    'jsx-a11y/click-events-have-key-events': 'off',
   }
 };
